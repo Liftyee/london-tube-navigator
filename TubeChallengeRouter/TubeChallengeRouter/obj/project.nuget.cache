@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "dZTBuT6AfASaNr4mPUiU82nxauiQQ1UYOj63IYb0WPyyoCI6FnSlqou2g2K7+TW1znQON4yTTIp5uZVZGL00tg==",
+  "dgSpecHash": "SOBwQ6cjDNJUl+2kiHknBb1wqfZsx2HM5EJR5XBP3NlbjVsupv6Mb1+N42AdgDHd7dgadCT/CEL6djzo1idaVw==",
   "success": true,
-  "projectFilePath": "/home/yee/Documents/tube-challenge-router/TubeChallengeRouter/TubeChallengeRouter/TubeChallengeRouter.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/yee/RiderProjects/tube-challenge-router/TubeChallengeRouter/TubeChallengeRouter/TubeChallengeRouter.csproj",
+  "expectedPackageFiles": [
+    "/home/yee/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/home/yee/.nuget/packages/nunit/4.0.0-beta.1/nunit.4.0.0-beta.1.nupkg.sha512",
+    "/home/yee/.nuget/packages/restsharp/106.15.0/restsharp.106.15.0.nupkg.sha512"
+  ],
   "logs": []
 }
