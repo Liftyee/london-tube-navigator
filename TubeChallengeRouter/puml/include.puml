@@ -1,0 +1,6 @@
+@startuml
+!include ./Class1.puml
+!include ./obj/Debug/net7.0/.NETCoreApp,Version=v7.0.AssemblyAttributes.puml
+!include ./obj/Debug/net7.0/TransportNetwork.AssemblyInfo.puml
+!include ./obj/Debug/net7.0/TransportNetwork.GlobalUsings.g.puml
+@enduml

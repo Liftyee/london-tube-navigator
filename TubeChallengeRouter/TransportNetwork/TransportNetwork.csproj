@@ -1,0 +1,1308 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\.gitignore">
+        <Link>tfl-csharp-client\.gitignore</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\.swagger-codegen-ignore">
+        <Link>tfl-csharp-client\.swagger-codegen-ignore</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\.swagger-codegen\VERSION">
+        <Link>tfl-csharp-client\.swagger-codegen\VERSION</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\.travis.yml">
+        <Link>tfl-csharp-client\.travis.yml</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\build.bat">
+        <Link>tfl-csharp-client\build.bat</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\build.sh">
+        <Link>tfl-csharp-client\build.sh</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\AccidentStatsApi.md">
+        <Link>tfl-csharp-client\docs\AccidentStatsApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\AirQualityApi.md">
+        <Link>tfl-csharp-client\docs\AirQualityApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\BikePointApi.md">
+        <Link>tfl-csharp-client\docs\BikePointApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\CabwiseApi.md">
+        <Link>tfl-csharp-client\docs\CabwiseApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\JourneyApi.md">
+        <Link>tfl-csharp-client\docs\JourneyApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\LineApi.md">
+        <Link>tfl-csharp-client\docs\LineApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\ModeApi.md">
+        <Link>tfl-csharp-client\docs\ModeApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\OccupancyApi.md">
+        <Link>tfl-csharp-client\docs\OccupancyApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\PlaceApi.md">
+        <Link>tfl-csharp-client\docs\PlaceApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\RoadApi.md">
+        <Link>tfl-csharp-client\docs\RoadApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\SearchApi.md">
+        <Link>tfl-csharp-client\docs\SearchApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\StopPointApi.md">
+        <Link>tfl-csharp-client\docs\StopPointApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\SystemDataSpatialDbGeography.md">
+        <Link>tfl-csharp-client\docs\SystemDataSpatialDbGeography.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\SystemDataSpatialDbGeographyWellKnownValue.md">
+        <Link>tfl-csharp-client\docs\SystemDataSpatialDbGeographyWellKnownValue.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\SystemObject.md">
+        <Link>tfl-csharp-client\docs\SystemObject.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiCommonApiVersionInfo.md">
+        <Link>tfl-csharp-client\docs\TflApiCommonApiVersionInfo.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiCommonDateRange.md">
+        <Link>tfl-csharp-client\docs\TflApiCommonDateRange.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiCommonDateRangeNullable.md">
+        <Link>tfl-csharp-client\docs\TflApiCommonDateRangeNullable.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiCommonGeoPoint.md">
+        <Link>tfl-csharp-client\docs\TflApiCommonGeoPoint.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiCommonJourneyPlannerJpElevation.md">
+        <Link>tfl-csharp-client\docs\TflApiCommonJourneyPlannerJpElevation.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiCommonPlaceGeo.md">
+        <Link>tfl-csharp-client\docs\TflApiCommonPlaceGeo.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiCommonPostcodeInput.md">
+        <Link>tfl-csharp-client\docs\TflApiCommonPostcodeInput.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesAccidentStatsAccidentDetail.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesAccidentStatsAccidentDetail.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesAccidentStatsAccidentStatsOrderedSummary.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesAccidentStatsAccidentStatsOrderedSummary.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesAccidentStatsCasualty.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesAccidentStatsCasualty.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesAccidentStatsVehicle.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesAccidentStatsVehicle.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesActiveServiceType.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesActiveServiceType.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesAdditionalProperties.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesAdditionalProperties.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesArrivalDeparture.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesArrivalDeparture.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesArrivalDepartureWithLine.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesArrivalDepartureWithLine.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesBay.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesBay.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesBikePointOccupancy.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesBikePointOccupancy.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesCarParkOccupancy.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesCarParkOccupancy.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesChargeConnectorOccupancy.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesChargeConnectorOccupancy.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesCoordinate.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesCoordinate.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesCrowding.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesCrowding.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesCycleSuperhighway.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesCycleSuperhighway.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesDisruptedPoint.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesDisruptedPoint.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesDisruptedRoute.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesDisruptedRoute.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesDisruption.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesDisruption.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFare.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFare.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFareBounds.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFareBounds.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFareDetails.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFareDetails.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFaresMode.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFaresMode.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFaresPeriod.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFaresPeriod.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFaresSection.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFaresSection.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFareStation.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresFareStation.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresJourney.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresJourney.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresPassengerType.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresPassengerType.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresRecommendation.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresRecommendation.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresRecommendationResponse.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresRecommendationResponse.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresTicket.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresTicket.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresTicketTime.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresTicketTime.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesFaresTicketType.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesFaresTicketType.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesGeoCodeSearchMatch.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesGeoCodeSearchMatch.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesIdentifier.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesIdentifier.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesInstruction.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesInstruction.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesInstructionStep.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesInstructionStep.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesInterval.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesInterval.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerFare.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerFare.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerFareCaveat.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerFareCaveat.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerFareTap.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerFareTap.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerFareTapDetails.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerFareTapDetails.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerItineraryResult.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerItineraryResult.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerJourney.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerJourney.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerJourneyFare.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerJourneyFare.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerJourneyPlannerCycleHireDockingStationData.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerJourneyPlannerCycleHireDockingStationData.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerJourneyVector.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerJourneyVector.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerLeg.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerLeg.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerObstacle.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerObstacle.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerPath.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerPath.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerPlannedWork.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerPlannedWork.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerRouteOption.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerRouteOption.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerSearchCriteria.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerSearchCriteria.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerTimeAdjustment.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerTimeAdjustment.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerTimeAdjustments.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesJourneyPlannerTimeAdjustments.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesKnownJourney.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesKnownJourney.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesLine.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesLine.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesLineGroup.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesLineGroup.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesLineModeGroup.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesLineModeGroup.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesLineRouteSection.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesLineRouteSection.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesLineServiceType.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesLineServiceType.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesLineServiceTypeInfo.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesLineServiceTypeInfo.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesLineSpecificServiceType.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesLineSpecificServiceType.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesLineStatus.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesLineStatus.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesMatchedRoute.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesMatchedRoute.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesMatchedRouteSections.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesMatchedRouteSections.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesMatchedStop.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesMatchedStop.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesMessage.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesMessage.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesMode.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesMode.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesNetworkStatus.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesNetworkStatus.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesOrderedRoute.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesOrderedRoute.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesPassengerFlow.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesPassengerFlow.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesPathAttribute.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesPathAttribute.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesPeriod.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesPeriod.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesPlace.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesPlace.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesPlaceCategory.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesPlaceCategory.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesPlacePolygon.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesPlacePolygon.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesPoint.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesPoint.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesPrediction.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesPrediction.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesPredictionTiming.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesPredictionTiming.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesRedirect.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesRedirect.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesRoadCorridor.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesRoadCorridor.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesRoadDisruption.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesRoadDisruption.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesRoadDisruptionImpactArea.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesRoadDisruptionImpactArea.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesRoadDisruptionLine.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesRoadDisruptionLine.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesRoadDisruptionSchedule.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesRoadDisruptionSchedule.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesRoadProject.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesRoadProject.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesRouteSearchMatch.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesRouteSearchMatch.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesRouteSearchResponse.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesRouteSearchResponse.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesRouteSectionNaptanEntrySequence.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesRouteSectionNaptanEntrySequence.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesRouteSequence.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesRouteSequence.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesSchedule.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesSchedule.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesSearchMatch.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesSearchMatch.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesSearchResponse.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesSearchResponse.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesServiceFrequency.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesServiceFrequency.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesStationInterval.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesStationInterval.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesStatusSeverity.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesStatusSeverity.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesStopPoint.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesStopPoint.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesStopPointCategory.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesStopPointCategory.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesStopPointRouteSection.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesStopPointRouteSection.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesStopPointSequence.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesStopPointSequence.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesStopPointsResponse.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesStopPointsResponse.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesStreet.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesStreet.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesStreetSegment.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesStreetSegment.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesTimetable.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesTimetable.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesTimetableResponse.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesTimetableResponse.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesTimetableRoute.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesTimetableRoute.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesTimetablesDisambiguation.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesTimetablesDisambiguation.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesTimetablesDisambiguationOption.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesTimetablesDisambiguationOption.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesTrainLoading.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesTrainLoading.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesTwentyFourHourClockTime.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesTwentyFourHourClockTime.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TflApiPresentationEntitiesValidityPeriod.md">
+        <Link>tfl-csharp-client\docs\TflApiPresentationEntitiesValidityPeriod.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\TravelTimeApi.md">
+        <Link>tfl-csharp-client\docs\TravelTimeApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\docs\VehicleApi.md">
+        <Link>tfl-csharp-client\docs\VehicleApi.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\git_push.sh">
+        <Link>tfl-csharp-client\git_push.sh</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\IO.Swagger.sln">
+        <Link>tfl-csharp-client\IO.Swagger.sln</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\mono_nunit_test.sh">
+        <Link>tfl-csharp-client\mono_nunit_test.sh</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\README.md">
+        <Link>tfl-csharp-client\README.md</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\IO.Swagger.Test.csproj">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\IO.Swagger.Test.csproj</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\IO.Swagger.csproj">
+        <Link>tfl-csharp-client\src\IO.Swagger\IO.Swagger.csproj</Link>
+      </Content>
+      <Content Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\IO.Swagger.nuspec">
+        <Link>tfl-csharp-client\src\IO.Swagger\IO.Swagger.nuspec</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\packages.config">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\packages.config</Link>
+      </None>
+      <None Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\packages.config">
+        <Link>tfl-csharp-client\src\IO.Swagger\packages.config</Link>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\AccidentStatsApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\AccidentStatsApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\AirQualityApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\AirQualityApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\BikePointApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\BikePointApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\CabwiseApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\CabwiseApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\JourneyApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\JourneyApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\LineApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\LineApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\ModeApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\ModeApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\OccupancyApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\OccupancyApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\PlaceApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\PlaceApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\RoadApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\RoadApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\SearchApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\SearchApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\StopPointApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\StopPointApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\TravelTimeApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\TravelTimeApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Api\VehicleApiTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Api\VehicleApiTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\SystemDataSpatialDbGeographyTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\SystemDataSpatialDbGeographyTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\SystemDataSpatialDbGeographyWellKnownValueTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\SystemDataSpatialDbGeographyWellKnownValueTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\SystemObjectTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\SystemObjectTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonApiVersionInfoTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonApiVersionInfoTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonDateRangeNullableTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonDateRangeNullableTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonDateRangeTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonDateRangeTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonGeoPointTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonGeoPointTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonJourneyPlannerJpElevationTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonJourneyPlannerJpElevationTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonPlaceGeoTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonPlaceGeoTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonPostcodeInputTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiCommonPostcodeInputTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesAccidentStatsAccidentDetailTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesAccidentStatsAccidentDetailTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesAccidentStatsAccidentStatsOrderedSummaryTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesAccidentStatsAccidentStatsOrderedSummaryTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesAccidentStatsCasualtyTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesAccidentStatsCasualtyTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesAccidentStatsVehicleTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesAccidentStatsVehicleTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesActiveServiceTypeTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesActiveServiceTypeTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesAdditionalPropertiesTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesAdditionalPropertiesTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesArrivalDepartureTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesArrivalDepartureTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesArrivalDepartureWithLineTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesArrivalDepartureWithLineTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesBayTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesBayTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesBikePointOccupancyTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesBikePointOccupancyTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesCarParkOccupancyTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesCarParkOccupancyTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesChargeConnectorOccupancyTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesChargeConnectorOccupancyTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesCoordinateTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesCoordinateTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesCrowdingTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesCrowdingTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesCycleSuperhighwayTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesCycleSuperhighwayTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesDisruptedPointTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesDisruptedPointTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesDisruptedRouteTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesDisruptedRouteTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesDisruptionTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesDisruptionTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFareBoundsTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFareBoundsTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFareDetailsTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFareDetailsTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFaresModeTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFaresModeTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFaresPeriodTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFaresPeriodTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFaresSectionTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFaresSectionTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFareStationTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFareStationTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFareTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresFareTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresJourneyTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresJourneyTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresPassengerTypeTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresPassengerTypeTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresRecommendationResponseTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresRecommendationResponseTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresRecommendationTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresRecommendationTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresTicketTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresTicketTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresTicketTimeTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresTicketTimeTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresTicketTypeTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesFaresTicketTypeTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesGeoCodeSearchMatchTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesGeoCodeSearchMatchTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesIdentifierTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesIdentifierTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesInstructionStepTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesInstructionStepTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesInstructionTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesInstructionTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesIntervalTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesIntervalTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerFareCaveatTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerFareCaveatTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerFareTapDetailsTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerFareTapDetailsTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerFareTapTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerFareTapTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerFareTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerFareTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerItineraryResultTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerItineraryResultTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerJourneyFareTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerJourneyFareTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerJourneyPlannerCycleHireDockingStationDataTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerJourneyPlannerCycleHireDockingStationDataTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerJourneyTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerJourneyTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerJourneyVectorTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerJourneyVectorTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerLegTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerLegTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerObstacleTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerObstacleTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerPathTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerPathTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerPlannedWorkTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerPlannedWorkTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerRouteOptionTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerRouteOptionTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerSearchCriteriaTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerSearchCriteriaTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerTimeAdjustmentsTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerTimeAdjustmentsTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerTimeAdjustmentTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesJourneyPlannerTimeAdjustmentTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesKnownJourneyTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesKnownJourneyTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineGroupTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineGroupTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineModeGroupTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineModeGroupTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineRouteSectionTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineRouteSectionTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineServiceTypeInfoTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineServiceTypeInfoTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineServiceTypeTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineServiceTypeTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineSpecificServiceTypeTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineSpecificServiceTypeTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineStatusTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineStatusTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesLineTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesMatchedRouteSectionsTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesMatchedRouteSectionsTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesMatchedRouteTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesMatchedRouteTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesMatchedStopTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesMatchedStopTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesMessageTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesMessageTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesModeTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesModeTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesNetworkStatusTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesNetworkStatusTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesOrderedRouteTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesOrderedRouteTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPassengerFlowTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPassengerFlowTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPathAttributeTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPathAttributeTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPeriodTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPeriodTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPlaceCategoryTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPlaceCategoryTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPlacePolygonTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPlacePolygonTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPlaceTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPlaceTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPointTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPointTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPredictionTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPredictionTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPredictionTimingTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesPredictionTimingTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRedirectTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRedirectTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadCorridorTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadCorridorTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadDisruptionImpactAreaTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadDisruptionImpactAreaTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadDisruptionLineTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadDisruptionLineTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadDisruptionScheduleTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadDisruptionScheduleTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadDisruptionTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadDisruptionTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadProjectTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRoadProjectTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRouteSearchMatchTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRouteSearchMatchTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRouteSearchResponseTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRouteSearchResponseTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRouteSectionNaptanEntrySequenceTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRouteSectionNaptanEntrySequenceTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRouteSequenceTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesRouteSequenceTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesScheduleTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesScheduleTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesSearchMatchTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesSearchMatchTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesSearchResponseTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesSearchResponseTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesServiceFrequencyTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesServiceFrequencyTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStationIntervalTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStationIntervalTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStatusSeverityTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStatusSeverityTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStopPointCategoryTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStopPointCategoryTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStopPointRouteSectionTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStopPointRouteSectionTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStopPointSequenceTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStopPointSequenceTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStopPointsResponseTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStopPointsResponseTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStopPointTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStopPointTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStreetSegmentTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStreetSegmentTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStreetTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesStreetTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTimetableResponseTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTimetableResponseTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTimetableRouteTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTimetableRouteTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTimetablesDisambiguationOptionTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTimetablesDisambiguationOptionTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTimetablesDisambiguationTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTimetablesDisambiguationTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTimetableTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTimetableTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTrainLoadingTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTrainLoadingTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTwentyFourHourClockTimeTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesTwentyFourHourClockTimeTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesValidityPeriodTests.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger.Test\Model\TflApiPresentationEntitiesValidityPeriodTests.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\AccidentStatsApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\AccidentStatsApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\AirQualityApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\AirQualityApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\BikePointApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\BikePointApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\CabwiseApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\CabwiseApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\JourneyApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\JourneyApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\LineApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\LineApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\ModeApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\ModeApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\OccupancyApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\OccupancyApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\PlaceApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\PlaceApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\RoadApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\RoadApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\SearchApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\SearchApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\StopPointApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\StopPointApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\TravelTimeApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\TravelTimeApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Api\VehicleApi.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Api\VehicleApi.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Client\ApiClient.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Client\ApiClient.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Client\ApiException.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Client\ApiException.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Client\ApiResponse.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Client\ApiResponse.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Client\Configuration.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Client\Configuration.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Client\ExceptionFactory.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Client\ExceptionFactory.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Client\GlobalConfiguration.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Client\GlobalConfiguration.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Client\IApiAccessor.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Client\IApiAccessor.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Client\IReadableConfiguration.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Client\IReadableConfiguration.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Client\SwaggerDateConverter.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Client\SwaggerDateConverter.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\SystemDataSpatialDbGeography.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\SystemDataSpatialDbGeography.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\SystemDataSpatialDbGeographyWellKnownValue.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\SystemDataSpatialDbGeographyWellKnownValue.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\SystemObject.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\SystemObject.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonApiVersionInfo.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonApiVersionInfo.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonDateRange.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonDateRange.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonDateRangeNullable.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonDateRangeNullable.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonGeoPoint.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonGeoPoint.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonJourneyPlannerJpElevation.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonJourneyPlannerJpElevation.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonPlaceGeo.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonPlaceGeo.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonPostcodeInput.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonPostcodeInput.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAccidentStatsAccidentDetail.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAccidentStatsAccidentDetail.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAccidentStatsAccidentStatsOrderedSummary.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAccidentStatsAccidentStatsOrderedSummary.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAccidentStatsCasualty.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAccidentStatsCasualty.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAccidentStatsVehicle.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAccidentStatsVehicle.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesActiveServiceType.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesActiveServiceType.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAdditionalProperties.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAdditionalProperties.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesArrivalDeparture.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesArrivalDeparture.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesArrivalDepartureWithLine.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesArrivalDepartureWithLine.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesBay.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesBay.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesBikePointOccupancy.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesBikePointOccupancy.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCarParkOccupancy.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCarParkOccupancy.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesChargeConnectorOccupancy.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesChargeConnectorOccupancy.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCoordinate.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCoordinate.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCrowding.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCrowding.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCycleSuperhighway.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCycleSuperhighway.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruptedPoint.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruptedPoint.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruptedRoute.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruptedRoute.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruption.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruption.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFare.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFare.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFareBounds.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFareBounds.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFareDetails.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFareDetails.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFaresMode.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFaresMode.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFaresPeriod.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFaresPeriod.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFaresSection.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFaresSection.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFareStation.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresFareStation.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresJourney.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresJourney.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresPassengerType.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresPassengerType.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresRecommendation.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresRecommendation.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresRecommendationResponse.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresRecommendationResponse.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresTicket.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresTicket.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresTicketTime.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresTicketTime.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresTicketType.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesFaresTicketType.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesGeoCodeSearchMatch.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesGeoCodeSearchMatch.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesIdentifier.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesIdentifier.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInstruction.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInstruction.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInstructionStep.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInstructionStep.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInterval.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInterval.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerFare.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerFare.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerFareCaveat.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerFareCaveat.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerFareTap.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerFareTap.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerFareTapDetails.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerFareTapDetails.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerItineraryResult.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerItineraryResult.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerJourney.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerJourney.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerJourneyFare.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerJourneyFare.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerJourneyPlannerCycleHireDockingStationData.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerJourneyPlannerCycleHireDockingStationData.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerJourneyVector.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerJourneyVector.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerLeg.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerLeg.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerObstacle.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerObstacle.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerPath.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerPath.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerPlannedWork.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerPlannedWork.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerRouteOption.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerRouteOption.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerSearchCriteria.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerSearchCriteria.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerTimeAdjustment.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerTimeAdjustment.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerTimeAdjustments.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesJourneyPlannerTimeAdjustments.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesKnownJourney.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesKnownJourney.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLine.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLine.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineGroup.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineGroup.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineModeGroup.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineModeGroup.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineRouteSection.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineRouteSection.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineServiceType.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineServiceType.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineServiceTypeInfo.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineServiceTypeInfo.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineSpecificServiceType.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineSpecificServiceType.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineStatus.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineStatus.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedRoute.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedRoute.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedRouteSections.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedRouteSections.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedStop.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedStop.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMessage.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMessage.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMode.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMode.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesNetworkStatus.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesNetworkStatus.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesOrderedRoute.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesOrderedRoute.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPassengerFlow.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPassengerFlow.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPathAttribute.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPathAttribute.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPeriod.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPeriod.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlace.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlace.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlaceCategory.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlaceCategory.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlacePolygon.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlacePolygon.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPoint.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPoint.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPrediction.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPrediction.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPredictionTiming.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPredictionTiming.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRedirect.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRedirect.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadCorridor.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadCorridor.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadDisruption.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadDisruption.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadDisruptionImpactArea.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadDisruptionImpactArea.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadDisruptionLine.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadDisruptionLine.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadDisruptionSchedule.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadDisruptionSchedule.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadProject.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRoadProject.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSearchMatch.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSearchMatch.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSearchResponse.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSearchResponse.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSectionNaptanEntrySequence.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSectionNaptanEntrySequence.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSequence.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSequence.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSchedule.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSchedule.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSearchMatch.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSearchMatch.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSearchResponse.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSearchResponse.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesServiceFrequency.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesServiceFrequency.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStationInterval.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStationInterval.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStatusSeverity.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStatusSeverity.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPoint.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPoint.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointCategory.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointCategory.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointRouteSection.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointRouteSection.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointSequence.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointSequence.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointsResponse.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointsResponse.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStreet.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStreet.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStreetSegment.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStreetSegment.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetable.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetable.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetableResponse.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetableResponse.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetableRoute.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetableRoute.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetablesDisambiguation.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetablesDisambiguation.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetablesDisambiguationOption.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetablesDisambiguationOption.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTrainLoading.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTrainLoading.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTwentyFourHourClockTime.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTwentyFourHourClockTime.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesValidityPeriod.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesValidityPeriod.cs</Link>
+      </Compile>
+      <Compile Include="..\TubeChallengeRouter\tfl-csharp-client\src\IO.Swagger\Properties\AssemblyInfo.cs">
+        <Link>tfl-csharp-client\src\IO.Swagger\Properties\AssemblyInfo.cs</Link>
+      </Compile>
+    </ItemGroup>
+
+</Project>
