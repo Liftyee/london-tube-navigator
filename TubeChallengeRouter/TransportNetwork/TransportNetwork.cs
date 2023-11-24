@@ -8,8 +8,8 @@ public interface IRoute
     public Station GetEnd();
     public List<DateTime> GetTimes();
     public DateTime NextOpportunity(DateTime time);
-    public ! LinesUsed();
-    public ! StationsUsed();
+    public List<Line> LinesUsed();
+    public List<Station> StationsUsed();
 }
 
 public class Interchange
@@ -17,21 +17,98 @@ public class Interchange
     
 }
 
-public class TrainRoute(IRoute)
+public class TrainRoute : IRoute
 {
-    
+    public TrainRoute()
+    {
+        throw new NotImplementedException();
+    }
+
+    public TimeSpan GetDuration()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Station GetStart()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Station GetEnd()
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<DateTime> GetTimes()
+    {
+        throw new NotImplementedException();
+    }
+
+    public DateTime NextOpportunity(DateTime time)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Line> LinesUsed()
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Station> StationsUsed()
+    {
+        throw new NotImplementedException();
+    }
 }
 
-public class WalkingRoute(IRoute)
+public class WalkingRoute : IRoute
 {
-    
+    public WalkingRoute()
+    {
+        throw new NotImplementedException();
+    }
+
+    public TimeSpan GetDuration()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Station GetStart()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Station GetEnd()
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<DateTime> GetTimes()
+    {
+        throw new NotImplementedException();
+    }
+
+    public DateTime NextOpportunity(DateTime time)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Line> LinesUsed()
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Station> StationsUsed()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class Station
 {
     public readonly string Name;
-    protected Timetable? _timetable;
-
+    protected Timetable? Timetable;
+    public readonly List<Line> lines;
+    
     public Station(string name)
     {
         this.Name = name;
@@ -39,12 +116,26 @@ public class Station
 
     public Station(StationData config)
     {
-        this.Name = ;
-        this._timetable = 
+        throw new NotImplementedException();
+    }
+
+    public Station(TflApiPresentationEntitiesStopPoint tfldata)
+    {
+        this.Name = tfldata.CommonName;
+
+        foreach (object line in tfldata.Lines) // THIS IS BAD FIX THIS
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
-public struct StationDataconfig
+public class Line
+{
+    
+}
+
+public struct StationData
 {
     public string Name;
     public int ID;
@@ -55,7 +146,7 @@ public struct StationDataconfig
 public class TransportNetwork
 {
     protected List<Station> stations;
-    
+    protected List<Line> lines;
 }
 
 public class Timetable

@@ -37,15 +37,15 @@
           "build/NUnit.props": {}
         }
       },
-      "RestSharp/106.15.0": {
+      "RestSharp/105.1.0": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/RestSharp.dll": {
+          "lib/net452/RestSharp.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.0/RestSharp.dll": {
+          "lib/net452/RestSharp.dll": {
             "related": ".xml"
           }
         }
@@ -109,20 +109,40 @@
         "nunit.nuspec"
       ]
     },
-    "RestSharp/106.15.0": {
-      "sha512": "HM7ohR6AscxedNenrrl93DSZG6hvdnA7O+NHyCl/6ZKTfn8psQ9rRmUpcb9eWr+140vmfxoVemql0bUoeGEW3A==",
+    "RestSharp/105.1.0": {
+      "sha512": "2DRH1cpTOJwesBOwQ0cIhVHUmupbRKt+tdSatfdvndvsawsGMIEgrbq8yv6g3GM1MRVcb37bT8LACVFsqITDmg==",
       "type": "package",
-      "path": "restsharp/106.15.0",
+      "path": "restsharp/105.1.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "lib/net35-client/RestSharp.dll",
+        "lib/net35-client/RestSharp.xml",
+        "lib/net35/RestSharp.dll",
+        "lib/net35/RestSharp.xml",
+        "lib/net4-client/RestSharp.dll",
+        "lib/net4-client/RestSharp.xml",
+        "lib/net4/RestSharp.dll",
+        "lib/net4/RestSharp.xml",
+        "lib/net45-client/RestSharp.dll",
+        "lib/net45-client/RestSharp.xml",
+        "lib/net45/RestSharp.dll",
+        "lib/net45/RestSharp.xml",
+        "lib/net451-client/RestSharp.dll",
+        "lib/net451-client/RestSharp.xml",
+        "lib/net451/RestSharp.dll",
+        "lib/net451/RestSharp.xml",
+        "lib/net452-client/RestSharp.dll",
+        "lib/net452-client/RestSharp.xml",
         "lib/net452/RestSharp.dll",
         "lib/net452/RestSharp.xml",
-        "lib/netstandard2.0/RestSharp.dll",
-        "lib/netstandard2.0/RestSharp.xml",
-        "restsharp.106.15.0.nupkg.sha512",
-        "restsharp.nuspec",
-        "restsharp.png"
+        "lib/sl4/RestSharp.Silverlight.dll",
+        "lib/sl4/RestSharp.Silverlight.xml",
+        "lib/windowsphone8/RestSharp.WindowsPhone.dll",
+        "lib/windowsphone8/RestSharp.WindowsPhone.xml",
+        "readme.txt",
+        "restsharp.105.1.0.nupkg.sha512",
+        "restsharp.nuspec"
       ]
     }
   },
@@ -130,7 +150,7 @@
     "net7.0": [
       "NUnit >= 4.0.0-beta.1",
       "Newtonsoft.Json >= 13.0.3",
-      "RestSharp >= 106.15.0"
+      "RestSharp >= 105.1.0"
     ]
   },
   "packageFolders": {
@@ -180,7 +200,7 @@
           },
           "RestSharp": {
             "target": "Package",
-            "version": "[106.15.0, )"
+            "version": "[105.1.0, )"
           }
         },
         "imports": [
@@ -199,8 +219,20 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.114/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.100/RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'RestSharp 105.1.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net7.0'. This package may not be fully compatible with your project.",
+      "libraryId": "RestSharp",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }

@@ -48,7 +48,7 @@
             },
             "RestSharp": {
               "target": "Package",
-              "version": "[106.15.0, )"
+              "version": "[105.1.0, )"
             }
           },
           "imports": [
@@ -67,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.114/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }

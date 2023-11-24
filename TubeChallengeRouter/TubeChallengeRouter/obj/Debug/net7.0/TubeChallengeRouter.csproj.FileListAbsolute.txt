@@ -18,3 +18,4 @@
 /home/yee/RiderProjects/tube-challenge-router/TubeChallengeRouter/TubeChallengeRouter/bin/Debug/net7.0/nunit.framework.legacy.dll
 /home/yee/RiderProjects/tube-challenge-router/TubeChallengeRouter/TubeChallengeRouter/bin/Debug/net7.0/RestSharp.dll
 /home/yee/RiderProjects/tube-challenge-router/TubeChallengeRouter/TubeChallengeRouter/obj/Debug/net7.0/TubeChallengeRouter.csproj.CopyComplete
+/home/yee/RiderProjects/tube-challenge-router/TubeChallengeRouter/TubeChallengeRouter/obj/Debug/net7.0/TubeChallengeRouter.sourcelink.json

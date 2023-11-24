@@ -1305,4 +1305,10 @@
       </Compile>
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="NUnit" Version="4.0.0-beta.1" />
+      <PackageReference Include="RestSharp" Version="106.15.0" />
+    </ItemGroup>
+
 </Project>
