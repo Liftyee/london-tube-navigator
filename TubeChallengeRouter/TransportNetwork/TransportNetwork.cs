@@ -108,6 +108,7 @@ public class Station
     public readonly string Name;
     protected Timetable? Timetable;
     public readonly List<Line> lines;
+    private OutboundLink links;
     
     public Station(string name)
     {
@@ -127,7 +128,14 @@ public class Station
         {
             throw new NotImplementedException();
         }
+        
+        foreach ()
     }
+}
+
+public class OutboundLink
+{
+    
 }
 
 public class Line
@@ -145,8 +153,14 @@ public struct StationData
 
 public class TransportNetwork
 {
-    protected List<Station> stations;
-    protected List<Line> lines;
+    private Dictionary<int, List<Station>> stations;
+    private Dictionary<int, List<Line>> lines;
+
+    public TransportNetwork(INetworkDataFetcher fetcher)
+    {
+        List<Station> tempStations = fetcher.GetStations();
+        List<Line> tempLines = fetcher.GetLines();
+    }
 }
 
 public class Timetable
@@ -155,3 +169,21 @@ public class Timetable
     // we need to store this data on a per-line basis. 
 }
 
+public interface INetworkDataFetcher
+{
+    public List<Station> GetStations();
+    public List<Line> GetLines();pu
+}
+
+public class CachedDataFetcher : INetworkDataFetcher
+{
+    public List<Station> GetStations()
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Line> GetLines()
+    {
+        throw new NotImplementedException();
+    }
+}
