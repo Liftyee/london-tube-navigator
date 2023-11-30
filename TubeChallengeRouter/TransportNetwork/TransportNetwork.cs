@@ -103,10 +103,10 @@ public class WalkingRoute : IRoute
     }
 }
 
+[Serializable]
 public class Station
 {
     public readonly string Name;
-    protected Timetable? Timetable;
     public readonly List<Line> lines;
     private OutboundLink links;
     public readonly string? NaptanID;
@@ -132,11 +132,15 @@ public class Station
     }
 }
 
+[Serializable]
 public class OutboundLink
 {
-    
+    private Timetable TrainTimes;
+    public readonly Station Destination;
+    public readonly int? length;
 }
 
+[Serializable]
 public class Line
 {
     
@@ -147,13 +151,14 @@ public struct StationData
     public string Name;
     public int ID;
     public string Naptan;
-    public Timetable Timetable;
+    public ITimetable Timetable;
 }
 
+[Serializable]
 public class TransportNetwork
 {
-    private Dictionary<int, List<Station>> stations;
-    private Dictionary<int, List<Line>> lines;
+    private Dictionary<int, Station> _stations;
+    private Dictionary<int, Line> _lines;
 
     public TransportNetwork(INetworkDataFetcher fetcher)
     {
@@ -162,10 +167,9 @@ public class TransportNetwork
     }
 }
 
-public class Timetable
+public interface ITimetable
 {
-    // encode train time data.
-    // we need to store this data on a per-line basis. 
+    
 }
 
 public interface INetworkDataFetcher
