@@ -109,11 +109,7 @@ public class Station
     protected Timetable? Timetable;
     public readonly List<Line> lines;
     private OutboundLink links;
-    
-    public Station(string name)
-    {
-        this.Name = name;
-    }
+    public readonly string? NaptanID;
 
     public Station(StationData config)
     {
@@ -128,8 +124,11 @@ public class Station
         {
             throw new NotImplementedException();
         }
-        
-        foreach ()
+    }
+
+    public Station(string naptan)
+    {
+        this.NaptanID = naptan;
     }
 }
 
@@ -172,7 +171,7 @@ public class Timetable
 public interface INetworkDataFetcher
 {
     public List<Station> GetStations();
-    public List<Line> GetLines();pu
+    public List<Line> GetLines();
 }
 
 public class CachedDataFetcher : INetworkDataFetcher
