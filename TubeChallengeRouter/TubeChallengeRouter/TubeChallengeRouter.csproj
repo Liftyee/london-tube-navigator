@@ -165,6 +165,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\TransportNetwork\TransportNetwork.csproj" />
       <ProjectReference Include="..\TubeRouterGUI\TubeRouterGUI.Gtk\TubeRouterGUI.Gtk.csproj" />
       <ProjectReference Include="..\TubeRouterGUI\TubeRouterGUI.Mac\TubeRouterGUI.Mac.csproj" />
       <ProjectReference Include="..\TubeRouterGUI\TubeRouterGUI\TubeRouterGUI.csproj" />

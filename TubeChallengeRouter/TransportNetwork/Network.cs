@@ -1,4 +1,6 @@
-﻿namespace TransportNetwork;
+﻿using NUnit.Framework.Constraints;
+
+namespace TransportNetwork;
 using IO.Swagger.Model;
 
 public interface IRoute
@@ -106,10 +108,10 @@ public class WalkingRoute : IRoute
 [Serializable]
 public class Station
 {
-    public readonly string Name;
-    public readonly List<Line> lines;
-    private OutboundLink links;
-    public readonly string? NaptanID;
+    public readonly string? Name;
+    public readonly List<Line>? lines;
+    private List<Link>? links;
+    public readonly string NaptanID;
 
     public Station(StationData config)
     {
@@ -130,14 +132,27 @@ public class Station
     {
         this.NaptanID = naptan;
     }
+
+    public void AddLink(Link newLink)
+    {
+        this.links.Add(newLink);
+    } 
 }
 
 [Serializable]
-public class OutboundLink
+public class Link
 {
-    private Timetable TrainTimes;
+    private ITimetable? TrainTimes;
     public readonly Station Destination;
-    public readonly int? length;
+    public readonly Station Origin;
+    public readonly TimeSpan? Duration;
+
+    public Link(Station start, Station end, TimeSpan duration)
+    {
+        this.Destination = end;
+        this.Origin = start;
+        this.Duration = duration;
+    }
 }
 
 [Serializable]
@@ -155,15 +170,29 @@ public struct StationData
 }
 
 [Serializable]
-public class TransportNetwork
+public class Network
 {
-    private Dictionary<int, Station> _stations;
+    private Dictionary<string, Station> _stations;
     private Dictionary<int, Line> _lines;
 
-    public TransportNetwork(INetworkDataFetcher fetcher)
+    public Network(INetworkDataFetcher fetcher)
     {
         List<Station> tempStations = fetcher.GetStations();
         List<Line> tempLines = fetcher.GetLines();
+    }
+
+    public void AddStation(Station stationToAdd)
+    {
+        _stations.Add(stationToAdd.NaptanID, stationToAdd);
+    }
+
+    public void LinkStations(Station startStation, Station endStation, TimeSpan timeBetween, bool directed=false)
+    {
+        startStation.AddLink(new Link(startStation, endStation, timeBetween));
+        if (!directed)
+        {
+            endStation.AddLink(new Link(endStation, startStation, timeBetween));
+        }
     }
 }
 

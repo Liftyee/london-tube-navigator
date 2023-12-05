@@ -3,12 +3,15 @@ using IO.Swagger.Api;
 using IO.Swagger.Client;
 using IO.Swagger.Model;
 using System.Linq;
+using MonoMac.OpenGL;
 using TubeRouterGUI.Gtk;
+using TransportNetwork;
 
 namespace TubeChallengeRouter
 {
     internal class Program
     {
+        private static Network tube;
         private static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
@@ -28,6 +31,22 @@ namespace TubeChallengeRouter
                 Console.WriteLine($"Line {i}: {result[i].Name}");
                 List<TflApiPresentationEntitiesStopPoint> stations = lineApi.LineStopPoints(result[i].Id);
                 Console.WriteLine($"Stations: {string.Join(", ", stations.Select((item, index) => $"{item.CommonName}"))}");
+            }
+        }
+
+        struct LineEdge
+        {
+            public string pointA;
+            public string pointB;
+            public double DurationMins;
+        }
+
+        private static void PopulateNetwork(List<LineEdge> edges)
+        {
+            foreach (LineEdge e in edges)
+            {
+                TimeSpan duration = new TimeSpan(hours:0, Math.Floor(e.DurationMins), )
+                tube.LinkStations(e.pointA, e.pointB, );
             }
         }
     }
