@@ -194,6 +194,11 @@ public class Network
             endStation.AddLink(new Link(endStation, startStation, timeBetween));
         }
     }
+
+    public bool HasStationByID(string ID)
+    {
+        return _stations.Keys.Contains(ID);
+    }
 }
 
 public interface ITimetable

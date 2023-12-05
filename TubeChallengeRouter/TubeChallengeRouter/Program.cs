@@ -45,8 +45,11 @@ namespace TubeChallengeRouter
         {
             foreach (LineEdge e in edges)
             {
-                TimeSpan duration = new TimeSpan(hours:0, Math.Floor(e.DurationMins), )
-                tube.LinkStations(e.pointA, e.pointB, );
+                // convert from decimal minutes into TimeSpan object   
+                TimeSpan duration = new TimeSpan(hours: 0, (int)Math.Floor(e.DurationMins),
+                    (int)Math.Floor((e.DurationMins % 1)*60));
+                
+                tube.LinkStations(new Station(e.pointA), new Station(e.pointB), duration);
             }
         }
     }
