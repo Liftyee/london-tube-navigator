@@ -181,6 +181,11 @@ public class Network
         List<Line> tempLines = fetcher.GetLines();
     }
 
+    public Network()
+    {
+        
+    }
+
     public void AddStation(Station stationToAdd)
     {
         _stations.Add(stationToAdd.NaptanID, stationToAdd);

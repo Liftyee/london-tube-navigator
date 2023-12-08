@@ -1,10 +1,6 @@
-﻿using System;
-using IO.Swagger.Api;
+﻿using IO.Swagger.Api;
 using IO.Swagger.Client;
 using IO.Swagger.Model;
-using System.Linq;
-using MonoMac.OpenGL;
-using TubeRouterGUI.Gtk;
 using TransportNetwork;
 
 namespace TubeChallengeRouter
@@ -15,6 +11,7 @@ namespace TubeChallengeRouter
         private static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            tube = new Network();
             TestAPI();
         }
 
@@ -36,9 +33,16 @@ namespace TubeChallengeRouter
 
         struct LineEdge
         {
-            public string pointA;
-            public string pointB;
-            public double DurationMins;
+            public readonly string PointA;
+            public readonly string PointB;
+            public readonly double DurationMins;
+
+            public LineEdge(string pointA, string pointB, double durationMins)
+            {
+                PointA = pointA;
+                PointB = pointB;
+                DurationMins = durationMins;
+            }
         }
 
         private static void PopulateNetwork(List<LineEdge> edges)
@@ -49,20 +53,34 @@ namespace TubeChallengeRouter
                 TimeSpan duration = new TimeSpan(hours: 0, (int)Math.Floor(e.DurationMins),
                     (int)Math.Floor((e.DurationMins % 1) * 60));
 
-                tube.LinkStations(new Station(e.pointA), new Station(e.pointB), duration);
-
+                tube.LinkStations(new Station(e.PointA), new Station(e.PointB), duration);
             }
+        }
+
+        private static LineEdge EdgeObjectFromDetails(string[] edgeData)
+        {
+            if (edgeData.Length != 3)
+            {
+                throw new ArgumentException(
+                    $"Invalid edge details array: {edgeData.ToString} has {edgeData.Length} items");
+            }
+
+            return new LineEdge(edgeData[0], edgeData[1], System.Convert.ToDouble(edgeData[2]));
         }
 
         private static void ImportLondonTubeData()
         {
             using (StreamReader dataFile = File.OpenText("data.txt"))
             {
-                while (!dataFile.EndOfStream)
+                List<LineEdge> edgeObjects = new();
+                while (!dataFile.EndOfStream) 
                 {
+                    // parse line by line
                     string rawLine = dataFile.ReadLine();
-                    rawLine.Split(" ");
+                    string[] edgeDetails = rawLine.Split(" ");
+                    edgeObjects.Add(EdgeObjectFromDetails(edgeDetails));
                 }
+                PopulateNetwork(edgeObjects);
             }
         }
     }
