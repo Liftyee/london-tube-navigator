@@ -1,4 +1,5 @@
-﻿using NUnit.Framework.Constraints;
+﻿using System.Text;
+using NUnit.Framework.Constraints;
 
 namespace TransportNetwork;
 using IO.Swagger.Model;
@@ -128,15 +129,25 @@ public class Station
         }
     }
 
-    public Station(string naptan)
+    public Station(string naptan) : this()
     {
         this.NaptanID = naptan;
+    }
+
+    private Station()
+    {
+        links = new List<Link>();
     }
 
     public void AddLink(Link newLink)
     {
         this.links.Add(newLink);
     } 
+    
+    public List<Link> GetLinks()
+    {
+        return this.links;
+    }
 }
 
 [Serializable]
@@ -175,7 +186,7 @@ public class Network
     private Dictionary<string, Station> _stations;
     private Dictionary<int, Line> _lines;
 
-    public Network(INetworkDataFetcher fetcher)
+    public Network(INetworkDataFetcher fetcher) : this()
     {
         List<Station> tempStations = fetcher.GetStations();
         List<Line> tempLines = fetcher.GetLines();
@@ -183,7 +194,8 @@ public class Network
 
     public Network()
     {
-        
+        _stations = new Dictionary<string, Station>();
+        _lines = new Dictionary<int, Line>();
     }
 
     public void AddStation(Station stationToAdd)
@@ -200,9 +212,39 @@ public class Network
         }
     }
 
+    public void LinkStations(string startID, string endID, TimeSpan timeBetween, bool directed = false)
+    {
+        Station startObject = _stations[startID];
+        Station endObject = _stations[endID];
+        LinkStations(startObject, endObject, timeBetween, directed);
+    }
+
     public bool HasStationByID(string ID)
     {
         return _stations.Keys.Contains(ID);
+    }
+    
+    public override string ToString()
+    {
+        return $"Network with {_stations.Count} stations and {_lines.Count} lines";
+    }
+
+    public string EnumerateStations()
+    {
+        // output each station and its links
+        StringBuilder output = new StringBuilder();
+        foreach (KeyValuePair<string, Station> station in _stations)
+        {
+            output.Append($"Station {station.Key} has links to: ");
+            foreach (Link link in station.Value.GetLinks())
+            {
+                output.Append($"{link.Destination.Name}, ");
+            }
+
+            output.Append("\n");
+        }
+
+        return output.ToString();
     }
 }
 

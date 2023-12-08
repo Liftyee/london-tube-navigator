@@ -12,7 +12,9 @@ namespace TubeChallengeRouter
         {
             Console.WriteLine("Hello World!");
             tube = new Network();
-            TestAPI();
+            //TestAPI();
+            ImportLondonTubeData();
+            Console.WriteLine(tube.ToString());
         }
 
         private static void TestAPI()
@@ -52,8 +54,18 @@ namespace TubeChallengeRouter
                 // convert from decimal minutes into TimeSpan object   
                 TimeSpan duration = new TimeSpan(hours: 0, (int)Math.Floor(e.DurationMins),
                     (int)Math.Floor((e.DurationMins % 1) * 60));
-
-                tube.LinkStations(new Station(e.PointA), new Station(e.PointB), duration);
+                
+                if (!tube.HasStationByID(e.PointA))
+                {
+                    tube.AddStation(new Station(e.PointA));
+                }
+                
+                if (!tube.HasStationByID(e.PointB))
+                {
+                    tube.AddStation(new Station(e.PointB));
+                }
+                
+                tube.LinkStations(e.PointA, e.PointB, duration);
             }
         }
 
@@ -70,7 +82,7 @@ namespace TubeChallengeRouter
 
         private static void ImportLondonTubeData()
         {
-            using (StreamReader dataFile = File.OpenText("data.txt"))
+            using (StreamReader dataFile = File.OpenText("/home/yee/RiderProjects/tube-challenge-router/tube-timings/data.txt"))
             {
                 List<LineEdge> edgeObjects = new();
                 while (!dataFile.EndOfStream) 
