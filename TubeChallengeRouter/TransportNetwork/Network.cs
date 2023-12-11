@@ -308,6 +308,7 @@ public class TfLModelWrapper : INetworkDataFetcher
 
     public bool PopulateNetworkStructure(ref Network network)
     {
+        #warning "Use https://api.tfl.gov.uk/Line/Piccadilly/Route/Sequence/inbound RouteSequence API to do this!"
         throw new NotImplementedException();
     }
 }
