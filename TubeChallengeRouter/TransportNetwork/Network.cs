@@ -1,5 +1,6 @@
 ﻿using System.Text;
-using NUnit.Framework.Constraints;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
 
 namespace TransportNetwork;
 using IO.Swagger.Model;
@@ -109,44 +110,26 @@ public class WalkingRoute : IRoute
 [Serializable]
 public class Station
 {
-    public readonly string? Name;
-    public readonly List<Line>? lines;
-    private List<Link>? links;
-    public readonly string NaptanID;
+    // some attributes internal so that data fetchers can update values after instantiation
+    internal string? Name;
+    internal List<Line>? Lines;
+    private List<Link> _links;
+    public readonly string NaptanId;
 
-    public Station(StationData config)
+    public Station(string naptan)
     {
-        throw new NotImplementedException();
-    }
-
-    public Station(TflApiPresentationEntitiesStopPoint tfldata)
-    {
-        this.Name = tfldata.CommonName;
-
-        foreach (object line in tfldata.Lines) // THIS IS BAD FIX THIS
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public Station(string naptan) : this()
-    {
-        this.NaptanID = naptan;
-    }
-
-    private Station()
-    {
-        links = new List<Link>();
+        NaptanId = naptan;
+        _links = new List<Link>();
     }
 
     public void AddLink(Link newLink)
     {
-        this.links.Add(newLink);
+        _links.Add(newLink);
     } 
     
     public List<Link> GetLinks()
     {
-        return this.links;
+        return this._links;
     }
 }
 
@@ -157,6 +140,7 @@ public class Link
     public readonly Station Destination;
     public readonly Station Origin;
     public readonly TimeSpan? Duration;
+    internal Line? Line;
 
     public Link(Station start, Station end, TimeSpan duration)
     {
@@ -200,7 +184,7 @@ public class Network
 
     public void AddStation(Station stationToAdd)
     {
-        _stations.Add(stationToAdd.NaptanID, stationToAdd);
+        _stations.Add(stationToAdd.NaptanId, stationToAdd);
     }
 
     public void LinkStations(Station startStation, Station endStation, TimeSpan timeBetween, bool directed=false)
@@ -238,7 +222,7 @@ public class Network
             output.Append($"Station {station.Key} has links to: ");
             foreach (Link link in station.Value.GetLinks())
             {
-                output.Append($"{link.Destination.Name}, ");
+                output.Append($"{link.Destination.NaptanId} ({link.Duration.ToString()}), ");
             }
 
             output.Append("\n");
@@ -257,16 +241,72 @@ public interface INetworkDataFetcher
 {
     public List<Station> GetStations();
     public List<Line> GetLines();
+
+    public bool UpdateStationData(ref Station station);
+    public bool UpdateLineData(ref Line line);
+
+    public bool PopulateNetworkStructure(ref Network network);
 }
 
-public class CachedDataFetcher : INetworkDataFetcher
+public class TfLModelWrapper : INetworkDataFetcher
 {
+    private StopPointApi stationFetcher;
+    private LineApi lineApi;
+    private Dictionary<string, TflApiPresentationEntitiesStopPoint> stationCache;
+    private List<TflApiPresentationEntitiesLine> lineCache;
+    public TfLModelWrapper()
+    {
+        var apiconfig = new Configuration
+        {
+            BasePath = "https://api.tfl.gov.uk"
+        };
+        lineApi = new LineApi(apiconfig);
+        stationFetcher = new StopPointApi(apiconfig);
+        stationCache = new Dictionary<string, TflApiPresentationEntitiesStopPoint>();
+        lineCache = new List<TflApiPresentationEntitiesLine>();
+    }
+
     public List<Station> GetStations()
     {
         throw new NotImplementedException();
     }
 
     public List<Line> GetLines()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool UpdateCaches(List<string> lineNames)
+    {
+        lineCache = lineApi.LineGet(lineNames);
+        foreach (TflApiPresentationEntitiesLine line in lineCache)
+        {
+            List<TflApiPresentationEntitiesStopPoint> linestations = lineApi.LineStopPoints(line.Id);
+            foreach (TflApiPresentationEntitiesStopPoint station in linestations)
+            {
+                stationCache[station.NaptanId] = station;
+            }
+        }
+        return true;
+    }
+
+    public bool UpdateStationData(ref Station station)
+    {
+        TflApiPresentationEntitiesStopPoint result = stationCache[station.NaptanId];
+        
+        station.Name = result.CommonName;
+
+        #warning "Adding line information not supported yet!
+        
+        return true;
+    }
+
+    public bool UpdateLineData(ref Line line)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool PopulateNetworkStructure(ref Network network)
     {
         throw new NotImplementedException();
     }
