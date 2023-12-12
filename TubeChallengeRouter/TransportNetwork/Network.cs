@@ -139,14 +139,38 @@ public class Link
     private ITimetable? TrainTimes;
     public readonly Station Destination;
     public readonly Station Origin;
-    public readonly TimeSpan? Duration;
-    internal Line? Line;
+    internal TimeSpan? Duration { get; private set; }
+    private Line? Line;
+    public bool FullyPopulated;
 
     public Link(Station start, Station end, TimeSpan duration)
     {
         this.Destination = end;
         this.Origin = start;
         this.Duration = duration;
+        this.FullyPopulated = false;
+    }
+    
+    public Link(Station start, Station end)
+    {
+        this.Destination = end;
+        this.Origin = start;
+        this.FullyPopulated = false;
+    }
+
+    internal void SetDuration(TimeSpan duration)
+    {
+        if (this.FullyPopulated)
+        {
+            throw new Exception("Tried to edit an already fully populated link!");
+        }
+
+        this.Duration = duration;
+        if (this.Line is not null)
+        {
+            this.FullyPopulated = true;
+        }
+        #warning "Timetable check not used yet for FullyPopulated!"
     }
 }
 
@@ -196,11 +220,28 @@ public class Network
         }
     }
 
-    public void LinkStations(string startID, string endID, TimeSpan timeBetween, bool directed = false)
+    public void LinkStations(string startId, string endId, TimeSpan timeBetween, bool directed = false)
     {
-        Station startObject = _stations[startID];
-        Station endObject = _stations[endID];
+        Station startObject = _stations[startId];
+        Station endObject = _stations[endId];
         LinkStations(startObject, endObject, timeBetween, directed);
+    }
+    
+    
+    public void TentativeLinkStations(string startId, string endId, bool directed = false)
+    {
+        Station startObject = _stations[startId];
+        Station endObject = _stations[endId];
+        TentativeLinkStations(startObject, endObject, directed);
+    }
+    
+    public void TentativeLinkStations(Station startStation, Station endStation, bool directed=false)
+    {
+        startStation.AddLink(new Link(startStation, endStation));
+        if (!directed)
+        {
+            endStation.AddLink(new Link(endStation, startStation));
+        }
     }
 
     public bool HasStationByID(string ID)
@@ -242,10 +283,10 @@ public interface INetworkDataFetcher
     public List<Station> GetStations();
     public List<Line> GetLines();
 
-    public bool UpdateStationData(ref Station station);
-    public bool UpdateLineData(ref Line line);
+    public void UpdateStationData(ref Station station);
+    public void UpdateLineData(ref Line line);
 
-    public bool PopulateNetworkStructure(ref Network network);
+    public void PopulateNetworkStructure(ref Network network);
 }
 
 public class TfLModelWrapper : INetworkDataFetcher
@@ -290,25 +331,39 @@ public class TfLModelWrapper : INetworkDataFetcher
         return true;
     }
 
-    public bool UpdateStationData(ref Station station)
+    public void UpdateStationData(ref Station station)
     {
         TflApiPresentationEntitiesStopPoint result = stationCache[station.NaptanId];
         
         station.Name = result.CommonName;
 
         #warning "Adding line information not supported yet!
-        
-        return true;
     }
 
-    public bool UpdateLineData(ref Line line)
+    public void UpdateLineData(ref Line line)
     {
         throw new NotImplementedException();
     }
 
-    public bool PopulateNetworkStructure(ref Network network)
+    public void PopulateNetworkStructure(ref Network network)
     {
         #warning "Use https://api.tfl.gov.uk/Line/Piccadilly/Route/Sequence/inbound RouteSequence API to do this!"
-        throw new NotImplementedException();
+        
+        string[] lines = new [] {"bakerloo", "central", "circle", "district", "hammersmith-city", "jubilee", "metropolitan", "northern", "piccadilly", "victoria", "waterloo-city"};
+        foreach (string lineName in lines)
+        {
+            TflApiPresentationEntitiesRouteSequence result = lineApi.LineRouteSequence(lineName, "inbound");
+            List<TflApiPresentationEntitiesOrderedRoute> orderedRoutes = result.OrderedLineRoutes;
+            foreach (TflApiPresentationEntitiesOrderedRoute route in orderedRoutes)
+            {
+                List<string> stationIds = route.NaptanIds;
+                for (int i = 0; i < stationIds.Count - 1; i++)
+                {
+                    string start = stationIds[i];
+                    string end = stationIds[i + 1];
+                    network.TentativeLinkStations(start, end);
+                }
+            }
+        }
     }
 }
