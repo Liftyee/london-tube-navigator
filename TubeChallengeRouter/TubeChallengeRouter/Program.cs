@@ -14,24 +14,37 @@ namespace TubeChallengeRouter
             Console.WriteLine("Hello World!");
             tube = new Network();
             TestAPI();
+            throw new NotImplementedException();
             ImportLondonTubeData();
             Console.WriteLine(tube.ToString());
             Console.WriteLine(tube.EnumerateStations());
         }
-
+        
         private static void TestAPI()
         {
             var apiconfig = new Configuration();
             apiconfig.BasePath = "https://api.tfl.gov.uk";
             var lineApi = new LineApi(apiconfig);
-            List<string> lines = new List<string>{"piccadilly", "northern"};
-            List<TflApiPresentationEntitiesLine> result = lineApi.LineGet(lines);
+
+            Console.WriteLine("Fetching all tube lines...");
+            var rawLines = lineApi.LineGetByMode(new List<string> { "tube" });
             
-            for (int i = 0; i < result.Count; i++)
+            List<string> lineIds = new List<string>();
+            foreach (var l in rawLines)
             {
-                Console.WriteLine($"Line {i}: {result[i].Name}");
-                List<TflApiPresentationEntitiesStopPoint> stations = lineApi.LineStopPoints(result[i].Id);
-                Console.WriteLine($"Stations: {string.Join(", ", stations.Select((item, index) => $"{item.CommonName}"))}");
+                lineIds.Add(l.Id);
+            }
+            Console.WriteLine($"Found lines: {string.Join(", ", lineIds)}");
+            
+            for (int i = 0; i < lineIds.Count; i++)
+            {
+                Console.WriteLine($"Line {i}: {lineIds[i]}");
+                var lineStationSequences = lineApi.LineRouteSequence(lineIds[i],"inbound");
+                Console.WriteLine($"{lineStationSequences.StopPointSequences.Count} station segments found");
+                for (int j = 0; j < lineStationSequences.StopPointSequences.Count; j++)
+                {
+                    Console.WriteLine($"Segment {j}: {lineStationSequences.StopPointSequences[j].StopPoint[0].Name} to {lineStationSequences.StopPointSequences[j].StopPoint.Last().Name}");
+                }
             }
         }
 
