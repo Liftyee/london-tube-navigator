@@ -20,11 +20,8 @@ namespace TubeChallengeRouter
                 .CreateLogger();
             logger.Information("Hello World! Logging is {Description}.","online");
 
-            NetworkFactory tubeFactory = new NetworkFactory(new TfLModelWrapper(logger));
-            //TestAPI();
-            tube = tubeFactory.Generate();
-            logger.Information("Result: {A}",tube.ToString());
-            logger.Debug(tube.EnumerateStations());
+            //GenerateLinearNetwork();
+            TestTubeGen();
         }
         
         private static void TestAPI()
@@ -53,6 +50,23 @@ namespace TubeChallengeRouter
                     logger.Debug($"Segment {j}: {lineStationSequences.StopPointSequences[j].StopPoint[0].Name} to {lineStationSequences.StopPointSequences[j].StopPoint.Last().Name}");
                 }
             }
+        }
+        
+        private static void TestTubeGen()
+        {
+            NetworkFactory tubeFactory = new NetworkFactory(new TfLModelWrapper(logger));
+            //TestAPI();
+            tube = tubeFactory.Generate(NetworkType.Floyd);
+            logger.Information("Result: {A}",tube.ToString());
+            logger.Debug(tube.EnumerateStations());
+        }
+        
+        private static void GenerateLinearNetwork()
+        {
+            NetworkFactory linearFactory = new NetworkFactory(new LinearNetwork(10));
+            tube = linearFactory.Generate(NetworkType.Simple);
+            logger.Information("Result: {A}",tube.ToString());
+            logger.Debug(tube.EnumerateStations());
         }
 
         struct LineEdge

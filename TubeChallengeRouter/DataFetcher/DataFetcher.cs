@@ -6,10 +6,40 @@ using IO.Swagger.Model;
 using Serilog;
 using Serilog.Core;
 using System.Diagnostics;
+using Serilog.Debugging;
 using TransportNetwork;
 
     
 namespace DataFetcher;
+
+public class LinearNetwork : INetworkDataFetcher
+{
+    private int numNodes;
+    public LinearNetwork(int nNodes)
+    {
+        numNodes = nNodes;
+    }
+    public void PopulateNetworkStructure(ref Network network)
+    {
+        for (int i = 0; i < numNodes; i++)
+        {
+            network.AddStationByIdIfNotPresent(i.ToString());
+        }
+
+        for (int i = 0; i < numNodes - 1; i++)
+        {
+            network.LinkStationsPartial(i.ToString(), (i + 1).ToString(), Dir.Inbound);
+            network.LinkStationsPartial((i+1).ToString(), i.ToString(), Dir.Outbound);
+        }
+    }
+}
+
+public class InvalidBranchIDException : Exception
+{
+    public InvalidBranchIDException(string message) : base(message)
+    {
+    }
+}
 
 public class TfLModelWrapper : INetworkDataFetcher
 {
@@ -77,7 +107,7 @@ public class TfLModelWrapper : INetworkDataFetcher
             }
         }
 
-        throw new ArgumentException("Sequence did not contain a segment with given ID!");
+        throw new InvalidBranchIDException("Sequence did not contain a segment with given ID!");
     }
 
     internal TflApiPresentationEntitiesMatchedStop GetFirstStop(TflApiPresentationEntitiesStopPointSequence segment)
@@ -106,7 +136,7 @@ public class TfLModelWrapper : INetworkDataFetcher
                 if (i > 0)
                 {
                     string prevID = segment.StopPoint[i - 1].Id;
-                    network.LinkStationsPartial(prevID, currentID, currentLine, direction);
+                    network.LinkStationsPartial(prevID, currentID, direction, currentLine);
                 }
             }
                 
@@ -121,8 +151,8 @@ public class TfLModelWrapper : INetworkDataFetcher
                     // link the last station of our segment to the first station of the new chain
                     network.AddStationByIdIfNotPresent(lastStationOfCurrentSegment.Id, lastStationOfCurrentSegment.Name);
                     network.AddStationByIdIfNotPresent(firstStationOfNextSegment.Id, firstStationOfNextSegment.Name);
-                    network.LinkStationsPartial(lastStationOfCurrentSegment.Id, firstStationOfNextSegment.Id, currentLine, direction);
-                } catch (ArgumentException ex)
+                    network.LinkStationsPartial(lastStationOfCurrentSegment.Id, firstStationOfNextSegment.Id, direction, currentLine);
+                } catch (InvalidBranchIDException ex)
                 {
                     logger.Warning("Segment list (on line {A}) did not contain a segment with given ID {B}! Search started by segment id {C}",
                         currentLine.Id,

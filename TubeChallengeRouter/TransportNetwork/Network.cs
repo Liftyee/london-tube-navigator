@@ -1,9 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using IO.Swagger.Api;
 using IO.Swagger.Client;
 using Serilog.Debugging;
+using System.Collections.Specialized;
 
 namespace TransportNetwork;
 using IO.Swagger.Model;
@@ -116,13 +118,13 @@ public class Station
     // some attributes internal so that data fetchers can update values after instantiation
     internal string? Name;
     internal List<Line>? Lines;
-    private List<Link> _links;
+    private Dictionary<string, Link> _links;
     public readonly string NaptanId;
 
     public Station(string naptan)
     {
         NaptanId = naptan;
-        _links = new List<Link>();
+        _links = new Dictionary<string, Link>();
     }
     
     public Station(string naptan, string name) : this(naptan)
@@ -132,12 +134,24 @@ public class Station
 
     public void AddLink(Link newLink)
     {
-        _links.Add(newLink);
+        // TODO: combine line and station information for key to prevent error
+        _links.Add(newLink.Destination.NaptanId, newLink);
     } 
     
     public List<Link> GetLinks()
     {
-        return this._links;
+        return this._links.Values.ToList();
+    }
+
+    // TODO: this might get slow if there are lots of links, consider using a dictionary for O(1)
+    public bool HasLink(string destID)
+    {
+        return _links.ContainsKey(destID);
+    }
+
+    public Link GetLinkById(string Id)
+    {
+        return _links[Id];
     }
 }
 
@@ -167,7 +181,7 @@ public class Link
         this.FullyPopulated = false;
     }
     
-    public Link(Station start, Station end, Line line, Dir dir)
+    public Link(Station start, Station end, Line? line, Dir dir)
     {
         this.Destination = end;
         this.Origin = start;
@@ -212,18 +226,31 @@ public struct StationData
     public ITimetable Timetable;
 }
 
+public enum NetworkType
+{
+    Simple,
+    Floyd,
+    Dijkstra
+}
+
 [Serializable]
 public class Network
 {
-    private Dictionary<string, Station> _stations;
-    private Dictionary<int, Line> _lines;
-    private ILogger logger;
+    protected Dictionary<string, Station> _stations;
+    protected Dictionary<int, Line> _lines;
+    protected ILogger logger;
+    protected const int INF_COST = Int32.MaxValue;
     
     public Network()
     {
         //logger = loggerFactory.CreateLogger<Network>();
         _stations = new Dictionary<string, Station>();
         _lines = new Dictionary<int, Line>();
+    }
+
+    public virtual void Initialise()
+    {
+        
     }
 
     public void AddStation(Station stationToAdd)
@@ -246,7 +273,8 @@ public class Network
             this.AddStation(new Station(naptanId, name));
         }
     }
-
+    
+    // TODO: Modify to use Inbound/Outbound
     public void LinkStations(Station startStation, Station endStation, TimeSpan timeBetween, bool directed=false)
     {
         startStation.AddLink(new Link(startStation, endStation, timeBetween));
@@ -263,14 +291,14 @@ public class Network
         LinkStations(startObject, endObject, timeBetween, directed);
     }
     
-    public void LinkStationsPartial(string startId, string endId, Line line, Dir direction)
+    public void LinkStationsPartial(string startId, string endId, Dir direction, Line? line=null)
     {
         Station startObject = _stations[startId];
         Station endObject = _stations[endId];
-        LinkStationsPartial(startObject, endObject, line, direction);
+        LinkStationsPartial(startObject, endObject, direction, line);
     }
     
-    public void LinkStationsPartial(Station startStation, Station endStation, Line line, Dir direction)
+    public void LinkStationsPartial(Station startStation, Station endStation, Dir direction, Line? line)
     {
         startStation.AddLink(new Link(startStation, endStation, line, direction));
     }
@@ -302,6 +330,83 @@ public class Network
 
         return output.ToString();
     }
+
+    public virtual int CostFunction(string startId, string endId)
+    {
+        if (_stations[startId].HasLink(endId))
+        {
+            return (int)_stations[startId].GetLinkById(endId).Duration.Value.TotalMinutes;
+        }
+        else
+        {
+            return INF_COST;
+        }
+    }
+}
+
+public class FloydCostNetwork : Network
+{
+    private Dictionary<string, Dictionary<string, int>> _costMatrix; // format: [start station][end station]
+    public override void Initialise()
+    {
+        PreprocessFloyd();
+    }
+    public override int CostFunction(string startId, string endId)
+    {
+        return _costMatrix[startId][endId];
+    }
+    
+    private void PreprocessFloyd()
+    {
+        logger.Information("Preprocessing Floyd-Warshall weights...");
+        // initialise cost matrix
+        _costMatrix = new Dictionary<string, Dictionary<string, int>>();
+        foreach (string stationID in _stations.Keys)
+        {
+            _costMatrix[stationID] = new Dictionary<string, int>();
+            foreach (string station2ID in _stations.Keys)
+            {
+                if (stationID != station2ID)
+                {
+                    _costMatrix[stationID][station2ID] = INF_COST;
+                }
+                else
+                {
+                    _costMatrix[stationID][station2ID] = 0; // no cost to itself
+                }
+            }
+        }
+        logger.Debug("Cost matrix initialised");
+        
+        // populate cost matrix with links for each station
+        foreach (Station station in _stations.Values)
+        {
+            foreach (Link link in station.GetLinks())
+            {
+                _costMatrix[station.NaptanId][link.Destination.NaptanId] = (int)link.Duration.Value.TotalMinutes;
+            }
+        }
+        logger.Debug("Links populated");
+        
+        Stopwatch timer = new Stopwatch();
+        timer.Start();
+        // run Floyd-Warshall
+        foreach (string k in _stations.Keys)
+        {
+            foreach (string i in _stations.Keys)
+            {
+                foreach (string j in _stations.Keys)
+                {
+                    if (_costMatrix[i][j] > _costMatrix[i][k] + _costMatrix[k][j])
+                    {
+                        _costMatrix[i][j] = _costMatrix[i][k] + _costMatrix[k][j];
+                    }
+                }
+            }
+            logger.Debug("Mid-station {A} processed in {B}ms", k, timer.ElapsedMilliseconds);
+        }
+        logger.Information("Done! Took {A}ms", timer.ElapsedMilliseconds);
+    }
 }
 
 public class NetworkFactory
@@ -312,9 +417,23 @@ public class NetworkFactory
         _dataSource = dataSource;
     }
 
-    public Network Generate()
+    public Network Generate(NetworkType type)
     {
-        Network result = new Network();
+        Network result;
+        switch (type)
+        {
+            case NetworkType.Simple:
+                result = new Network();
+                break;
+            case NetworkType.Floyd:
+                result = new FloydCostNetwork();
+                break;
+            case NetworkType.Dijkstra:
+                throw new NotImplementedException();
+            default:
+                throw new NotImplementedException();
+        }
+        
         _dataSource.PopulateNetworkStructure(ref result);
         return result;
     }
@@ -323,11 +442,11 @@ public class NetworkFactory
 
 public interface INetworkDataFetcher
 {
-    public List<Station> GetStations();
-    public List<Line> GetLinks();
+    //public List<Station> GetStations();
+    //public List<Line> GetLinks();
 
-    public void UpdateStationData(ref Station station);
-    public void UpdateLineData(ref Line line);
+    //public void UpdateStationData(ref Station station);
+    //public void UpdateLineData(ref Line line);
 
     public void PopulateNetworkStructure(ref Network network);
 } 
