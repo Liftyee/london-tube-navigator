@@ -1,10 +1,13 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using IO.Swagger.Api;
 using IO.Swagger.Client;
+using Serilog.Debugging;
 
 namespace TransportNetwork;
 using IO.Swagger.Model;
-
+using Serilog;
 public interface IRoute
 {
     public TimeSpan GetDuration();
@@ -121,6 +124,11 @@ public class Station
         NaptanId = naptan;
         _links = new List<Link>();
     }
+    
+    public Station(string naptan, string name) : this(naptan)
+    {
+        Name = name;
+    }
 
     public void AddLink(Link newLink)
     {
@@ -133,6 +141,12 @@ public class Station
     }
 }
 
+public enum Dir
+{
+    Inbound,
+    Outbound
+}
+
 [Serializable]
 public class Link
 {
@@ -140,22 +154,26 @@ public class Link
     public readonly Station Destination;
     public readonly Station Origin;
     internal TimeSpan? Duration { get; private set; }
-    private Line? Line;
+    internal Line? Line { get; private set; }
     public bool FullyPopulated;
+    public Dir Dir;
 
     public Link(Station start, Station end, TimeSpan duration)
     {
+        throw new NotImplementedException("This constructor not supported!");
         this.Destination = end;
         this.Origin = start;
         this.Duration = duration;
         this.FullyPopulated = false;
     }
     
-    public Link(Station start, Station end)
+    public Link(Station start, Station end, Line line, Dir dir)
     {
         this.Destination = end;
         this.Origin = start;
         this.FullyPopulated = false;
+        this.Line = line;
+        this.Dir = dir;
     }
 
     internal void SetDuration(TimeSpan duration)
@@ -177,7 +195,13 @@ public class Link
 [Serializable]
 public class Line
 {
-    
+    public readonly string Name;
+    public readonly string Id;
+    public Line(string id, string name)
+    {
+        Name = name;
+        Id = id; 
+    }
 }
 
 public struct StationData
@@ -193,15 +217,11 @@ public class Network
 {
     private Dictionary<string, Station> _stations;
     private Dictionary<int, Line> _lines;
-
-    public Network(INetworkDataFetcher fetcher) : this()
-    {
-        List<Station> tempStations = fetcher.GetStations();
-        List<Line> tempLines = fetcher.GetLines();
-    }
-
+    private ILogger logger;
+    
     public Network()
     {
+        //logger = loggerFactory.CreateLogger<Network>();
         _stations = new Dictionary<string, Station>();
         _lines = new Dictionary<int, Line>();
     }
@@ -209,6 +229,22 @@ public class Network
     public void AddStation(Station stationToAdd)
     {
         _stations.Add(stationToAdd.NaptanId, stationToAdd);
+    }
+
+    public void AddStationByIdIfNotPresent(string naptanId)
+    {
+        if (!this.HasStationByID(naptanId))
+        {
+            this.AddStation(new Station(naptanId));
+        }
+    }
+
+    public void AddStationByIdIfNotPresent(string naptanId, string name)
+    {
+        if (!this.HasStationByID(naptanId))
+        {
+            this.AddStation(new Station(naptanId, name));
+        }
     }
 
     public void LinkStations(Station startStation, Station endStation, TimeSpan timeBetween, bool directed=false)
@@ -227,21 +263,16 @@ public class Network
         LinkStations(startObject, endObject, timeBetween, directed);
     }
     
-    
-    public void TentativeLinkStations(string startId, string endId, bool directed = false)
+    public void LinkStationsPartial(string startId, string endId, Line line, Dir direction)
     {
         Station startObject = _stations[startId];
         Station endObject = _stations[endId];
-        TentativeLinkStations(startObject, endObject, directed);
+        LinkStationsPartial(startObject, endObject, line, direction);
     }
     
-    public void TentativeLinkStations(Station startStation, Station endStation, bool directed=false)
+    public void LinkStationsPartial(Station startStation, Station endStation, Line line, Dir direction)
     {
-        startStation.AddLink(new Link(startStation, endStation));
-        if (!directed)
-        {
-            endStation.AddLink(new Link(endStation, startStation));
-        }
+        startStation.AddLink(new Link(startStation, endStation, line, direction));
     }
 
     public bool HasStationByID(string ID)
@@ -263,7 +294,7 @@ public class Network
             output.Append($"Station {station.Key} has links to: ");
             foreach (Link link in station.Value.GetLinks())
             {
-                output.Append($"{link.Destination.NaptanId} ({link.Duration.ToString()}), ");
+                output.Append($"{link.Destination.NaptanId} ({link.Duration.ToString()}) {link.Dir.ToString()}, ");
             }
 
             output.Append("\n");
@@ -273,98 +304,35 @@ public class Network
     }
 }
 
-public interface ITimetable
+public class NetworkFactory
 {
-    
+    private INetworkDataFetcher _dataSource;
+    public NetworkFactory(INetworkDataFetcher dataSource)
+    {
+        _dataSource = dataSource;
+    }
+
+    public Network Generate()
+    {
+        Network result = new Network();
+        _dataSource.PopulateNetworkStructure(ref result);
+        return result;
+    }
 }
+
 
 public interface INetworkDataFetcher
 {
     public List<Station> GetStations();
-    public List<Line> GetLines();
+    public List<Line> GetLinks();
 
     public void UpdateStationData(ref Station station);
     public void UpdateLineData(ref Line line);
 
     public void PopulateNetworkStructure(ref Network network);
-}
+} 
 
-public class TfLModelWrapper : INetworkDataFetcher
+public interface ITimetable
 {
-    private StopPointApi stationFetcher;
-    private LineApi lineApi;
-    private Dictionary<string, TflApiPresentationEntitiesStopPoint> stationCache;
-    private List<TflApiPresentationEntitiesLine> lineCache;
-    public TfLModelWrapper()
-    {
-        var apiconfig = new Configuration
-        {
-            BasePath = "https://api.tfl.gov.uk"
-        };
-        lineApi = new LineApi(apiconfig);
-        stationFetcher = new StopPointApi(apiconfig);
-        stationCache = new Dictionary<string, TflApiPresentationEntitiesStopPoint>();
-        lineCache = new List<TflApiPresentationEntitiesLine>();
-    }
-
-    public List<Station> GetStations()
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Line> GetLines()
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool UpdateCaches(List<string> lineNames)
-    {
-        lineCache = lineApi.LineGet(lineNames);
-        foreach (TflApiPresentationEntitiesLine line in lineCache)
-        {
-            List<TflApiPresentationEntitiesStopPoint> linestations = lineApi.LineStopPoints(line.Id);
-            foreach (TflApiPresentationEntitiesStopPoint station in linestations)
-            {
-                stationCache[station.NaptanId] = station;
-            }
-        }
-        return true;
-    }
-
-    public void UpdateStationData(ref Station station)
-    {
-        TflApiPresentationEntitiesStopPoint result = stationCache[station.NaptanId];
-        
-        station.Name = result.CommonName;
-
-        #warning "Adding line information not supported yet!
-    }
-
-    public void UpdateLineData(ref Line line)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void PopulateNetworkStructure(ref Network network)
-    {
-        #warning "Use https://api.tfl.gov.uk/Line/Piccadilly/Route/Sequence/inbound RouteSequence API to do this!"
-        
-        string[] lines = new [] {"bakerloo", "central", "circle", "district", "hammersmith-city", "jubilee", "metropolitan", "northern", "piccadilly", "victoria", "waterloo-city"};
-        foreach (string lineName in lines)
-        {
-            TflApiPresentationEntitiesRouteSequence result = lineApi.LineRouteSequence(lineName, "inbound");
-            List<TflApiPresentationEntitiesOrderedRoute> orderedRoutes = result.OrderedLineRoutes;
-            foreach (TflApiPresentationEntitiesOrderedRoute route in orderedRoutes)
-            {
-                List<string> stationIds = route.NaptanIds;
-                for (int i = 0; i < stationIds.Count - 1; i++)
-                {
-                    string start = stationIds[i];
-                    string end = stationIds[i + 1];
-                    network.TentativeLinkStations(start, end);
-                }
-                #warning "Need to add line information to the links!"
-            }
-        }
-    }
+    
 }

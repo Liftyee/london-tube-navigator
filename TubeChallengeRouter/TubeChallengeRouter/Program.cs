@@ -1,23 +1,30 @@
-﻿using IO.Swagger.Api;
+﻿using DataFetcher;
+using IO.Swagger.Api;
 using IO.Swagger.Client;
 using IO.Swagger.Model;
 using NUnit.Framework.Constraints;
 using TransportNetwork;
+using Serilog;
 
 namespace TubeChallengeRouter
 {
     internal class Program
     {
         private static Network tube;
+        private static ILogger logger;
         private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            tube = new Network();
-            TestAPI();
-            throw new NotImplementedException();
-            ImportLondonTubeData();
-            Console.WriteLine(tube.ToString());
-            Console.WriteLine(tube.EnumerateStations());
+            logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .CreateLogger();
+            logger.Information("Hello World! Logging is {Description}.","online");
+
+            NetworkFactory tubeFactory = new NetworkFactory(new TfLModelWrapper(logger));
+            //TestAPI();
+            tube = tubeFactory.Generate();
+            logger.Information("Result: {A}",tube.ToString());
+            logger.Debug(tube.EnumerateStations());
         }
         
         private static void TestAPI()
@@ -26,7 +33,7 @@ namespace TubeChallengeRouter
             apiconfig.BasePath = "https://api.tfl.gov.uk";
             var lineApi = new LineApi(apiconfig);
 
-            Console.WriteLine("Fetching all tube lines...");
+            logger.Debug("Fetching all tube lines...");
             var rawLines = lineApi.LineGetByMode(new List<string> { "tube" });
             
             List<string> lineIds = new List<string>();
@@ -34,16 +41,16 @@ namespace TubeChallengeRouter
             {
                 lineIds.Add(l.Id);
             }
-            Console.WriteLine($"Found lines: {string.Join(", ", lineIds)}");
+            logger.Information($"Found lines: {string.Join(", ", lineIds)}");
             
             for (int i = 0; i < lineIds.Count; i++)
             {
-                Console.WriteLine($"Line {i}: {lineIds[i]}");
+                logger.Debug($"Line {i}: {lineIds[i]}");
                 var lineStationSequences = lineApi.LineRouteSequence(lineIds[i],"inbound");
-                Console.WriteLine($"{lineStationSequences.StopPointSequences.Count} station segments found");
+                logger.Debug($"{lineStationSequences.StopPointSequences.Count} station segments found");
                 for (int j = 0; j < lineStationSequences.StopPointSequences.Count; j++)
                 {
-                    Console.WriteLine($"Segment {j}: {lineStationSequences.StopPointSequences[j].StopPoint[0].Name} to {lineStationSequences.StopPointSequences[j].StopPoint.Last().Name}");
+                    logger.Debug($"Segment {j}: {lineStationSequences.StopPointSequences[j].StopPoint[0].Name} to {lineStationSequences.StopPointSequences[j].StopPoint.Last().Name}");
                 }
             }
         }
