@@ -118,13 +118,13 @@ public class Station
     // some attributes internal so that data fetchers can update values after instantiation
     internal string? Name;
     internal List<Line>? Lines;
-    private Dictionary<string, Link> _links;
+    private List<Link> _links;
     public readonly string NaptanId;
 
     public Station(string naptan)
     {
         NaptanId = naptan;
-        _links = new Dictionary<string, Link>();
+        _links = new List<Link>();
     }
     
     public Station(string naptan, string name) : this(naptan)
@@ -134,24 +134,39 @@ public class Station
 
     public void AddLink(Link newLink)
     {
-        // TODO: combine line and station information for key to prevent error
-        _links.Add(newLink.Destination.NaptanId, newLink);
+        _links.Add(newLink);
     } 
     
     public List<Link> GetLinks()
     {
-        return this._links.Values.ToList();
+        return this._links;
     }
 
-    // TODO: this might get slow if there are lots of links, consider using a dictionary for O(1)
+    // NOTE: Can't use a dictionary, because the link destinations are not unique!
     public bool HasLink(string destID)
     {
-        return _links.ContainsKey(destID);
+        foreach (Link link in _links)
+        {
+            if (link.Destination.NaptanId == destID)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Link GetLinkById(string Id)
     {
-        return _links[Id];
+        foreach (Link link in _links)
+        {
+            if (link.Destination.NaptanId == Id)
+            {
+                return link;
+            }
+        }
+
+        throw new Exception($"No link found with ID {Id}");
     }
 }
 
