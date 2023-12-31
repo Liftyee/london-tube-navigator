@@ -203,6 +203,7 @@ public class Link
         this.FullyPopulated = false;
         this.Line = line;
         this.Dir = dir;
+        this.Duration = new TimeSpan(0, 1, 0);
     }
 
     internal void SetDuration(TimeSpan duration)
@@ -256,9 +257,9 @@ public class Network
     protected ILogger logger;
     protected const int INF_COST = Int32.MaxValue;
     
-    public Network()
+    public Network(ILogger logger)
     {
-        //logger = loggerFactory.CreateLogger<Network>();
+        this.logger = logger;
         _stations = new Dictionary<string, Station>();
         _lines = new Dictionary<int, Line>();
     }
@@ -362,6 +363,12 @@ public class Network
 public class FloydCostNetwork : Network
 {
     private Dictionary<string, Dictionary<string, int>> _costMatrix; // format: [start station][end station]
+
+    public FloydCostNetwork(ILogger logger) : base(logger)
+    {
+        
+    }
+    
     public override void Initialise()
     {
         PreprocessFloyd();
@@ -422,6 +429,23 @@ public class FloydCostNetwork : Network
         }
         logger.Information("Done! Took {A}ms", timer.ElapsedMilliseconds);
     }
+    
+    public string EnumerateCostMatrix()
+    {
+        StringBuilder output = new StringBuilder();
+        foreach (string stationID in _stations.Keys)
+        {
+            output.Append($"Station {stationID} has links to: ");
+            foreach (string station2ID in _stations.Keys)
+            {
+                output.Append($"{station2ID} ({_costMatrix[stationID][station2ID]}), ");
+            }
+
+            output.Append("\n");
+        }
+
+        return output.ToString();
+    }
 }
 
 public class NetworkFactory
@@ -432,16 +456,16 @@ public class NetworkFactory
         _dataSource = dataSource;
     }
 
-    public Network Generate(NetworkType type)
+    public Network Generate(NetworkType type, ILogger logger)
     {
         Network result;
         switch (type)
         {
             case NetworkType.Simple:
-                result = new Network();
+                result = new Network(logger);
                 break;
             case NetworkType.Floyd:
-                result = new FloydCostNetwork();
+                result = new FloydCostNetwork(logger);
                 break;
             case NetworkType.Dijkstra:
                 throw new NotImplementedException();

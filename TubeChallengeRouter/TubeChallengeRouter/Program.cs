@@ -5,6 +5,7 @@ using IO.Swagger.Model;
 using NUnit.Framework.Constraints;
 using TransportNetwork;
 using Serilog;
+using DataFetcher;
 
 namespace TubeChallengeRouter
 {
@@ -54,21 +55,21 @@ namespace TubeChallengeRouter
         
         private static void TestTubeGen()
         {
-            NetworkFactory tubeFactory = new NetworkFactory(new TfLModelWrapper(logger));
-            //TestAPI();
-            tube = tubeFactory.Generate(NetworkType.Floyd);
+            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger));
+            tube = tubeFactory.Generate(NetworkType.Floyd, logger);
             logger.Information("Result: {A}",tube.ToString());
-            logger.Debug(tube.EnumerateStations());
+            //logger.Debug(tube.EnumerateStations());
+            tube.Initialise();
         }
         
         private static void GenerateLinearNetwork()
         {
             NetworkFactory linearFactory = new NetworkFactory(new LinearNetwork(10));
-            tube = linearFactory.Generate(NetworkType.Simple);
+            tube = linearFactory.Generate(NetworkType.Simple, logger);
             logger.Information("Result: {A}",tube.ToString());
             logger.Debug(tube.EnumerateStations());
         }
-
+        
         struct LineEdge
         {
             public readonly string PointA;
