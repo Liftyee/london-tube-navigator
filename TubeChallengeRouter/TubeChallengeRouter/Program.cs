@@ -11,7 +11,6 @@ namespace TubeChallengeRouter
 {
     internal class Program
     {
-        private static Network tube;
         private static ILogger logger;
         private static void Main(string[] args)
         {
@@ -21,8 +20,8 @@ namespace TubeChallengeRouter
                 .CreateLogger();
             logger.Information("Hello World! Logging is {Description}.","online");
 
+            TestTubeGen();
             LinearNetworkTestRouting();
-            //TestTubeGen();
         }
         
         private static void TestAPI()
@@ -56,18 +55,26 @@ namespace TubeChallengeRouter
         private static void TestTubeGen()
         {
             NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger));
-            tube = tubeFactory.Generate(NetworkType.Floyd, logger);
+            Network tube = tubeFactory.Generate(NetworkType.Floyd, logger);
             logger.Information("Result: {A}",tube.ToString());
             //logger.Debug(tube.EnumerateStations());
-            tube.Initialise();
         }
         
         private static void LinearNetworkTestRouting()
         {
+            // create a simple linear network of 10 stations
             NetworkFactory linearFactory = new NetworkFactory(new LinearNetwork(10));
-            tube = linearFactory.Generate(NetworkType.Floyd, logger);
-            logger.Information("Result: {A}",tube.ToString());
-            logger.Debug(tube.EnumerateStations());
+            Network net = linearFactory.Generate(NetworkType.Floyd, logger);
+            logger.Information("Result: {A}",net.ToString());
+            // logger.Debug(tube.EnumerateStations());
+            
+            // generate a random route
+            IRoute route = net.GenerateRandomRoute();
+            logger.Debug("Random route: {A} (weight {B})",route.GetPath(), route.GetDuration().ToString());
+
+            int maxIterations = 100;
+            int i = 0;
+            // TODO: add simulated annealing magic
         }
         
         struct LineEdge
@@ -86,7 +93,7 @@ namespace TubeChallengeRouter
             }
         }
 
-        private static void PopulateNetwork(List<LineEdge> edges)
+        private static void PopulateNetwork(List<LineEdge> edges, Network tube)
         {
             foreach (LineEdge e in edges)
             {
@@ -119,7 +126,7 @@ namespace TubeChallengeRouter
             return new LineEdge(edgeData[0], edgeData[1], System.Convert.ToDouble(edgeData[2]), true);
         }
 
-        private static void ImportLondonTubeData()
+        private static void ImportLondonTubeData(Network tube)
         {
             using (StreamReader dataFile = File.OpenText("/home/yee/RiderProjects/tube-challenge-router/tube-timings/data.txt"))
             {
@@ -131,7 +138,7 @@ namespace TubeChallengeRouter
                     string[] edgeDetails = rawLine.Split(" ");
                     edgeObjects.Add(EdgeObjectFromDetails(edgeDetails));
                 }
-                PopulateNetwork(edgeObjects);
+                PopulateNetwork(edgeObjects, tube);
             }
         }
     }

@@ -15,6 +15,8 @@ public interface IRoute
     public TimeSpan GetDuration();
     public string GetStart();
     public string GetEnd();
+
+    public List<string> GetPath();
     // public List<DateTime> GetTimes();
     // public DateTime NextOpportunity(DateTime time);
     // public List<Line> LinesUsed();
@@ -23,8 +25,8 @@ public interface IRoute
 
 public class Route : IRoute
 {
-    public List<string> stationIDs { get; private set; }
-    public TimeSpan Length { get; private set; }
+    private List<string> stationIDs;
+    private TimeSpan Length;
     
     public Route(List<string> stations, TimeSpan length)
     {
@@ -37,7 +39,7 @@ public class Route : IRoute
 
     public TimeSpan GetDuration()
     {
-        throw new NotImplementedException();
+        return Length;
     }
 
     public string GetStart()
@@ -48,6 +50,16 @@ public class Route : IRoute
     public string GetEnd()
     {
         throw new NotImplementedException();
+    }
+
+    public override string ToString()
+    {
+        return $"Route with {stationIDs.Count} stations and length {Length}";
+    }
+
+    public List<string> GetPath()
+    {
+        return stationIDs;
     }
 }
 
@@ -200,6 +212,8 @@ public class Network
     protected Dictionary<int, Line> _lines;
     protected ILogger logger;
     protected const int INF_COST = 1000000000; // use 1 billion instead of MaxValue to avoid overflow issues
+    public int StationCount => _stations.Count;
+    protected int nEdges;
     
     public Network(ILogger logger)
     {
@@ -208,7 +222,7 @@ public class Network
         _lines = new Dictionary<int, Line>();
     }
 
-    public virtual void Initialise()
+    internal virtual void Initialise()
     {
         
     }
@@ -242,6 +256,8 @@ public class Network
         {
             endStation.AddLink(new Link(endStation, startStation, timeBetween));
         }
+
+        nEdges++;
     }
 
     public void LinkStations(string startId, string endId, TimeSpan timeBetween, bool directed = false)
@@ -261,6 +277,7 @@ public class Network
     public void LinkStationsPartial(Station startStation, Station endStation, Dir direction, Line? line)
     {
         startStation.AddLink(new Link(startStation, endStation, line, direction));
+        nEdges++;
     }
 
     public bool HasStationByID(string ID)
@@ -270,7 +287,7 @@ public class Network
     
     public override string ToString()
     {
-        return $"Network with {_stations.Count} stations and {_lines.Count} lines";
+        return $"Network with {_stations.Count} stations and {_lines.Count} lines ({nEdges} directed edges)";
     }
 
     public string EnumerateStations()
@@ -337,7 +354,7 @@ public class FloydCostNetwork : Network
         
     }
     
-    public override void Initialise()
+    internal override void Initialise()
     {
         PreprocessFloyd();
     }
@@ -375,7 +392,6 @@ public class FloydCostNetwork : Network
             foreach (Link link in station.GetLinks())
             {
                 _costMatrix[station.NaptanId][link.Destination.NaptanId] = (int)link.Duration.Value.TotalMinutes;
-                logger.Debug("Setting weight from {A} to {B} to {C}", station.NaptanId, link.Destination.NaptanId, (int)link.Duration.Value.TotalMinutes);
             }
         }
         logger.Debug("Links populated");
@@ -406,8 +422,14 @@ public class FloydCostNetwork : Network
                     nIterations++;
                 }
             }
-            logger.Debug("Mid-station {A} processed in {B}ms", k, timer.ElapsedMilliseconds);
         }
+
+        // only print the cost matrix into debug if it's small enough
+        if (_stations.Count <= 10)
+        {
+            logger.Debug(EnumerateCostMatrix());
+        }
+        
         logger.Information("Done! Took {A}ms ({B} iterations)", timer.ElapsedMilliseconds, nIterations);
     }
     
@@ -416,7 +438,7 @@ public class FloydCostNetwork : Network
         StringBuilder output = new StringBuilder();
         foreach (string stationID in _stations.Keys)
         {
-            output.Append($"Station {stationID} has links to: ");
+            output.Append($"Station {stationID} has cost matrix: ");
             foreach (string station2ID in _stations.Keys)
             {
                 output.Append($"{station2ID} ({_costMatrix[stationID][station2ID]}), ");
@@ -455,6 +477,7 @@ public class NetworkFactory
         }
         
         _dataSource.PopulateNetworkStructure(ref result);
+        result.Initialise();
         return result;
     }
 }
