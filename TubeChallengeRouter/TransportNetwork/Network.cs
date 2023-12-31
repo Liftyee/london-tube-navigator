@@ -169,7 +169,7 @@ public class Network
     protected Dictionary<string, Station> _stations;
     protected Dictionary<int, Line> _lines;
     protected ILogger logger;
-    protected const int INF_COST = Int32.MaxValue;
+    protected const int INF_COST = int.MaxValue;
     
     public Network(ILogger logger)
     {
@@ -295,6 +295,7 @@ public class FloydCostNetwork : Network
     private void PreprocessFloyd()
     {
         logger.Information("Preprocessing Floyd-Warshall weights...");
+        
         // initialise cost matrix
         _costMatrix = new Dictionary<string, Dictionary<string, int>>();
         foreach (string stationID in _stations.Keys)
@@ -308,18 +309,19 @@ public class FloydCostNetwork : Network
                 }
                 else
                 {
-                    _costMatrix[stationID][station2ID] = 0; // no cost to itself
+                    _costMatrix[stationID][station2ID] = 0; // station has no cost to itself
                 }
             }
         }
         logger.Debug("Cost matrix initialised");
         
-        // populate cost matrix with links for each station
+        // populate cost matrix with weights of links for each station
         foreach (Station station in _stations.Values)
         {
             foreach (Link link in station.GetLinks())
             {
                 _costMatrix[station.NaptanId][link.Destination.NaptanId] = (int)link.Duration.Value.TotalMinutes;
+                logger.Debug("Setting weight from {A} to {B} to {C}", station.NaptanId, link.Destination.NaptanId, (int)link.Duration.Value.TotalMinutes);
             }
         }
         logger.Debug("Links populated");
@@ -336,9 +338,29 @@ public class FloydCostNetwork : Network
             {
                 foreach (string j in _stations.Keys)
                 {
-                    if (_costMatrix[i][j] > _costMatrix[i][k] + _costMatrix[k][j])
+                    // if (_costMatrix[i][j] < 0)
+                    // {
+                    //     throw new Exception(_costMatrix[i][j].ToString());
+                    // }
+                    //
+                    // if (_costMatrix[i][k] < 0)
+                    // {
+                    //     throw new Exception(_costMatrix[i][k].ToString());
+                    // }
+                    //
+                    // if (_costMatrix[k][j] < 0)
+                    // {
+                    //     throw new Exception(_costMatrix[k][j].ToString());
+                    // }
+                    
+                    if (_costMatrix[i][j] > (_costMatrix[i][k] + _costMatrix[k][j]))
                     {
                         _costMatrix[i][j] = _costMatrix[i][k] + _costMatrix[k][j];
+                        if (_costMatrix[i][j] < 0)
+                        {
+                            logger.Fatal("Tried to set negative cost between {A} and {B} ({C})", i, j, _costMatrix[i][j]);
+                            throw new OverflowException($"Overflow when calculating cost between {i} and {j} via {k}! {_costMatrix[i][j]}");
+                        }
                     }
 
                     nIterations++;
@@ -346,6 +368,7 @@ public class FloydCostNetwork : Network
             }
             logger.Debug("Mid-station {A} processed in {B}ms", k, timer.ElapsedMilliseconds);
         }
+        logger.Debug(EnumerateCostMatrix());
         logger.Information("Done! Took {A}ms ({B} iterations)", timer.ElapsedMilliseconds, nIterations);
     }
     
