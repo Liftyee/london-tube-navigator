@@ -169,7 +169,7 @@ public class Network
     protected Dictionary<string, Station> _stations;
     protected Dictionary<int, Line> _lines;
     protected ILogger logger;
-    protected const int INF_COST = int.MaxValue;
+    protected const int INF_COST = 1000000000; // use 1 billion instead of MaxValue to avoid overflow issues
     
     public Network(ILogger logger)
     {
@@ -338,21 +338,7 @@ public class FloydCostNetwork : Network
             {
                 foreach (string j in _stations.Keys)
                 {
-                    // if (_costMatrix[i][j] < 0)
-                    // {
-                    //     throw new Exception(_costMatrix[i][j].ToString());
-                    // }
-                    //
-                    // if (_costMatrix[i][k] < 0)
-                    // {
-                    //     throw new Exception(_costMatrix[i][k].ToString());
-                    // }
-                    //
-                    // if (_costMatrix[k][j] < 0)
-                    // {
-                    //     throw new Exception(_costMatrix[k][j].ToString());
-                    // }
-                    
+                    // NOTE: the right side of this comparison is prone to overflowing!
                     if (_costMatrix[i][j] > (_costMatrix[i][k] + _costMatrix[k][j]))
                     {
                         _costMatrix[i][j] = _costMatrix[i][k] + _costMatrix[k][j];
@@ -368,7 +354,6 @@ public class FloydCostNetwork : Network
             }
             logger.Debug("Mid-station {A} processed in {B}ms", k, timer.ElapsedMilliseconds);
         }
-        logger.Debug(EnumerateCostMatrix());
         logger.Information("Done! Took {A}ms ({B} iterations)", timer.ElapsedMilliseconds, nIterations);
     }
     
