@@ -13,12 +13,42 @@ using Serilog;
 public interface IRoute
 {
     public TimeSpan GetDuration();
-    public Station GetStart();
-    public Station GetEnd();
-    public List<DateTime> GetTimes();
-    public DateTime NextOpportunity(DateTime time);
-    public List<Line> LinesUsed();
-    public List<Station> StationsUsed();
+    public string GetStart();
+    public string GetEnd();
+    // public List<DateTime> GetTimes();
+    // public DateTime NextOpportunity(DateTime time);
+    // public List<Line> LinesUsed();
+    // public List<Station> StationsUsed();
+}
+
+public class Route : IRoute
+{
+    public List<string> stationIDs { get; private set; }
+    public TimeSpan Length { get; private set; }
+    
+    public Route(List<string> stations, TimeSpan length)
+    {
+        stationIDs = stations;
+        Length = length;
+    }
+
+    public Route(List<string> stations, int minutes) : this(stations, new TimeSpan(0, minutes, 0))
+    { }
+
+    public TimeSpan GetDuration()
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetStart()
+    {
+        throw new NotImplementedException();
+    }
+
+    public string GetEnd()
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class Interchange
@@ -271,6 +301,30 @@ public class Network
         {
             return INF_COST;
         }
+    }
+
+    // generate random route through all stations
+    public virtual IRoute GenerateRandomRoute()
+    {
+        List<string> stationIDs = new List<string>(); 
+        HashSet<string> visitedIDs = new HashSet<string>();
+        int cost = 0;
+        
+        while (visitedIDs.Count < _stations.Count)
+        {
+            string nextID = _stations.Keys.ElementAt(new Random().Next(_stations.Count));
+            if (!visitedIDs.Contains(nextID))
+            {
+                stationIDs.Add(nextID);
+                visitedIDs.Add(nextID);
+                if (visitedIDs.Count > 1)
+                {
+                    cost += CostFunction(stationIDs[^2], stationIDs[^1]);
+                }
+            }
+        }
+
+        return new Route(stationIDs, cost);
     }
 }
 

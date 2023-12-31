@@ -21,8 +21,8 @@ namespace TubeChallengeRouter
                 .CreateLogger();
             logger.Information("Hello World! Logging is {Description}.","online");
 
-            //GenerateLinearNetwork();
-            TestTubeGen();
+            LinearNetworkTestRouting();
+            //TestTubeGen();
         }
         
         private static void TestAPI()
@@ -62,10 +62,10 @@ namespace TubeChallengeRouter
             tube.Initialise();
         }
         
-        private static void GenerateLinearNetwork()
+        private static void LinearNetworkTestRouting()
         {
             NetworkFactory linearFactory = new NetworkFactory(new LinearNetwork(10));
-            tube = linearFactory.Generate(NetworkType.Simple, logger);
+            tube = linearFactory.Generate(NetworkType.Floyd, logger);
             logger.Information("Result: {A}",tube.ToString());
             logger.Debug(tube.EnumerateStations());
         }
