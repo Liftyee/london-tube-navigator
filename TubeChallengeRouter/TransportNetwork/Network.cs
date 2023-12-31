@@ -26,92 +26,6 @@ public class Interchange
     
 }
 
-public class TrainRoute : IRoute
-{
-    public TrainRoute()
-    {
-        throw new NotImplementedException();
-    }
-
-    public TimeSpan GetDuration()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Station GetStart()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Station GetEnd()
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<DateTime> GetTimes()
-    {
-        throw new NotImplementedException();
-    }
-
-    public DateTime NextOpportunity(DateTime time)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Line> LinesUsed()
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Station> StationsUsed()
-    {
-        throw new NotImplementedException();
-    }
-}
-
-public class WalkingRoute : IRoute
-{
-    public WalkingRoute()
-    {
-        throw new NotImplementedException();
-    }
-
-    public TimeSpan GetDuration()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Station GetStart()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Station GetEnd()
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<DateTime> GetTimes()
-    {
-        throw new NotImplementedException();
-    }
-
-    public DateTime NextOpportunity(DateTime time)
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Line> LinesUsed()
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<Station> StationsUsed()
-    {
-        throw new NotImplementedException();
-    }
-}
-
 [Serializable]
 public class Station
 {
@@ -410,8 +324,11 @@ public class FloydCostNetwork : Network
         }
         logger.Debug("Links populated");
         
+        // track algo performance
         Stopwatch timer = new Stopwatch();
         timer.Start();
+        int nIterations = 0;
+        
         // run Floyd-Warshall
         foreach (string k in _stations.Keys)
         {
@@ -423,11 +340,13 @@ public class FloydCostNetwork : Network
                     {
                         _costMatrix[i][j] = _costMatrix[i][k] + _costMatrix[k][j];
                     }
+
+                    nIterations++;
                 }
             }
             logger.Debug("Mid-station {A} processed in {B}ms", k, timer.ElapsedMilliseconds);
         }
-        logger.Information("Done! Took {A}ms", timer.ElapsedMilliseconds);
+        logger.Information("Done! Took {A}ms ({B} iterations)", timer.ElapsedMilliseconds, nIterations);
     }
     
     public string EnumerateCostMatrix()
