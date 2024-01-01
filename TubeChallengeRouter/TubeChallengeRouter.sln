@@ -4,8 +4,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TubeChallengeRouter", "Tube
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportNetwork", "TransportNetwork\TransportNetwork.csproj", "{0CA73BF5-468A-4154-BB93-E97B3634DEBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalCacher", "LocalCacher\LocalCacher.csproj", "{A1A3B442-0EB7-41F2-BCB4-16D98E6861BE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TubeRouterGUI", "TubeRouterGUI\TubeRouterGUI\TubeRouterGUI.csproj", "{DE424DBC-10F9-429F-B4AC-B456D5A56A46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TubeRouterGUI.Gtk", "TubeRouterGUI\TubeRouterGUI.Gtk\TubeRouterGUI.Gtk.csproj", "{4ED04ED0-EA1B-4CEF-8DDD-41447CFC7C35}"
@@ -15,6 +13,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TubeRouterGUI.Wpf", "TubeRouterGUI\TubeRouterGUI.Wpf\TubeRouterGUI.Wpf.csproj", "{5A9C22FB-F985-4E77-8A63-2A2A0DE52A1B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataFetcher", "DataFetcher\DataFetcher.csproj", "{3C0C820D-F37C-45ED-82FB-C72B4633DF90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RouteSolver", "RouteSolver\RouteSolver.csproj", "{3D842669-DFCF-4CF6-A70B-DC528B7598FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +30,6 @@ Global
 		{0CA73BF5-468A-4154-BB93-E97B3634DEBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CA73BF5-468A-4154-BB93-E97B3634DEBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CA73BF5-468A-4154-BB93-E97B3634DEBE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1A3B442-0EB7-41F2-BCB4-16D98E6861BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1A3B442-0EB7-41F2-BCB4-16D98E6861BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1A3B442-0EB7-41F2-BCB4-16D98E6861BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1A3B442-0EB7-41F2-BCB4-16D98E6861BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DE424DBC-10F9-429F-B4AC-B456D5A56A46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DE424DBC-10F9-429F-B4AC-B456D5A56A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE424DBC-10F9-429F-B4AC-B456D5A56A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -54,5 +50,9 @@ Global
 		{3C0C820D-F37C-45ED-82FB-C72B4633DF90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C0C820D-F37C-45ED-82FB-C72B4633DF90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C0C820D-F37C-45ED-82FB-C72B4633DF90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D842669-DFCF-4CF6-A70B-DC528B7598FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D842669-DFCF-4CF6-A70B-DC528B7598FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D842669-DFCF-4CF6-A70B-DC528B7598FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D842669-DFCF-4CF6-A70B-DC528B7598FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
