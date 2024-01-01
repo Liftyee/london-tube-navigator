@@ -122,7 +122,7 @@ public class Network
         }
         else
         {
-            return INF_COST;
+            throw new ArgumentException("Simple network doesn't support cost function for non-linked stations (use overrides)");
         }
     }
 
@@ -148,5 +148,18 @@ public class Network
         }
 
         return new Route(stationIDs, cost);
+    }
+
+    // TODO: Put the indexing behaviour outside of the Route class?
+    public virtual int CostFunction(IRoute route)
+    {
+        int cost = 0;
+        for (int i = 0; i < route.NumStations() - 1; i++)
+        {
+            route.SetIndex(i);
+            cost += CostFunction(route.GetCurrentStation(), route.GetNextStation());
+        }
+
+        return cost;
     }
 }

@@ -1,4 +1,5 @@
-﻿using DataFetcher;
+﻿using System.Diagnostics;
+using DataFetcher;
 using IO.Swagger.Api;
 using IO.Swagger.Client;
 using IO.Swagger.Model;
@@ -70,8 +71,9 @@ namespace TubeChallengeRouter
             
             // generate a random route
             IRoute route = net.GenerateRandomRoute();
-            logger.Debug("Random route: {A} (weight {B})",route.GetPath(), route.GetDuration().ToString());
+            logger.Debug("Random route: {A} (weight {B})",route.ToString(), route.Duration().ToString());
 
+            Debug.Assert(route.Duration().TotalMinutes == net.CostFunction(route));
             int maxIterations = 100;
             int i = 0;
             // TODO: add simulated annealing magic
