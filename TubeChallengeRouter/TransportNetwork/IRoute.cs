@@ -16,5 +16,6 @@ public interface IRoute
     public string GetPreviousStation();
     public string GetNextStation();
     public void GoToStart();
-    public int NumStations();
+    public int Count();
+    public void Swap(int a, int b);
 }

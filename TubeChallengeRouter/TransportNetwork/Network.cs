@@ -154,7 +154,7 @@ public class Network
     public virtual int CostFunction(IRoute route)
     {
         int cost = 0;
-        for (int i = 0; i < route.NumStations() - 1; i++)
+        for (int i = 0; i < route.Count() - 1; i++)
         {
             route.SetIndex(i);
             cost += CostFunction(route.GetCurrentStation(), route.GetNextStation());

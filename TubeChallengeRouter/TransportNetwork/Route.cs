@@ -77,8 +77,15 @@ public class Route : IRoute
         pointer = 0;
     }
     
-    public int NumStations()
+    public int Count()
     {
         return stationIDs.Count;
+    }
+
+    public void Swap(int idxA, int idxB)
+    {
+        string temp = stationIDs[idxA];
+        stationIDs[idxA] = stationIDs[idxB];
+        stationIDs[idxB] = temp;
     }
 }

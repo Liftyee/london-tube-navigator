@@ -71,12 +71,71 @@ namespace TubeChallengeRouter
             
             // generate a random route
             IRoute route = net.GenerateRandomRoute();
-            logger.Debug("Random route: {A} (weight {B})",route.ToString(), route.Duration().ToString());
+            logger.Debug("Random route: {A}",route.ToString());
 
             Debug.Assert(route.Duration().TotalMinutes == net.CostFunction(route));
-            int maxIterations = 100;
-            int i = 0;
+            
+            const int tempStepIterations = 100;
+            const int maxIterations = 10000;
+            const double coolDownFactor = 0.9;
+            const int noChangeThreshold = 100;
+            double Temperature = 10000;
+            int randomA, randomB, oldCost, newCost;
+            int loopsSinceLastAccept = 0;
+            var randomGenerator = new Random();
             // TODO: add simulated annealing magic
+            for (int i = 1; i < maxIterations; i++)
+            {
+                // pick a random pair of stations to swap
+                do
+                {
+                    randomA = randomGenerator.Next(0, route.Count());
+                    randomB = randomGenerator.Next(0, route.Count());
+                } while (randomA == randomB);
+
+                oldCost = net.CostFunction(route);
+                route.Swap(randomA, randomB);
+                newCost = net.CostFunction(route);
+
+                if (newCost < oldCost)
+                {
+                    // accept the change
+                    loopsSinceLastAccept = 0;
+                }
+                else
+                {
+                    // accept the change with probability e^(-delta/T)
+                    double delta = oldCost - newCost;
+                    double probability = Math.Exp(delta / Temperature);
+                    if (randomGenerator.NextDouble() < probability)
+                    {
+                        loopsSinceLastAccept = 0;
+                    }
+                    else
+                    {
+                        // reject the change (swap back)
+                        route.Swap(randomA, randomB);
+                        loopsSinceLastAccept++;
+                    }
+                }
+                
+                // cool down every tempStepIterations cycles
+                if (i % tempStepIterations == 0)
+                {
+                    Temperature *= coolDownFactor;
+                    
+                    logger.Debug("Cooled down to {A}",Temperature);
+                    logger.Debug("Current route: {A}",route.ToString());
+                }
+                
+                // if we haven't changed anything for a while then we're probably done
+                if (loopsSinceLastAccept > noChangeThreshold)
+                {
+                    logger.Debug("No change for {A} iterations, stopping annealing",loopsSinceLastAccept);
+                    break;
+                }
+            }
+            logger.Debug("Final route: {A}",route.ToString());
         }
         
         struct LineEdge
