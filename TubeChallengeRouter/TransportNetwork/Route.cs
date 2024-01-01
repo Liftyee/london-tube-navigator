@@ -88,4 +88,9 @@ public class Route : IRoute
         stationIDs[idxA] = stationIDs[idxB];
         stationIDs[idxB] = temp;
     }
+
+    public void UpdateLength(int newLength)
+    {
+        Length = new TimeSpan(0, newLength, 0);
+    }
 }

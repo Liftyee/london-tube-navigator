@@ -83,7 +83,7 @@ namespace TubeChallengeRouter
             int randomA, randomB, oldCost, newCost;
             int loopsSinceLastAccept = 0;
             var randomGenerator = new Random();
-            // TODO: add simulated annealing magic
+
             for (int i = 1; i < maxIterations; i++)
             {
                 // pick a random pair of stations to swap
@@ -101,6 +101,7 @@ namespace TubeChallengeRouter
                 {
                     // accept the change
                     loopsSinceLastAccept = 0;
+                    route.UpdateLength(newCost);
                 }
                 else
                 {
@@ -110,6 +111,7 @@ namespace TubeChallengeRouter
                     if (randomGenerator.NextDouble() < probability)
                     {
                         loopsSinceLastAccept = 0;
+                        route.UpdateLength(newCost);
                     }
                     else
                     {

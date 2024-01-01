@@ -18,4 +18,5 @@ public interface IRoute
     public void GoToStart();
     public int Count();
     public void Swap(int a, int b);
+    public void UpdateLength(int newLength);
 }
