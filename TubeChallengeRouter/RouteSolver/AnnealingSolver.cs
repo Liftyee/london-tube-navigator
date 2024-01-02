@@ -34,7 +34,7 @@ public class AnnealingSolver : ISolver
         }
         
         const int tempStepIterations = 1000;
-        const int maxIterations = 1000000;
+        const int maxIterations = 2000000;
         const double coolDownFactor = 0.99;
         const int noChangeThreshold = 10000;
         double Temperature = 1000;
