@@ -60,6 +60,5 @@ public class OrderingTests
         _minQueue.Insert(3);
         _minQueue.Insert(2);
         _minQueue.Insert(3);
-        Assert.Pass();
     }
 }
