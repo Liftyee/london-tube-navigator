@@ -26,15 +26,6 @@ public class Link
     internal Line? Line { get; private set; }
     public bool FullyPopulated;
     public Dir Dir;
-
-    public Link(Station start, Station end, TimeSpan duration)
-    {
-        throw new NotImplementedException("This constructor not supported!");
-        this.Destination = end;
-        this.Origin = start;
-        this.Duration = duration;
-        this.FullyPopulated = false;
-    }
     
     public Link(Station start, Station end, Line? line, Dir dir)
     {

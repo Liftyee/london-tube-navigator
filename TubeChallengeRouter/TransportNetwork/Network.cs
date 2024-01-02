@@ -54,23 +54,14 @@ public class Network
         }
     }
     
-    // TODO: Modify to use Inbound/Outbound
+    [Obsolete("Use LinkStationsPartial instead", true)]
     public void LinkStations(Station startStation, Station endStation, TimeSpan timeBetween, bool directed=false)
     {
-        startStation.AddLink(new Link(startStation, endStation, timeBetween));
-        if (!directed)
-        {
-            endStation.AddLink(new Link(endStation, startStation, timeBetween));
-        }
-
-        nEdges++;
     }
 
+    [Obsolete("Use LinkStationsPartial instead", true)]
     public void LinkStations(string startId, string endId, TimeSpan timeBetween, bool directed = false)
     {
-        Station startObject = _stations[startId];
-        Station endObject = _stations[endId];
-        LinkStations(startObject, endObject, timeBetween, directed);
     }
     
     public void LinkStationsPartial(string startId, string endId, Dir direction, Line? line=null)
