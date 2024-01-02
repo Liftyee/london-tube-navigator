@@ -102,7 +102,7 @@ public class TflModelWrapper : INetworkDataFetcher
             for (int i = 0; i < segment.StopPoint.Count; i++)
             {
                 string currentID = segment.StopPoint[i].Id;
-                network.AddStationByIdIfNotPresent(currentID);
+                network.AddStationByIdIfNotPresent(currentID, segment.StopPoint[i].Name);
                     
                 // link the previous station (if it exists) to the current station, in an ordered way
                 if (i > 0)
@@ -113,6 +113,7 @@ public class TflModelWrapper : INetworkDataFetcher
             }
                 
             // we need to link this route segment to its next ones if present
+            // TODO: actually not needed since the ends of route segments overlap
             foreach (int id in segment.NextBranchIds)
             {
                 var lastStationOfCurrentSegment = GetLastStop(segment);

@@ -163,4 +163,17 @@ public class Network
 
         return cost;
     }
+
+    // convert route naptan IDs into a string for readability
+    public string RouteToStringStationSeq(IRoute route)
+    {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < route.Count(); i++)
+        {
+            route.SetIndex(i);
+            output.Append($"{_stations[route.GetCurrentStation()].Name.Replace(" Underground Station", "")}, ");
+        }
+
+        return output.ToString();
+    }
 }

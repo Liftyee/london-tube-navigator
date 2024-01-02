@@ -65,6 +65,7 @@ namespace TubeChallengeRouter
 
             ISolver solver = new AnnealingSolver(logger);
             IRoute route = solver.Solve(tube);
+            logger.Information("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration());
         }
         
         private static void LinearNetworkTestRouting()
