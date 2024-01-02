@@ -87,7 +87,7 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
 
     private bool OutOfOrder(T node1, T node2)
     {
-        if (_priority == Priority.Smallest)
+        if (_priority == Priority.Largest)
         {
             return node1.CompareTo(node2) > 0;
         }
