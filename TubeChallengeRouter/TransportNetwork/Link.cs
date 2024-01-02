@@ -1,3 +1,5 @@
+using System.Security;
+
 namespace TransportNetwork;
 
 public enum Dir
@@ -24,55 +26,57 @@ public class Link
     public readonly Station Origin;
     internal TimeSpan? Duration { get; private set; }
     public Line? Line { get; private set; }
-    public bool FullyPopulated;
-    public Dir Dir;
+    public Dir Dir { get; private set; }
+    private bool _durationEdited;
     
     public Link(Station start, Station end, Line? line, Dir dir)
     {
-        this.Destination = end;
-        this.Origin = start;
-        this.FullyPopulated = false;
-        this.Line = line;
-        this.Dir = dir;
-        this.Duration = new TimeSpan(0, 1, 0);
+        Destination = end;
+        Origin = start;
+        Line = line;
+        Dir = dir;
+        Duration = new TimeSpan(0, 1, 0);
+        _durationEdited = false;
     }
 
     internal void SetDuration(TimeSpan duration)
     {
-        if (this.FullyPopulated)
+        if (_durationEdited)
         {
-            throw new Exception("Tried to edit an already fully populated link!");
+            throw new InvalidOperationException("Cannot change the duration of a link");
         }
 
-        this.Duration = duration;
-        if (this.Line is not null)
+        Duration = duration;
+        _durationEdited = true;
+    }
+
+    internal void SetLine(Line line)
+    {
+        if (Line != null)
         {
-            this.FullyPopulated = true;
+            throw new InvalidOperationException("Cannot change the line of a link");
         }
-#warning "Timetable check not used yet for FullyPopulated!"
+
+        Line = line;
     }
 
     public override bool Equals(Object other)
     {
-        if ((other == null) || !this.GetType().Equals(other.GetType()))
+        if ((other == null) || !GetType().Equals(other.GetType()))
         {
             return false; // link is never equal to something that isn't a link
         }
-        else
+
+        Link otherLink = (Link)other;
+        if (Destination.NaptanId == otherLink.Destination.NaptanId &&
+            Origin.NaptanId == otherLink.Origin.NaptanId &&
+            Line?.Id == otherLink.Line?.Id &&
+            Dir == otherLink.Dir &&
+            Duration == otherLink.Duration)
         {
-            Link otherLink = (Link)other;
-            if (this.Destination.NaptanId == otherLink.Destination.NaptanId &&
-                this.Origin.NaptanId == otherLink.Origin.NaptanId &&
-                this.Line?.Id == otherLink.Line?.Id &&
-                this.Dir == otherLink.Dir &&
-                this.Duration == otherLink.Duration)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
+
+        return false;
     }
 }
