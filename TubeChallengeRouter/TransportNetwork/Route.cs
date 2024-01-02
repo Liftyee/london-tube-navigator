@@ -34,11 +34,11 @@ public class Route : IRoute
     {
         if (stationIDs.Count < 20)
         {
-            return $"Route with {stationIDs.Count} stations and length {Length}: {String.Join(", ", stationIDs)}";
+            return $"Route with {stationIDs.Count} stations and length {Length.TotalMinutes} minutes: {String.Join(", ", stationIDs)}";
         }
         else // don't return all the stations if there are too many
         {
-            return $"Route with {stationIDs.Count} stations and length {Length}"; 
+            return $"Route with {stationIDs.Count} stations and length {Length.TotalMinutes} minutes"; 
         }
     }
 
