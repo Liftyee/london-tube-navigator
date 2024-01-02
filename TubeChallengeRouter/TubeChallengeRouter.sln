@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataFetcher", "DataFetcher\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RouteSolver", "RouteSolver\RouteSolver.csproj", "{3D842669-DFCF-4CF6-A70B-DC528B7598FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriorityQueue", "PriorityQueue\PriorityQueue.csproj", "{77777444-96B4-415A-B804-0913309F24ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriorityQueueTests", "PriorityQueueTests\PriorityQueueTests.csproj", "{1A948043-5BF1-4AF3-80B0-10CCF94B2043}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +58,13 @@ Global
 		{3D842669-DFCF-4CF6-A70B-DC528B7598FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D842669-DFCF-4CF6-A70B-DC528B7598FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D842669-DFCF-4CF6-A70B-DC528B7598FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77777444-96B4-415A-B804-0913309F24ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77777444-96B4-415A-B804-0913309F24ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77777444-96B4-415A-B804-0913309F24ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77777444-96B4-415A-B804-0913309F24ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A948043-5BF1-4AF3-80B0-10CCF94B2043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A948043-5BF1-4AF3-80B0-10CCF94B2043}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A948043-5BF1-4AF3-80B0-10CCF94B2043}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A948043-5BF1-4AF3-80B0-10CCF94B2043}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
