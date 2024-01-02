@@ -5,13 +5,13 @@ public class Station
     // some attributes internal so that data fetchers can update values after instantiation
     internal string? Name;
     internal List<Line>? Lines;
-    private List<Link> _links;
+    private HashSet<Link> _links;
     public readonly string NaptanId;
 
     public Station(string naptan)
     {
         NaptanId = naptan;
-        _links = new List<Link>();
+        _links = new HashSet<Link>();
     }
     
     public Station(string naptan, string name) : this(naptan)
@@ -26,7 +26,7 @@ public class Station
     
     public List<Link> GetLinks()
     {
-        return this._links;
+        return this._links.ToList();
     }
 
     // NOTE: Can't use a dictionary, because the link destinations are not unique!

@@ -60,4 +60,28 @@ public class Link
         }
 #warning "Timetable check not used yet for FullyPopulated!"
     }
+
+    public override bool Equals(Object other)
+    {
+        if ((other == null) || !this.GetType().Equals(other.GetType()))
+        {
+            return false; // link is never equal to something that isn't a link
+        }
+        else
+        {
+            Link otherLink = (Link)other;
+            if (this.Destination.NaptanId == otherLink.Destination.NaptanId &&
+                this.Origin.NaptanId == otherLink.Origin.NaptanId &&
+                this.Line?.Id == otherLink.Line?.Id &&
+                this.Dir == otherLink.Dir &&
+                this.Duration == otherLink.Duration)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }
