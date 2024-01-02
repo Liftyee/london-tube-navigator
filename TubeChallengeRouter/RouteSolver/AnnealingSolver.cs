@@ -35,9 +35,9 @@ public class AnnealingSolver : ISolver
         
         const int tempStepIterations = 1000;
         const int maxIterations = 1000000;
-        const double coolDownFactor = 0.9;
-        const int noChangeThreshold = 100;
-        double Temperature = 10000;
+        const double coolDownFactor = 0.99;
+        const int noChangeThreshold = 1000;
+        double Temperature = 1000;
         int randomA, randomB, oldCost, newCost;
         int loopsSinceLastAccept = 0;
         Random randomGenerator = new Random();
