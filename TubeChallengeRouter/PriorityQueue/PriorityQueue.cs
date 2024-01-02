@@ -19,14 +19,18 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
     
     public PriorityQueue(int size, Priority prio)
     {
-        _nodes = new T[size];
+        _nodes = new T[size+1]; // add one because of our dummy first element
         _priority = prio;
         _nodeCount = 0;
-        _nodes[0] = default(T); // the first element is not used in our binary indexing system
+        _nodes[0] = default(T); // the first element is not used in our indexing system
     }
 
     public void Insert(T item)
     {
+        if (_nodeCount == _nodes.Length - 1)
+        {
+            throw new InvalidOperationException("Cannot insert into full queue");
+        }
         _nodes[_nodeCount + 1] = item;
         _nodeCount++;
         push_up(Size());
@@ -34,6 +38,10 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
 
     public void RemoveTop()
     {
+        if (_nodeCount == 0)
+        {
+            throw new InvalidOperationException("Cannot remove from empty queue");
+        }
         SwapIndices(Size(), 1);
         _nodes[Size()] = default(T);
         _nodeCount--;
@@ -103,6 +111,10 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
     
     public T Top()
     {
+        if (_nodeCount == 0)
+        {
+            throw new InvalidOperationException("Cannot get top of empty queue");
+        }
         return _nodes[1];
     }
 }
