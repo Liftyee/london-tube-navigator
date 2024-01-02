@@ -3,7 +3,7 @@ namespace TransportNetwork;
 public class Station
 {
     // some attributes internal so that data fetchers can update values after instantiation
-    internal string? Name;
+    public readonly string? Name;
     internal List<Line>? Lines;
     private HashSet<Link> _links;
     public readonly string NaptanId;

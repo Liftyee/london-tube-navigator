@@ -23,7 +23,7 @@ public class Link
     public readonly Station Destination;
     public readonly Station Origin;
     internal TimeSpan? Duration { get; private set; }
-    internal Line? Line { get; private set; }
+    public Line? Line { get; private set; }
     public bool FullyPopulated;
     public Dir Dir;
     
