@@ -6,6 +6,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="StationAndLink.Tests" />
+  </ItemGroup>
+  
     <ItemGroup>
       <Content Include="..\TubeChallengeRouter\tfl-csharp-client\.gitignore">
         <Link>tfl-csharp-client\.gitignore</Link>
