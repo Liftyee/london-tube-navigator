@@ -32,7 +32,14 @@ public class Route : IRoute
 
     public override string ToString()
     {
-        return $"Route with {stationIDs.Count} stations and length {Length}: {String.Join(", ", stationIDs)}";
+        if (stationIDs.Count < 20)
+        {
+            return $"Route with {stationIDs.Count} stations and length {Length}: {String.Join(", ", stationIDs)}";
+        }
+        else // don't return all the stations if there are too many
+        {
+            return $"Route with {stationIDs.Count} stations and length {Length}"; 
+        }
     }
 
     private List<string> GetPath()
