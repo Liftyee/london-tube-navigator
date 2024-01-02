@@ -54,16 +54,6 @@ public class Network
         }
     }
     
-    [Obsolete("Use LinkStationsPartial instead", true)]
-    public void LinkStations(Station startStation, Station endStation, TimeSpan timeBetween, bool directed=false)
-    {
-    }
-
-    [Obsolete("Use LinkStationsPartial instead", true)]
-    public void LinkStations(string startId, string endId, TimeSpan timeBetween, bool directed = false)
-    {
-    }
-    
     public void LinkStationsPartial(string startId, string endId, Dir direction, Line? line=null)
     {
         Station startStation = _stations[startId];
