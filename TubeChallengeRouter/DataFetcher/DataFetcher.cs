@@ -6,6 +6,7 @@ using IO.Swagger.Model;
 using Serilog;
 using Serilog.Core;
 using System.Diagnostics;
+using System.Net;
 using Serilog.Debugging;
 using TransportNetwork;
 using System.Runtime.Serialization;
@@ -146,13 +147,13 @@ public class TflModelWrapper : INetworkDataFetcher
             if (lastUpdated < DateTime.Now.AddDays(-maxCacheAge))
             {
                 logger.Information($"Cache is older than {maxCacheAge} days, updating...");
-                UpdateCacheFiles();
+                UpdateStructureCache();
             }
         }
         else
         {
             logger.Information("No cache found, updating...");
-            UpdateCacheFiles();
+            UpdateStructureCache();
         }
 
         try
@@ -162,15 +163,17 @@ public class TflModelWrapper : INetworkDataFetcher
         catch (System.IO.FileNotFoundException)
         {
             logger.Warning("Cache file missing!, Regenerating from API...");
-            UpdateCacheFiles();
+            UpdateStructureCache();
             PopulateNetworkStructureFromCache(ref network);
         }
         catch (System.Runtime.Serialization.SerializationException)
         {
             logger.Warning("Cache file corrupt! Regenerating from API...");
-            UpdateCacheFiles();
+            UpdateStructureCache();
             PopulateNetworkStructureFromCache(ref network);
         }
+        
+        PopulateNetworkTimesEliyahuLib(ref network);
     }
 
     private void PopulateNetworkStructureFromCache(ref Network network)
@@ -213,7 +216,7 @@ public class TflModelWrapper : INetworkDataFetcher
         logger.Information("Done in {A}ms", watch.ElapsedMilliseconds);
     } 
 
-    private void UpdateCacheFiles()
+    private void UpdateStructureCache()
     {
         var watch = System.Diagnostics.Stopwatch.StartNew(); // timer to report performance in logs
 
@@ -258,6 +261,76 @@ public class TflModelWrapper : INetworkDataFetcher
             using (StreamWriter sw = new StreamWriter(fs))
             {
                 sw.WriteLine(DateTime.Now.ToString());
+            }
+        }
+    }
+
+    private void UpdateEliyahuLib()
+    {
+        const string address = "https://raw.githubusercontent.com/egkoppel/tube-timings/main/data.txt";
+        using (WebClient client = new WebClient())
+        {
+            client.DownloadFile(address, $"{cachePath}timingsData.txt");
+        }
+    }
+
+    private void PopulateNetworkTimesEliyahuLib(ref Network network)
+    {
+        logger.Information("Populating network times from Eliyahu's library...");
+        UpdateEliyahuLib();
+        using (StreamReader dataFile = File.OpenText($"{cachePath}timingsData.txt"))
+        {
+            while (!dataFile.EndOfStream)
+            {
+                // parse line by line
+                string rawLine = dataFile.ReadLine();
+                string[] edgeDetails = rawLine.Split(" ");
+                double decimalMinutes = System.Convert.ToDouble(edgeDetails[2]);
+                int minutes = (int)Math.Floor(decimalMinutes);
+                int seconds = (int)Math.Floor((decimalMinutes % 1) * 60);
+                try
+                {
+                    network.UpdateLink(edgeDetails[0], edgeDetails[1], new TimeSpan(0, minutes, seconds));
+                }
+                catch (ArgumentException)
+                {
+                    logger.Warning("Tried to update a link that doesn't exist! {A} -> {B}", edgeDetails[0], edgeDetails[1]);
+                }
+            }
+        }
+    }
+
+    private void PopulateNetworkTimes(ref Network network)
+    {
+        var rawLines = lineApi.LineGetByMode(new List<string> { "tube" });
+        logger.Debug("Got {A} lines from API", rawLines.Count);
+
+        foreach (var line in rawLines)
+        {
+            
+        }
+    }
+
+    private void UpdateTimetableCache()
+    {
+        throw new NotImplementedException();
+        var watch = System.Diagnostics.Stopwatch.StartNew(); // timer to report performance in logs
+        
+        var rawLines = lineApi.LineGetByMode(new List<string> { "tube" });
+
+        DataContractSerializer serializer = new DataContractSerializer(typeof(TflApiPresentationEntitiesTimetableResponse));
+        foreach (var line in rawLines)
+        {
+            var stations = lineApi.LineStopPoints(line.Id);
+            logger.Debug("Got {A} stations from API for line {B}", stations.Count, line.Name);
+            foreach (var station in stations)
+            {
+                var result = lineApi.LineTimetable(station.NaptanId, line.Id);
+                
+                using (FileStream fs = new FileStream($"{cachePath}z{station.NaptanId}.xml", FileMode.Create))
+                {
+                    serializer.WriteObject(fs, result);
+                }
             }
         }
     }

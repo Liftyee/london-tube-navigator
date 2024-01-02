@@ -68,7 +68,7 @@ public class AnnealingSolver : ISolver
                 loopsSinceLastAccept++;
             }
             
-            // cool down every tempStepIterations cycles
+            // cool down every tempStepIterations cycles to avoid cooling too fast
             if (i % tempStepIterations == 0)
             {
                 Temperature *= coolDownFactor;

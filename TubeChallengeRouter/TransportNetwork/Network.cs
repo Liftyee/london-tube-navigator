@@ -75,15 +75,16 @@ public class Network
     
     public void LinkStationsPartial(string startId, string endId, Dir direction, Line? line=null)
     {
-        Station startObject = _stations[startId];
-        Station endObject = _stations[endId];
-        LinkStationsPartial(startObject, endObject, direction, line);
-    }
-    
-    public void LinkStationsPartial(Station startStation, Station endStation, Dir direction, Line? line)
-    {
+        Station startStation = _stations[startId];
+        Station endStation = _stations[endId];
         startStation.AddLink(new Link(startStation, endStation, line, direction));
         nEdges++;
+    }
+    
+    public void UpdateLink(string startId, string endId, TimeSpan newTime)
+    {
+        Station startStation = _stations[startId];
+        startStation.ModifyLink(endId, newTime);
     }
 
     public bool HasStationByID(string ID)

@@ -53,6 +53,36 @@ public class Station
             }
         }
 
-        throw new Exception($"No link found with ID {Id}");
+        throw new ArgumentException($"No link found with ID {Id}");
+    }
+    
+    public void ModifyLink(string lineID, string destID, TimeSpan newTime)
+    {
+        foreach (Link link in _links)
+        {
+            if (link.Destination.NaptanId == destID && link.Line?.Id == lineID)
+            {
+                link.SetDuration(newTime);
+                return; // only one link should match
+            }
+        }
+
+        throw new ArgumentException($"No link found with ID {destID} on line {lineID}");
+    }
+    
+    public void ModifyLink(string destID, TimeSpan newTime)
+    {
+        bool matched = false;
+        foreach (Link link in _links)
+        {
+            if (link.Destination.NaptanId == destID)
+            {
+                matched = true;
+                link.SetDuration(newTime);
+                // many links might match, don't return
+            }
+        }
+
+        if (!matched) throw new ArgumentException($"No link found with ID {destID}");
     }
 }
