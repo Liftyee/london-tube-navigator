@@ -136,10 +136,10 @@ public class Network
     public virtual int CostFunction(IRoute route)
     {
         int cost = 0;
-        for (int i = 0; i < route.Count() - 1; i++)
+        List<string> routeStations = route.GetPath();
+        for (int i = 0; i < routeStations.Count - 1; i++)
         {
-            route.SetIndex(i);
-            cost += CostFunction(route.GetCurrentStation(), route.GetNextStation());
+            cost += CostFunction(routeStations[i], routeStations[i+1]);
         }
 
         return cost;
@@ -149,10 +149,10 @@ public class Network
     public string RouteToStringStationSeq(IRoute route)
     {
         StringBuilder output = new StringBuilder();
-        for (int i = 0; i < route.Count(); i++)
+        List<string> stationIDs = route.GetPath();
+        for (int i = 0; i < stationIDs.Count(); i++)
         {
-            route.SetIndex(i);
-            output.Append($"{_stations[route.GetCurrentStation()].Name.Replace(" Underground Station", "")}, ");
+            output.Append($"{_stations[stationIDs[i]].Name.Replace(" Underground Station", "")}, ");
         }
 
         return output.ToString();
