@@ -132,7 +132,6 @@ public class Network
         return new Route(stationIDs, cost);
     }
 
-    // TODO: Put the indexing behaviour outside of the Route class?
     public virtual int CostFunction(IRoute route)
     {
         int cost = 0;
