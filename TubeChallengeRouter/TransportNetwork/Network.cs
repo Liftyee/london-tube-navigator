@@ -170,14 +170,47 @@ public class Network
     public virtual void Swap(Route route, int idxA, int idxB)
     {
         List<string> stations = route.GetTargetPath();
+        
+        TimeSpan updatedTime = route.Duration;
+        int updatedCost = route.Cost;
+        
+        /* Instead of recalculating the travel time by summing all travel times between stations, we can just
+           change the travel times to and from the stations that are being swapped. All other travel times should
+           remain constant, so we are only concerned with what happens around our swapped stations. */
+        
+        // These four times are the time taken to travel to and from both stations being swapped (before the swap)
+        if (idxA > 0)             updatedTime -= TravelTime(stations[idxA - 1], stations[idxA]);
+        if (idxA < route.Count-1) updatedTime -= TravelTime(stations[idxA], stations[idxA + 1]);
+        if (idxB > 0)             updatedTime -= TravelTime(stations[idxB - 1], stations[idxB]);
+        if (idxB < route.Count-1) updatedTime -= TravelTime(stations[idxB], stations[idxB + 1]);
+
+        // Do the same for costs (unitless value considering but not limited to duration)
+        if (idxA > 0)             updatedCost -= CostFunction(stations[idxA - 1], stations[idxA]);
+        if (idxA < route.Count-1) updatedCost -= CostFunction(stations[idxA], stations[idxA + 1]);
+        if (idxB > 0)             updatedCost -= CostFunction(stations[idxB - 1], stations[idxB]);
+        if (idxB < route.Count-1) updatedCost -= CostFunction(stations[idxB], stations[idxB + 1]);
+        
+        // swap the stations in the route
         string temp = stations[idxA];
         stations[idxA] = stations[idxB];
         stations[idxB] = temp;
         
+        // Now add the updated times to travel to and from the swapped stations in their new position
+        if (idxA > 0)             updatedTime += TravelTime(stations[idxA - 1], stations[idxA]);
+        if (idxA < route.Count-1) updatedTime += TravelTime(stations[idxA], stations[idxA + 1]);
+        if (idxB > 0)             updatedTime += TravelTime(stations[idxB - 1], stations[idxB]);
+        if (idxB < route.Count-1) updatedTime += TravelTime(stations[idxB], stations[idxB + 1]);
+        
+        // and costs too
+        if (idxA > 0)             updatedCost += CostFunction(stations[idxA - 1], stations[idxA]);
+        if (idxA < route.Count-1) updatedCost += CostFunction(stations[idxA], stations[idxA + 1]);
+        if (idxB > 0)             updatedCost += CostFunction(stations[idxB - 1], stations[idxB]);
+        if (idxB < route.Count-1) updatedCost += CostFunction(stations[idxB], stations[idxB + 1]);
+        
         // update the route's length (time taken)
-        route.UpdateDuration(TravelTime(route));
+        route.UpdateDuration(updatedTime);
         
         // update the route's cost (unitless value based on number of factors)
-        route.UpdateCost(CostFunction(route));
+        route.UpdateCost(updatedCost);
     }
 }
