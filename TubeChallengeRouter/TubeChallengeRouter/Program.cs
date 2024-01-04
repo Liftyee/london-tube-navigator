@@ -23,7 +23,7 @@ namespace TubeChallengeRouter
                 .CreateLogger();
             logger.Information("Hello World! Logging is {Description}.","online");
 
-            TestTubeGen();
+            TestTubeGenFloyd();
             Console.ReadKey();
             LinearNetworkTestRouting();
         }
@@ -55,8 +55,19 @@ namespace TubeChallengeRouter
                 }
             }
         }
-        
         private static void TestTubeGen()
+        {
+            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger));
+            Network tube = tubeFactory.Generate(NetworkType.Dijkstra, logger);
+            logger.Information("Result: {A}",tube.ToString());
+            //logger.Debug(tube.EnumerateStations());
+
+            ISolver solver = new AnnealingSolver(logger);
+            Route route = solver.Solve(tube);
+            logger.Information("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
+        }
+        
+        private static void TestTubeGenFloyd()
         {
             NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger));
             Network tube = tubeFactory.Generate(NetworkType.Floyd, logger);

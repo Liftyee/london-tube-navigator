@@ -15,7 +15,10 @@ public class AnnealingSolver : ISolver
     
     public Route Solve(Network net)
     {
+        // performance tracking metrics
         Stopwatch perfTimer = Stopwatch.StartNew();
+        int nLookups = 0;
+        
         // generate a random route
         Route route = net.GenerateRandomRoute();
         logger.Debug("Random route: {A}",route.ToString());
@@ -55,6 +58,7 @@ public class AnnealingSolver : ISolver
             oldCost = net.CostFunction(route);
             net.Swap(route, randomA, randomB);
             newCost = net.CostFunction(route);
+            nLookups += 2;
 
             if (AcceptSolution(oldCost, newCost, Temperature, randomGenerator))
             {
@@ -84,7 +88,8 @@ public class AnnealingSolver : ISolver
                 break;
             }
         }
-        logger.Debug("Final route: {A} (found in {B} ms)",route.ToString(), perfTimer.ElapsedMilliseconds);
+        logger.Information("Final route: {A} (found in {B} ms)",route.ToString(), perfTimer.ElapsedMilliseconds);
+        logger.Debug("{A} cost function lookups performed", nLookups);
         return route;
     }
 }
