@@ -27,10 +27,10 @@ public class OrderingTests
         _minQueue.Insert(6);
         Assert.That(_minQueue.Top(), Is.EqualTo(1));
         
-        _minQueue.RemoveTop(); // should remove 1
+        _minQueue.Pop(); // should remove 1
         Assert.That(_minQueue.Top(), Is.EqualTo(2));
         
-        _minQueue.RemoveTop(); // should remove 2
+        _minQueue.Pop(); // should remove 2
         Assert.That(_minQueue.Top(), Is.EqualTo(3));
     }
     
@@ -46,10 +46,10 @@ public class OrderingTests
         _maxQueue.Insert(1);
         Assert.That(_maxQueue.Top(), Is.EqualTo(5));
         
-        _maxQueue.RemoveTop(); // should remove 5
+        _maxQueue.Pop(); // should remove 5
         Assert.That(_maxQueue.Top(), Is.EqualTo(4));
         
-        _maxQueue.RemoveTop(); // should remove 4
+        _maxQueue.Pop(); // should remove 4
         Assert.That(_maxQueue.Top(), Is.EqualTo(3));
     }
 

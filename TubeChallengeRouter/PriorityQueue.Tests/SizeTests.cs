@@ -32,7 +32,7 @@ public class SizeTests
     public void RemovingAllItems_DecreasesSizeToZero()
     {
         _queue.Insert(1);
-        _queue.RemoveTop();
+        _queue.Pop();
         bool result = _queue.Count == 0;
         Assert.That(result, "Queue should have size 0 after removing all items");
     }

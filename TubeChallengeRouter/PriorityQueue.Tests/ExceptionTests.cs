@@ -26,7 +26,7 @@ public class ExceptionTests
     [Test]
     public void RemovingFromEmptyQueue_ThrowsException()
     {
-        Assert.Throws<InvalidOperationException>(() => _queue.RemoveTop());
+        Assert.Throws<InvalidOperationException>(() => _queue.Pop());
     }
 
     [Test]

@@ -37,7 +37,7 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         push_up(Size());
     }
 
-    public T RemoveTop()
+    public T Pop()
     {
         if (_nodeCount == 0)
         {
