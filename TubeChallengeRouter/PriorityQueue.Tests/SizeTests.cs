@@ -16,7 +16,7 @@ public class SizeTests
     [Test]
     public void EmptyQueue_HasSizeZero()
     {
-        bool result = _queue.Size() == 0;
+        bool result = _queue.Count == 0;
         Assert.That(result, "Empty queue should have size 0");
     }
     
@@ -24,7 +24,7 @@ public class SizeTests
     public void InsertingOneItem_IncreasesSize()
     {
         _queue.Insert(1);
-        bool result = _queue.Size() == 1;
+        bool result = _queue.Count == 1;
         Assert.That(result, "Queue should have size 1 after inserting one item");
     }
     
@@ -33,7 +33,7 @@ public class SizeTests
     {
         _queue.Insert(1);
         _queue.RemoveTop();
-        bool result = _queue.Size() == 0;
+        bool result = _queue.Count == 0;
         Assert.That(result, "Queue should have size 0 after removing all items");
     }
 }

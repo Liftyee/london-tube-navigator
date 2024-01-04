@@ -16,6 +16,7 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
     private int _nodeCount;
     private T[] _nodes; // this array is used like a binary tree: node at index N has left child 2N and right child 2N+1
     private readonly Priority _priority;
+    public int Count => _nodeCount;
     
     public PriorityQueue(int size, Priority prio)
     {
@@ -36,16 +37,18 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         push_up(Size());
     }
 
-    public void RemoveTop()
+    public T RemoveTop()
     {
         if (_nodeCount == 0)
         {
             throw new InvalidOperationException("Cannot remove from empty queue");
         }
+        T top = Top();
         SwapIndices(Size(), 1);
         _nodes[Size()] = default(T);
         _nodeCount--;
         push_down(1);
+        return top;
     }
 
     private void push_up(int currentPosition)
@@ -104,7 +107,7 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         _nodes[pos2] = temp;
     }
     
-    public int Size()
+    private int Size()
     {
         return _nodeCount;
     }
