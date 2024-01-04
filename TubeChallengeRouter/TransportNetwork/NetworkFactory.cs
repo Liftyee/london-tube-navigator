@@ -28,7 +28,8 @@ public class NetworkFactory
                 result = new FloydCostNetwork(logger);
                 break;
             case NetworkType.Dijkstra:
-                throw new NotImplementedException();
+                result = new DijkstraCostNetwork(logger);
+                break;
             default:
                 throw new NotImplementedException();
         }
