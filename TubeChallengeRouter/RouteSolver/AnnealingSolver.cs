@@ -15,9 +15,10 @@ public class AnnealingSolver : ISolver
     
     public Route Solve(Network net)
     {
+        logger.Information("Annealing route for {A}...", net.ToString());
         // performance tracking metrics
         Stopwatch perfTimer = Stopwatch.StartNew();
-        int nLookups = 0;
+        int nIterations = 0;
         
         // generate a random route
         Route route = net.GenerateRandomRoute();
@@ -48,6 +49,7 @@ public class AnnealingSolver : ISolver
 
         for (int i = 1; i < maxIterations; i++)
         {
+            nIterations++;
             // pick a random pair of stations to swap
             do
             {
@@ -55,10 +57,9 @@ public class AnnealingSolver : ISolver
                 randomB = randomGenerator.Next(0, route.Count);
             } while (randomA == randomB);
 
-            oldCost = net.CostFunction(route);
+            oldCost = route.Cost; // int is a value type so we don't have to worry about copying
             net.Swap(route, randomA, randomB);
-            newCost = net.CostFunction(route);
-            nLookups += 2;
+            newCost = route.Cost;
 
             if (AcceptSolution(oldCost, newCost, Temperature, randomGenerator))
             {
@@ -87,9 +88,13 @@ public class AnnealingSolver : ISolver
                 logger.Debug("No change for {A} iterations, stopping annealing",loopsSinceLastAccept);
                 break;
             }
+
+            if (nIterations % (maxIterations / 10) == 0)
+            {
+                logger.Information("{A} percent complete", nIterations*100 / (maxIterations));
+            }
         }
-        logger.Information("Final route: {A} (found in {B} ms)",route.ToString(), perfTimer.ElapsedMilliseconds);
-        logger.Debug("{A} cost function lookups performed", nLookups);
+        logger.Information("Final route: {A} (found in {B} ms, {C} ms per iteration)",route.ToString(), perfTimer.ElapsedMilliseconds, (perfTimer.ElapsedMilliseconds/(double)nIterations).ToString("0.####"));
         return route;
     }
 }
