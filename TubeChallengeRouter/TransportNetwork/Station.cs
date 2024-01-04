@@ -29,6 +29,11 @@ public class Station
         return this._links.ToList();
     }
 
+    public int CostTo(string destID)
+    {
+        return this.GetLinkByDestId(destID).GetCost();
+    }
+
     // NOTE: Can't use a dictionary, because the link destinations are not unique!
     public bool HasLink(string destID)
     {
@@ -43,7 +48,7 @@ public class Station
         return false;
     }
 
-    public Link GetLinkById(string Id)
+    public Link GetLinkByDestId(string Id)
     {
         foreach (Link link in _links)
         {
