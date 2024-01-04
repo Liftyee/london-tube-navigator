@@ -36,6 +36,23 @@ public class LinearNetwork : INetworkDataFetcher
     }
 }
 
+public class TestNetwork1 : INetworkDataFetcher
+{
+    public void PopulateNetworkStructure(ref Network _network)
+    {
+        _network.AddStation(new Station("A"));
+        _network.AddStation(new Station("B"));
+        _network.AddStation(new Station("C"));
+        _network.AddStation(new Station("D"));
+        _network.AddStation(new Station("E"));
+        _network.LinkStationsPartial("A", "B", Dir.Inbound, null);
+        _network.LinkStationsPartial("B", "C", Dir.Inbound, null);
+        _network.LinkStationsPartial("B", "D", Dir.Inbound, null);
+        _network.LinkStationsPartial("C", "E", Dir.Inbound, null);
+        _network.LinkStationsPartial("D", "E", Dir.Inbound, null);
+    }
+}
+
 public class InvalidBranchIDException : Exception
 {
     public InvalidBranchIDException(string message) : base(message)

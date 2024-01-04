@@ -62,7 +62,7 @@ public class DijkstraCostNetwork : Network
         
         // otherwise, calculate it and update the cache
         _costCache[startId][endId] = DijkstraLookup(startId, endId);
-        throw new NotImplementedException("Implement Dijkstra first");
+        return _costCache[startId][endId].Value;
     }
 
     private int DijkstraLookup(string startId, string endId)
@@ -71,26 +71,36 @@ public class DijkstraCostNetwork : Network
         PriorityQueue<DijkstraNode>
             nextNodes = new PriorityQueue<DijkstraNode>(_stations.Count + 20, Priority.Smallest);
         nextNodes.Insert(new DijkstraNode(startId, 0));
+        HashSet<string> visited = new();
+        Dictionary<string, int> dist = new();
+        foreach (string stationId in _stations.Keys)
+        {
+            dist[stationId] = INF_COST;
+        }
+        dist[startId] = 0;
+        
         while (nextNodes.Count > 0)
         {
             DijkstraNode minCostNode = nextNodes.Pop();
-            if (minCostNode.StationID == endId)
-            {
-                return minCostNode.Cost;
-            }
             foreach (Link link in _stations[minCostNode.StationID].GetLinks())
             {
+                if (visited.Contains(link.Destination.NaptanId)) continue;
                 int costToNeighbour = link.GetCost();
                 int newCost = minCostNode.Cost + costToNeighbour;
-                if (_costCache[minCostNode.StationID][link.Destination.NaptanId] is null ||
-                    newCost < _costCache[minCostNode.StationID][link.Destination.NaptanId])
+                if (newCost < dist[link.Destination.NaptanId])
                 {
-                    _costCache[minCostNode.StationID][link.Destination.NaptanId] = newCost;
+                    dist[link.Destination.NaptanId] = newCost;
                     prev[link.Destination.NaptanId] = minCostNode.StationID;
                     nextNodes.Insert(new DijkstraNode(link.Destination.NaptanId, newCost));
                 }
             }
+            visited.Add(minCostNode.StationID);
+            if (minCostNode.StationID == endId)
+            {
+                return minCostNode.Cost;
+            }
         }
+        logger.Debug("No more stations to visit");
         // TODO: make a custom exception
         throw new ArgumentException($"No route found between {startId} and {endId}");
     }
