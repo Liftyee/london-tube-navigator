@@ -52,7 +52,7 @@ public class AnnealingSolver : ISolver
             } while (randomA == randomB);
 
             oldCost = net.CostFunction(route);
-            route.Swap(randomA, randomB);
+            net.Swap(route, randomA, randomB);
             newCost = net.CostFunction(route);
 
             if (AcceptSolution(oldCost, newCost, Temperature, randomGenerator))
@@ -64,7 +64,7 @@ public class AnnealingSolver : ISolver
             else
             {
                 // reject the change (swap back)
-                route.Swap(randomA, randomB);
+                net.Swap(route, randomA, randomB);
                 loopsSinceLastAccept++;
             }
             

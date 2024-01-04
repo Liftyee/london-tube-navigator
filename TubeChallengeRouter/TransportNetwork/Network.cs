@@ -156,4 +156,12 @@ public class Network
 
         return output.ToString();
     }
+    
+    public virtual void Swap(IRoute route, int idxA, int idxB)
+    {
+        List<string> stations = route.GetPath();
+        string temp = stations[idxA];
+        stations[idxA] = stations[idxB];
+        stations[idxB] = temp;
+    }
 }

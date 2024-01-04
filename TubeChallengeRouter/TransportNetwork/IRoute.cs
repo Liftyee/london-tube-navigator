@@ -11,6 +11,5 @@ public interface IRoute
     // public List<Line> LinesUsed();
     // public List<Station> StationsUsed();
     public int Count();
-    public void Swap(int a, int b);
     public void UpdateLength(int newLength);
 }

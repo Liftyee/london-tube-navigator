@@ -18,9 +18,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RouteSolver", "RouteSolver\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriorityQueue", "PriorityQueue\PriorityQueue.csproj", "{77777444-96B4-415A-B804-0913309F24ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriorityQueueTests", "PriorityQueueTests\PriorityQueueTests.csproj", "{1A948043-5BF1-4AF3-80B0-10CCF94B2043}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriorityQueue.Tests", "PriorityQueue.Tests\PriorityQueue.Tests.csproj", "{1A948043-5BF1-4AF3-80B0-10CCF94B2043}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StationAndLink.Tests", "StationAndLink.Tests\StationAndLink.Tests.csproj", "{E18A32C4-4D4C-4024-AC60-27E6C66CCD06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportNetwork.Tests", "TransportNetwork.Tests\TransportNetwork.Tests.csproj", "{E18A32C4-4D4C-4024-AC60-27E6C66CCD06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

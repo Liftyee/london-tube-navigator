@@ -2,13 +2,13 @@ namespace TransportNetwork;
 
 public class Route : IRoute
 {
-    private List<string> stationIDs;
+    internal List<string> targetStations;
+    internal List<List<string>> intermediateStations;
     private TimeSpan Length;
-    private int pointer;
     
     public Route(List<string> stations, TimeSpan length)
     {
-        stationIDs = stations;
+        targetStations = stations;
         Length = length;
     }
 
@@ -32,33 +32,31 @@ public class Route : IRoute
 
     public override string ToString()
     {
-        if (stationIDs.Count < 20)
+        if (targetStations.Count < 20)
         {
-            return $"Route with {stationIDs.Count} stations and length {Length.TotalMinutes} minutes: {String.Join(", ", stationIDs)}";
+            return $"Route with {targetStations.Count} stations and length {Length.TotalMinutes} minutes: {String.Join(", ", targetStations)}";
         }
         else // don't return all the stations if there are too many
         {
-            return $"Route with {stationIDs.Count} stations and length {Length.TotalMinutes} minutes"; 
+            return $"Route with {targetStations.Count} stations and length {Length.TotalMinutes} minutes"; 
         }
     }
 
     public List<string> GetPath()
     {
-        return stationIDs;
+        return targetStations;
+    }
+    
+    internal List<string> GetIntermediateStations(int segmentIndex)
+    {
+        return intermediateStations[segmentIndex];
     }
     
     public int Count()
     {
-        return stationIDs.Count;
+        return targetStations.Count;
     }
-
-    public void Swap(int idxA, int idxB)
-    {
-        string temp = stationIDs[idxA];
-        stationIDs[idxA] = stationIDs[idxB];
-        stationIDs[idxB] = temp;
-    }
-
+    
     public void UpdateLength(int newLength)
     {
         Length = new TimeSpan(0, newLength, 0);
