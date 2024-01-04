@@ -196,11 +196,16 @@ public class TflModelWrapper : INetworkDataFetcher
 
     private void PopulateNetworkStructureFromCache(ref Network network)
     {
-        var watch = System.Diagnostics.Stopwatch.StartNew(); 
-        
-        // TODO: won't work properly if number of lines has changed since cache was generated
-        var rawLines = lineApi.LineGetByMode(new List<string> { "tube" });
-        logger.Debug("Got {A} lines from API", rawLines.Count);
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+
+        DataContractSerializer lineSerializer =
+            new DataContractSerializer(typeof(List<TflApiPresentationEntitiesLine>));
+        List<TflApiPresentationEntitiesLine> rawLines;
+        using (FileStream fs = new FileStream($"{cachePath}lines.xml", FileMode.Open))
+        {
+            rawLines = (List<TflApiPresentationEntitiesLine>) lineSerializer.ReadObject(fs);
+        }
+        logger.Debug("Got {A} lines from cached file", rawLines.Count);
         
         List<Line> lines = new List<Line>();
         foreach (var l in rawLines)
@@ -208,6 +213,7 @@ public class TflModelWrapper : INetworkDataFetcher
             lines.Add(new Line(l.Id, l.Name));
         }
         
+        DataContractSerializer serializer = new DataContractSerializer(typeof(TflApiPresentationEntitiesRouteSequence));
         foreach (Line line in lines)
         {
             logger.Debug("Processing segments for line {A}", line.Name);
@@ -215,7 +221,6 @@ public class TflModelWrapper : INetworkDataFetcher
             TflApiPresentationEntitiesRouteSequence inboundResult;
             using (FileStream fs = new FileStream($"{cachePath}{line.Id}_inbound.xml", FileMode.Open))
             {
-                DataContractSerializer serializer = new DataContractSerializer(typeof(TflApiPresentationEntitiesRouteSequence));
                 inboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs);
             }
             
@@ -225,7 +230,6 @@ public class TflModelWrapper : INetworkDataFetcher
             TflApiPresentationEntitiesRouteSequence outboundResult;
             using (FileStream fs = new FileStream($"{cachePath}{line.Id}_outbound.xml", FileMode.Open))
             {
-                DataContractSerializer serializer = new DataContractSerializer(typeof(TflApiPresentationEntitiesRouteSequence));
                 outboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs);
             }
             
@@ -245,6 +249,14 @@ public class TflModelWrapper : INetworkDataFetcher
         
         // create cache directory if it doesn't exist
         Directory.CreateDirectory(cachePath);
+
+        // cache which lines there are too to be completely independent of the API in case of no network connection
+        DataContractSerializer lineSerializer =
+            new DataContractSerializer(typeof(List<TflApiPresentationEntitiesLine>));
+        using (FileStream fs = new FileStream($"{cachePath}lines.xml", FileMode.Create))
+        {
+            lineSerializer.WriteObject(fs, rawLines);
+        }
         
         foreach (var line in rawLines)
         {
