@@ -16,9 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\tube-timings\data.txt">
-        <Link>data.txt</Link>
-      </Content>
       <Content Include="tfl-csharp-client\.gitignore" />
       <Content Include="tfl-csharp-client\.swagger-codegen-ignore" />
       <Content Include="tfl-csharp-client\.swagger-codegen\VERSION" />
