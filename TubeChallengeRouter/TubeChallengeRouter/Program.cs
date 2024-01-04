@@ -18,14 +18,13 @@ namespace TubeChallengeRouter
         private static void Main(string[] args)
         {
             logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
+                .MinimumLevel.Information()
                 .WriteTo.Console()
                 .CreateLogger();
             logger.Information("Hello World! Logging is {Description}.","online");
 
+            TestTubeGen();
             TestTubeGenFloyd();
-            Console.ReadKey();
-            LinearNetworkTestRouting();
         }
         
         private static void TestAPI()
@@ -64,7 +63,7 @@ namespace TubeChallengeRouter
 
             ISolver solver = new AnnealingSolver(logger);
             Route route = solver.Solve(tube);
-            logger.Information("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
+            logger.Debug("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
         }
         
         private static void TestTubeGenFloyd()
@@ -76,7 +75,7 @@ namespace TubeChallengeRouter
 
             ISolver solver = new AnnealingSolver(logger);
             Route route = solver.Solve(tube);
-            logger.Information("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
+            logger.Debug("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
         }
         
         private static void LinearNetworkTestRouting()
