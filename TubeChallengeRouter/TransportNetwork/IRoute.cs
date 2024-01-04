@@ -1,15 +1,11 @@
 namespace TransportNetwork;
 
-public interface IRoute
-{
-    public TimeSpan Duration();
-    public string GetStart();
-    public string GetEnd();
-    public List<string> GetPath();
-    // public List<DateTime> GetTimes();
-    // public DateTime NextOpportunity(DateTime time);
-    // public List<Line> LinesUsed();
-    // public List<Station> StationsUsed();
-    public int Count();
-    public void UpdateLength(int newLength);
-}
+// public abstract class IRoute
+// {
+//     public TimeSpan Duration;
+//     public int Cost;
+//     public int Count;
+//     public abstract List<string> GetTargetPath();
+//     public abstract void UpdateDuration(TimeSpan newLength);
+//     public abstract void UpdateCost(int newCost);
+// }

@@ -100,7 +100,7 @@ public class Network
     {
         if (_stations[startId].HasLink(endId))
         {
-            return (int)_stations[startId].GetLinkById(endId).Duration.Value.TotalMinutes;
+            return (int)_stations[startId].GetLinkByDestId(endId).Duration.Value.TotalSeconds;
         }
         else
         {
@@ -109,7 +109,7 @@ public class Network
     }
 
     // generate random route through all stations
-    public virtual IRoute GenerateRandomRoute()
+    public virtual Route GenerateRandomRoute()
     {
         List<string> stationIDs = new List<string>(); 
         HashSet<string> visitedIDs = new HashSet<string>();
@@ -129,13 +129,13 @@ public class Network
             }
         }
 
-        return new Route(stationIDs, cost);
+        return new Route(stationIDs, new TimeSpan(0, 0, cost));
     }
 
-    public virtual int CostFunction(IRoute route)
+    public virtual int CostFunction(Route route)
     {
         int cost = 0;
-        List<string> routeStations = route.GetPath();
+        List<string> routeStations = route.GetTargetPath();
         for (int i = 0; i < routeStations.Count - 1; i++)
         {
             cost += CostFunction(routeStations[i], routeStations[i+1]);
@@ -144,11 +144,21 @@ public class Network
         return cost;
     }
 
+    public virtual TimeSpan TravelTime(Route route)
+    {
+        return new TimeSpan(0,0,CostFunction(route));
+    }
+    
+    public virtual TimeSpan TravelTime(string startId, string endId)
+    {
+        return new TimeSpan(0,0,CostFunction(startId, endId));
+    }
+
     // convert route naptan IDs into a string for readability
-    public string RouteToStringStationSeq(IRoute route)
+    public string RouteToStringStationSeq(Route route)
     {
         StringBuilder output = new StringBuilder();
-        List<string> stationIDs = route.GetPath();
+        List<string> stationIDs = route.GetTargetPath();
         for (int i = 0; i < stationIDs.Count(); i++)
         {
             output.Append($"{_stations[stationIDs[i]].Name.Replace(" Underground Station", "")}, ");
@@ -157,11 +167,17 @@ public class Network
         return output.ToString();
     }
     
-    public virtual void Swap(IRoute route, int idxA, int idxB)
+    public virtual void Swap(Route route, int idxA, int idxB)
     {
-        List<string> stations = route.GetPath();
+        List<string> stations = route.GetTargetPath();
         string temp = stations[idxA];
         stations[idxA] = stations[idxB];
         stations[idxB] = temp;
+        
+        // update the route's length (time taken)
+        route.UpdateDuration(TravelTime(route));
+        
+        // update the route's cost (unitless value based on number of factors)
+        route.UpdateCost(CostFunction(route));
     }
 }

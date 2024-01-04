@@ -4,5 +4,5 @@ namespace RouteSolver;
 
 public interface ISolver
 {
-    public IRoute Solve(Network network);
+    public Route Solve(Network network);
 }

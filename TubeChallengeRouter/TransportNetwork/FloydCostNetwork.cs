@@ -50,7 +50,7 @@ public class FloydCostNetwork : Network
         {
             foreach (Link link in station.GetLinks())
             {
-                _costMatrix[station.NaptanId][link.Destination.NaptanId] = (int)link.Duration.Value.TotalMinutes;
+                _costMatrix[station.NaptanId][link.Destination.NaptanId] = (int)link.Duration.Value.TotalSeconds;
             }
         }
         logger.Debug("Links populated");

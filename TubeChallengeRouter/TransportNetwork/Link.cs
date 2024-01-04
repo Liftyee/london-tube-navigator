@@ -79,4 +79,13 @@ public class Link
 
         return false;
     }
+
+    public int GetCost() // cost is duration in seconds
+    {
+        if (Duration is null)
+        {
+            throw new InvalidOperationException("Duration is null");
+        }
+        return (int)Duration.Value.TotalSeconds;
+    }
 }

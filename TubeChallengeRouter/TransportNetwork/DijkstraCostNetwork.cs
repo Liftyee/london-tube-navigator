@@ -1,8 +1,27 @@
+using PriorityQueue;
+
 namespace TransportNetwork;
 using Serilog;
 
 public class DijkstraCostNetwork : Network
 {
+    private readonly struct DijkstraNode : IComparable<DijkstraNode>
+    {
+        public readonly string StationID;
+        public readonly int Cost;
+
+        public int CompareTo(DijkstraNode other)
+        {
+            return Cost.CompareTo(other.Cost);
+        }
+        
+        public DijkstraNode(string stationID, int cost)
+        {
+            StationID = stationID;
+            Cost = cost;
+        }
+    }
+    
     private Dictionary<string, Dictionary<string, int?>> _costCache;
     
     public DijkstraCostNetwork(ILogger logger) : base(logger)
@@ -31,6 +50,10 @@ public class DijkstraCostNetwork : Network
     }
     public override int CostFunction(string startId, string endId)
     {
+        if (_stations[startId].HasLink(endId))
+        {
+            return _stations[startId].CostTo(endId);
+        }
         // first, lookup in cache to see if we have calculated it before
         if (_costCache[startId][endId] is not null)
         {
@@ -44,6 +67,31 @@ public class DijkstraCostNetwork : Network
 
     private int DijkstraLookup(string startId, string endId)
     {
-        throw new NotImplementedException("Implement Dijkstra algorithm here using my prio queue algo");
+        Dictionary<string, string> prev = new();
+        PriorityQueue<DijkstraNode>
+            nextNodes = new PriorityQueue<DijkstraNode>(_stations.Count + 20, Priority.Smallest);
+        nextNodes.Insert(new DijkstraNode(startId, 0));
+        while (nextNodes.Count > 0)
+        {
+            DijkstraNode minCostNode = nextNodes.Pop();
+            if (minCostNode.StationID == endId)
+            {
+                return minCostNode.Cost;
+            }
+            foreach (Link link in _stations[minCostNode.StationID].GetLinks())
+            {
+                int costToNeighbour = link.GetCost();
+                int newCost = minCostNode.Cost + costToNeighbour;
+                if (_costCache[minCostNode.StationID][link.Destination.NaptanId] is null ||
+                    newCost < _costCache[minCostNode.StationID][link.Destination.NaptanId])
+                {
+                    _costCache[minCostNode.StationID][link.Destination.NaptanId] = newCost;
+                    prev[link.Destination.NaptanId] = minCostNode.StationID;
+                    nextNodes.Insert(new DijkstraNode(link.Destination.NaptanId, newCost));
+                }
+            }
+        }
+        // TODO: make a custom exception
+        throw new ArgumentException($"No route found between {startId} and {endId}");
     }
 }

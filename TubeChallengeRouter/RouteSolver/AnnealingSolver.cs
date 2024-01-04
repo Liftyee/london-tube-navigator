@@ -13,14 +13,15 @@ public class AnnealingSolver : ISolver
         this.logger = logger;
     }
     
-    public IRoute Solve(Network net)
+    public Route Solve(Network net)
     {
         Stopwatch perfTimer = Stopwatch.StartNew();
         // generate a random route
-        IRoute route = net.GenerateRandomRoute();
+        Route route = net.GenerateRandomRoute();
         logger.Debug("Random route: {A}",route.ToString());
 
-        Debug.Assert(route.Duration().TotalMinutes == net.CostFunction(route));
+        // TODO: move this assert into a unit test
+        Debug.Assert(route.Duration.TotalSeconds == net.CostFunction(route));
 
         // this function lets me deduplicate the logic later
         static bool AcceptSolution(int oldCost, int newCost, double temperature, Random generator)
@@ -47,8 +48,8 @@ public class AnnealingSolver : ISolver
             // pick a random pair of stations to swap
             do
             {
-                randomA = randomGenerator.Next(0, route.Count());
-                randomB = randomGenerator.Next(0, route.Count());
+                randomA = randomGenerator.Next(0, route.Count);
+                randomB = randomGenerator.Next(0, route.Count);
             } while (randomA == randomB);
 
             oldCost = net.CostFunction(route);
@@ -57,9 +58,8 @@ public class AnnealingSolver : ISolver
 
             if (AcceptSolution(oldCost, newCost, Temperature, randomGenerator))
             {
-                // accept the change
+                // accept the change (duration has already been updated by the swap)
                 loopsSinceLastAccept = 0;
-                route.UpdateLength(newCost);
             }
             else
             {

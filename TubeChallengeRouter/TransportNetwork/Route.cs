@@ -1,48 +1,35 @@
 namespace TransportNetwork;
 
-public class Route : IRoute
+// HACK: class name temporarily changed
+public class Route// : IRoute
 {
     internal List<string> targetStations;
     internal List<List<string>> intermediateStations;
-    private TimeSpan Length;
+    private TimeSpan _duration;
+    private int _cost;
+    public int Count => targetStations.Count;
+    public int Cost => _cost;
+    public TimeSpan Duration => _duration;
     
-    public Route(List<string> stations, TimeSpan length)
+    public Route(List<string> stations, TimeSpan duration)
     {
         targetStations = stations;
-        Length = length;
+        _duration = duration;
     }
-
-    public Route(List<string> stations, int minutes) : this(stations, new TimeSpan(0, minutes, 0))
-    { }
-
-    public TimeSpan Duration()
-    {
-        return Length;
-    }
-
-    public string GetStart()
-    {
-        throw new NotImplementedException();
-    }
-
-    public string GetEnd()
-    {
-        throw new NotImplementedException();
-    }
-
+    
     public override string ToString()
     {
         if (targetStations.Count < 20)
         {
-            return $"Route with {targetStations.Count} stations and length {Length.TotalMinutes} minutes: {String.Join(", ", targetStations)}";
+            return $"Route with {targetStations.Count} stations and length {_duration.TotalMinutes} minutes: {String.Join(", ", targetStations)}";
         }
         else // don't return all the stations if there are too many
         {
-            return $"Route with {targetStations.Count} stations and length {Length.TotalMinutes} minutes"; 
+            return $"Route with {targetStations.Count} stations and length {_duration.TotalMinutes} minutes"; 
         }
     }
 
-    public List<string> GetPath()
+    public List<string> GetTargetPath()
     {
         return targetStations;
     }
@@ -52,13 +39,13 @@ public class Route : IRoute
         return intermediateStations[segmentIndex];
     }
     
-    public int Count()
+    public void UpdateDuration(TimeSpan newDuration)
     {
-        return targetStations.Count;
+        _duration = newDuration;
     }
-    
-    public void UpdateLength(int newLength)
+
+    public void UpdateCost(int newCost)
     {
-        Length = new TimeSpan(0, newLength, 0);
+        _cost = newCost;
     }
 }
