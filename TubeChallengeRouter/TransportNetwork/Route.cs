@@ -10,11 +10,21 @@ public class Route// : IRoute
     public int Count => targetStations.Count;
     public int Cost => _cost;
     public TimeSpan Duration => _duration;
-    
-    public Route(List<string> stations, TimeSpan duration)
+
+    public Route(List<string> stations, TimeSpan duration, int cost, List<List<string>>? intermediateStations = null)
     {
         targetStations = stations;
         _duration = duration;
+        _cost = cost;
+        
+        if (intermediateStations is null)
+        {
+            this.intermediateStations = new List<List<string>>();
+        }
+        else
+        {
+            this.intermediateStations = intermediateStations;
+        }
     }
     
     public override string ToString()
@@ -37,6 +47,11 @@ public class Route// : IRoute
     internal List<string> GetIntermediateStations(int segmentIndex)
     {
         return intermediateStations[segmentIndex];
+    }
+    
+    internal List<List<string>> GetIntermediateStations()
+    {
+        return intermediateStations;
     }
     
     public void UpdateDuration(TimeSpan newDuration)

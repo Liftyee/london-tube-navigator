@@ -32,10 +32,10 @@ public class DijkstraCostNetwork : Network
     {
         // initialise cost matrix to all null's
         _costCache = new Dictionary<string, Dictionary<string, int?>>();
-        foreach (string stationID in _stations.Keys)
+        foreach (string stationID in Stations.Keys)
         {
             _costCache[stationID] = new Dictionary<string, int?>();
-            foreach (string station2ID in _stations.Keys)
+            foreach (string station2ID in Stations.Keys)
             {
                 if (stationID != station2ID)
                 {
@@ -48,11 +48,11 @@ public class DijkstraCostNetwork : Network
             }
         }
     }
-    public override int CostFunction(string startId, string endId)
+    public override int CostFunction(string startId, string endId, List<string>? lineIDs=null)
     {
-        if (_stations[startId].HasLink(endId))
+        if (Stations[startId].HasLink(endId))
         {
-            return _stations[startId].CostTo(endId);
+            return Stations[startId].CostTo(endId);
         }
         // first, lookup in cache to see if we have calculated it before
         if (_costCache[startId][endId] is not null)
@@ -69,11 +69,11 @@ public class DijkstraCostNetwork : Network
     {
         Dictionary<string, string> prev = new();
         PriorityQueue<DijkstraNode>
-            nextNodes = new PriorityQueue<DijkstraNode>(_stations.Count + 20, Priority.Smallest);
+            nextNodes = new PriorityQueue<DijkstraNode>(Stations.Count + 20, Priority.Smallest);
         nextNodes.Insert(new DijkstraNode(startId, 0));
         HashSet<string> visited = new();
         Dictionary<string, int> dist = new();
-        foreach (string stationId in _stations.Keys)
+        foreach (string stationId in Stations.Keys)
         {
             dist[stationId] = INF_COST;
         }
@@ -82,7 +82,7 @@ public class DijkstraCostNetwork : Network
         while (nextNodes.Count > 0)
         {
             DijkstraNode minCostNode = nextNodes.Pop();
-            foreach (Link link in _stations[minCostNode.StationID].GetLinks())
+            foreach (Link link in Stations[minCostNode.StationID].GetLinks())
             {
                 if (visited.Contains(link.Destination.NaptanId)) continue;
                 int costToNeighbour = link.GetCost();
@@ -100,7 +100,7 @@ public class DijkstraCostNetwork : Network
                 return minCostNode.Cost;
             }
         }
-        logger.Debug("No more stations to visit");
+        Logger.Debug("No more stations to visit");
         // TODO: make a custom exception
         throw new ArgumentException($"No route found between {startId} and {endId}");
     }

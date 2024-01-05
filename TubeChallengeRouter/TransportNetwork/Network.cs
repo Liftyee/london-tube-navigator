@@ -1,31 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using Serilog.Debugging;
-using System.Collections.Specialized;
-
+﻿using System.Text;
 namespace TransportNetwork;
-using IO.Swagger.Model;
 using Serilog;
 
 [Serializable]
 public class Network
 {
-    protected Dictionary<string, Station> _stations;
-    protected Dictionary<int, Line> _lines;
-    protected ILogger logger;
+    protected Dictionary<string, Station> Stations;
+    protected Dictionary<int, Line> Lines;
+    protected ILogger Logger;
     protected const int INF_COST = 1000000000; // use 1 billion instead of MaxValue to avoid overflow issues
-    public int StationCount => _stations.Count;
-    protected int nEdges;
+    public int StationCount => Stations.Count;
+    protected int NEdges;
     
     public Network(ILogger logger)
     {
-        this.logger = logger;
-        _stations = new Dictionary<string, Station>();
-        _lines = new Dictionary<int, Line>();
+        this.Logger = logger;
+        Stations = new Dictionary<string, Station>();
+        Lines = new Dictionary<int, Line>();
     }
 
     internal virtual void Initialise()
@@ -35,12 +26,12 @@ public class Network
 
     public void AddStation(Station stationToAdd)
     {
-        _stations.Add(stationToAdd.NaptanId, stationToAdd);
+        Stations.Add(stationToAdd.NaptanId, stationToAdd);
     }
 
     public void AddStationByIdIfNotPresent(string naptanId)
     {
-        if (!this.HasStationByID(naptanId))
+        if (!this.HasStationById(naptanId))
         {
             this.AddStation(new Station(naptanId));
         }
@@ -48,7 +39,7 @@ public class Network
 
     public void AddStationByIdIfNotPresent(string naptanId, string name)
     {
-        if (!this.HasStationByID(naptanId))
+        if (!this.HasStationById(naptanId))
         {
             this.AddStation(new Station(naptanId, name));
         }
@@ -56,33 +47,33 @@ public class Network
     
     public void LinkStationsPartial(string startId, string endId, Dir direction, Line? line=null)
     {
-        Station startStation = _stations[startId];
-        Station endStation = _stations[endId];
+        Station startStation = Stations[startId];
+        Station endStation = Stations[endId];
         startStation.AddLink(new Link(startStation, endStation, line, direction));
-        nEdges++;
+        NEdges++;
     }
     
     public void UpdateLink(string startId, string endId, TimeSpan newTime)
     {
-        Station startStation = _stations[startId];
+        Station startStation = Stations[startId];
         startStation.ModifyLink(endId, newTime);
     }
 
-    public bool HasStationByID(string ID)
+    public bool HasStationById(string ID)
     {
-        return _stations.Keys.Contains(ID);
+        return Stations.Keys.Contains(ID);
     }
     
     public override string ToString()
     {
-        return $"Network with {_stations.Count} stations and {_lines.Count} lines ({nEdges} directed edges)";
+        return $"Network with {Stations.Count} stations and {Lines.Count} lines ({NEdges} directed edges)";
     }
 
     public string EnumerateStations()
     {
         // output each station and its links
         StringBuilder output = new StringBuilder();
-        foreach (KeyValuePair<string, Station> station in _stations)
+        foreach (KeyValuePair<string, Station> station in Stations)
         {
             output.Append($"Station {station.Key} has links to: ");
             foreach (Link link in station.Value.GetLinks())
@@ -96,11 +87,11 @@ public class Network
         return output.ToString();
     }
 
-    public virtual int CostFunction(string startId, string endId)
+    public virtual int CostFunction(string startId, string endId, List<string>? path=null)
     {
-        if (_stations[startId].HasLink(endId))
+        if (Stations[startId].HasLink(endId))
         {
-            return (int)_stations[startId].GetLinkByDestId(endId).Duration.Value.TotalSeconds;
+            return (int)Stations[startId].GetLinkByDestId(endId).Duration.TotalSeconds;
         }
         else
         {
@@ -113,23 +104,28 @@ public class Network
     {
         List<string> stationIDs = new List<string>(); 
         HashSet<string> visitedIDs = new HashSet<string>();
-        int cost = 0;
+        int totalCost = 0;
+        List<List<string>> intermediateStations = new List<List<string>>();
         
-        while (visitedIDs.Count < _stations.Count)
+        while (visitedIDs.Count < Stations.Count)
         {
-            string nextID = _stations.Keys.ElementAt(new Random().Next(_stations.Count));
+            string nextID = Stations.Keys.ElementAt(new Random().Next(Stations.Count));
             if (!visitedIDs.Contains(nextID))
             {
                 stationIDs.Add(nextID);
                 visitedIDs.Add(nextID);
+                List<string> pathToNext = new List<string>();
                 if (visitedIDs.Count > 1)
                 {
-                    cost += CostFunction(stationIDs[^2], stationIDs[^1]);
+                    totalCost += CostFunction(stationIDs[^2], stationIDs[^1], pathToNext);
                 }
+                intermediateStations.Add(pathToNext);
             }
         }
+        
+        Route result = new Route(stationIDs, new TimeSpan(0, 0, totalCost), totalCost, intermediateStations);
 
-        return new Route(stationIDs, new TimeSpan(0, 0, cost));
+        return result;
     }
 
     public virtual int CostFunction(Route route)
@@ -161,7 +157,7 @@ public class Network
         List<string> stationIDs = route.GetTargetPath();
         for (int i = 0; i < stationIDs.Count(); i++)
         {
-            output.Append($"{_stations[stationIDs[i]].Name.Replace(" Underground Station", "")}, ");
+            output.Append($"{Stations[stationIDs[i]].Name.Replace(" Underground Station", "")}, ");
         }
 
         return output.ToString();
@@ -170,6 +166,7 @@ public class Network
     public virtual void Swap(Route route, int idxA, int idxB)
     {
         List<string> stations = route.GetTargetPath();
+        List<List<string>> interStations = route.GetIntermediateStations();
         
         TimeSpan updatedTime = route.Duration;
         int updatedCost = route.Cost;
@@ -202,10 +199,10 @@ public class Network
         if (idxB < route.Count-1) updatedTime += TravelTime(stations[idxB], stations[idxB + 1]);
         
         // and costs too
-        if (idxA > 0)             updatedCost += CostFunction(stations[idxA - 1], stations[idxA]);
-        if (idxA < route.Count-1) updatedCost += CostFunction(stations[idxA], stations[idxA + 1]);
-        if (idxB > 0)             updatedCost += CostFunction(stations[idxB - 1], stations[idxB]);
-        if (idxB < route.Count-1) updatedCost += CostFunction(stations[idxB], stations[idxB + 1]);
+        if (idxA > 0)             updatedCost += CostFunction(stations[idxA - 1], stations[idxA], interStations[idxA-1]);
+        if (idxA < route.Count-1) updatedCost += CostFunction(stations[idxA], stations[idxA + 1], interStations[idxA]);
+        if (idxB > 0)             updatedCost += CostFunction(stations[idxB - 1], stations[idxB], interStations[idxB-1]);
+        if (idxB < route.Count-1) updatedCost += CostFunction(stations[idxB], stations[idxB + 1], interStations[idxB]);
         
         // update the route's length (time taken)
         route.UpdateDuration(updatedTime);

@@ -17,21 +17,21 @@ public class FloydCostNetwork : Network
     {
         PreprocessFloyd();
     }
-    public override int CostFunction(string startId, string endId)
+    public override int CostFunction(string startId, string endId, List<string>? lineIDs=null)
     {
         return _costMatrix[startId][endId];
     }
     
     private void PreprocessFloyd()
     {
-        logger.Information("Preprocessing Floyd-Warshall weights...");
+        Logger.Information("Preprocessing Floyd-Warshall weights...");
         
         // initialise cost matrix
         _costMatrix = new Dictionary<string, Dictionary<string, int>>();
-        foreach (string stationID in _stations.Keys)
+        foreach (string stationID in Stations.Keys)
         {
             _costMatrix[stationID] = new Dictionary<string, int>();
-            foreach (string station2ID in _stations.Keys)
+            foreach (string station2ID in Stations.Keys)
             {
                 if (stationID != station2ID)
                 {
@@ -43,17 +43,17 @@ public class FloydCostNetwork : Network
                 }
             }
         }
-        logger.Debug("Cost matrix initialised");
+        Logger.Debug("Cost matrix initialised");
         
         // populate cost matrix with weights of links for each station
-        foreach (Station station in _stations.Values)
+        foreach (Station station in Stations.Values)
         {
             foreach (Link link in station.GetLinks())
             {
-                _costMatrix[station.NaptanId][link.Destination.NaptanId] = (int)link.Duration.Value.TotalSeconds;
+                _costMatrix[station.NaptanId][link.Destination.NaptanId] = (int)link.Duration.TotalSeconds;
             }
         }
-        logger.Debug("Links populated");
+        Logger.Debug("Links populated");
         
         // track algo performance
         Stopwatch timer = new Stopwatch();
@@ -61,11 +61,11 @@ public class FloydCostNetwork : Network
         int nIterations = 0;
         
         // run Floyd-Warshall
-        foreach (string k in _stations.Keys)
+        foreach (string k in Stations.Keys)
         {
-            foreach (string i in _stations.Keys)
+            foreach (string i in Stations.Keys)
             {
-                foreach (string j in _stations.Keys)
+                foreach (string j in Stations.Keys)
                 {
                     // NOTE: the right side of this comparison is prone to overflowing!
                     if (_costMatrix[i][j] > (_costMatrix[i][k] + _costMatrix[k][j]))
@@ -73,7 +73,7 @@ public class FloydCostNetwork : Network
                         _costMatrix[i][j] = _costMatrix[i][k] + _costMatrix[k][j];
                         if (_costMatrix[i][j] < 0)
                         {
-                            logger.Fatal("Tried to set negative cost between {A} and {B} ({C})", i, j, _costMatrix[i][j]);
+                            Logger.Fatal("Tried to set negative cost between {A} and {B} ({C})", i, j, _costMatrix[i][j]);
                             throw new OverflowException($"Overflow when calculating cost between {i} and {j} via {k}! {_costMatrix[i][j]}");
                         }
                     }
@@ -84,21 +84,21 @@ public class FloydCostNetwork : Network
         }
 
         // only print the cost matrix into debug if it's small enough
-        if (_stations.Count <= 10)
+        if (Stations.Count <= 10)
         {
-            logger.Debug(EnumerateCostMatrix());
+            Logger.Debug(EnumerateCostMatrix());
         }
         
-        logger.Information("Done! Took {A}ms ({B} iterations)", timer.ElapsedMilliseconds, nIterations);
+        Logger.Information("Done! Took {A}ms ({B} iterations)", timer.ElapsedMilliseconds, nIterations);
     }
     
     public string EnumerateCostMatrix()
     {
         StringBuilder output = new StringBuilder();
-        foreach (string stationID in _stations.Keys)
+        foreach (string stationID in Stations.Keys)
         {
             output.Append($"Station {stationID} has cost matrix: ");
-            foreach (string station2ID in _stations.Keys)
+            foreach (string station2ID in Stations.Keys)
             {
                 output.Append($"{station2ID} ({_costMatrix[stationID][station2ID]}), ");
             }

@@ -24,7 +24,7 @@ public class Link
     private ITimetable? TrainTimes;
     public readonly Station Destination;
     public readonly Station Origin;
-    internal TimeSpan? Duration { get; private set; }
+    internal TimeSpan Duration { get; private set; }
     public Line? Line { get; private set; }
     public Dir Dir { get; private set; }
     private bool _durationEdited;
@@ -80,12 +80,8 @@ public class Link
         return false;
     }
 
-    public int GetCost() // cost is duration in seconds
+    public int GetCost() // cost is duration in seconds (for now...)
     {
-        if (Duration is null)
-        {
-            throw new InvalidOperationException("Duration is null");
-        }
-        return (int)Duration.Value.TotalSeconds;
+        return (int)Duration.TotalSeconds;
     }
 }
