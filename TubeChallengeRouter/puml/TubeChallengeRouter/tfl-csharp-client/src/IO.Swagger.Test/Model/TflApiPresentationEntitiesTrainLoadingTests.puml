@@ -1,0 +1,14 @@
+@startuml
+class TflApiPresentationEntitiesTrainLoadingTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesTrainLoadingInstanceTest() : void
+    + LineTest() : void
+    + LineDirectionTest() : void
+    + PlatformDirectionTest() : void
+    + DirectionTest() : void
+    + NaptanToTest() : void
+    + TimeSliceTest() : void
+    + ValueTest() : void
+}
+@enduml

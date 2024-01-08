@@ -1,0 +1,5 @@
+@startuml
+interface ISolver {
+    + Solve(network:Network) : Route
+}
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class TflApiPresentationEntitiesCoordinateTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesCoordinateInstanceTest() : void
+    + LongitudeTest() : void
+    + LatitudeTest() : void
+    + EastingTest() : void
+    + NorthingTest() : void
+    + XCoordTest() : void
+    + YCoordTest() : void
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class TflApiCommonDateRangeTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiCommonDateRangeInstanceTest() : void
+    + StartDateTest() : void
+    + EndDateTest() : void
+}
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class AnnealingSolver {
+    + AnnealingSolver(logger:ILogger)
+    + Solve(net:Network) : Route
+}
+ISolver <|-- AnnealingSolver
+@enduml

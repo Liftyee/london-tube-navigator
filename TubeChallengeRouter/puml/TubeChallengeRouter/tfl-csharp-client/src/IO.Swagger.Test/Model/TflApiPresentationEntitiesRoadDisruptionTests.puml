@@ -1,0 +1,38 @@
+@startuml
+class TflApiPresentationEntitiesRoadDisruptionTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesRoadDisruptionInstanceTest() : void
+    + IdTest() : void
+    + UrlTest() : void
+    + PointTest() : void
+    + SeverityTest() : void
+    + OrdinalTest() : void
+    + CategoryTest() : void
+    + SubCategoryTest() : void
+    + CommentsTest() : void
+    + CurrentUpdateTest() : void
+    + CurrentUpdateDateTimeTest() : void
+    + CorridorIdsTest() : void
+    + StartDateTimeTest() : void
+    + EndDateTimeTest() : void
+    + LastModifiedTimeTest() : void
+    + LevelOfInterestTest() : void
+    + LocationTest() : void
+    + StatusTest() : void
+    + GeographyTest() : void
+    + GeometryTest() : void
+    + StreetsTest() : void
+    + IsProvisionalTest() : void
+    + HasClosuresTest() : void
+    + LinkTextTest() : void
+    + LinkUrlTest() : void
+    + RoadProjectTest() : void
+    + PublishStartDateTest() : void
+    + PublishEndDateTest() : void
+    + TimeFrameTest() : void
+    + RoadDisruptionLinesTest() : void
+    + RoadDisruptionImpactAreasTest() : void
+    + RecurringSchedulesTest() : void
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesValidityPeriodTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesValidityPeriodInstanceTest() : void
+    + FromDateTest() : void
+    + ToDateTest() : void
+    + IsNowTest() : void
+}
+@enduml

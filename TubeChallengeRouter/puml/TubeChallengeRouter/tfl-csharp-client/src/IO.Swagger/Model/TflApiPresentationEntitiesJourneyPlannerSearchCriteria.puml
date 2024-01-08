@@ -1,0 +1,22 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerSearchCriteria <<partial>> {
+    + DateTimeType : DateTimeTypeEnum? <<get>> <<set>>
+    + TflApiPresentationEntitiesJourneyPlannerSearchCriteria(dateTime:DateTime?, dateTimeType:DateTimeTypeEnum?, timeAdjustments:TflApiPresentationEntitiesJourneyPlannerTimeAdjustments)
+    + DateTime : DateTime? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesJourneyPlannerSearchCriteria) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+enum DateTimeTypeEnum {
+    Arriving= 1,
+    Departing= 2,
+}
+"IEquatable`1" "<TflApiPresentationEntitiesJourneyPlannerSearchCriteria>" <|-- TflApiPresentationEntitiesJourneyPlannerSearchCriteria
+IValidatableObject <|-- TflApiPresentationEntitiesJourneyPlannerSearchCriteria
+TflApiPresentationEntitiesJourneyPlannerSearchCriteria --> "TimeAdjustments" TflApiPresentationEntitiesJourneyPlannerTimeAdjustments
+TflApiPresentationEntitiesJourneyPlannerSearchCriteria +-- DateTimeTypeEnum
+@enduml

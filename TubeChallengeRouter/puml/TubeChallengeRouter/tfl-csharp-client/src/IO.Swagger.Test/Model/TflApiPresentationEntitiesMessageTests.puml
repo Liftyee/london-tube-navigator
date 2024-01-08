@@ -1,0 +1,12 @@
+@startuml
+class TflApiPresentationEntitiesMessageTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesMessageInstanceTest() : void
+    + BulletOrderTest() : void
+    + HeaderTest() : void
+    + MessageTextTest() : void
+    + LinkTextTest() : void
+    + UrlTest() : void
+}
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+class TflApiPresentationEntitiesTimetableResponse <<partial>> {
+    + TflApiPresentationEntitiesTimetableResponse(lineId:string, lineName:string, direction:string, pdfUrl:string, stations:List<TflApiPresentationEntitiesMatchedStop>, stops:List<TflApiPresentationEntitiesMatchedStop>, timetable:TflApiPresentationEntitiesTimetable, disambiguation:TflApiPresentationEntitiesTimetablesDisambiguation, statusErrorMessage:string)
+    + LineId : string <<get>> <<set>>
+    + LineName : string <<get>> <<set>>
+    + Direction : string <<get>> <<set>>
+    + PdfUrl : string <<get>> <<set>>
+    + StatusErrorMessage : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesTimetableResponse) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesTimetableResponse>" <|-- TflApiPresentationEntitiesTimetableResponse
+IValidatableObject <|-- TflApiPresentationEntitiesTimetableResponse
+TflApiPresentationEntitiesTimetableResponse --> "Stations<TflApiPresentationEntitiesMatchedStop>" "List`1"
+TflApiPresentationEntitiesTimetableResponse --> "Stops<TflApiPresentationEntitiesMatchedStop>" "List`1"
+TflApiPresentationEntitiesTimetableResponse --> "Timetable" TflApiPresentationEntitiesTimetable
+TflApiPresentationEntitiesTimetableResponse --> "Disambiguation" TflApiPresentationEntitiesTimetablesDisambiguation
+@enduml

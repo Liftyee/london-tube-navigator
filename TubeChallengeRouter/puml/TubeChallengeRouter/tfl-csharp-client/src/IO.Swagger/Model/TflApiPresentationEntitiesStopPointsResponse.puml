@@ -1,0 +1,21 @@
+@startuml
+class TflApiPresentationEntitiesStopPointsResponse <<partial>> {
+    + TflApiPresentationEntitiesStopPointsResponse(centrePoint:List<double?>, stopPoints:List<TflApiPresentationEntitiesStopPoint>, pageSize:int?, total:int?, page:int?)
+    + PageSize : int? <<get>> <<set>>
+    + Total : int? <<get>> <<set>>
+    + Page : int? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesStopPointsResponse) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesStopPointsResponse>" <|-- TflApiPresentationEntitiesStopPointsResponse
+IValidatableObject <|-- TflApiPresentationEntitiesStopPointsResponse
+TflApiPresentationEntitiesStopPointsResponse --> "CentrePoint<double?>" "List`1"
+TflApiPresentationEntitiesStopPointsResponse --> "StopPoints<TflApiPresentationEntitiesStopPoint>" "List`1"
+@enduml

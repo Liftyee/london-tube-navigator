@@ -1,0 +1,8 @@
+@startuml
+class OrderingTests {
+    + SetUp() : void
+    + MinQueue_OrdersSmallestFirst() : void
+    + MaxQueue_OrdersLargestFirst() : void
+    + Queue_HandlesDuplicates() : void
+}
+@enduml

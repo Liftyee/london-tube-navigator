@@ -1,0 +1,9 @@
+@startuml
+class TflApiPresentationEntitiesLineServiceTypeInfoTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesLineServiceTypeInfoInstanceTest() : void
+    + NameTest() : void
+    + UriTest() : void
+}
+@enduml

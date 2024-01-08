@@ -24,7 +24,7 @@ namespace TubeChallengeRouter
             logger.Information("Hello World! Logging is {Description}.","online");
 
             TestTubeGen();
-            TestTubeGenFloyd();
+            //TestTubeGenFloyd();
         }
         
         private static void TestAPI()
@@ -64,6 +64,12 @@ namespace TubeChallengeRouter
             ISolver solver = new AnnealingSolver(logger);
             Route route = solver.Solve(tube);
             logger.Debug("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
+            
+            // write route to a file
+            using (var file = new System.IO.FileStream("route.txt", System.IO.FileMode.Create))
+            {
+                tube.RouteDetailsToStream(route, file);
+            }
         }
         
         private static void TestTubeGenFloyd()

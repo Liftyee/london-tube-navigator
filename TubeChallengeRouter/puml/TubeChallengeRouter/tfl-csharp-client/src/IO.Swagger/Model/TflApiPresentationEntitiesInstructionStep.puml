@@ -1,0 +1,49 @@
+@startuml
+class TflApiPresentationEntitiesInstructionStep <<partial>> {
+    + SkyDirectionDescription : SkyDirectionDescriptionEnum? <<get>> <<set>>
+    + TrackType : TrackTypeEnum? <<get>> <<set>>
+    + TflApiPresentationEntitiesInstructionStep(description:string, turnDirection:string, streetName:string, distance:int?, cumulativeDistance:int?, skyDirection:int?, skyDirectionDescription:SkyDirectionDescriptionEnum?, cumulativeTravelTime:int?, latitude:double?, longitude:double?, pathAttribute:TflApiPresentationEntitiesPathAttribute, descriptionHeading:string, trackType:TrackTypeEnum?)
+    + Description : string <<get>> <<set>>
+    + TurnDirection : string <<get>> <<set>>
+    + StreetName : string <<get>> <<set>>
+    + Distance : int? <<get>> <<set>>
+    + CumulativeDistance : int? <<get>> <<set>>
+    + SkyDirection : int? <<get>> <<set>>
+    + CumulativeTravelTime : int? <<get>> <<set>>
+    + Latitude : double? <<get>> <<set>>
+    + Longitude : double? <<get>> <<set>>
+    + DescriptionHeading : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesInstructionStep) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+enum SkyDirectionDescriptionEnum {
+    North= 1,
+    NorthEast= 2,
+    East= 3,
+    SouthEast= 4,
+    South= 5,
+    SouthWest= 6,
+    West= 7,
+    NorthWest= 8,
+}
+enum TrackTypeEnum {
+    CycleSuperHighway= 1,
+    CanalTowpath= 2,
+    QuietRoad= 3,
+    ProvisionForCyclists= 4,
+    BusyRoads= 5,
+    None= 6,
+    PushBike= 7,
+    Quietway= 8,
+}
+"IEquatable`1" "<TflApiPresentationEntitiesInstructionStep>" <|-- TflApiPresentationEntitiesInstructionStep
+IValidatableObject <|-- TflApiPresentationEntitiesInstructionStep
+TflApiPresentationEntitiesInstructionStep --> "PathAttribute" TflApiPresentationEntitiesPathAttribute
+TflApiPresentationEntitiesInstructionStep +-- SkyDirectionDescriptionEnum
+TflApiPresentationEntitiesInstructionStep +-- TrackTypeEnum
+@enduml

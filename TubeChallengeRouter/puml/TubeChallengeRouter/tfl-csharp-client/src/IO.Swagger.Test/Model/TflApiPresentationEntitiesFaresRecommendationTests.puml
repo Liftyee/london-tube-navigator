@@ -1,0 +1,25 @@
+@startuml
+class TflApiPresentationEntitiesFaresRecommendationTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesFaresRecommendationInstanceTest() : void
+    + IdTest() : void
+    + RuleTest() : void
+    + RankTest() : void
+    + FareTypeTest() : void
+    + ProductTest() : void
+    + TicketTypeTest() : void
+    + TicketTimeTest() : void
+    + ProductTypeTest() : void
+    + DiscountCardTest() : void
+    + ZonesTest() : void
+    + CostTest() : void
+    + PriceDescriptionTest() : void
+    + PriceComparisonTest() : void
+    + RecommendedTopUpTest() : void
+    + NotesTest() : void
+    + KeyFeaturesTest() : void
+    + GettingYourTicketTest() : void
+    + SingleFareTest() : void
+}
+@enduml

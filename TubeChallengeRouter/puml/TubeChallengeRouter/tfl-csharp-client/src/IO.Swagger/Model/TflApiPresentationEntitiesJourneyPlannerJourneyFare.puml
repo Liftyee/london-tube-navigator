@@ -1,0 +1,19 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerJourneyFare <<partial>> {
+    + TflApiPresentationEntitiesJourneyPlannerJourneyFare(totalCost:int?, fares:List<TflApiPresentationEntitiesJourneyPlannerFare>, caveats:List<TflApiPresentationEntitiesJourneyPlannerFareCaveat>)
+    + TotalCost : int? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesJourneyPlannerJourneyFare) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesJourneyPlannerJourneyFare>" <|-- TflApiPresentationEntitiesJourneyPlannerJourneyFare
+IValidatableObject <|-- TflApiPresentationEntitiesJourneyPlannerJourneyFare
+TflApiPresentationEntitiesJourneyPlannerJourneyFare --> "Fares<TflApiPresentationEntitiesJourneyPlannerFare>" "List`1"
+TflApiPresentationEntitiesJourneyPlannerJourneyFare --> "Caveats<TflApiPresentationEntitiesJourneyPlannerFareCaveat>" "List`1"
+@enduml

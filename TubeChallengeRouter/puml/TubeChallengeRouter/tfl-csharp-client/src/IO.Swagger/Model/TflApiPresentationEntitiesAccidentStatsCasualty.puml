@@ -1,0 +1,19 @@
+@startuml
+class TflApiPresentationEntitiesAccidentStatsCasualty <<partial>> {
+    + TflApiPresentationEntitiesAccidentStatsCasualty(age:int?, _class:string, severity:string, mode:string, ageBand:string)
+    + Age : int? <<get>> <<set>>
+    + Class : string <<get>> <<set>>
+    + Severity : string <<get>> <<set>>
+    + Mode : string <<get>> <<set>>
+    + AgeBand : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesAccidentStatsCasualty) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesAccidentStatsCasualty>" <|-- TflApiPresentationEntitiesAccidentStatsCasualty
+IValidatableObject <|-- TflApiPresentationEntitiesAccidentStatsCasualty
+@enduml

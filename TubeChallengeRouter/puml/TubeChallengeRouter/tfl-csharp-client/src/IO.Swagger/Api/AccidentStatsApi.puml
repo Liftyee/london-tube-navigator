@@ -1,0 +1,18 @@
+@startuml
+interface IAccidentStatsApi {
+}
+class AccidentStatsApi <<partial>> {
+    + AccidentStatsApi(basePath:String)
+    + AccidentStatsApi(configuration:IO.Swagger.Client.Configuration)
+    + GetBasePath() : String
+    + SetBasePath(basePath:String) : void
+    + DefaultHeader() : IDictionary<String, String>
+    + AddDefaultHeader(key:string, value:string) : void
+    + AccidentStatsGet(year:int?) : List<TflApiPresentationEntitiesAccidentStatsAccidentDetail>
+    + AccidentStatsGetWithHttpInfo(year:int?) : ApiResponse< List<TflApiPresentationEntitiesAccidentStatsAccidentDetail> >
+    + <<async>> AccidentStatsGetAsync(year:int?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesAccidentStatsAccidentDetail>>
+    + <<async>> AccidentStatsGetAsyncWithHttpInfo(year:int?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesAccidentStatsAccidentDetail>>>
+}
+IApiAccessor <|-- IAccidentStatsApi
+IAccidentStatsApi <|-- AccidentStatsApi
+@enduml

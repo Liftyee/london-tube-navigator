@@ -1,0 +1,19 @@
+@startuml
+class TflApiPresentationEntitiesOrderedRoute <<partial>> {
+    + TflApiPresentationEntitiesOrderedRoute(name:string, naptanIds:List<string>, serviceType:string)
+    + Name : string <<get>> <<set>>
+    + ServiceType : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesOrderedRoute) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesOrderedRoute>" <|-- TflApiPresentationEntitiesOrderedRoute
+IValidatableObject <|-- TflApiPresentationEntitiesOrderedRoute
+TflApiPresentationEntitiesOrderedRoute --> "NaptanIds<string>" "List`1"
+@enduml

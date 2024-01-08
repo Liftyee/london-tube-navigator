@@ -1,0 +1,17 @@
+@startuml
+class TflApiPresentationEntitiesFaresFaresMode <<partial>> {
+    + TflApiPresentationEntitiesFaresFaresMode(id:int?, name:string, description:string)
+    + Id : int? <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesFaresFaresMode) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesFaresFaresMode>" <|-- TflApiPresentationEntitiesFaresFaresMode
+IValidatableObject <|-- TflApiPresentationEntitiesFaresFaresMode
+@enduml

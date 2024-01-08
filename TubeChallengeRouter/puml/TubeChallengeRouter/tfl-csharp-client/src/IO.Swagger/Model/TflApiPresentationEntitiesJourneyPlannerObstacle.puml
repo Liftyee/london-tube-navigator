@@ -1,0 +1,18 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerObstacle <<partial>> {
+    + TflApiPresentationEntitiesJourneyPlannerObstacle(type:string, incline:string, stopId:int?, position:string)
+    + Type : string <<get>> <<set>>
+    + Incline : string <<get>> <<set>>
+    + StopId : int? <<get>> <<set>>
+    + Position : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesJourneyPlannerObstacle) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesJourneyPlannerObstacle>" <|-- TflApiPresentationEntitiesJourneyPlannerObstacle
+IValidatableObject <|-- TflApiPresentationEntitiesJourneyPlannerObstacle
+@enduml

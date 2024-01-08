@@ -1,0 +1,12 @@
+@startuml
+class SearchApiTests {
+    + Init() : void
+    + Cleanup() : void
+    + InstanceTest() : void
+    + SearchBusSchedulesTest() : void
+    + SearchGetTest() : void
+    + SearchMetaCategoriesTest() : void
+    + SearchMetaSearchProvidersTest() : void
+    + SearchMetaSortsTest() : void
+}
+@enduml

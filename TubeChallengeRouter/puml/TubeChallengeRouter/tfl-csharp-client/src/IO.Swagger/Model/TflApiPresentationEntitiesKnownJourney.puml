@@ -1,0 +1,17 @@
+@startuml
+class TflApiPresentationEntitiesKnownJourney <<partial>> {
+    + TflApiPresentationEntitiesKnownJourney(hour:string, minute:string, intervalId:int?)
+    + Hour : string <<get>> <<set>>
+    + Minute : string <<get>> <<set>>
+    + IntervalId : int? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesKnownJourney) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesKnownJourney>" <|-- TflApiPresentationEntitiesKnownJourney
+IValidatableObject <|-- TflApiPresentationEntitiesKnownJourney
+@enduml

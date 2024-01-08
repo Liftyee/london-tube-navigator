@@ -1,0 +1,23 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerItineraryResult <<partial>> {
+    + TflApiPresentationEntitiesJourneyPlannerItineraryResult(journeys:List<TflApiPresentationEntitiesJourneyPlannerJourney>, lines:List<TflApiPresentationEntitiesLine>, cycleHireDockingStationData:TflApiPresentationEntitiesJourneyPlannerJourneyPlannerCycleHireDockingStationData, stopMessages:List<string>, recommendedMaxAgeMinutes:int?, searchCriteria:TflApiPresentationEntitiesJourneyPlannerSearchCriteria, journeyVector:TflApiPresentationEntitiesJourneyPlannerJourneyVector)
+    + RecommendedMaxAgeMinutes : int? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesJourneyPlannerItineraryResult) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesJourneyPlannerItineraryResult>" <|-- TflApiPresentationEntitiesJourneyPlannerItineraryResult
+IValidatableObject <|-- TflApiPresentationEntitiesJourneyPlannerItineraryResult
+TflApiPresentationEntitiesJourneyPlannerItineraryResult --> "Journeys<TflApiPresentationEntitiesJourneyPlannerJourney>" "List`1"
+TflApiPresentationEntitiesJourneyPlannerItineraryResult --> "Lines<TflApiPresentationEntitiesLine>" "List`1"
+TflApiPresentationEntitiesJourneyPlannerItineraryResult --> "CycleHireDockingStationData" TflApiPresentationEntitiesJourneyPlannerJourneyPlannerCycleHireDockingStationData
+TflApiPresentationEntitiesJourneyPlannerItineraryResult --> "StopMessages<string>" "List`1"
+TflApiPresentationEntitiesJourneyPlannerItineraryResult --> "SearchCriteria" TflApiPresentationEntitiesJourneyPlannerSearchCriteria
+TflApiPresentationEntitiesJourneyPlannerItineraryResult --> "JourneyVector" TflApiPresentationEntitiesJourneyPlannerJourneyVector
+@enduml

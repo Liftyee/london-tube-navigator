@@ -1,0 +1,14 @@
+@startuml
+class TflApiPresentationEntitiesLineRouteSectionTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesLineRouteSectionInstanceTest() : void
+    + RouteIdTest() : void
+    + DirectionTest() : void
+    + DestinationTest() : void
+    + FromStationTest() : void
+    + ToStationTest() : void
+    + ServiceTypeTest() : void
+    + VehicleDestinationTextTest() : void
+}
+@enduml

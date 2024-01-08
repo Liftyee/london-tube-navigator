@@ -1,0 +1,10 @@
+@startuml
+class BikePointApiTests {
+    + Init() : void
+    + Cleanup() : void
+    + InstanceTest() : void
+    + BikePointGetTest() : void
+    + BikePointGetAllTest() : void
+    + BikePointSearchTest() : void
+}
+@enduml

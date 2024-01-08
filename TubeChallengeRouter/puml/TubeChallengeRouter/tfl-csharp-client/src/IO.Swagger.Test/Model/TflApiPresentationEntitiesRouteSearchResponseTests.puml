@@ -1,0 +1,9 @@
+@startuml
+class TflApiPresentationEntitiesRouteSearchResponseTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesRouteSearchResponseInstanceTest() : void
+    + InputTest() : void
+    + SearchMatchesTest() : void
+}
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+class TflApiPresentationEntitiesCarParkOccupancy <<partial>> {
+    + TflApiPresentationEntitiesCarParkOccupancy(id:string, bays:List<TflApiPresentationEntitiesBay>, name:string, carParkDetailsUrl:string)
+    + Id : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + CarParkDetailsUrl : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesCarParkOccupancy) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesCarParkOccupancy>" <|-- TflApiPresentationEntitiesCarParkOccupancy
+IValidatableObject <|-- TflApiPresentationEntitiesCarParkOccupancy
+TflApiPresentationEntitiesCarParkOccupancy --> "Bays<TflApiPresentationEntitiesBay>" "List`1"
+@enduml

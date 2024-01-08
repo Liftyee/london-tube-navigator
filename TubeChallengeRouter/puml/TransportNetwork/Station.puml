@@ -1,0 +1,15 @@
+@startuml
+class Station {
+    + <<readonly>> Name : string?
+    + <<readonly>> NaptanId : string
+    + Station(naptan:string)
+    + Station(naptan:string, name:string)
+    + AddLink(newLink:Link) : void
+    + GetLinks() : List<Link>
+    + CostTo(destID:string) : int
+    + HasLink(destID:string) : bool
+    + GetLinkByDestId(Id:string) : Link
+    + ModifyLink(lineID:string, destID:string, newTime:TimeSpan) : void
+    + ModifyLink(destID:string, newTime:TimeSpan) : void
+}
+@enduml

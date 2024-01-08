@@ -1,0 +1,8 @@
+@startuml
+class TflModelWrapper {
+    + TflModelWrapper(logger:ILogger)
+    + AddLinksForLineSequence(segments:List<TflApiPresentationEntitiesStopPointSequence>, network:Network, currentLine:Line, direction:Dir) : void
+    + PopulateNetworkStructure(network:Network) : void
+}
+INetworkDataFetcher <|-- TflModelWrapper
+@enduml

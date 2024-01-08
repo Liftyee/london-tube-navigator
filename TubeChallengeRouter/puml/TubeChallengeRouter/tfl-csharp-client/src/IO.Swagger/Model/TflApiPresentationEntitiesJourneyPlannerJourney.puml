@@ -1,0 +1,23 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerJourney <<partial>> {
+    + TflApiPresentationEntitiesJourneyPlannerJourney(startDateTime:DateTime?, duration:int?, arrivalDateTime:DateTime?, description:string, alternativeRoute:bool?, legs:List<TflApiPresentationEntitiesJourneyPlannerLeg>, fare:TflApiPresentationEntitiesJourneyPlannerJourneyFare)
+    + StartDateTime : DateTime? <<get>> <<set>>
+    + Duration : int? <<get>> <<set>>
+    + ArrivalDateTime : DateTime? <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + AlternativeRoute : bool? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesJourneyPlannerJourney) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesJourneyPlannerJourney>" <|-- TflApiPresentationEntitiesJourneyPlannerJourney
+IValidatableObject <|-- TflApiPresentationEntitiesJourneyPlannerJourney
+TflApiPresentationEntitiesJourneyPlannerJourney --> "Legs<TflApiPresentationEntitiesJourneyPlannerLeg>" "List`1"
+TflApiPresentationEntitiesJourneyPlannerJourney --> "Fare" TflApiPresentationEntitiesJourneyPlannerJourneyFare
+@enduml

@@ -3,7 +3,7 @@ namespace TransportNetwork;
 // HACK: class name temporarily changed
 public class Route// : IRoute
 {
-    internal List<string> targetStations;
+    public List<string> targetStations;
     internal List<List<string>> intermediateStations;
     private TimeSpan _duration;
     private int _cost;
@@ -63,4 +63,9 @@ public class Route// : IRoute
     {
         _cost = newCost;
     }
+
+    public void UpdateIntermediateStations(int segmentIndex, List<string> updateTo)
+    {
+        intermediateStations[segmentIndex] = updateTo;
+    } 
 }

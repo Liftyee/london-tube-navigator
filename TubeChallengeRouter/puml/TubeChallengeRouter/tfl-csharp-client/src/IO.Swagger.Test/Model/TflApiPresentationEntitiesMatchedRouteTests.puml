@@ -1,0 +1,17 @@
+@startuml
+class TflApiPresentationEntitiesMatchedRouteTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesMatchedRouteInstanceTest() : void
+    + RouteCodeTest() : void
+    + NameTest() : void
+    + DirectionTest() : void
+    + OriginationNameTest() : void
+    + DestinationNameTest() : void
+    + OriginatorTest() : void
+    + DestinationTest() : void
+    + ServiceTypeTest() : void
+    + ValidToTest() : void
+    + ValidFromTest() : void
+}
+@enduml

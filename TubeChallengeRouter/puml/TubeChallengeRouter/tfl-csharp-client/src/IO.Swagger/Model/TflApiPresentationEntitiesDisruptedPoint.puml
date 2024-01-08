@@ -1,0 +1,24 @@
+@startuml
+class TflApiPresentationEntitiesDisruptedPoint <<partial>> {
+    + TflApiPresentationEntitiesDisruptedPoint(atcoCode:string, fromDate:DateTime?, toDate:DateTime?, description:string, commonName:string, type:string, mode:string, stationAtcoCode:string, appearance:string, additionalInformation:string)
+    + AtcoCode : string <<get>> <<set>>
+    + FromDate : DateTime? <<get>> <<set>>
+    + ToDate : DateTime? <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + CommonName : string <<get>> <<set>>
+    + Type : string <<get>> <<set>>
+    + Mode : string <<get>> <<set>>
+    + StationAtcoCode : string <<get>> <<set>>
+    + Appearance : string <<get>> <<set>>
+    + AdditionalInformation : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesDisruptedPoint) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesDisruptedPoint>" <|-- TflApiPresentationEntitiesDisruptedPoint
+IValidatableObject <|-- TflApiPresentationEntitiesDisruptedPoint
+@enduml

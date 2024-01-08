@@ -1,0 +1,18 @@
+@startuml
+class TflApiPresentationEntitiesStationInterval <<partial>> {
+    + TflApiPresentationEntitiesStationInterval(id:string, intervals:List<TflApiPresentationEntitiesInterval>)
+    + Id : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesStationInterval) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesStationInterval>" <|-- TflApiPresentationEntitiesStationInterval
+IValidatableObject <|-- TflApiPresentationEntitiesStationInterval
+TflApiPresentationEntitiesStationInterval --> "Intervals<TflApiPresentationEntitiesInterval>" "List`1"
+@enduml

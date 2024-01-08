@@ -1,0 +1,18 @@
+@startuml
+class TflApiPresentationEntitiesBay <<partial>> {
+    + TflApiPresentationEntitiesBay(bayType:string, bayCount:int?, free:int?, occupied:int?)
+    + BayType : string <<get>> <<set>>
+    + BayCount : int? <<get>> <<set>>
+    + Free : int? <<get>> <<set>>
+    + Occupied : int? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesBay) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesBay>" <|-- TflApiPresentationEntitiesBay
+IValidatableObject <|-- TflApiPresentationEntitiesBay
+@enduml

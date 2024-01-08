@@ -1,0 +1,9 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerFareCaveatTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerFareCaveatInstanceTest() : void
+    + TextTest() : void
+    + TypeTest() : void
+}
+@enduml

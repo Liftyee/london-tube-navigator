@@ -1,0 +1,11 @@
+@startuml
+class TflApiPresentationEntitiesCarParkOccupancyTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesCarParkOccupancyInstanceTest() : void
+    + IdTest() : void
+    + BaysTest() : void
+    + NameTest() : void
+    + CarParkDetailsUrlTest() : void
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class TflApiPresentationEntitiesPlacePolygonTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesPlacePolygonInstanceTest() : void
+    + GeoPointsTest() : void
+    + CommonNameTest() : void
+}
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class TflApiPresentationEntitiesStreetSegmentTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesStreetSegmentInstanceTest() : void
+    + ToidTest() : void
+    + LineStringTest() : void
+    + SourceSystemIdTest() : void
+    + SourceSystemKeyTest() : void
+}
+@enduml

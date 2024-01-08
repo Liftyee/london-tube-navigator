@@ -1,0 +1,11 @@
+@startuml
+class TflApiPresentationEntitiesNetworkStatusTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesNetworkStatusInstanceTest() : void
+    + OperatorTest() : void
+    + StatusTest() : void
+    + MessageTest() : void
+    + StatusLevelTest() : void
+}
+@enduml

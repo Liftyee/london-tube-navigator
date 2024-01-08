@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesFaresFaresModeTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesFaresFaresModeInstanceTest() : void
+    + IdTest() : void
+    + NameTest() : void
+    + DescriptionTest() : void
+}
+@enduml

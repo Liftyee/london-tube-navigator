@@ -1,0 +1,36 @@
+@startuml
+class TflApiPresentationEntitiesMatchedStop <<partial>> {
+    + TflApiPresentationEntitiesMatchedStop(routeId:int?, parentId:string, stationId:string, icsId:string, topMostParentId:string, direction:string, towards:string, modes:List<string>, stopType:string, stopLetter:string, zone:string, accessibilitySummary:string, hasDisruption:bool?, lines:List<TflApiPresentationEntitiesIdentifier>, status:bool?, id:string, url:string, name:string, lat:double?, lon:double?)
+    + RouteId : int? <<get>> <<set>>
+    + ParentId : string <<get>> <<set>>
+    + StationId : string <<get>> <<set>>
+    + IcsId : string <<get>> <<set>>
+    + TopMostParentId : string <<get>> <<set>>
+    + Direction : string <<get>> <<set>>
+    + Towards : string <<get>> <<set>>
+    + StopType : string <<get>> <<set>>
+    + StopLetter : string <<get>> <<set>>
+    + Zone : string <<get>> <<set>>
+    + AccessibilitySummary : string <<get>> <<set>>
+    + HasDisruption : bool? <<get>> <<set>>
+    + Status : bool? <<get>> <<set>>
+    + Id : string <<get>> <<set>>
+    + Url : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + Lat : double? <<get>> <<set>>
+    + Lon : double? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesMatchedStop) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesMatchedStop>" <|-- TflApiPresentationEntitiesMatchedStop
+IValidatableObject <|-- TflApiPresentationEntitiesMatchedStop
+TflApiPresentationEntitiesMatchedStop --> "Modes<string>" "List`1"
+TflApiPresentationEntitiesMatchedStop --> "Lines<TflApiPresentationEntitiesIdentifier>" "List`1"
+@enduml

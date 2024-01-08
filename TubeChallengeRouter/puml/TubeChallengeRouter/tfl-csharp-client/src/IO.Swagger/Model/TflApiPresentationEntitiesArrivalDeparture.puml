@@ -1,0 +1,35 @@
+@startuml
+class TflApiPresentationEntitiesArrivalDeparture <<partial>> {
+    + DepartureStatus : DepartureStatusEnum? <<get>> <<set>>
+    + TflApiPresentationEntitiesArrivalDeparture(platformName:string, destinationNaptanId:string, destinationName:string, naptanId:string, stationName:string, estimatedTimeOfArrival:DateTime?, scheduledTimeOfArrival:DateTime?, estimatedTimeOfDeparture:DateTime?, scheduledTimeOfDeparture:DateTime?, minutesAndSecondsToArrival:string, minutesAndSecondsToDeparture:string, cause:string, departureStatus:DepartureStatusEnum?, timing:TflApiPresentationEntitiesPredictionTiming)
+    + PlatformName : string <<get>> <<set>>
+    + DestinationNaptanId : string <<get>> <<set>>
+    + DestinationName : string <<get>> <<set>>
+    + NaptanId : string <<get>> <<set>>
+    + StationName : string <<get>> <<set>>
+    + EstimatedTimeOfArrival : DateTime? <<get>> <<set>>
+    + ScheduledTimeOfArrival : DateTime? <<get>> <<set>>
+    + EstimatedTimeOfDeparture : DateTime? <<get>> <<set>>
+    + ScheduledTimeOfDeparture : DateTime? <<get>> <<set>>
+    + MinutesAndSecondsToArrival : string <<get>> <<set>>
+    + MinutesAndSecondsToDeparture : string <<get>> <<set>>
+    + Cause : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesArrivalDeparture) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+enum DepartureStatusEnum {
+    OnTime= 1,
+    Delayed= 2,
+    Cancelled= 3,
+    NotStoppingAtStation= 4,
+}
+"IEquatable`1" "<TflApiPresentationEntitiesArrivalDeparture>" <|-- TflApiPresentationEntitiesArrivalDeparture
+IValidatableObject <|-- TflApiPresentationEntitiesArrivalDeparture
+TflApiPresentationEntitiesArrivalDeparture --> "Timing" TflApiPresentationEntitiesPredictionTiming
+TflApiPresentationEntitiesArrivalDeparture +-- DepartureStatusEnum
+@enduml

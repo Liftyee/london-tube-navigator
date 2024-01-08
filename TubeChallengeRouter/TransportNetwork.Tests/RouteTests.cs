@@ -10,7 +10,7 @@ public class RouteTests
     [SetUp]
     public void SetUp()
     {
-        _route = new Route(new List<string> {"A", "B", "C"}, new TimeSpan(0,10,0));
+        _route = new Route(new List<string> {"A", "B", "C"}, new TimeSpan(0,10,0), 3, new List<List<string>> {new List<string>(), new List<string> ()});
     }
 
     [Test]

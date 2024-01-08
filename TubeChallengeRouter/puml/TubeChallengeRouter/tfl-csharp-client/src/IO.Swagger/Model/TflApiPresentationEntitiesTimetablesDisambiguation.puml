@@ -1,0 +1,17 @@
+@startuml
+class TflApiPresentationEntitiesTimetablesDisambiguation <<partial>> {
+    + TflApiPresentationEntitiesTimetablesDisambiguation(disambiguationOptions:List<TflApiPresentationEntitiesTimetablesDisambiguationOption>)
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesTimetablesDisambiguation) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesTimetablesDisambiguation>" <|-- TflApiPresentationEntitiesTimetablesDisambiguation
+IValidatableObject <|-- TflApiPresentationEntitiesTimetablesDisambiguation
+TflApiPresentationEntitiesTimetablesDisambiguation --> "DisambiguationOptions<TflApiPresentationEntitiesTimetablesDisambiguationOption>" "List`1"
+@enduml

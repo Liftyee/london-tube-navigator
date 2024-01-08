@@ -1,0 +1,16 @@
+@startuml
+class TflApiPresentationEntitiesFaresJourney <<partial>> {
+    + TflApiPresentationEntitiesFaresJourney(fromStation:TflApiPresentationEntitiesFaresFareStation, toStation:TflApiPresentationEntitiesFaresFareStation)
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesFaresJourney) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesFaresJourney>" <|-- TflApiPresentationEntitiesFaresJourney
+IValidatableObject <|-- TflApiPresentationEntitiesFaresJourney
+TflApiPresentationEntitiesFaresJourney --> "FromStation" TflApiPresentationEntitiesFaresFareStation
+TflApiPresentationEntitiesFaresJourney --> "ToStation" TflApiPresentationEntitiesFaresFareStation
+@enduml

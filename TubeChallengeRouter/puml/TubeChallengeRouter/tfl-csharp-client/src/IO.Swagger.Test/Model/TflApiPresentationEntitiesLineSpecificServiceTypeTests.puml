@@ -1,0 +1,9 @@
+@startuml
+class TflApiPresentationEntitiesLineSpecificServiceTypeTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesLineSpecificServiceTypeInstanceTest() : void
+    + ServiceTypeTest() : void
+    + StopServesServiceTypeTest() : void
+}
+@enduml

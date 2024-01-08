@@ -1,0 +1,25 @@
+@startuml
+class TflApiPresentationEntitiesRouteSequence <<partial>> {
+    + TflApiPresentationEntitiesRouteSequence(lineId:string, lineName:string, direction:string, isOutboundOnly:bool?, mode:string, lineStrings:List<string>, stations:List<TflApiPresentationEntitiesMatchedStop>, stopPointSequences:List<TflApiPresentationEntitiesStopPointSequence>, orderedLineRoutes:List<TflApiPresentationEntitiesOrderedRoute>)
+    + LineId : string <<get>> <<set>>
+    + LineName : string <<get>> <<set>>
+    + Direction : string <<get>> <<set>>
+    + IsOutboundOnly : bool? <<get>> <<set>>
+    + Mode : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesRouteSequence) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesRouteSequence>" <|-- TflApiPresentationEntitiesRouteSequence
+IValidatableObject <|-- TflApiPresentationEntitiesRouteSequence
+TflApiPresentationEntitiesRouteSequence --> "LineStrings<string>" "List`1"
+TflApiPresentationEntitiesRouteSequence --> "Stations<TflApiPresentationEntitiesMatchedStop>" "List`1"
+TflApiPresentationEntitiesRouteSequence --> "StopPointSequences<TflApiPresentationEntitiesStopPointSequence>" "List`1"
+TflApiPresentationEntitiesRouteSequence --> "OrderedLineRoutes<TflApiPresentationEntitiesOrderedRoute>" "List`1"
+@enduml

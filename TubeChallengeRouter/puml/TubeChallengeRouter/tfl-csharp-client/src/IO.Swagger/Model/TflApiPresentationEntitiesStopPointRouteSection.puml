@@ -1,0 +1,26 @@
+@startuml
+class TflApiPresentationEntitiesStopPointRouteSection <<partial>> {
+    + TflApiPresentationEntitiesStopPointRouteSection(naptanId:string, lineId:string, mode:string, validFrom:DateTime?, validTo:DateTime?, direction:string, routeSectionName:string, lineString:string, isActive:bool?, serviceType:string, vehicleDestinationText:string, destinationName:string)
+    + NaptanId : string <<get>> <<set>>
+    + LineId : string <<get>> <<set>>
+    + Mode : string <<get>> <<set>>
+    + ValidFrom : DateTime? <<get>> <<set>>
+    + ValidTo : DateTime? <<get>> <<set>>
+    + Direction : string <<get>> <<set>>
+    + RouteSectionName : string <<get>> <<set>>
+    + LineString : string <<get>> <<set>>
+    + IsActive : bool? <<get>> <<set>>
+    + ServiceType : string <<get>> <<set>>
+    + VehicleDestinationText : string <<get>> <<set>>
+    + DestinationName : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesStopPointRouteSection) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesStopPointRouteSection>" <|-- TflApiPresentationEntitiesStopPointRouteSection
+IValidatableObject <|-- TflApiPresentationEntitiesStopPointRouteSection
+@enduml

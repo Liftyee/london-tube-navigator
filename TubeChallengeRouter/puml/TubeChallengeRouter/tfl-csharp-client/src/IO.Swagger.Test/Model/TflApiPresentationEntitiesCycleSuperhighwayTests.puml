@@ -1,0 +1,15 @@
+@startuml
+class TflApiPresentationEntitiesCycleSuperhighwayTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesCycleSuperhighwayInstanceTest() : void
+    + IdTest() : void
+    + LabelTest() : void
+    + LabelShortTest() : void
+    + GeographyTest() : void
+    + SegmentedTest() : void
+    + ModifiedTest() : void
+    + StatusTest() : void
+    + RouteTypeTest() : void
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class ExceptionTests {
+    + SetUp() : void
+    + InsertingIntoFullQueue_ThrowsException() : void
+    + RemovingFromEmptyQueue_ThrowsException() : void
+    + TopOfEmptyQueue_ThrowsException() : void
+}
+@enduml

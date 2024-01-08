@@ -1,0 +1,8 @@
+@startuml
+class TflApiPresentationEntitiesFaresRecommendationResponseTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesFaresRecommendationResponseInstanceTest() : void
+    + RecommendationsTest() : void
+}
+@enduml

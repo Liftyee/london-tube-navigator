@@ -87,7 +87,12 @@ public class Network
         return output.ToString();
     }
 
-    public virtual int CostFunction(string startId, string endId, List<string>? path=null)
+    public virtual int CostFunction(string startId, string endId, out List<string> path)
+    {
+        throw new InvalidOperationException("Simple network doesn't support cost function with path (use overrides)");
+    }
+
+    public virtual int CostFunction(string startId, string endId)
     {
         if (Stations[startId].HasLink(endId))
         {
@@ -117,7 +122,7 @@ public class Network
                 List<string> pathToNext = new List<string>();
                 if (visitedIDs.Count > 1)
                 {
-                    totalCost += CostFunction(stationIDs[^2], stationIDs[^1], pathToNext);
+                    totalCost += CostFunction(stationIDs[^2], stationIDs[^1], out pathToNext);
                 }
                 intermediateStations.Add(pathToNext);
             }
@@ -162,6 +167,28 @@ public class Network
 
         return output.ToString();
     }
+
+    public void RouteDetailsToStream(Route route, Stream outStream)
+    {
+        using (StreamWriter writer = new StreamWriter(outStream))
+        {
+            writer.WriteLine("Route result computed at " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ssZ"));
+            writer.WriteLine($"Route with {route.Count} stations and length {route.Duration.TotalMinutes} minutes");
+            
+            List<string> stationIDs = route.GetTargetPath();
+            List<List<string>> interStations = route.GetIntermediateStations();
+            for (int i = 0; i < stationIDs.Count(); i++)
+            {
+                writer.WriteLine($"Visit: {Stations[stationIDs[i]].Name.Replace(" Underground Station", "")}");
+                if (i < stationIDs.Count() - 1)
+                {
+                    writer.WriteLine(
+                        $"Pass thru: {String.Join(", ", interStations[i].Select(s => Stations[s].Name.Replace(" Underground Station", "")))}");
+                }
+            }
+            writer.WriteLine("Done");
+        } 
+    }
     
     public virtual void Swap(Route route, int idxA, int idxB)
     {
@@ -199,10 +226,10 @@ public class Network
         if (idxB < route.Count-1) updatedTime += TravelTime(stations[idxB], stations[idxB + 1]);
         
         // and costs too
-        if (idxA > 0)             updatedCost += CostFunction(stations[idxA - 1], stations[idxA], interStations[idxA-1]);
-        if (idxA < route.Count-1) updatedCost += CostFunction(stations[idxA], stations[idxA + 1], interStations[idxA]);
-        if (idxB > 0)             updatedCost += CostFunction(stations[idxB - 1], stations[idxB], interStations[idxB-1]);
-        if (idxB < route.Count-1) updatedCost += CostFunction(stations[idxB], stations[idxB + 1], interStations[idxB]);
+        if (idxA > 0)             updatedCost += CostFunction(stations[idxA - 1], stations[idxA]);
+        if (idxA < route.Count-1) updatedCost += CostFunction(stations[idxA], stations[idxA + 1]);
+        if (idxB > 0)             updatedCost += CostFunction(stations[idxB - 1], stations[idxB]);
+        if (idxB < route.Count-1) updatedCost += CostFunction(stations[idxB], stations[idxB + 1]);
         
         // update the route's length (time taken)
         route.UpdateDuration(updatedTime);

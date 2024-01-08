@@ -1,0 +1,16 @@
+@startuml
+class TflApiPresentationEntitiesActiveServiceType <<partial>> {
+    + TflApiPresentationEntitiesActiveServiceType(mode:string, serviceType:string)
+    + Mode : string <<get>> <<set>>
+    + ServiceType : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesActiveServiceType) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesActiveServiceType>" <|-- TflApiPresentationEntitiesActiveServiceType
+IValidatableObject <|-- TflApiPresentationEntitiesActiveServiceType
+@enduml

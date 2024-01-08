@@ -1,0 +1,43 @@
+@startuml
+class TflApiPresentationEntitiesCycleSuperhighway <<partial>> {
+    + Status : StatusEnum? <<get>> <<set>>
+    + RouteType : RouteTypeEnum? <<get>> <<set>>
+    + TflApiPresentationEntitiesCycleSuperhighway(id:string, label:string, labelShort:string, geography:SystemDataSpatialDbGeography, segmented:bool?, modified:DateTime?, status:StatusEnum?, routeType:RouteTypeEnum?)
+    + Id : string <<get>> <<set>>
+    + Label : string <<get>> <<set>>
+    + LabelShort : string <<get>> <<set>>
+    + Segmented : bool? <<get>> <<set>>
+    + Modified : DateTime? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesCycleSuperhighway) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+enum StatusEnum {
+    Unknown= 1,
+    All= 2,
+    Open= 3,
+    InProgress= 4,
+    Planned= 5,
+    PlannedSubjecttofeasibilityandconsultation= 6,
+    NotOpen= 7,
+}
+enum RouteTypeEnum {
+    Unknown= 1,
+    All= 2,
+    CycleSuperhighways= 3,
+    Quietways= 4,
+    Cycleways= 5,
+    MiniHollands= 6,
+    CentralLondonGrid= 7,
+    StreetspaceRoute= 8,
+}
+"IEquatable`1" "<TflApiPresentationEntitiesCycleSuperhighway>" <|-- TflApiPresentationEntitiesCycleSuperhighway
+IValidatableObject <|-- TflApiPresentationEntitiesCycleSuperhighway
+TflApiPresentationEntitiesCycleSuperhighway --> "Geography" SystemDataSpatialDbGeography
+TflApiPresentationEntitiesCycleSuperhighway +-- StatusEnum
+TflApiPresentationEntitiesCycleSuperhighway +-- RouteTypeEnum
+@enduml

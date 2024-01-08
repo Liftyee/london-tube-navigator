@@ -1,0 +1,16 @@
+@startuml
+class Route {
+    + Count : int <<get>>
+    + Cost : int <<get>>
+    + Route(stations:List<string>, duration:TimeSpan, cost:int, intermediateStations:List<List<string>>?)
+    + <<override>> ToString() : string
+    + GetTargetPath() : List<string>
+    + UpdateDuration(newDuration:TimeSpan) : void
+    + UpdateCost(newCost:int) : void
+    + UpdateIntermediateStations(segmentIndex:int, updateTo:List<string>) : void
+}
+class "List`1"<T> {
+}
+Route --> "targetStations<string>" "List`1"
+Route --> "Duration" TimeSpan
+@enduml

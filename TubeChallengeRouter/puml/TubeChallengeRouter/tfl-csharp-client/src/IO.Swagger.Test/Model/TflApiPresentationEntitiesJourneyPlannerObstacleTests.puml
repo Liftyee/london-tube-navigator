@@ -1,0 +1,11 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerObstacleTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerObstacleInstanceTest() : void
+    + TypeTest() : void
+    + InclineTest() : void
+    + StopIdTest() : void
+    + PositionTest() : void
+}
+@enduml

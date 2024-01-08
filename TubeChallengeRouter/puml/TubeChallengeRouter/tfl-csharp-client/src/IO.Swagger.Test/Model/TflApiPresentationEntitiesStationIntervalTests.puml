@@ -1,0 +1,9 @@
+@startuml
+class TflApiPresentationEntitiesStationIntervalTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesStationIntervalInstanceTest() : void
+    + IdTest() : void
+    + IntervalsTest() : void
+}
+@enduml

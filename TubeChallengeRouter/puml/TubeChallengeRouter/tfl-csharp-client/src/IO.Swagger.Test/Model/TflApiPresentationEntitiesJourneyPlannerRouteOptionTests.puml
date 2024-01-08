@@ -1,0 +1,12 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerRouteOptionTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerRouteOptionInstanceTest() : void
+    + IdTest() : void
+    + NameTest() : void
+    + DirectionsTest() : void
+    + LineIdentifierTest() : void
+    + DirectionTest() : void
+}
+@enduml

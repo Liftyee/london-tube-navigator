@@ -1,0 +1,13 @@
+@startuml
+class TflApiPresentationEntitiesPredictionTimingTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesPredictionTimingInstanceTest() : void
+    + CountdownServerAdjustmentTest() : void
+    + SourceTest() : void
+    + InsertTest() : void
+    + ReadTest() : void
+    + SentTest() : void
+    + ReceivedTest() : void
+}
+@enduml

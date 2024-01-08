@@ -1,0 +1,106 @@
+@startuml
+interface IStopPointApi {
+}
+class StopPointApi <<partial>> {
+    + StopPointApi(basePath:String)
+    + StopPointApi(configuration:IO.Swagger.Client.Configuration)
+    + GetBasePath() : String
+    + SetBasePath(basePath:String) : void
+    + DefaultHeader() : IDictionary<String, String>
+    + AddDefaultHeader(key:string, value:string) : void
+    + StopPointArrivalDepartures(id:string, lineIds:List<string>) : List<TflApiPresentationEntitiesArrivalDeparture>
+    + StopPointArrivalDeparturesWithHttpInfo(id:string, lineIds:List<string>) : ApiResponse< List<TflApiPresentationEntitiesArrivalDeparture> >
+    + <<async>> StopPointArrivalDeparturesAsync(id:string, lineIds:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesArrivalDeparture>>
+    + <<async>> StopPointArrivalDeparturesAsyncWithHttpInfo(id:string, lineIds:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesArrivalDeparture>>>
+    + StopPointArrivals(id:string) : List<TflApiPresentationEntitiesPrediction>
+    + StopPointArrivalsWithHttpInfo(id:string) : ApiResponse< List<TflApiPresentationEntitiesPrediction> >
+    + <<async>> StopPointArrivalsAsync(id:string) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesPrediction>>
+    + <<async>> StopPointArrivalsAsyncWithHttpInfo(id:string) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesPrediction>>>
+    + StopPointCrowding(id:string, line:string, direction:string) : List<TflApiPresentationEntitiesStopPoint>
+    + StopPointCrowdingWithHttpInfo(id:string, line:string, direction:string) : ApiResponse< List<TflApiPresentationEntitiesStopPoint> >
+    + <<async>> StopPointCrowdingAsync(id:string, line:string, direction:string) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesStopPoint>>
+    + <<async>> StopPointCrowdingAsyncWithHttpInfo(id:string, line:string, direction:string) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesStopPoint>>>
+    + StopPointDirection(id:string, toStopPointId:string, lineId:string) : string
+    + StopPointDirectionWithHttpInfo(id:string, toStopPointId:string, lineId:string) : ApiResponse< string >
+    + <<async>> StopPointDirectionAsync(id:string, toStopPointId:string, lineId:string) : System.Threading.Tasks.Task<string>
+    + <<async>> StopPointDirectionAsyncWithHttpInfo(id:string, toStopPointId:string, lineId:string) : System.Threading.Tasks.Task<ApiResponse<string>>
+    + StopPointDisruption(ids:List<string>, getFamily:bool?, includeRouteBlockedStops:bool?, flattenResponse:bool?) : List<TflApiPresentationEntitiesDisruptedPoint>
+    + StopPointDisruptionWithHttpInfo(ids:List<string>, getFamily:bool?, includeRouteBlockedStops:bool?, flattenResponse:bool?) : ApiResponse< List<TflApiPresentationEntitiesDisruptedPoint> >
+    + <<async>> StopPointDisruptionAsync(ids:List<string>, getFamily:bool?, includeRouteBlockedStops:bool?, flattenResponse:bool?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesDisruptedPoint>>
+    + <<async>> StopPointDisruptionAsyncWithHttpInfo(ids:List<string>, getFamily:bool?, includeRouteBlockedStops:bool?, flattenResponse:bool?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesDisruptedPoint>>>
+    + StopPointDisruptionByMode(modes:List<string>, includeRouteBlockedStops:bool?) : List<TflApiPresentationEntitiesDisruptedPoint>
+    + StopPointDisruptionByModeWithHttpInfo(modes:List<string>, includeRouteBlockedStops:bool?) : ApiResponse< List<TflApiPresentationEntitiesDisruptedPoint> >
+    + <<async>> StopPointDisruptionByModeAsync(modes:List<string>, includeRouteBlockedStops:bool?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesDisruptedPoint>>
+    + <<async>> StopPointDisruptionByModeAsyncWithHttpInfo(modes:List<string>, includeRouteBlockedStops:bool?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesDisruptedPoint>>>
+    + StopPointGet(id:string, placeTypes:List<string>) : List<TflApiPresentationEntitiesPlace>
+    + StopPointGetWithHttpInfo(id:string, placeTypes:List<string>) : ApiResponse< List<TflApiPresentationEntitiesPlace> >
+    + <<async>> StopPointGetAsync(id:string, placeTypes:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesPlace>>
+    + <<async>> StopPointGetAsyncWithHttpInfo(id:string, placeTypes:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesPlace>>>
+    + StopPointGetByGeoPoint(stopTypes:List<string>, locationLat:double?, locationLon:double?, radius:int?, useStopPointHierarchy:bool?, modes:List<string>, categories:List<string>, returnLines:bool?) : TflApiPresentationEntitiesStopPointsResponse
+    + StopPointGetByGeoPointWithHttpInfo(stopTypes:List<string>, locationLat:double?, locationLon:double?, radius:int?, useStopPointHierarchy:bool?, modes:List<string>, categories:List<string>, returnLines:bool?) : ApiResponse< TflApiPresentationEntitiesStopPointsResponse >
+    + <<async>> StopPointGetByGeoPointAsync(stopTypes:List<string>, locationLat:double?, locationLon:double?, radius:int?, useStopPointHierarchy:bool?, modes:List<string>, categories:List<string>, returnLines:bool?) : System.Threading.Tasks.Task<TflApiPresentationEntitiesStopPointsResponse>
+    + <<async>> StopPointGetByGeoPointAsyncWithHttpInfo(stopTypes:List<string>, locationLat:double?, locationLon:double?, radius:int?, useStopPointHierarchy:bool?, modes:List<string>, categories:List<string>, returnLines:bool?) : System.Threading.Tasks.Task<ApiResponse<TflApiPresentationEntitiesStopPointsResponse>>
+    + StopPointGetByMode(modes:List<string>, page:int?) : TflApiPresentationEntitiesStopPointsResponse
+    + StopPointGetByModeWithHttpInfo(modes:List<string>, page:int?) : ApiResponse< TflApiPresentationEntitiesStopPointsResponse >
+    + <<async>> StopPointGetByModeAsync(modes:List<string>, page:int?) : System.Threading.Tasks.Task<TflApiPresentationEntitiesStopPointsResponse>
+    + <<async>> StopPointGetByModeAsyncWithHttpInfo(modes:List<string>, page:int?) : System.Threading.Tasks.Task<ApiResponse<TflApiPresentationEntitiesStopPointsResponse>>
+    + StopPointGetBySms(id:string, output:string) : SystemObject
+    + StopPointGetBySmsWithHttpInfo(id:string, output:string) : ApiResponse< SystemObject >
+    + <<async>> StopPointGetBySmsAsync(id:string, output:string) : System.Threading.Tasks.Task<SystemObject>
+    + <<async>> StopPointGetBySmsAsyncWithHttpInfo(id:string, output:string) : System.Threading.Tasks.Task<ApiResponse<SystemObject>>
+    + StopPointGetByType(types:List<string>) : List<TflApiPresentationEntitiesStopPoint>
+    + StopPointGetByTypeWithHttpInfo(types:List<string>) : ApiResponse< List<TflApiPresentationEntitiesStopPoint> >
+    + <<async>> StopPointGetByTypeAsync(types:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesStopPoint>>
+    + <<async>> StopPointGetByTypeAsyncWithHttpInfo(types:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesStopPoint>>>
+    + StopPointGetByTypeWithPagination(types:List<string>, page:int?) : List<TflApiPresentationEntitiesStopPoint>
+    + StopPointGetByTypeWithPaginationWithHttpInfo(types:List<string>, page:int?) : ApiResponse< List<TflApiPresentationEntitiesStopPoint> >
+    + <<async>> StopPointGetByTypeWithPaginationAsync(types:List<string>, page:int?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesStopPoint>>
+    + <<async>> StopPointGetByTypeWithPaginationAsyncWithHttpInfo(types:List<string>, page:int?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesStopPoint>>>
+    + StopPointGetCarParksById(stopPointId:string) : List<TflApiPresentationEntitiesPlace>
+    + StopPointGetCarParksByIdWithHttpInfo(stopPointId:string) : ApiResponse< List<TflApiPresentationEntitiesPlace> >
+    + <<async>> StopPointGetCarParksByIdAsync(stopPointId:string) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesPlace>>
+    + <<async>> StopPointGetCarParksByIdAsyncWithHttpInfo(stopPointId:string) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesPlace>>>
+    + StopPointGetId(ids:List<string>, includeCrowdingData:bool?) : List<TflApiPresentationEntitiesStopPoint>
+    + StopPointGetIdWithHttpInfo(ids:List<string>, includeCrowdingData:bool?) : ApiResponse< List<TflApiPresentationEntitiesStopPoint> >
+    + <<async>> StopPointGetIdAsync(ids:List<string>, includeCrowdingData:bool?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesStopPoint>>
+    + <<async>> StopPointGetIdAsyncWithHttpInfo(ids:List<string>, includeCrowdingData:bool?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesStopPoint>>>
+    + StopPointGetServiceTypes(id:string, lineIds:List<string>, modes:List<string>) : List<TflApiPresentationEntitiesLineServiceType>
+    + StopPointGetServiceTypesWithHttpInfo(id:string, lineIds:List<string>, modes:List<string>) : ApiResponse< List<TflApiPresentationEntitiesLineServiceType> >
+    + <<async>> StopPointGetServiceTypesAsync(id:string, lineIds:List<string>, modes:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesLineServiceType>>
+    + <<async>> StopPointGetServiceTypesAsyncWithHttpInfo(id:string, lineIds:List<string>, modes:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesLineServiceType>>>
+    + StopPointGetTaxiRanksByIds(stopPointId:string) : List<TflApiPresentationEntitiesPlace>
+    + StopPointGetTaxiRanksByIdsWithHttpInfo(stopPointId:string) : ApiResponse< List<TflApiPresentationEntitiesPlace> >
+    + <<async>> StopPointGetTaxiRanksByIdsAsync(stopPointId:string) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesPlace>>
+    + <<async>> StopPointGetTaxiRanksByIdsAsyncWithHttpInfo(stopPointId:string) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesPlace>>>
+    + StopPointMetaCategories() : List<TflApiPresentationEntitiesStopPointCategory>
+    + StopPointMetaCategoriesWithHttpInfo() : ApiResponse< List<TflApiPresentationEntitiesStopPointCategory> >
+    + <<async>> StopPointMetaCategoriesAsync() : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesStopPointCategory>>
+    + <<async>> StopPointMetaCategoriesAsyncWithHttpInfo() : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesStopPointCategory>>>
+    + StopPointMetaModes() : List<TflApiPresentationEntitiesMode>
+    + StopPointMetaModesWithHttpInfo() : ApiResponse< List<TflApiPresentationEntitiesMode> >
+    + <<async>> StopPointMetaModesAsync() : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesMode>>
+    + <<async>> StopPointMetaModesAsyncWithHttpInfo() : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesMode>>>
+    + StopPointMetaStopTypes() : List<string>
+    + StopPointMetaStopTypesWithHttpInfo() : ApiResponse< List<string> >
+    + <<async>> StopPointMetaStopTypesAsync() : System.Threading.Tasks.Task<List<string>>
+    + <<async>> StopPointMetaStopTypesAsyncWithHttpInfo() : System.Threading.Tasks.Task<ApiResponse<List<string>>>
+    + StopPointReachableFrom(id:string, lineId:string, serviceTypes:List<string>) : List<TflApiPresentationEntitiesStopPoint>
+    + StopPointReachableFromWithHttpInfo(id:string, lineId:string, serviceTypes:List<string>) : ApiResponse< List<TflApiPresentationEntitiesStopPoint> >
+    + <<async>> StopPointReachableFromAsync(id:string, lineId:string, serviceTypes:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesStopPoint>>
+    + <<async>> StopPointReachableFromAsyncWithHttpInfo(id:string, lineId:string, serviceTypes:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesStopPoint>>>
+    + StopPointRoute(id:string, serviceTypes:List<string>) : List<TflApiPresentationEntitiesStopPointRouteSection>
+    + StopPointRouteWithHttpInfo(id:string, serviceTypes:List<string>) : ApiResponse< List<TflApiPresentationEntitiesStopPointRouteSection> >
+    + <<async>> StopPointRouteAsync(id:string, serviceTypes:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesStopPointRouteSection>>
+    + <<async>> StopPointRouteAsyncWithHttpInfo(id:string, serviceTypes:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesStopPointRouteSection>>>
+    + StopPointSearch(query:string, modes:List<string>, faresOnly:bool?, maxResults:int?, lines:List<string>, includeHubs:bool?, tflOperatedNationalRailStationsOnly:bool?) : TflApiPresentationEntitiesSearchResponse
+    + StopPointSearchWithHttpInfo(query:string, modes:List<string>, faresOnly:bool?, maxResults:int?, lines:List<string>, includeHubs:bool?, tflOperatedNationalRailStationsOnly:bool?) : ApiResponse< TflApiPresentationEntitiesSearchResponse >
+    + <<async>> StopPointSearchAsync(query:string, modes:List<string>, faresOnly:bool?, maxResults:int?, lines:List<string>, includeHubs:bool?, tflOperatedNationalRailStationsOnly:bool?) : System.Threading.Tasks.Task<TflApiPresentationEntitiesSearchResponse>
+    + <<async>> StopPointSearchAsyncWithHttpInfo(query:string, modes:List<string>, faresOnly:bool?, maxResults:int?, lines:List<string>, includeHubs:bool?, tflOperatedNationalRailStationsOnly:bool?) : System.Threading.Tasks.Task<ApiResponse<TflApiPresentationEntitiesSearchResponse>>
+    + StopPointSearch_0(query:string, modes:List<string>, faresOnly:bool?, maxResults:int?, lines:List<string>, includeHubs:bool?, tflOperatedNationalRailStationsOnly:bool?) : TflApiPresentationEntitiesSearchResponse
+    + StopPointSearch_0WithHttpInfo(query:string, modes:List<string>, faresOnly:bool?, maxResults:int?, lines:List<string>, includeHubs:bool?, tflOperatedNationalRailStationsOnly:bool?) : ApiResponse< TflApiPresentationEntitiesSearchResponse >
+    + <<async>> StopPointSearch_0Async(query:string, modes:List<string>, faresOnly:bool?, maxResults:int?, lines:List<string>, includeHubs:bool?, tflOperatedNationalRailStationsOnly:bool?) : System.Threading.Tasks.Task<TflApiPresentationEntitiesSearchResponse>
+    + <<async>> StopPointSearch_0AsyncWithHttpInfo(query:string, modes:List<string>, faresOnly:bool?, maxResults:int?, lines:List<string>, includeHubs:bool?, tflOperatedNationalRailStationsOnly:bool?) : System.Threading.Tasks.Task<ApiResponse<TflApiPresentationEntitiesSearchResponse>>
+}
+IApiAccessor <|-- IStopPointApi
+IStopPointApi <|-- StopPointApi
+@enduml

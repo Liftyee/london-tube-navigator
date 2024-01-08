@@ -1,0 +1,20 @@
+@startuml
+class TflApiPresentationEntitiesMode <<partial>> {
+    + TflApiPresentationEntitiesMode(isTflService:bool?, isFarePaying:bool?, isScheduledService:bool?, modeName:string, motType:string, network:string)
+    + IsTflService : bool? <<get>> <<set>>
+    + IsFarePaying : bool? <<get>> <<set>>
+    + IsScheduledService : bool? <<get>> <<set>>
+    + ModeName : string <<get>> <<set>>
+    + MotType : string <<get>> <<set>>
+    + Network : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesMode) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesMode>" <|-- TflApiPresentationEntitiesMode
+IValidatableObject <|-- TflApiPresentationEntitiesMode
+@enduml

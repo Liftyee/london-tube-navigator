@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesAccidentStatsAccidentStatsOrderedSummaryTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesAccidentStatsAccidentStatsOrderedSummaryInstanceTest() : void
+    + YearTest() : void
+    + BoroughTest() : void
+    + AccidentsTest() : void
+}
+@enduml

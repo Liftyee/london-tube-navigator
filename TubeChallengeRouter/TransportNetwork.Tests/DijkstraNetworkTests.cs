@@ -22,4 +22,11 @@ public class DijkstraNetworkTests
         int result = _network.CostFunction("A", "E");
         Assert.That(result, Is.EqualTo(180)); // cost is in seconds
     }
+
+    [Test]
+    public void RandomRoute_HasIntermediate()
+    {
+        Route result = _network.GenerateRandomRoute();
+        
+    }
 }

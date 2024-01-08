@@ -1,0 +1,11 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerTimeAdjustmentTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerTimeAdjustmentInstanceTest() : void
+    + DateTest() : void
+    + TimeTest() : void
+    + TimeIsTest() : void
+    + UriTest() : void
+}
+@enduml

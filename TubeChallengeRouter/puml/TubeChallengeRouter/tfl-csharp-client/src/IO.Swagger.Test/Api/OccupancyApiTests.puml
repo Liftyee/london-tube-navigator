@@ -1,0 +1,12 @@
+@startuml
+class OccupancyApiTests {
+    + Init() : void
+    + Cleanup() : void
+    + InstanceTest() : void
+    + OccupancyGetTest() : void
+    + OccupancyGetAllChargeConnectorStatusTest() : void
+    + OccupancyGetBikePointsOccupanciesTest() : void
+    + OccupancyGetChargeConnectorStatusTest() : void
+    + OccupancyGet_0Test() : void
+}
+@enduml

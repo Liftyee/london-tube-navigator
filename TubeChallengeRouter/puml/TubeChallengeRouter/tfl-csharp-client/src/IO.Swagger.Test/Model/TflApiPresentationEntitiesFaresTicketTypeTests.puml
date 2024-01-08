@@ -1,0 +1,9 @@
+@startuml
+class TflApiPresentationEntitiesFaresTicketTypeTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesFaresTicketTypeInstanceTest() : void
+    + TypeTest() : void
+    + DescriptionTest() : void
+}
+@enduml

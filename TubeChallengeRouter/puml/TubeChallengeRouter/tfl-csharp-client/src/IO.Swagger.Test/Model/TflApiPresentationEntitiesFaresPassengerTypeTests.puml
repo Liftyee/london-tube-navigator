@@ -1,0 +1,11 @@
+@startuml
+class TflApiPresentationEntitiesFaresPassengerTypeTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesFaresPassengerTypeInstanceTest() : void
+    + TypeTest() : void
+    + DescriptionTest() : void
+    + DisplayNameTest() : void
+    + DisplayOrderTest() : void
+}
+@enduml

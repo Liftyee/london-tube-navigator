@@ -1,0 +1,25 @@
+@startuml
+class TflApiPresentationEntitiesPeriod <<partial>> {
+    + Type : TypeEnum? <<get>> <<set>>
+    + TflApiPresentationEntitiesPeriod(type:TypeEnum?, fromTime:TflApiPresentationEntitiesTwentyFourHourClockTime, toTime:TflApiPresentationEntitiesTwentyFourHourClockTime, frequency:TflApiPresentationEntitiesServiceFrequency)
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesPeriod) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+enum TypeEnum {
+    Normal= 1,
+    FrequencyHours= 2,
+    FrequencyMinutes= 3,
+    Unknown= 4,
+}
+"IEquatable`1" "<TflApiPresentationEntitiesPeriod>" <|-- TflApiPresentationEntitiesPeriod
+IValidatableObject <|-- TflApiPresentationEntitiesPeriod
+TflApiPresentationEntitiesPeriod --> "FromTime" TflApiPresentationEntitiesTwentyFourHourClockTime
+TflApiPresentationEntitiesPeriod --> "ToTime" TflApiPresentationEntitiesTwentyFourHourClockTime
+TflApiPresentationEntitiesPeriod --> "Frequency" TflApiPresentationEntitiesServiceFrequency
+TflApiPresentationEntitiesPeriod +-- TypeEnum
+@enduml

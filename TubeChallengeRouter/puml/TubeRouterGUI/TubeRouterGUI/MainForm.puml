@@ -1,0 +1,6 @@
+@startuml
+class MainForm <<partial>> {
+    + MainForm()
+}
+Form <|-- MainForm
+@enduml

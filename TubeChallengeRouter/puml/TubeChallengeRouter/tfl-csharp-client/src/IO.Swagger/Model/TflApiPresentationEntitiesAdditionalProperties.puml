@@ -1,0 +1,19 @@
+@startuml
+class TflApiPresentationEntitiesAdditionalProperties <<partial>> {
+    + TflApiPresentationEntitiesAdditionalProperties(category:string, key:string, sourceSystemKey:string, value:string, modified:DateTime?)
+    + Category : string <<get>> <<set>>
+    + Key : string <<get>> <<set>>
+    + SourceSystemKey : string <<get>> <<set>>
+    + Value : string <<get>> <<set>>
+    + Modified : DateTime? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesAdditionalProperties) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesAdditionalProperties>" <|-- TflApiPresentationEntitiesAdditionalProperties
+IValidatableObject <|-- TflApiPresentationEntitiesAdditionalProperties
+@enduml

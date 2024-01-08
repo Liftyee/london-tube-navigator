@@ -1,0 +1,19 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerPath <<partial>> {
+    + TflApiPresentationEntitiesJourneyPlannerPath(lineString:string, stopPoints:List<TflApiPresentationEntitiesIdentifier>, elevation:List<TflApiCommonJourneyPlannerJpElevation>)
+    + LineString : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesJourneyPlannerPath) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesJourneyPlannerPath>" <|-- TflApiPresentationEntitiesJourneyPlannerPath
+IValidatableObject <|-- TflApiPresentationEntitiesJourneyPlannerPath
+TflApiPresentationEntitiesJourneyPlannerPath --> "StopPoints<TflApiPresentationEntitiesIdentifier>" "List`1"
+TflApiPresentationEntitiesJourneyPlannerPath --> "Elevation<TflApiCommonJourneyPlannerJpElevation>" "List`1"
+@enduml

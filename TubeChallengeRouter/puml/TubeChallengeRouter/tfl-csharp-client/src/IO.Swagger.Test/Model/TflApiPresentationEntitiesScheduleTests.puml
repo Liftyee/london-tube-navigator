@@ -1,0 +1,12 @@
+@startuml
+class TflApiPresentationEntitiesScheduleTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesScheduleInstanceTest() : void
+    + NameTest() : void
+    + KnownJourneysTest() : void
+    + FirstJourneyTest() : void
+    + LastJourneyTest() : void
+    + PeriodsTest() : void
+}
+@enduml

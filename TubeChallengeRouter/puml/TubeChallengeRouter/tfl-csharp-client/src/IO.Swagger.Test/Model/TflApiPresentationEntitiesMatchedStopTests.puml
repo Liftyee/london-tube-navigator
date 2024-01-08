@@ -1,0 +1,27 @@
+@startuml
+class TflApiPresentationEntitiesMatchedStopTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesMatchedStopInstanceTest() : void
+    + RouteIdTest() : void
+    + ParentIdTest() : void
+    + StationIdTest() : void
+    + IcsIdTest() : void
+    + TopMostParentIdTest() : void
+    + DirectionTest() : void
+    + TowardsTest() : void
+    + ModesTest() : void
+    + StopTypeTest() : void
+    + StopLetterTest() : void
+    + ZoneTest() : void
+    + AccessibilitySummaryTest() : void
+    + HasDisruptionTest() : void
+    + LinesTest() : void
+    + StatusTest() : void
+    + IdTest() : void
+    + UrlTest() : void
+    + NameTest() : void
+    + LatTest() : void
+    + LonTest() : void
+}
+@enduml

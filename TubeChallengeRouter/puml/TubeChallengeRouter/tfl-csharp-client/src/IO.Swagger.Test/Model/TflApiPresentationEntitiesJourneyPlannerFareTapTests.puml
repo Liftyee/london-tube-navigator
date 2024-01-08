@@ -1,0 +1,9 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerFareTapTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerFareTapInstanceTest() : void
+    + AtcoCodeTest() : void
+    + TapDetailsTest() : void
+}
+@enduml

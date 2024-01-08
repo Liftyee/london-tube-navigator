@@ -1,0 +1,9 @@
+@startuml
+class TflApiCommonDateRangeNullableTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiCommonDateRangeNullableInstanceTest() : void
+    + StartDateTest() : void
+    + EndDateTest() : void
+}
+@enduml

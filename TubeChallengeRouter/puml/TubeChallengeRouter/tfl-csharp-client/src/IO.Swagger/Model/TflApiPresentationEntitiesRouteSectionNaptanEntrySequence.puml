@@ -1,0 +1,16 @@
+@startuml
+class TflApiPresentationEntitiesRouteSectionNaptanEntrySequence <<partial>> {
+    + TflApiPresentationEntitiesRouteSectionNaptanEntrySequence(ordinal:int?, stopPoint:TflApiPresentationEntitiesStopPoint)
+    + Ordinal : int? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesRouteSectionNaptanEntrySequence) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesRouteSectionNaptanEntrySequence>" <|-- TflApiPresentationEntitiesRouteSectionNaptanEntrySequence
+IValidatableObject <|-- TflApiPresentationEntitiesRouteSectionNaptanEntrySequence
+TflApiPresentationEntitiesRouteSectionNaptanEntrySequence --> "StopPoint" TflApiPresentationEntitiesStopPoint
+@enduml

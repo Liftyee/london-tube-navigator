@@ -1,0 +1,17 @@
+@startuml
+class TflApiPresentationEntitiesRoadCorridorTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesRoadCorridorInstanceTest() : void
+    + IdTest() : void
+    + DisplayNameTest() : void
+    + GroupTest() : void
+    + StatusSeverityTest() : void
+    + StatusSeverityDescriptionTest() : void
+    + BoundsTest() : void
+    + EnvelopeTest() : void
+    + StatusAggregationStartDateTest() : void
+    + StatusAggregationEndDateTest() : void
+    + UrlTest() : void
+}
+@enduml

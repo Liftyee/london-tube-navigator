@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesLineGroupTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesLineGroupInstanceTest() : void
+    + NaptanIdReferenceTest() : void
+    + StationAtcoCodeTest() : void
+    + LineIdentifierTest() : void
+}
+@enduml

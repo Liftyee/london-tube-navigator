@@ -1,0 +1,26 @@
+@startuml
+class ApiClient <<partial>> {
+    + ApiClient()
+    + ApiClient(config:Configuration)
+    + ApiClient(basePath:String)
+    + CallApi(path:String, method:RestSharp.Method, queryParams:List<KeyValuePair<String, String>>, postBody:Object, headerParams:Dictionary<String, String>, formParams:Dictionary<String, String>, fileParams:Dictionary<String, FileParameter>, pathParams:Dictionary<String, String>, contentType:String) : Object
+    + <<async>> CallApiAsync(path:String, method:RestSharp.Method, queryParams:List<KeyValuePair<String, String>>, postBody:Object, headerParams:Dictionary<String, String>, formParams:Dictionary<String, String>, fileParams:Dictionary<String, FileParameter>, pathParams:Dictionary<String, String>, contentType:String) : System.Threading.Tasks.Task<Object>
+    + EscapeString(str:string) : string
+    + ParameterToFile(name:string, stream:Stream) : FileParameter
+    + ParameterToString(obj:object) : string
+    + Deserialize(response:IRestResponse, type:Type) : object
+    + Serialize(obj:object) : String
+    + IsJsonMime(mime:String) : bool
+    + SelectHeaderContentType(contentTypes:String[]) : String
+    + SelectHeaderAccept(accepts:String[]) : String
+    + {static} Base64Encode(text:string) : string
+    + {static} ConvertType(fromObject:dynamic, toObject:Type) : dynamic
+    + {static} ReadAsBytes(inputStream:Stream) : byte[]
+    + {static} UrlEncode(input:string) : string
+    + {static} SanitizeFilename(filename:string) : string
+    + ParameterToKeyValuePairs(collectionFormat:string, name:string, value:object) : IEnumerable<KeyValuePair<string, string>>
+}
+ApiClient --> "Default" ApiClient
+ApiClient --> "Configuration" IReadableConfiguration
+ApiClient --> "RestClient" RestClient
+@enduml

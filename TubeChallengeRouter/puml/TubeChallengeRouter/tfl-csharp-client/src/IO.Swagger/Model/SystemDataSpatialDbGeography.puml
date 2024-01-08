@@ -1,0 +1,15 @@
+@startuml
+class SystemDataSpatialDbGeography <<partial>> {
+    + SystemDataSpatialDbGeography(geography:SystemDataSpatialDbGeographyWellKnownValue)
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:SystemDataSpatialDbGeography) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<SystemDataSpatialDbGeography>" <|-- SystemDataSpatialDbGeography
+IValidatableObject <|-- SystemDataSpatialDbGeography
+SystemDataSpatialDbGeography --> "Geography" SystemDataSpatialDbGeographyWellKnownValue
+@enduml

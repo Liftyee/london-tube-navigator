@@ -1,0 +1,20 @@
+@startuml
+class TflApiPresentationEntitiesDisruptedRouteTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesDisruptedRouteInstanceTest() : void
+    + IdTest() : void
+    + LineIdTest() : void
+    + RouteCodeTest() : void
+    + NameTest() : void
+    + LineStringTest() : void
+    + DirectionTest() : void
+    + OriginationNameTest() : void
+    + DestinationNameTest() : void
+    + ViaTest() : void
+    + IsEntireRouteSectionTest() : void
+    + ValidToTest() : void
+    + ValidFromTest() : void
+    + RouteSectionNaptanEntrySequenceTest() : void
+}
+@enduml

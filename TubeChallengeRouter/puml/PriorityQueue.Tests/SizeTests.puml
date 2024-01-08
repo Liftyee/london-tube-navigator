@@ -1,0 +1,8 @@
+@startuml
+class SizeTests {
+    + SetUp() : void
+    + EmptyQueue_HasSizeZero() : void
+    + InsertingOneItem_IncreasesSize() : void
+    + RemovingAllItems_DecreasesSizeToZero() : void
+}
+@enduml

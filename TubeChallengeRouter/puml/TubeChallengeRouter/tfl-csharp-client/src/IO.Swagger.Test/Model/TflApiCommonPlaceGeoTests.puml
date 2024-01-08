@@ -1,0 +1,13 @@
+@startuml
+class TflApiCommonPlaceGeoTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiCommonPlaceGeoInstanceTest() : void
+    + SwLatTest() : void
+    + SwLonTest() : void
+    + NeLatTest() : void
+    + NeLonTest() : void
+    + LatTest() : void
+    + LonTest() : void
+}
+@enduml

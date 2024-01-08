@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerJourneyFareTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerJourneyFareInstanceTest() : void
+    + TotalCostTest() : void
+    + FaresTest() : void
+    + CaveatsTest() : void
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class SystemDataSpatialDbGeographyTests {
+    + Init() : void
+    + Cleanup() : void
+    + SystemDataSpatialDbGeographyInstanceTest() : void
+    + GeographyTest() : void
+}
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+enum Dir {
+    Inbound,
+    Outbound,
+}
+class Line {
+    + <<readonly>> Name : string
+    + <<readonly>> Id : string
+    + Line(id:string, name:string)
+}
+class Link {
+    + Line : Line? <<get>>
+    + Link(start:Station, end:Station, line:Line?, dir:Dir)
+    + <<override>> Equals(other:Object) : bool
+    + GetCost() : int
+}
+Link --> "Destination" Station
+Link --> "Origin" Station
+Link --> "Dir" Dir
+@enduml

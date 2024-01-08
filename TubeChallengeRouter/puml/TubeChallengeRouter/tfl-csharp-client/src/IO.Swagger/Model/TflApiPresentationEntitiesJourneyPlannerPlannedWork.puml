@@ -1,0 +1,18 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerPlannedWork <<partial>> {
+    + TflApiPresentationEntitiesJourneyPlannerPlannedWork(id:string, description:string, createdDateTime:DateTime?, lastUpdateDateTime:DateTime?)
+    + Id : string <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + CreatedDateTime : DateTime? <<get>> <<set>>
+    + LastUpdateDateTime : DateTime? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesJourneyPlannerPlannedWork) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesJourneyPlannerPlannedWork>" <|-- TflApiPresentationEntitiesJourneyPlannerPlannedWork
+IValidatableObject <|-- TflApiPresentationEntitiesJourneyPlannerPlannedWork
+@enduml

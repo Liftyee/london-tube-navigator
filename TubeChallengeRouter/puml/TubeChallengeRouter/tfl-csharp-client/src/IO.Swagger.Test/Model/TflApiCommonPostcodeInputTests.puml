@@ -1,0 +1,8 @@
+@startuml
+class TflApiCommonPostcodeInputTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiCommonPostcodeInputInstanceTest() : void
+    + PostcodeTest() : void
+}
+@enduml

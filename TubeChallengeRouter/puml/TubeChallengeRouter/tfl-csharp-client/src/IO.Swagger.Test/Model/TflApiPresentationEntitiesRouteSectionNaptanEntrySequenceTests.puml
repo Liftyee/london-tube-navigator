@@ -1,0 +1,9 @@
+@startuml
+class TflApiPresentationEntitiesRouteSectionNaptanEntrySequenceTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesRouteSectionNaptanEntrySequenceInstanceTest() : void
+    + OrdinalTest() : void
+    + StopPointTest() : void
+}
+@enduml

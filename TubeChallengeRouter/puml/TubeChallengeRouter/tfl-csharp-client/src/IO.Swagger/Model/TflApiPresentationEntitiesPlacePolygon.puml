@@ -1,0 +1,18 @@
+@startuml
+class TflApiPresentationEntitiesPlacePolygon <<partial>> {
+    + TflApiPresentationEntitiesPlacePolygon(geoPoints:List<TflApiCommonGeoPoint>, commonName:string)
+    + CommonName : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesPlacePolygon) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesPlacePolygon>" <|-- TflApiPresentationEntitiesPlacePolygon
+IValidatableObject <|-- TflApiPresentationEntitiesPlacePolygon
+TflApiPresentationEntitiesPlacePolygon --> "GeoPoints<TflApiCommonGeoPoint>" "List`1"
+@enduml

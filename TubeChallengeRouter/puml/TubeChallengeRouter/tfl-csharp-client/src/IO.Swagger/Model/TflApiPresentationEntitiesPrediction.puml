@@ -1,0 +1,34 @@
+@startuml
+class TflApiPresentationEntitiesPrediction <<partial>> {
+    + TflApiPresentationEntitiesPrediction(id:string, operationType:int?, vehicleId:string, naptanId:string, stationName:string, lineId:string, lineName:string, platformName:string, direction:string, bearing:string, destinationNaptanId:string, destinationName:string, timestamp:DateTime?, timeToStation:int?, currentLocation:string, towards:string, expectedArrival:DateTime?, timeToLive:DateTime?, modeName:string, timing:TflApiPresentationEntitiesPredictionTiming)
+    + Id : string <<get>> <<set>>
+    + OperationType : int? <<get>> <<set>>
+    + VehicleId : string <<get>> <<set>>
+    + NaptanId : string <<get>> <<set>>
+    + StationName : string <<get>> <<set>>
+    + LineId : string <<get>> <<set>>
+    + LineName : string <<get>> <<set>>
+    + PlatformName : string <<get>> <<set>>
+    + Direction : string <<get>> <<set>>
+    + Bearing : string <<get>> <<set>>
+    + DestinationNaptanId : string <<get>> <<set>>
+    + DestinationName : string <<get>> <<set>>
+    + Timestamp : DateTime? <<get>> <<set>>
+    + TimeToStation : int? <<get>> <<set>>
+    + CurrentLocation : string <<get>> <<set>>
+    + Towards : string <<get>> <<set>>
+    + ExpectedArrival : DateTime? <<get>> <<set>>
+    + TimeToLive : DateTime? <<get>> <<set>>
+    + ModeName : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesPrediction) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesPrediction>" <|-- TflApiPresentationEntitiesPrediction
+IValidatableObject <|-- TflApiPresentationEntitiesPrediction
+TflApiPresentationEntitiesPrediction --> "Timing" TflApiPresentationEntitiesPredictionTiming
+@enduml

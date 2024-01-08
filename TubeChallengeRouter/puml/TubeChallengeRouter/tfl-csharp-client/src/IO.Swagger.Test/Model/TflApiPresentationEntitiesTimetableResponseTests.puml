@@ -1,0 +1,16 @@
+@startuml
+class TflApiPresentationEntitiesTimetableResponseTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesTimetableResponseInstanceTest() : void
+    + LineIdTest() : void
+    + LineNameTest() : void
+    + DirectionTest() : void
+    + PdfUrlTest() : void
+    + StationsTest() : void
+    + StopsTest() : void
+    + TimetableTest() : void
+    + DisambiguationTest() : void
+    + StatusErrorMessageTest() : void
+}
+@enduml

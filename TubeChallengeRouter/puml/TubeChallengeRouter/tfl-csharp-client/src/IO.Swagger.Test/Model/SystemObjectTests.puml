@@ -1,0 +1,7 @@
+@startuml
+class SystemObjectTests {
+    + Init() : void
+    + Cleanup() : void
+    + SystemObjectInstanceTest() : void
+}
+@enduml

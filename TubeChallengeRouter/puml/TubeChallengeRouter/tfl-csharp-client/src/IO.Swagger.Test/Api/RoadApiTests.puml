@@ -1,0 +1,15 @@
+@startuml
+class RoadApiTests {
+    + Init() : void
+    + Cleanup() : void
+    + InstanceTest() : void
+    + RoadDisruptedStreetsTest() : void
+    + RoadDisruptionTest() : void
+    + RoadDisruptionByIdTest() : void
+    + RoadGetTest() : void
+    + RoadGet_0Test() : void
+    + RoadMetaCategoriesTest() : void
+    + RoadMetaSeveritiesTest() : void
+    + RoadStatusTest() : void
+}
+@enduml

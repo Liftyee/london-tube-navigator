@@ -1,0 +1,14 @@
+@startuml
+class TflApiPresentationEntitiesRoadDisruptionImpactAreaTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesRoadDisruptionImpactAreaInstanceTest() : void
+    + IdTest() : void
+    + RoadDisruptionIdTest() : void
+    + PolygonTest() : void
+    + StartDateTest() : void
+    + EndDateTest() : void
+    + StartTimeTest() : void
+    + EndTimeTest() : void
+}
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerTimeAdjustments <<partial>> {
+    + TflApiPresentationEntitiesJourneyPlannerTimeAdjustments(earliest:TflApiPresentationEntitiesJourneyPlannerTimeAdjustment, earlier:TflApiPresentationEntitiesJourneyPlannerTimeAdjustment, later:TflApiPresentationEntitiesJourneyPlannerTimeAdjustment, latest:TflApiPresentationEntitiesJourneyPlannerTimeAdjustment)
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesJourneyPlannerTimeAdjustments) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesJourneyPlannerTimeAdjustments>" <|-- TflApiPresentationEntitiesJourneyPlannerTimeAdjustments
+IValidatableObject <|-- TflApiPresentationEntitiesJourneyPlannerTimeAdjustments
+TflApiPresentationEntitiesJourneyPlannerTimeAdjustments --> "Earliest" TflApiPresentationEntitiesJourneyPlannerTimeAdjustment
+TflApiPresentationEntitiesJourneyPlannerTimeAdjustments --> "Earlier" TflApiPresentationEntitiesJourneyPlannerTimeAdjustment
+TflApiPresentationEntitiesJourneyPlannerTimeAdjustments --> "Later" TflApiPresentationEntitiesJourneyPlannerTimeAdjustment
+TflApiPresentationEntitiesJourneyPlannerTimeAdjustments --> "Latest" TflApiPresentationEntitiesJourneyPlannerTimeAdjustment
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+class TflApiPresentationEntitiesLineStatus <<partial>> {
+    + TflApiPresentationEntitiesLineStatus(id:int?, lineId:string, statusSeverity:int?, statusSeverityDescription:string, reason:string, created:DateTime?, modified:DateTime?, validityPeriods:List<TflApiPresentationEntitiesValidityPeriod>, disruption:TflApiPresentationEntitiesDisruption)
+    + Id : int? <<get>> <<set>>
+    + LineId : string <<get>> <<set>>
+    + StatusSeverity : int? <<get>> <<set>>
+    + StatusSeverityDescription : string <<get>> <<set>>
+    + Reason : string <<get>> <<set>>
+    + Created : DateTime? <<get>> <<set>>
+    + Modified : DateTime? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesLineStatus) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesLineStatus>" <|-- TflApiPresentationEntitiesLineStatus
+IValidatableObject <|-- TflApiPresentationEntitiesLineStatus
+TflApiPresentationEntitiesLineStatus --> "ValidityPeriods<TflApiPresentationEntitiesValidityPeriod>" "List`1"
+TflApiPresentationEntitiesLineStatus --> "Disruption" TflApiPresentationEntitiesDisruption
+@enduml

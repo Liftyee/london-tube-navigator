@@ -1,0 +1,24 @@
+@startuml
+class TflApiPresentationEntitiesFaresTicket <<partial>> {
+    + TflApiPresentationEntitiesFaresTicket(passengerType:string, ticketType:TflApiPresentationEntitiesFaresTicketType, ticketTime:TflApiPresentationEntitiesFaresTicketTime, cost:string, description:string, mode:string, displayOrder:int?, messages:List<TflApiPresentationEntitiesMessage>)
+    + PassengerType : string <<get>> <<set>>
+    + Cost : string <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + Mode : string <<get>> <<set>>
+    + DisplayOrder : int? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesFaresTicket) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesFaresTicket>" <|-- TflApiPresentationEntitiesFaresTicket
+IValidatableObject <|-- TflApiPresentationEntitiesFaresTicket
+TflApiPresentationEntitiesFaresTicket --> "TicketType" TflApiPresentationEntitiesFaresTicketType
+TflApiPresentationEntitiesFaresTicket --> "TicketTime" TflApiPresentationEntitiesFaresTicketTime
+TflApiPresentationEntitiesFaresTicket --> "Messages<TflApiPresentationEntitiesMessage>" "List`1"
+@enduml

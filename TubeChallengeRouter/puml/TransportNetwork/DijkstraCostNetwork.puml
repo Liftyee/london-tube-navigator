@@ -1,0 +1,18 @@
+@startuml
+class DijkstraCostNetwork {
+    + DijkstraCostNetwork(logger:ILogger)
+    + <<override>> CostFunction(startId:string, endId:string, path:List<string>) : int
+    + <<override>> Swap(route:Route, idxA:int, idxB:int) : void
+}
+struct DijkstraNode {
+    + <<readonly>> StationID : string
+    + <<readonly>> Cost : int
+    + CompareTo(other:DijkstraNode) : int
+    + DijkstraNode(stationID:string, cost:int)
+}
+class "IComparable`1"<T> {
+}
+Network <|-- DijkstraCostNetwork
+DijkstraCostNetwork +-- DijkstraNode
+"IComparable`1" "<DijkstraNode>" <|-- DijkstraNode
+@enduml

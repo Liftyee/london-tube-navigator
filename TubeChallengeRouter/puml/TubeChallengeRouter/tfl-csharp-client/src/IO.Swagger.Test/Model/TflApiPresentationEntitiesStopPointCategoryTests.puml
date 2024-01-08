@@ -1,0 +1,9 @@
+@startuml
+class TflApiPresentationEntitiesStopPointCategoryTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesStopPointCategoryInstanceTest() : void
+    + CategoryTest() : void
+    + AvailableKeysTest() : void
+}
+@enduml

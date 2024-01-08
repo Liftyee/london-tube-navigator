@@ -1,0 +1,44 @@
+@startuml
+class TflApiPresentationEntitiesStopPoint <<partial>> {
+    + TflApiPresentationEntitiesStopPoint(naptanId:string, platformName:string, indicator:string, stopLetter:string, modes:List<string>, icsCode:string, smsCode:string, stopType:string, stationNaptan:string, accessibilitySummary:string, hubNaptanCode:string, lines:List<TflApiPresentationEntitiesIdentifier>, lineGroup:List<TflApiPresentationEntitiesLineGroup>, lineModeGroups:List<TflApiPresentationEntitiesLineModeGroup>, fullName:string, naptanMode:string, status:bool?, individualStopId:string, id:string, url:string, commonName:string, distance:double?, placeType:string, additionalProperties:List<TflApiPresentationEntitiesAdditionalProperties>, children:List<TflApiPresentationEntitiesPlace>, childrenUrls:List<string>, lat:double?, lon:double?)
+    + NaptanId : string <<get>> <<set>>
+    + PlatformName : string <<get>> <<set>>
+    + Indicator : string <<get>> <<set>>
+    + StopLetter : string <<get>> <<set>>
+    + IcsCode : string <<get>> <<set>>
+    + SmsCode : string <<get>> <<set>>
+    + StopType : string <<get>> <<set>>
+    + StationNaptan : string <<get>> <<set>>
+    + AccessibilitySummary : string <<get>> <<set>>
+    + HubNaptanCode : string <<get>> <<set>>
+    + FullName : string <<get>> <<set>>
+    + NaptanMode : string <<get>> <<set>>
+    + Status : bool? <<get>> <<set>>
+    + IndividualStopId : string <<get>> <<set>>
+    + Id : string <<get>> <<set>>
+    + Url : string <<get>> <<set>>
+    + CommonName : string <<get>> <<set>>
+    + Distance : double? <<get>> <<set>>
+    + PlaceType : string <<get>> <<set>>
+    + Lat : double? <<get>> <<set>>
+    + Lon : double? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesStopPoint) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesStopPoint>" <|-- TflApiPresentationEntitiesStopPoint
+IValidatableObject <|-- TflApiPresentationEntitiesStopPoint
+TflApiPresentationEntitiesStopPoint --> "Modes<string>" "List`1"
+TflApiPresentationEntitiesStopPoint --> "Lines<TflApiPresentationEntitiesIdentifier>" "List`1"
+TflApiPresentationEntitiesStopPoint --> "LineGroup<TflApiPresentationEntitiesLineGroup>" "List`1"
+TflApiPresentationEntitiesStopPoint --> "LineModeGroups<TflApiPresentationEntitiesLineModeGroup>" "List`1"
+TflApiPresentationEntitiesStopPoint --> "AdditionalProperties<TflApiPresentationEntitiesAdditionalProperties>" "List`1"
+TflApiPresentationEntitiesStopPoint --> "Children<TflApiPresentationEntitiesPlace>" "List`1"
+TflApiPresentationEntitiesStopPoint --> "ChildrenUrls<string>" "List`1"
+@enduml

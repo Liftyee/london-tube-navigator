@@ -1,0 +1,9 @@
+@startuml
+class Tests {
+    + Setup() : void
+    + Constructor_SetsNaptan() : void
+    + Constructor_SetsName() : void
+    + AddingLink_UpdatesGetLinks() : void
+    + AddingLink_UpdatesHasLink() : void
+}
+@enduml

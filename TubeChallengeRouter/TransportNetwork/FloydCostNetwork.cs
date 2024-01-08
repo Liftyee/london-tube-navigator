@@ -17,7 +17,7 @@ public class FloydCostNetwork : Network
     {
         PreprocessFloyd();
     }
-    public override int CostFunction(string startId, string endId, List<string>? lineIDs=null)
+    public override int CostFunction(string startId, string endId)
     {
         return _costMatrix[startId][endId];
     }

@@ -1,0 +1,24 @@
+@startuml
+class TflApiPresentationEntitiesRoadCorridor <<partial>> {
+    + TflApiPresentationEntitiesRoadCorridor(id:string, displayName:string, group:string, statusSeverity:string, statusSeverityDescription:string, bounds:string, envelope:string, statusAggregationStartDate:DateTime?, statusAggregationEndDate:DateTime?, url:string)
+    + Id : string <<get>> <<set>>
+    + DisplayName : string <<get>> <<set>>
+    + Group : string <<get>> <<set>>
+    + StatusSeverity : string <<get>> <<set>>
+    + StatusSeverityDescription : string <<get>> <<set>>
+    + Bounds : string <<get>> <<set>>
+    + Envelope : string <<get>> <<set>>
+    + StatusAggregationStartDate : DateTime? <<get>> <<set>>
+    + StatusAggregationEndDate : DateTime? <<get>> <<set>>
+    + Url : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesRoadCorridor) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesRoadCorridor>" <|-- TflApiPresentationEntitiesRoadCorridor
+IValidatableObject <|-- TflApiPresentationEntitiesRoadCorridor
+@enduml

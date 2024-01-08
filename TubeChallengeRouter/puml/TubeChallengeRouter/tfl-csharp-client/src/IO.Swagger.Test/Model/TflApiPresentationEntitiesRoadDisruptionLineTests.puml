@@ -1,0 +1,15 @@
+@startuml
+class TflApiPresentationEntitiesRoadDisruptionLineTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesRoadDisruptionLineInstanceTest() : void
+    + IdTest() : void
+    + RoadDisruptionIdTest() : void
+    + IsDiversionTest() : void
+    + MultiLineStringTest() : void
+    + StartDateTest() : void
+    + EndDateTest() : void
+    + StartTimeTest() : void
+    + EndTimeTest() : void
+}
+@enduml

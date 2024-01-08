@@ -1,0 +1,24 @@
+@startuml
+class TflApiPresentationEntitiesRoadProjectTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesRoadProjectInstanceTest() : void
+    + ProjectIdTest() : void
+    + SchemeNameTest() : void
+    + ProjectNameTest() : void
+    + ProjectDescriptionTest() : void
+    + ProjectPageUrlTest() : void
+    + ConsultationPageUrlTest() : void
+    + ConsultationStartDateTest() : void
+    + ConsultationEndDateTest() : void
+    + ConstructionStartDateTest() : void
+    + ConstructionEndDateTest() : void
+    + BoroughsBenefitedTest() : void
+    + CycleSuperhighwayIdTest() : void
+    + PhaseTest() : void
+    + ContactNameTest() : void
+    + ContactEmailTest() : void
+    + ExternalPageUrlTest() : void
+    + ProjectSummaryPageUrlTest() : void
+}
+@enduml

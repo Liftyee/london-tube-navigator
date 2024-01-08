@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesStatusSeverityTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesStatusSeverityInstanceTest() : void
+    + ModeNameTest() : void
+    + SeverityLevelTest() : void
+    + DescriptionTest() : void
+}
+@enduml

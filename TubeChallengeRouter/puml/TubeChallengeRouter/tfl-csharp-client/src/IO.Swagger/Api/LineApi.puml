@@ -1,0 +1,98 @@
+@startuml
+interface ILineApi {
+}
+class LineApi <<partial>> {
+    + LineApi(basePath:String)
+    + LineApi(configuration:IO.Swagger.Client.Configuration)
+    + GetBasePath() : String
+    + SetBasePath(basePath:String) : void
+    + DefaultHeader() : IDictionary<String, String>
+    + AddDefaultHeader(key:string, value:string) : void
+    + LineArrivals(ids:List<string>, stopPointId:string, direction:string, destinationStationId:string) : List<TflApiPresentationEntitiesPrediction>
+    + LineArrivalsWithHttpInfo(ids:List<string>, stopPointId:string, direction:string, destinationStationId:string) : ApiResponse< List<TflApiPresentationEntitiesPrediction> >
+    + <<async>> LineArrivalsAsync(ids:List<string>, stopPointId:string, direction:string, destinationStationId:string) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesPrediction>>
+    + <<async>> LineArrivalsAsyncWithHttpInfo(ids:List<string>, stopPointId:string, direction:string, destinationStationId:string) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesPrediction>>>
+    + LineDisruption(ids:List<string>) : List<TflApiPresentationEntitiesDisruption>
+    + LineDisruptionWithHttpInfo(ids:List<string>) : ApiResponse< List<TflApiPresentationEntitiesDisruption> >
+    + <<async>> LineDisruptionAsync(ids:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesDisruption>>
+    + <<async>> LineDisruptionAsyncWithHttpInfo(ids:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesDisruption>>>
+    + LineDisruptionByMode(modes:List<string>) : List<TflApiPresentationEntitiesDisruption>
+    + LineDisruptionByModeWithHttpInfo(modes:List<string>) : ApiResponse< List<TflApiPresentationEntitiesDisruption> >
+    + <<async>> LineDisruptionByModeAsync(modes:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesDisruption>>
+    + <<async>> LineDisruptionByModeAsyncWithHttpInfo(modes:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesDisruption>>>
+    + LineGet(ids:List<string>) : List<TflApiPresentationEntitiesLine>
+    + LineGetWithHttpInfo(ids:List<string>) : ApiResponse< List<TflApiPresentationEntitiesLine> >
+    + <<async>> LineGetAsync(ids:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesLine>>
+    + <<async>> LineGetAsyncWithHttpInfo(ids:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesLine>>>
+    + LineGetByMode(modes:List<string>) : List<TflApiPresentationEntitiesLine>
+    + LineGetByModeWithHttpInfo(modes:List<string>) : ApiResponse< List<TflApiPresentationEntitiesLine> >
+    + <<async>> LineGetByModeAsync(modes:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesLine>>
+    + <<async>> LineGetByModeAsyncWithHttpInfo(modes:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesLine>>>
+    + LineLineRoutesByIds(ids:List<string>, serviceTypes:List<string>) : List<TflApiPresentationEntitiesLine>
+    + LineLineRoutesByIdsWithHttpInfo(ids:List<string>, serviceTypes:List<string>) : ApiResponse< List<TflApiPresentationEntitiesLine> >
+    + <<async>> LineLineRoutesByIdsAsync(ids:List<string>, serviceTypes:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesLine>>
+    + <<async>> LineLineRoutesByIdsAsyncWithHttpInfo(ids:List<string>, serviceTypes:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesLine>>>
+    + LineMetaDisruptionCategories() : List<string>
+    + LineMetaDisruptionCategoriesWithHttpInfo() : ApiResponse< List<string> >
+    + <<async>> LineMetaDisruptionCategoriesAsync() : System.Threading.Tasks.Task<List<string>>
+    + <<async>> LineMetaDisruptionCategoriesAsyncWithHttpInfo() : System.Threading.Tasks.Task<ApiResponse<List<string>>>
+    + LineMetaModes() : List<TflApiPresentationEntitiesMode>
+    + LineMetaModesWithHttpInfo() : ApiResponse< List<TflApiPresentationEntitiesMode> >
+    + <<async>> LineMetaModesAsync() : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesMode>>
+    + <<async>> LineMetaModesAsyncWithHttpInfo() : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesMode>>>
+    + LineMetaServiceTypes() : List<string>
+    + LineMetaServiceTypesWithHttpInfo() : ApiResponse< List<string> >
+    + <<async>> LineMetaServiceTypesAsync() : System.Threading.Tasks.Task<List<string>>
+    + <<async>> LineMetaServiceTypesAsyncWithHttpInfo() : System.Threading.Tasks.Task<ApiResponse<List<string>>>
+    + LineMetaSeverity() : List<TflApiPresentationEntitiesStatusSeverity>
+    + LineMetaSeverityWithHttpInfo() : ApiResponse< List<TflApiPresentationEntitiesStatusSeverity> >
+    + <<async>> LineMetaSeverityAsync() : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesStatusSeverity>>
+    + <<async>> LineMetaSeverityAsyncWithHttpInfo() : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesStatusSeverity>>>
+    + LineRoute(serviceTypes:List<string>) : List<TflApiPresentationEntitiesLine>
+    + LineRouteWithHttpInfo(serviceTypes:List<string>) : ApiResponse< List<TflApiPresentationEntitiesLine> >
+    + <<async>> LineRouteAsync(serviceTypes:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesLine>>
+    + <<async>> LineRouteAsyncWithHttpInfo(serviceTypes:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesLine>>>
+    + LineRouteByMode(modes:List<string>, serviceTypes:List<string>) : List<TflApiPresentationEntitiesLine>
+    + LineRouteByModeWithHttpInfo(modes:List<string>, serviceTypes:List<string>) : ApiResponse< List<TflApiPresentationEntitiesLine> >
+    + <<async>> LineRouteByModeAsync(modes:List<string>, serviceTypes:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesLine>>
+    + <<async>> LineRouteByModeAsyncWithHttpInfo(modes:List<string>, serviceTypes:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesLine>>>
+    + LineRouteSequence(id:string, direction:string, serviceTypes:List<string>, excludeCrowding:bool?) : TflApiPresentationEntitiesRouteSequence
+    + LineRouteSequenceWithHttpInfo(id:string, direction:string, serviceTypes:List<string>, excludeCrowding:bool?) : ApiResponse< TflApiPresentationEntitiesRouteSequence >
+    + <<async>> LineRouteSequenceAsync(id:string, direction:string, serviceTypes:List<string>, excludeCrowding:bool?) : System.Threading.Tasks.Task<TflApiPresentationEntitiesRouteSequence>
+    + <<async>> LineRouteSequenceAsyncWithHttpInfo(id:string, direction:string, serviceTypes:List<string>, excludeCrowding:bool?) : System.Threading.Tasks.Task<ApiResponse<TflApiPresentationEntitiesRouteSequence>>
+    + LineSearch(query:string, modes:List<string>, serviceTypes:List<string>) : TflApiPresentationEntitiesRouteSearchResponse
+    + LineSearchWithHttpInfo(query:string, modes:List<string>, serviceTypes:List<string>) : ApiResponse< TflApiPresentationEntitiesRouteSearchResponse >
+    + <<async>> LineSearchAsync(query:string, modes:List<string>, serviceTypes:List<string>) : System.Threading.Tasks.Task<TflApiPresentationEntitiesRouteSearchResponse>
+    + <<async>> LineSearchAsyncWithHttpInfo(query:string, modes:List<string>, serviceTypes:List<string>) : System.Threading.Tasks.Task<ApiResponse<TflApiPresentationEntitiesRouteSearchResponse>>
+    + LineStatus(ids:List<string>, startDate:string, endDate:string, detail:bool?, dateRangeStartDate:DateTime?, dateRangeEndDate:DateTime?) : List<TflApiPresentationEntitiesLine>
+    + LineStatusWithHttpInfo(ids:List<string>, startDate:string, endDate:string, detail:bool?, dateRangeStartDate:DateTime?, dateRangeEndDate:DateTime?) : ApiResponse< List<TflApiPresentationEntitiesLine> >
+    + <<async>> LineStatusAsync(ids:List<string>, startDate:string, endDate:string, detail:bool?, dateRangeStartDate:DateTime?, dateRangeEndDate:DateTime?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesLine>>
+    + <<async>> LineStatusAsyncWithHttpInfo(ids:List<string>, startDate:string, endDate:string, detail:bool?, dateRangeStartDate:DateTime?, dateRangeEndDate:DateTime?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesLine>>>
+    + LineStatusByIds(ids:List<string>, detail:bool?) : List<TflApiPresentationEntitiesLine>
+    + LineStatusByIdsWithHttpInfo(ids:List<string>, detail:bool?) : ApiResponse< List<TflApiPresentationEntitiesLine> >
+    + <<async>> LineStatusByIdsAsync(ids:List<string>, detail:bool?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesLine>>
+    + <<async>> LineStatusByIdsAsyncWithHttpInfo(ids:List<string>, detail:bool?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesLine>>>
+    + LineStatusByMode(modes:List<string>, detail:bool?, severityLevel:string) : List<TflApiPresentationEntitiesLine>
+    + LineStatusByModeWithHttpInfo(modes:List<string>, detail:bool?, severityLevel:string) : ApiResponse< List<TflApiPresentationEntitiesLine> >
+    + <<async>> LineStatusByModeAsync(modes:List<string>, detail:bool?, severityLevel:string) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesLine>>
+    + <<async>> LineStatusByModeAsyncWithHttpInfo(modes:List<string>, detail:bool?, severityLevel:string) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesLine>>>
+    + LineStatusBySeverity(severity:int?) : List<TflApiPresentationEntitiesLine>
+    + LineStatusBySeverityWithHttpInfo(severity:int?) : ApiResponse< List<TflApiPresentationEntitiesLine> >
+    + <<async>> LineStatusBySeverityAsync(severity:int?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesLine>>
+    + <<async>> LineStatusBySeverityAsyncWithHttpInfo(severity:int?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesLine>>>
+    + LineStopPoints(id:string, tflOperatedNationalRailStationsOnly:bool?) : List<TflApiPresentationEntitiesStopPoint>
+    + LineStopPointsWithHttpInfo(id:string, tflOperatedNationalRailStationsOnly:bool?) : ApiResponse< List<TflApiPresentationEntitiesStopPoint> >
+    + <<async>> LineStopPointsAsync(id:string, tflOperatedNationalRailStationsOnly:bool?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesStopPoint>>
+    + <<async>> LineStopPointsAsyncWithHttpInfo(id:string, tflOperatedNationalRailStationsOnly:bool?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesStopPoint>>>
+    + LineTimetable(fromStopPointId:string, id:string) : TflApiPresentationEntitiesTimetableResponse
+    + LineTimetableWithHttpInfo(fromStopPointId:string, id:string) : ApiResponse< TflApiPresentationEntitiesTimetableResponse >
+    + <<async>> LineTimetableAsync(fromStopPointId:string, id:string) : System.Threading.Tasks.Task<TflApiPresentationEntitiesTimetableResponse>
+    + <<async>> LineTimetableAsyncWithHttpInfo(fromStopPointId:string, id:string) : System.Threading.Tasks.Task<ApiResponse<TflApiPresentationEntitiesTimetableResponse>>
+    + LineTimetableTo(fromStopPointId:string, id:string, toStopPointId:string) : TflApiPresentationEntitiesTimetableResponse
+    + LineTimetableToWithHttpInfo(fromStopPointId:string, id:string, toStopPointId:string) : ApiResponse< TflApiPresentationEntitiesTimetableResponse >
+    + <<async>> LineTimetableToAsync(fromStopPointId:string, id:string, toStopPointId:string) : System.Threading.Tasks.Task<TflApiPresentationEntitiesTimetableResponse>
+    + <<async>> LineTimetableToAsyncWithHttpInfo(fromStopPointId:string, id:string, toStopPointId:string) : System.Threading.Tasks.Task<ApiResponse<TflApiPresentationEntitiesTimetableResponse>>
+}
+IApiAccessor <|-- ILineApi
+ILineApi <|-- LineApi
+@enduml

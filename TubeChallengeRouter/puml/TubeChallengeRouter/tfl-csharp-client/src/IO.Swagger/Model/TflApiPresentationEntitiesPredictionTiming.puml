@@ -1,0 +1,20 @@
+@startuml
+class TflApiPresentationEntitiesPredictionTiming <<partial>> {
+    + TflApiPresentationEntitiesPredictionTiming(countdownServerAdjustment:string, source:DateTime?, insert:DateTime?, read:DateTime?, sent:DateTime?, received:DateTime?)
+    + CountdownServerAdjustment : string <<get>> <<set>>
+    + Source : DateTime? <<get>> <<set>>
+    + Insert : DateTime? <<get>> <<set>>
+    + Read : DateTime? <<get>> <<set>>
+    + Sent : DateTime? <<get>> <<set>>
+    + Received : DateTime? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesPredictionTiming) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesPredictionTiming>" <|-- TflApiPresentationEntitiesPredictionTiming
+IValidatableObject <|-- TflApiPresentationEntitiesPredictionTiming
+@enduml

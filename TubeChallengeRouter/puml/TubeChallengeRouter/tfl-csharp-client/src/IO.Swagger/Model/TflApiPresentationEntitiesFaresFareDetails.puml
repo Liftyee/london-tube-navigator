@@ -1,0 +1,38 @@
+@startuml
+class TflApiPresentationEntitiesFaresFareDetails <<partial>> {
+    + TflApiPresentationEntitiesFaresFareDetails(boundsId:int?, startDate:DateTime?, endDate:DateTime?, mode:string, passengerType:string, contactlessPAYGOnlyFare:bool?, from:string, to:string, fromStation:string, toStation:string, via:string, routeCode:string, displayName:string, displayOrder:int?, routeDescription:string, validatorInformation:string, _operator:string, specialFare:bool?, throughFare:bool?, isTour:bool?, ticketsAvailable:List<TflApiPresentationEntitiesFaresTicket>, messages:List<TflApiPresentationEntitiesMessage>)
+    + BoundsId : int? <<get>> <<set>>
+    + StartDate : DateTime? <<get>> <<set>>
+    + EndDate : DateTime? <<get>> <<set>>
+    + Mode : string <<get>> <<set>>
+    + PassengerType : string <<get>> <<set>>
+    + ContactlessPAYGOnlyFare : bool? <<get>> <<set>>
+    + From : string <<get>> <<set>>
+    + To : string <<get>> <<set>>
+    + FromStation : string <<get>> <<set>>
+    + ToStation : string <<get>> <<set>>
+    + Via : string <<get>> <<set>>
+    + RouteCode : string <<get>> <<set>>
+    + DisplayName : string <<get>> <<set>>
+    + DisplayOrder : int? <<get>> <<set>>
+    + RouteDescription : string <<get>> <<set>>
+    + ValidatorInformation : string <<get>> <<set>>
+    + Operator : string <<get>> <<set>>
+    + SpecialFare : bool? <<get>> <<set>>
+    + ThroughFare : bool? <<get>> <<set>>
+    + IsTour : bool? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesFaresFareDetails) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesFaresFareDetails>" <|-- TflApiPresentationEntitiesFaresFareDetails
+IValidatableObject <|-- TflApiPresentationEntitiesFaresFareDetails
+TflApiPresentationEntitiesFaresFareDetails --> "TicketsAvailable<TflApiPresentationEntitiesFaresTicket>" "List`1"
+TflApiPresentationEntitiesFaresFareDetails --> "Messages<TflApiPresentationEntitiesMessage>" "List`1"
+@enduml

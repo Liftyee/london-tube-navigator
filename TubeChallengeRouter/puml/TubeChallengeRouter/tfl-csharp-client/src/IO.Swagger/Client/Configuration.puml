@@ -1,0 +1,33 @@
+@startuml
+class Configuration {
+    + <<const>> Version : string = "1.0.0"
+    + <<const>> ISO8601_DATETIME_FORMAT : string = "o"
+    + Configuration()
+    + Configuration(defaultHeader:IDictionary<string, string>, apiKey:IDictionary<string, string>, apiKeyPrefix:IDictionary<string, string>, basePath:string)
+    + Configuration(apiClient:ApiClient, defaultHeader:IDictionary<string, string>, username:string, password:string, accessToken:string, apiKey:IDictionary<string, string>, apiKeyPrefix:IDictionary<string, string>, tempFolderPath:string, dateTimeFormat:string, timeout:int, userAgent:string)
+    + Configuration(apiClient:ApiClient)
+    + <<virtual>> BasePath : string <<get>> <<set>>
+    + <<virtual>> Timeout : int <<get>> <<set>>
+    + <<virtual>> UserAgent : string <<get>> <<set>>
+    + <<virtual>> Username : string <<get>> <<set>>
+    + <<virtual>> Password : string <<get>> <<set>>
+    + GetApiKeyWithPrefix(apiKeyIdentifier:string) : string
+    + <<virtual>> AccessToken : string <<get>> <<set>>
+    + <<virtual>> TempFolderPath : string <<get>> <<set>>
+    + <<virtual>> DateTimeFormat : string <<get>> <<set>>
+    + AddDefaultHeader(key:string, value:string) : void
+    + CreateApiClient() : ApiClient
+    + {static} ToDebugReport() : String
+    + AddApiKey(key:string, value:string) : void
+    + AddApiKeyPrefix(key:string, value:string) : void
+}
+class "IDictionary`2"<T1,T2> {
+}
+IReadableConfiguration <|-- Configuration
+Configuration o-> "DefaultExceptionFactory" ExceptionFactory
+Configuration --> "Default" Configuration
+Configuration --> "ApiClient" ApiClient
+Configuration --> "DefaultHeader<string,string>" "IDictionary`2"
+Configuration --> "ApiKeyPrefix<string,string>" "IDictionary`2"
+Configuration --> "ApiKey<string,string>" "IDictionary`2"
+@enduml

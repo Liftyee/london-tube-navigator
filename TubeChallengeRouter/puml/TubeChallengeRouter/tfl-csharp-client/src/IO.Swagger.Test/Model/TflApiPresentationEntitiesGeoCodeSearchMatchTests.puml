@@ -1,0 +1,14 @@
+@startuml
+class TflApiPresentationEntitiesGeoCodeSearchMatchTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesGeoCodeSearchMatchInstanceTest() : void
+    + TypesTest() : void
+    + AddressTest() : void
+    + IdTest() : void
+    + UrlTest() : void
+    + NameTest() : void
+    + LatTest() : void
+    + LonTest() : void
+}
+@enduml

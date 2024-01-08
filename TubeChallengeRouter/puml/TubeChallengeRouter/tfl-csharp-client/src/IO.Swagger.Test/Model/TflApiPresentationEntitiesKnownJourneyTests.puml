@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesKnownJourneyTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesKnownJourneyInstanceTest() : void
+    + HourTest() : void
+    + MinuteTest() : void
+    + IntervalIdTest() : void
+}
+@enduml

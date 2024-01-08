@@ -1,0 +1,10 @@
+@startuml
+class LinkTests {
+    + SetUp() : void
+    + Constructor_SetsDetails() : void
+    + SetDuration_ChangesDurationAttribute() : void
+    + SetLine_ChangesLineAttribute() : void
+    + SetDurationMoreThanOnce_ThrowsException() : void
+    + SetLineMoreThanOnce_ThrowsException() : void
+}
+@enduml

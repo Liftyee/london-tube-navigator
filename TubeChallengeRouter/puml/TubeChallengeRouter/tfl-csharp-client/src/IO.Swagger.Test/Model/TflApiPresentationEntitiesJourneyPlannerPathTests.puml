@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerPathTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerPathInstanceTest() : void
+    + LineStringTest() : void
+    + StopPointsTest() : void
+    + ElevationTest() : void
+}
+@enduml

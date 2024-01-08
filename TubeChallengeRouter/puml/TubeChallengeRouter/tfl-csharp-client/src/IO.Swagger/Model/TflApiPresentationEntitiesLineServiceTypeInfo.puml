@@ -1,0 +1,16 @@
+@startuml
+class TflApiPresentationEntitiesLineServiceTypeInfo <<partial>> {
+    + TflApiPresentationEntitiesLineServiceTypeInfo(name:string, uri:string)
+    + Name : string <<get>> <<set>>
+    + Uri : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesLineServiceTypeInfo) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesLineServiceTypeInfo>" <|-- TflApiPresentationEntitiesLineServiceTypeInfo
+IValidatableObject <|-- TflApiPresentationEntitiesLineServiceTypeInfo
+@enduml

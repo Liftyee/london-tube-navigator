@@ -1,0 +1,17 @@
+@startuml
+class TflApiPresentationEntitiesRedirect <<partial>> {
+    + TflApiPresentationEntitiesRedirect(shortUrl:string, longUrl:string, active:bool?)
+    + ShortUrl : string <<get>> <<set>>
+    + LongUrl : string <<get>> <<set>>
+    + Active : bool? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesRedirect) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesRedirect>" <|-- TflApiPresentationEntitiesRedirect
+IValidatableObject <|-- TflApiPresentationEntitiesRedirect
+@enduml

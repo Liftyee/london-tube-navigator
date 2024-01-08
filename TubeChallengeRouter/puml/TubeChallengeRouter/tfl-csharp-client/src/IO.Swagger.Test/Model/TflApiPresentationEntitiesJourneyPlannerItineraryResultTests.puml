@@ -1,0 +1,14 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerItineraryResultTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerItineraryResultInstanceTest() : void
+    + JourneysTest() : void
+    + LinesTest() : void
+    + CycleHireDockingStationDataTest() : void
+    + StopMessagesTest() : void
+    + RecommendedMaxAgeMinutesTest() : void
+    + SearchCriteriaTest() : void
+    + JourneyVectorTest() : void
+}
+@enduml

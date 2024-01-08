@@ -1,0 +1,11 @@
+@startuml
+class TflApiPresentationEntitiesBayTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesBayInstanceTest() : void
+    + BayTypeTest() : void
+    + BayCountTest() : void
+    + FreeTest() : void
+    + OccupiedTest() : void
+}
+@enduml

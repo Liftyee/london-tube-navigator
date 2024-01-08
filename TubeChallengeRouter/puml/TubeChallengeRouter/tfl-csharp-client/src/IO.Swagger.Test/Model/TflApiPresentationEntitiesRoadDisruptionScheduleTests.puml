@@ -1,0 +1,9 @@
+@startuml
+class TflApiPresentationEntitiesRoadDisruptionScheduleTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesRoadDisruptionScheduleInstanceTest() : void
+    + StartTimeTest() : void
+    + EndTimeTest() : void
+}
+@enduml

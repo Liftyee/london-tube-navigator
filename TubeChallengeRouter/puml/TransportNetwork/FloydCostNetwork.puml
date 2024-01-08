@@ -1,0 +1,8 @@
+@startuml
+class FloydCostNetwork {
+    + FloydCostNetwork(logger:ILogger)
+    + <<override>> CostFunction(startId:string, endId:string) : int
+    + EnumerateCostMatrix() : string
+}
+Network <|-- FloydCostNetwork
+@enduml

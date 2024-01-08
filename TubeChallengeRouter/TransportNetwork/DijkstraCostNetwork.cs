@@ -23,6 +23,7 @@ public class DijkstraCostNetwork : Network
     }
     
     private Dictionary<string, Dictionary<string, int?>> _costCache;
+    private Dictionary<string, Dictionary<string, List<string>>> _pathCache;
     
     public DijkstraCostNetwork(ILogger logger) : base(logger)
     {
@@ -48,24 +49,29 @@ public class DijkstraCostNetwork : Network
             }
         }
     }
-    public override int CostFunction(string startId, string endId, List<string>? lineIDs=null)
+    public override int CostFunction(string startId, string endId, out List<string> path)
     {
         if (Stations[startId].HasLink(endId))
         {
+            path = new List<string>();
             return Stations[startId].CostTo(endId);
         }
         // first, lookup in cache to see if we have calculated it before
         if (_costCache[startId][endId] is not null)
         {
+            path = _pathCache[startId][endId];
             return _costCache[startId][endId].Value;
         }
         
         // otherwise, calculate it and update the cache
-        _costCache[startId][endId] = DijkstraLookup(startId, endId);
+        List<string> result;
+        _costCache[startId][endId] = DijkstraLookup(startId, endId, out result);
+        _pathCache[startId][endId] = result; // TODO: might induce undesired referencing? 
+        path = result;
         return _costCache[startId][endId].Value;
     }
 
-    private int DijkstraLookup(string startId, string endId)
+    private int DijkstraLookup(string startId, string endId, out List<string> path)
     {
         Dictionary<string, string> prev = new();
         PriorityQueue<DijkstraNode>
@@ -97,11 +103,74 @@ public class DijkstraCostNetwork : Network
             visited.Add(minCostNode.StationID);
             if (minCostNode.StationID == endId)
             {
+                // reconstruct path
+                List<string> result = new();
+                string? current = prev[endId];
+                while (current != startId)
+                {
+                    result.Add(current);
+                    current = prev[current];
+                }
+                result.Reverse();
+                path = result;
                 return minCostNode.Cost;
             }
         }
         Logger.Debug("No more stations to visit");
         // TODO: make a custom exception
         throw new ArgumentException($"No route found between {startId} and {endId}");
+    }
+    
+    public override void Swap(Route route, int idxA, int idxB)
+    {
+        List<string> stations = route.GetTargetPath();
+        
+        TimeSpan updatedTime = route.Duration;
+        int updatedCost = route.Cost;
+        
+        /* Instead of recalculating the travel time by summing all travel times between stations, we can just
+           change the travel times to and from the stations that are being swapped. All other travel times should
+           remain constant, so we are only concerned with what happens around our swapped stations. */
+        
+        // These four times are the time taken to travel to and from both stations being swapped (before the swap)
+        if (idxA > 0)             updatedTime -= TravelTime(stations[idxA - 1], stations[idxA]);
+        if (idxA < route.Count-1) updatedTime -= TravelTime(stations[idxA], stations[idxA + 1]);
+        if (idxB > 0)             updatedTime -= TravelTime(stations[idxB - 1], stations[idxB]);
+        if (idxB < route.Count-1) updatedTime -= TravelTime(stations[idxB], stations[idxB + 1]);
+
+        // Do the same for costs (unitless value considering but not limited to duration)
+        if (idxA > 0)             updatedCost -= CostFunction(stations[idxA - 1], stations[idxA]);
+        if (idxA < route.Count-1) updatedCost -= CostFunction(stations[idxA], stations[idxA + 1]);
+        if (idxB > 0)             updatedCost -= CostFunction(stations[idxB - 1], stations[idxB]);
+        if (idxB < route.Count-1) updatedCost -= CostFunction(stations[idxB], stations[idxB + 1]);
+        
+        // swap the stations in the route
+        string temp = stations[idxA];
+        stations[idxA] = stations[idxB];
+        stations[idxB] = temp;
+        
+        // Now add the updated times to travel to and from the swapped stations in their new position
+        if (idxA > 0)             updatedTime += TravelTime(stations[idxA - 1], stations[idxA]);
+        if (idxA < route.Count-1) updatedTime += TravelTime(stations[idxA], stations[idxA + 1]);
+        if (idxB > 0)             updatedTime += TravelTime(stations[idxB - 1], stations[idxB]);
+        if (idxB < route.Count-1) updatedTime += TravelTime(stations[idxB], stations[idxB + 1]);
+        
+        // and costs too
+        if (idxA > 0)               updatedCost += UpdatePathReturnCost(route, idxA);
+        if (idxA < route.Count - 1) updatedCost += UpdatePathReturnCost(route, idxA + 1);
+        if (idxB > 0)               updatedCost += UpdatePathReturnCost(route, idxB);
+        if (idxB < route.Count - 1) updatedCost += UpdatePathReturnCost(route, idxB + 1);
+        
+        // update the route's length (time taken)
+        route.UpdateDuration(updatedTime);
+        
+        // update the route's cost (unitless value based on number of factors)
+        route.UpdateCost(updatedCost);
+    }
+
+    private int UpdatePathReturnCost(Route route, int idxA)
+    {
+        List<string> toA = route.GetIntermediateStations(idxA - 1);
+        return CostFunction(route.targetStations[idxA - 1], route.targetStations[idxA], out toA);
     }
 }

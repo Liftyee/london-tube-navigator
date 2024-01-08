@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesOrderedRouteTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesOrderedRouteInstanceTest() : void
+    + NameTest() : void
+    + NaptanIdsTest() : void
+    + ServiceTypeTest() : void
+}
+@enduml

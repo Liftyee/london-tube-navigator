@@ -1,0 +1,6 @@
+@startuml
+class DijkstraNetworkTests {
+    + SetUp() : void
+    + Dijkstra_FindsPath() : void
+}
+@enduml

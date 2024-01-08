@@ -1,0 +1,16 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerFareTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerFareInstanceTest() : void
+    + LowZoneTest() : void
+    + HighZoneTest() : void
+    + CostTest() : void
+    + ChargeProfileNameTest() : void
+    + IsHopperFareTest() : void
+    + ChargeLevelTest() : void
+    + PeakTest() : void
+    + OffPeakTest() : void
+    + TapsTest() : void
+}
+@enduml

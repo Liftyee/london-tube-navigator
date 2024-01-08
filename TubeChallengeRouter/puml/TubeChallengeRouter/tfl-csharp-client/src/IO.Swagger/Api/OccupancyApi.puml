@@ -1,0 +1,34 @@
+@startuml
+interface IOccupancyApi {
+}
+class OccupancyApi <<partial>> {
+    + OccupancyApi(basePath:String)
+    + OccupancyApi(configuration:IO.Swagger.Client.Configuration)
+    + GetBasePath() : String
+    + SetBasePath(basePath:String) : void
+    + DefaultHeader() : IDictionary<String, String>
+    + AddDefaultHeader(key:string, value:string) : void
+    + OccupancyGet(id:string) : TflApiPresentationEntitiesCarParkOccupancy
+    + OccupancyGetWithHttpInfo(id:string) : ApiResponse< TflApiPresentationEntitiesCarParkOccupancy >
+    + <<async>> OccupancyGetAsync(id:string) : System.Threading.Tasks.Task<TflApiPresentationEntitiesCarParkOccupancy>
+    + <<async>> OccupancyGetAsyncWithHttpInfo(id:string) : System.Threading.Tasks.Task<ApiResponse<TflApiPresentationEntitiesCarParkOccupancy>>
+    + OccupancyGetAllChargeConnectorStatus() : List<TflApiPresentationEntitiesChargeConnectorOccupancy>
+    + OccupancyGetAllChargeConnectorStatusWithHttpInfo() : ApiResponse< List<TflApiPresentationEntitiesChargeConnectorOccupancy> >
+    + <<async>> OccupancyGetAllChargeConnectorStatusAsync() : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesChargeConnectorOccupancy>>
+    + <<async>> OccupancyGetAllChargeConnectorStatusAsyncWithHttpInfo() : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesChargeConnectorOccupancy>>>
+    + OccupancyGetBikePointsOccupancies(ids:List<string>) : List<TflApiPresentationEntitiesBikePointOccupancy>
+    + OccupancyGetBikePointsOccupanciesWithHttpInfo(ids:List<string>) : ApiResponse< List<TflApiPresentationEntitiesBikePointOccupancy> >
+    + <<async>> OccupancyGetBikePointsOccupanciesAsync(ids:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesBikePointOccupancy>>
+    + <<async>> OccupancyGetBikePointsOccupanciesAsyncWithHttpInfo(ids:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesBikePointOccupancy>>>
+    + OccupancyGetChargeConnectorStatus(ids:List<string>) : List<TflApiPresentationEntitiesChargeConnectorOccupancy>
+    + OccupancyGetChargeConnectorStatusWithHttpInfo(ids:List<string>) : ApiResponse< List<TflApiPresentationEntitiesChargeConnectorOccupancy> >
+    + <<async>> OccupancyGetChargeConnectorStatusAsync(ids:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesChargeConnectorOccupancy>>
+    + <<async>> OccupancyGetChargeConnectorStatusAsyncWithHttpInfo(ids:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesChargeConnectorOccupancy>>>
+    + OccupancyGet_0() : List<TflApiPresentationEntitiesCarParkOccupancy>
+    + OccupancyGet_0WithHttpInfo() : ApiResponse< List<TflApiPresentationEntitiesCarParkOccupancy> >
+    + <<async>> OccupancyGet_0Async() : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesCarParkOccupancy>>
+    + <<async>> OccupancyGet_0AsyncWithHttpInfo() : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesCarParkOccupancy>>>
+}
+IApiAccessor <|-- IOccupancyApi
+IOccupancyApi <|-- OccupancyApi
+@enduml

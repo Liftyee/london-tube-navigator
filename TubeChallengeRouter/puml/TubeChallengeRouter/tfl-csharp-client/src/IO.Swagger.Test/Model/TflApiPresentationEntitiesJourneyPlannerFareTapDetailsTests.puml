@@ -1,0 +1,13 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerFareTapDetailsTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerFareTapDetailsInstanceTest() : void
+    + ModeTypeTest() : void
+    + ValidationTypeTest() : void
+    + HostDeviceTypeTest() : void
+    + BusRouteIdTest() : void
+    + NationalLocationCodeTest() : void
+    + TapTimestampTest() : void
+}
+@enduml

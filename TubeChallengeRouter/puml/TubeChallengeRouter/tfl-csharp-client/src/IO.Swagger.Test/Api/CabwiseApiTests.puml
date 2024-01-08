@@ -1,0 +1,8 @@
+@startuml
+class CabwiseApiTests {
+    + Init() : void
+    + Cleanup() : void
+    + InstanceTest() : void
+    + CabwiseGetTest() : void
+}
+@enduml

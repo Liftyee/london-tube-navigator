@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesInstructionTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesInstructionInstanceTest() : void
+    + SummaryTest() : void
+    + DetailedTest() : void
+    + StepsTest() : void
+}
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerJourneyVectorTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerJourneyVectorInstanceTest() : void
+    + FromTest() : void
+    + ToTest() : void
+    + ViaTest() : void
+    + UriTest() : void
+}
+@enduml

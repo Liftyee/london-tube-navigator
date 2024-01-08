@@ -1,0 +1,45 @@
+@startuml
+class TflApiPresentationEntitiesIdentifier <<partial>> {
+    + RouteType : RouteTypeEnum? <<get>> <<set>>
+    + Status : StatusEnum? <<get>> <<set>>
+    + TflApiPresentationEntitiesIdentifier(id:string, name:string, uri:string, fullName:string, type:string, crowding:TflApiPresentationEntitiesCrowding, routeType:RouteTypeEnum?, status:StatusEnum?, motType:string, network:string)
+    + Id : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + Uri : string <<get>> <<set>>
+    + FullName : string <<get>> <<set>>
+    + Type : string <<get>> <<set>>
+    + MotType : string <<get>> <<set>>
+    + Network : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesIdentifier) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+enum RouteTypeEnum {
+    Unknown= 1,
+    All= 2,
+    CycleSuperhighways= 3,
+    Quietways= 4,
+    Cycleways= 5,
+    MiniHollands= 6,
+    CentralLondonGrid= 7,
+    StreetspaceRoute= 8,
+}
+enum StatusEnum {
+    Unknown= 1,
+    All= 2,
+    Open= 3,
+    InProgress= 4,
+    Planned= 5,
+    PlannedSubjecttofeasibilityandconsultation= 6,
+    NotOpen= 7,
+}
+"IEquatable`1" "<TflApiPresentationEntitiesIdentifier>" <|-- TflApiPresentationEntitiesIdentifier
+IValidatableObject <|-- TflApiPresentationEntitiesIdentifier
+TflApiPresentationEntitiesIdentifier --> "Crowding" TflApiPresentationEntitiesCrowding
+TflApiPresentationEntitiesIdentifier +-- RouteTypeEnum
+TflApiPresentationEntitiesIdentifier +-- StatusEnum
+@enduml

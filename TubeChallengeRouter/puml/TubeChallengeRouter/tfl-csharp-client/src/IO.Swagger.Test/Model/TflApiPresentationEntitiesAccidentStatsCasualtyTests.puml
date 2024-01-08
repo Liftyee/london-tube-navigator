@@ -1,0 +1,12 @@
+@startuml
+class TflApiPresentationEntitiesAccidentStatsCasualtyTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesAccidentStatsCasualtyInstanceTest() : void
+    + AgeTest() : void
+    + ClassTest() : void
+    + SeverityTest() : void
+    + ModeTest() : void
+    + AgeBandTest() : void
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesChargeConnectorOccupancyTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesChargeConnectorOccupancyInstanceTest() : void
+    + IdTest() : void
+    + SourceSystemPlaceIdTest() : void
+    + StatusTest() : void
+}
+@enduml

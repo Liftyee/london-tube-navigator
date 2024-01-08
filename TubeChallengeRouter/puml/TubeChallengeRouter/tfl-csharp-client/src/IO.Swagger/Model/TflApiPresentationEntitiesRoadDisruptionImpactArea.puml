@@ -1,0 +1,21 @@
+@startuml
+class TflApiPresentationEntitiesRoadDisruptionImpactArea <<partial>> {
+    + TflApiPresentationEntitiesRoadDisruptionImpactArea(id:int?, roadDisruptionId:string, polygon:SystemDataSpatialDbGeography, startDate:DateTime?, endDate:DateTime?, startTime:string, endTime:string)
+    + Id : int? <<get>> <<set>>
+    + RoadDisruptionId : string <<get>> <<set>>
+    + StartDate : DateTime? <<get>> <<set>>
+    + EndDate : DateTime? <<get>> <<set>>
+    + StartTime : string <<get>> <<set>>
+    + EndTime : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesRoadDisruptionImpactArea) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesRoadDisruptionImpactArea>" <|-- TflApiPresentationEntitiesRoadDisruptionImpactArea
+IValidatableObject <|-- TflApiPresentationEntitiesRoadDisruptionImpactArea
+TflApiPresentationEntitiesRoadDisruptionImpactArea --> "Polygon" SystemDataSpatialDbGeography
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class TflApiPresentationEntitiesSearchMatchTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesSearchMatchInstanceTest() : void
+    + IdTest() : void
+    + UrlTest() : void
+    + NameTest() : void
+    + LatTest() : void
+    + LonTest() : void
+}
+@enduml

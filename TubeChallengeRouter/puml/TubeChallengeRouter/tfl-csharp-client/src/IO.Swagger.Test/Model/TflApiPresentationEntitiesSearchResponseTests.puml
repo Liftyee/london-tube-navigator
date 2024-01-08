@@ -1,0 +1,15 @@
+@startuml
+class TflApiPresentationEntitiesSearchResponseTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesSearchResponseInstanceTest() : void
+    + QueryTest() : void
+    + FromTest() : void
+    + PageTest() : void
+    + PageSizeTest() : void
+    + ProviderTest() : void
+    + TotalTest() : void
+    + MatchesTest() : void
+    + MaxScoreTest() : void
+}
+@enduml

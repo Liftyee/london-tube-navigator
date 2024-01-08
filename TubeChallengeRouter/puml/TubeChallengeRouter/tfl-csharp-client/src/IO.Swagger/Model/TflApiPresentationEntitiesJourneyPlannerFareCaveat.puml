@@ -1,0 +1,16 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerFareCaveat <<partial>> {
+    + TflApiPresentationEntitiesJourneyPlannerFareCaveat(text:string, type:string)
+    + Text : string <<get>> <<set>>
+    + Type : string <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesJourneyPlannerFareCaveat) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesJourneyPlannerFareCaveat>" <|-- TflApiPresentationEntitiesJourneyPlannerFareCaveat
+IValidatableObject <|-- TflApiPresentationEntitiesJourneyPlannerFareCaveat
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+class TflApiPresentationEntitiesPlace <<partial>> {
+    + TflApiPresentationEntitiesPlace(id:string, url:string, commonName:string, distance:double?, placeType:string, additionalProperties:List<TflApiPresentationEntitiesAdditionalProperties>, children:List<TflApiPresentationEntitiesPlace>, childrenUrls:List<string>, lat:double?, lon:double?)
+    + Id : string <<get>> <<set>>
+    + Url : string <<get>> <<set>>
+    + CommonName : string <<get>> <<set>>
+    + Distance : double? <<get>> <<set>>
+    + PlaceType : string <<get>> <<set>>
+    + Lat : double? <<get>> <<set>>
+    + Lon : double? <<get>> <<set>>
+    + <<override>> ToString() : string
+    + <<virtual>> ToJson() : string
+    + <<override>> Equals(input:object) : bool
+    + Equals(input:TflApiPresentationEntitiesPlace) : bool
+    + <<override>> GetHashCode() : int
+}
+class "IEquatable`1"<T> {
+}
+class "List`1"<T> {
+}
+"IEquatable`1" "<TflApiPresentationEntitiesPlace>" <|-- TflApiPresentationEntitiesPlace
+IValidatableObject <|-- TflApiPresentationEntitiesPlace
+TflApiPresentationEntitiesPlace --> "AdditionalProperties<TflApiPresentationEntitiesAdditionalProperties>" "List`1"
+TflApiPresentationEntitiesPlace --> "Children<TflApiPresentationEntitiesPlace>" "List`1"
+TflApiPresentationEntitiesPlace --> "ChildrenUrls<string>" "List`1"
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class TflApiPresentationEntitiesJourneyPlannerSearchCriteriaTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesJourneyPlannerSearchCriteriaInstanceTest() : void
+    + DateTimeTest() : void
+    + DateTimeTypeTest() : void
+    + TimeAdjustmentsTest() : void
+}
+@enduml

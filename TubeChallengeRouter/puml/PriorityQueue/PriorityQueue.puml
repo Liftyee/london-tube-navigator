@@ -1,0 +1,15 @@
+@startuml
+enum Priority {
+    Smallest,
+    Largest,
+}
+class "PriorityQueue`1"<T> <<sealed>> {
+    + Count : int <<get>>
+    + PriorityQueue(size:int, prio:Priority)
+    + Insert(item:T) : void
+    + Pop() : T
+    + Top() : T
+}
+class "IComparable`1"<T> {
+}
+@enduml

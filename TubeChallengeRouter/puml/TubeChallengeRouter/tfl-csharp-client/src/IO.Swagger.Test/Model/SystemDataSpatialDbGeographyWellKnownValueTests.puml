@@ -1,0 +1,10 @@
+@startuml
+class SystemDataSpatialDbGeographyWellKnownValueTests {
+    + Init() : void
+    + Cleanup() : void
+    + SystemDataSpatialDbGeographyWellKnownValueInstanceTest() : void
+    + CoordinateSystemIdTest() : void
+    + WellKnownTextTest() : void
+    + WellKnownBinaryTest() : void
+}
+@enduml

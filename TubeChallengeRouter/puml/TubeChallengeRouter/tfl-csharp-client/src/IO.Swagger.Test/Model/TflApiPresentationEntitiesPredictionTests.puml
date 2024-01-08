@@ -1,0 +1,27 @@
+@startuml
+class TflApiPresentationEntitiesPredictionTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesPredictionInstanceTest() : void
+    + IdTest() : void
+    + OperationTypeTest() : void
+    + VehicleIdTest() : void
+    + NaptanIdTest() : void
+    + StationNameTest() : void
+    + LineIdTest() : void
+    + LineNameTest() : void
+    + PlatformNameTest() : void
+    + DirectionTest() : void
+    + BearingTest() : void
+    + DestinationNaptanIdTest() : void
+    + DestinationNameTest() : void
+    + TimestampTest() : void
+    + TimeToStationTest() : void
+    + CurrentLocationTest() : void
+    + TowardsTest() : void
+    + ExpectedArrivalTest() : void
+    + TimeToLiveTest() : void
+    + ModeNameTest() : void
+    + TimingTest() : void
+}
+@enduml

@@ -1,0 +1,50 @@
+@startuml
+interface IPlaceApi {
+}
+class PlaceApi <<partial>> {
+    + PlaceApi(basePath:String)
+    + PlaceApi(configuration:IO.Swagger.Client.Configuration)
+    + GetBasePath() : String
+    + SetBasePath(basePath:String) : void
+    + DefaultHeader() : IDictionary<String, String>
+    + AddDefaultHeader(key:string, value:string) : void
+    + PlaceGet(id:string, includeChildren:bool?) : List<TflApiPresentationEntitiesPlace>
+    + PlaceGetWithHttpInfo(id:string, includeChildren:bool?) : ApiResponse< List<TflApiPresentationEntitiesPlace> >
+    + <<async>> PlaceGetAsync(id:string, includeChildren:bool?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesPlace>>
+    + <<async>> PlaceGetAsyncWithHttpInfo(id:string, includeChildren:bool?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesPlace>>>
+    + PlaceGetAt(type:List<string>, lat:string, lon:string, locationLat:double?, locationLon:double?) : SystemObject
+    + PlaceGetAtWithHttpInfo(type:List<string>, lat:string, lon:string, locationLat:double?, locationLon:double?) : ApiResponse< SystemObject >
+    + <<async>> PlaceGetAtAsync(type:List<string>, lat:string, lon:string, locationLat:double?, locationLon:double?) : System.Threading.Tasks.Task<SystemObject>
+    + <<async>> PlaceGetAtAsyncWithHttpInfo(type:List<string>, lat:string, lon:string, locationLat:double?, locationLon:double?) : System.Threading.Tasks.Task<ApiResponse<SystemObject>>
+    + PlaceGetByGeo(radius:double?, categories:List<string>, includeChildren:bool?, type:List<string>, activeOnly:bool?, numberOfPlacesToReturn:int?, placeGeoSwLat:double?, placeGeoSwLon:double?, placeGeoNeLat:double?, placeGeoNeLon:double?, placeGeoLat:double?, placeGeoLon:double?) : List<TflApiPresentationEntitiesStopPoint>
+    + PlaceGetByGeoWithHttpInfo(radius:double?, categories:List<string>, includeChildren:bool?, type:List<string>, activeOnly:bool?, numberOfPlacesToReturn:int?, placeGeoSwLat:double?, placeGeoSwLon:double?, placeGeoNeLat:double?, placeGeoNeLon:double?, placeGeoLat:double?, placeGeoLon:double?) : ApiResponse< List<TflApiPresentationEntitiesStopPoint> >
+    + <<async>> PlaceGetByGeoAsync(radius:double?, categories:List<string>, includeChildren:bool?, type:List<string>, activeOnly:bool?, numberOfPlacesToReturn:int?, placeGeoSwLat:double?, placeGeoSwLon:double?, placeGeoNeLat:double?, placeGeoNeLon:double?, placeGeoLat:double?, placeGeoLon:double?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesStopPoint>>
+    + <<async>> PlaceGetByGeoAsyncWithHttpInfo(radius:double?, categories:List<string>, includeChildren:bool?, type:List<string>, activeOnly:bool?, numberOfPlacesToReturn:int?, placeGeoSwLat:double?, placeGeoSwLon:double?, placeGeoNeLat:double?, placeGeoNeLon:double?, placeGeoLat:double?, placeGeoLon:double?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesStopPoint>>>
+    + PlaceGetByType(types:List<string>, activeOnly:bool?) : List<TflApiPresentationEntitiesPlace>
+    + PlaceGetByTypeWithHttpInfo(types:List<string>, activeOnly:bool?) : ApiResponse< List<TflApiPresentationEntitiesPlace> >
+    + <<async>> PlaceGetByTypeAsync(types:List<string>, activeOnly:bool?) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesPlace>>
+    + <<async>> PlaceGetByTypeAsyncWithHttpInfo(types:List<string>, activeOnly:bool?) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesPlace>>>
+    + PlaceGetOverlay(z:int?, type:List<string>, width:int?, height:int?, lat:string, lon:string, locationLat:double?, locationLon:double?) : SystemObject
+    + PlaceGetOverlayWithHttpInfo(z:int?, type:List<string>, width:int?, height:int?, lat:string, lon:string, locationLat:double?, locationLon:double?) : ApiResponse< SystemObject >
+    + <<async>> PlaceGetOverlayAsync(z:int?, type:List<string>, width:int?, height:int?, lat:string, lon:string, locationLat:double?, locationLon:double?) : System.Threading.Tasks.Task<SystemObject>
+    + <<async>> PlaceGetOverlayAsyncWithHttpInfo(z:int?, type:List<string>, width:int?, height:int?, lat:string, lon:string, locationLat:double?, locationLon:double?) : System.Threading.Tasks.Task<ApiResponse<SystemObject>>
+    + PlaceGetStreetsByPostCode(postcode:string, postcodeInputPostcode:string) : SystemObject
+    + PlaceGetStreetsByPostCodeWithHttpInfo(postcode:string, postcodeInputPostcode:string) : ApiResponse< SystemObject >
+    + <<async>> PlaceGetStreetsByPostCodeAsync(postcode:string, postcodeInputPostcode:string) : System.Threading.Tasks.Task<SystemObject>
+    + <<async>> PlaceGetStreetsByPostCodeAsyncWithHttpInfo(postcode:string, postcodeInputPostcode:string) : System.Threading.Tasks.Task<ApiResponse<SystemObject>>
+    + PlaceMetaCategories() : List<TflApiPresentationEntitiesPlaceCategory>
+    + PlaceMetaCategoriesWithHttpInfo() : ApiResponse< List<TflApiPresentationEntitiesPlaceCategory> >
+    + <<async>> PlaceMetaCategoriesAsync() : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesPlaceCategory>>
+    + <<async>> PlaceMetaCategoriesAsyncWithHttpInfo() : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesPlaceCategory>>>
+    + PlaceMetaPlaceTypes() : List<TflApiPresentationEntitiesPlaceCategory>
+    + PlaceMetaPlaceTypesWithHttpInfo() : ApiResponse< List<TflApiPresentationEntitiesPlaceCategory> >
+    + <<async>> PlaceMetaPlaceTypesAsync() : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesPlaceCategory>>
+    + <<async>> PlaceMetaPlaceTypesAsyncWithHttpInfo() : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesPlaceCategory>>>
+    + PlaceSearch(name:string, types:List<string>) : List<TflApiPresentationEntitiesPlace>
+    + PlaceSearchWithHttpInfo(name:string, types:List<string>) : ApiResponse< List<TflApiPresentationEntitiesPlace> >
+    + <<async>> PlaceSearchAsync(name:string, types:List<string>) : System.Threading.Tasks.Task<List<TflApiPresentationEntitiesPlace>>
+    + <<async>> PlaceSearchAsyncWithHttpInfo(name:string, types:List<string>) : System.Threading.Tasks.Task<ApiResponse<List<TflApiPresentationEntitiesPlace>>>
+}
+IApiAccessor <|-- IPlaceApi
+IPlaceApi <|-- PlaceApi
+@enduml

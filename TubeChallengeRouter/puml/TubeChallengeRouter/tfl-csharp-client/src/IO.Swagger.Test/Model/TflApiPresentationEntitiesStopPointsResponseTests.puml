@@ -1,0 +1,12 @@
+@startuml
+class TflApiPresentationEntitiesStopPointsResponseTests {
+    + Init() : void
+    + Cleanup() : void
+    + TflApiPresentationEntitiesStopPointsResponseInstanceTest() : void
+    + CentrePointTest() : void
+    + StopPointsTest() : void
+    + PageSizeTest() : void
+    + TotalTest() : void
+    + PageTest() : void
+}
+@enduml
