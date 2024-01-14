@@ -25,7 +25,8 @@
                         Content="Open the pod bay doors, HAL." />
                 <ItemsControl Margin="5"
                               ItemsSource="{Binding ConversationLog}"/>
-                <Svg Path="/home/yee/tubemap.svg"/>
+                <Svg Path="/home/yee/tubemap.svg" IsVisible="{Binding showSVG}"/>
+                <SKCanvasControl Name="CanvasControl"/>
             </StackPanel>
         </TabItem>
     </TabControl>
