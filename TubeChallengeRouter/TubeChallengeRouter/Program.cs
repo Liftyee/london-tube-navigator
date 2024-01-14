@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 using DataFetcher;
 using IO.Swagger.Api;
 using IO.Swagger.Client;
@@ -23,6 +24,7 @@ namespace TubeChallengeRouter
                 .CreateLogger();
             logger.Information("Hello World! Logging is {Description}.","online");
 
+            WriteStationsToFile();
             TestTubeGen();
             //TestTubeGenFloyd();
         }
@@ -69,6 +71,20 @@ namespace TubeChallengeRouter
             using (var file = new System.IO.FileStream("route.txt", System.IO.FileMode.Create))
             {
                 tube.RouteDetailsToStream(route, file);
+            }
+        }
+
+        private static void WriteStationsToFile()
+        {
+            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger));
+            Network tube = tubeFactory.Generate(NetworkType.Simple, logger);
+            
+            using (FileStream file = new FileStream("stations.txt", System.IO.FileMode.Create))
+            {
+                foreach (var station in tube.GetStations())
+                {
+                    file.Write(Encoding.UTF8.GetBytes($"{station.NaptanId}:{station.Name.Replace(" Underground Station", "")}\n"));
+                }
             }
         }
         

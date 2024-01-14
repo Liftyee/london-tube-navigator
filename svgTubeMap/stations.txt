@@ -1,0 +1,269 @@
+940GZZLUHAW:Harrow & Wealdstone
+940GZZLUKEN:Kenton
+940GZZLUSKT:South Kenton
+940GZZLUNWY:North Wembley
+940GZZLUWYC:Wembley Central
+940GZZLUSGP:Stonebridge Park
+940GZZLUHSN:Harlesden
+940GZZLUWJN:Willesden Junction
+940GZZLUKSL:Kensal Green
+940GZZLUQPS:Queen's Park
+940GZZLUKPK:Kilburn Park
+940GZZLUMVL:Maida Vale
+940GZZLUWKA:Warwick Avenue
+940GZZLUERB:Edgware Road
+940GZZLUMYB:Marylebone
+940GZZLUBST:Baker Street
+940GZZLURGP:Regent's Park
+940GZZLUOXC:Oxford Circus
+940GZZLUPCC:Piccadilly Circus
+940GZZLUCHX:Charing Cross
+940GZZLUEMB:Embankment
+940GZZLUWLO:Waterloo
+940GZZLULBN:Lambeth North
+940GZZLUEAC:Elephant & Castle
+940GZZLUEPG:Epping
+940GZZLUTHB:Theydon Bois
+940GZZLUDBN:Debden
+940GZZLULGN:Loughton
+940GZZLUBKH:Buckhurst Hill
+940GZZLUWOF:Woodford
+940GZZLUSWF:South Woodford
+940GZZLUSNB:Snaresbrook
+940GZZLULYS:Leytonstone
+940GZZLULYN:Leyton
+940GZZLUSTD:Stratford
+940GZZLUMED:Mile End
+940GZZLUBLG:Bethnal Green
+940GZZLULVT:Liverpool Street
+940GZZLUBNK:Bank
+940GZZLUSPU:St Paul's
+940GZZLUCHL:Chancery Lane
+940GZZLUHBN:Holborn
+940GZZLUTCR:Tottenham Court Road
+940GZZLUBND:Bond Street
+940GZZLUMBA:Marble Arch
+940GZZLULGT:Lancaster Gate
+940GZZLUQWY:Queensway
+940GZZLUNHG:Notting Hill Gate
+940GZZLUHPK:Holland Park
+940GZZLUSBC:Shepherd's Bush
+940GZZLUWCY:White City
+940GZZLUEAN:East Acton
+940GZZLUNAN:North Acton
+940GZZLUHGR:Hanger Lane
+940GZZLUPVL:Perivale
+940GZZLUGFD:Greenford
+940GZZLUNHT:Northolt
+940GZZLUSRP:South Ruislip
+940GZZLURSG:Ruislip Gardens
+940GZZLUWRP:West Ruislip
+940GZZLUHLT:Hainault
+940GZZLUFLP:Fairlop
+940GZZLUBKE:Barkingside
+940GZZLUNBP:Newbury Park
+940GZZLUGTH:Gants Hill
+940GZZLURBG:Redbridge
+940GZZLUWSD:Wanstead
+940GZZLUGGH:Grange Hill
+940GZZLUCWL:Chigwell
+940GZZLURVY:Roding Valley
+940GZZLUWTA:West Acton
+940GZZLUEBY:Ealing Broadway
+940GZZLUBWT:Bayswater
+940GZZLUHSK:High Street Kensington
+940GZZLUGTR:Gloucester Road
+940GZZLUSKS:South Kensington
+940GZZLUSSQ:Sloane Square
+940GZZLUVIC:Victoria
+940GZZLUSJP:St James's Park
+940GZZLUWSM:Westminster
+940GZZLUTMP:Temple
+940GZZLUBKF:Blackfriars
+940GZZLUMSH:Mansion House
+940GZZLUCST:Cannon Street
+940GZZLUMMT:Monument
+940GZZLUTWH:Tower Hill
+940GZZLUALD:Aldgate
+940GZZLUMGT:Moorgate
+940GZZLUBBN:Barbican
+940GZZLUFCN:Farringdon
+940GZZLUKSX:King's Cross & St Pancras International
+940GZZLUESQ:Euston Square
+940GZZLUGPS:Great Portland Street
+940GZZLUPAH:Paddington
+940GZZLURYO:Royal Oak
+940GZZLUWSP:Westbourne Park
+940GZZLULAD:Ladbroke Grove
+940GZZLULRD:Latimer Road
+940GZZLUWLA:Wood Lane
+940GZZLUSBM:Shepherd's Bush Market
+940GZZLUGHK:Goldhawk Road
+940GZZLUUPM:Upminster
+940GZZLUUPB:Upminster Bridge
+940GZZLUHCH:Hornchurch
+940GZZLUEPK:Elm Park
+940GZZLUDGE:Dagenham East
+940GZZLUDGY:Dagenham Heathway
+940GZZLUBEC:Becontree
+940GZZLUUPY:Upney
+940GZZLUBKG:Barking
+940GZZLUEHM:East Ham
+940GZZLUUPK:Upton Park
+940GZZLUPLW:Plaistow
+940GZZLUWHM:West Ham
+940GZZLUBBB:Bromley-by-Bow
+940GZZLUBWR:Bow Road
+940GZZLUSGN:Stepney Green
+940GZZLUWPL:Whitechapel
+940GZZLUADE:Aldgate East
+940GZZLUECT:Earl's Court
+940GZZLUWKN:West Kensington
+940GZZLUBSC:Barons Court
+940GZZLUHSD:Hammersmith
+940GZZLURVP:Ravenscourt Park
+940GZZLUSFB:Stamford Brook
+940GZZLUTNG:Turnham Green
+940GZZLUCWP:Chiswick Park
+940GZZLUACT:Acton Town
+940GZZLUECM:Ealing Common
+940GZZLUGBY:Gunnersbury
+940GZZLUKWG:Kew Gardens
+940GZZLURMD:Richmond
+940GZZLUWBN:West Brompton
+940GZZLUFBY:Fulham Broadway
+940GZZLUPSG:Parsons Green
+940GZZLUPYB:Putney Bridge
+940GZZLUEPY:East Putney
+940GZZLUSFS:Southﬁelds
+940GZZLUWIP:Wimbledon Park
+940GZZLUWIM:Wimbledon
+940GZZLUKOY:Kensington (Olympia)
+940GZZLUCGT:Canning Town
+940GZZLUNGW:North Greenwich
+940GZZLUCYF:Canary Wharf
+940GZZLUCWR:Canada Water
+940GZZLUBMY:Bermondsey
+940GZZLULNB:London Bridge
+940GZZLUSWK:Southwark
+940GZZLUGPK:Green Park
+940GZZLUSJW:St John's Wood
+940GZZLUSWC:Swiss Cottage
+940GZZLUFYR:Finchley Road
+940GZZLUWHP:West Hampstead
+940GZZLUKBN:Kilburn
+940GZZLUWIG:Willesden Green
+940GZZLUDOH:Dollis Hill
+940GZZLUNDN:Neasden
+940GZZLUWYP:Wembley Park
+940GZZLUKBY:Kingsbury
+940GZZLUQBY:Queensbury
+940GZZLUCPK:Canons Park
+940GZZLUSTM:Stanmore
+940GZZLUPRD:Preston Road
+940GZZLUNKP:Northwick Park
+940GZZLUHOH:Harrow-on-the-Hill
+940GZZLUNHA:North Harrow
+940GZZLUPNR:Pinner
+940GZZLUNWH:Northwood Hills
+940GZZLUNOW:Northwood
+940GZZLUMPK:Moor Park
+940GZZLURKW:Rickmansworth
+940GZZLUCYD:Chorleywood
+940GZZLUCAL:Chalfont & Latimer
+940GZZLUAMS:Amersham
+940GZZLUCSM:Chesham
+940GZZLUWHW:West Harrow
+940GZZLURYL:Rayners Lane
+940GZZLUEAE:Eastcote
+940GZZLURSM:Ruislip Manor
+940GZZLURSP:Ruislip
+940GZZLUICK:Ickenham
+940GZZLUHGD:Hillingdon
+940GZZLUUXB:Uxbridge
+940GZZLUCXY:Croxley
+940GZZLUWAF:Watford
+940GZZLUHBT:High Barnet
+940GZZLUTAW:Totteridge & Whetstone
+940GZZLUWOP:Woodside Park
+940GZZLUWFN:West Finchley
+940GZZLUFYC:Finchley Central
+940GZZLUEFY:East Finchley
+940GZZLUHGT:Highgate
+940GZZLUACY:Archway
+940GZZLUTFP:Tufnell Park
+940GZZLUKSH:Kentish Town
+940GZZLUCTN:Camden Town
+940GZZLUEUS:Euston
+940GZZLUAGL:Angel
+940GZZLUODS:Old Street
+940GZZLUBOR:Borough
+940GZZLUKNG:Kennington
+940GZZLUOVL:Oval
+940GZZLUSKW:Stockwell
+940GZZLUCPN:Clapham North
+940GZZLUCPC:Clapham Common
+940GZZLUCPS:Clapham South
+940GZZLUBLM:Balham
+940GZZLUTBC:Tooting Bec
+940GZZLUTBY:Tooting Broadway
+940GZZLUCSD:Colliers Wood
+940GZZLUSWN:South Wimbledon
+940GZZLUMDN:Morden
+940GZZLUMTC:Mornington Crescent
+940GZZLUWRR:Warren Street
+940GZZLUGDG:Goodge Street
+940GZZLULSQ:Leicester Square
+940GZZLUEGW:Edgware
+940GZZLUBTK:Burnt Oak
+940GZZLUCND:Colindale
+940GZZLUHCL:Hendon Central
+940GZZLUBTX:Brent Cross
+940GZZLUGGN:Golders Green
+940GZZLUHTD:Hampstead
+940GZZLUBZP:Belsize Park
+940GZZLUCFM:Chalk Farm
+940GZZLUMHL:Mill Hill East
+940GZZNEUGST:Nine Elms
+940GZZBPSUST:Battersea Power Station
+940GZZLUCKS:Cockfosters
+940GZZLUOAK:Oakwood
+940GZZLUSGT:Southgate
+940GZZLUASG:Arnos Grove
+940GZZLUBDS:Bounds Green
+940GZZLUWOG:Wood Green
+940GZZLUTPN:Turnpike Lane
+940GZZLUMRH:Manor House
+940GZZLUFPK:Finsbury Park
+940GZZLUASL:Arsenal
+940GZZLUHWY:Holloway Road
+940GZZLUCAR:Caledonian Road
+940GZZLURSQ:Russell Square
+940GZZLUCGN:Covent Garden
+940GZZLUHPC:Hyde Park Corner
+940GZZLUKNB:Knightsbridge
+940GZZLUNEN:North Ealing
+940GZZLUPKR:Park Royal
+940GZZLUALP:Alperton
+940GZZLUSUT:Sudbury Town
+940GZZLUSUH:Sudbury Hill
+940GZZLUSHH:South Harrow
+940GZZLUSEA:South Ealing
+940GZZLUNFD:Northﬁelds
+940GZZLUBOS:Boston Manor
+940GZZLUOSY:Osterley
+940GZZLUHWE:Hounslow East
+940GZZLUHWC:Hounslow Central
+940GZZLUHWT:Hounslow West
+940GZZLUHNX:Hatton Cross
+940GZZLUHRC:Heathrow Terminals 2 & 3
+940GZZLUHR5:Heathrow Terminal 5
+940GZZLUHR4:Heathrow Terminal 4
+940GZZLUWWL:Walthamstow Central
+940GZZLUBLR:Blackhorse Road
+940GZZLUTMH:Tottenham Hale
+940GZZLUSVS:Seven Sisters
+940GZZLUHAI:Highbury & Islington
+940GZZLUPCO:Pimlico
+940GZZLUVXL:Vauxhall
+940GZZLUBXN:Brixton

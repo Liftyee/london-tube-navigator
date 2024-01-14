@@ -86,6 +86,11 @@ public class Network
 
         return output.ToString();
     }
+    
+    public List<Station> GetStations()
+    {
+        return Stations.Values.ToList();
+    }
 
     public virtual int CostFunction(string startId, string endId, out List<string> path)
     {
