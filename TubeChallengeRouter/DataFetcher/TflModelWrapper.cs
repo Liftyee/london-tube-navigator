@@ -15,7 +15,7 @@ public class TflModelWrapper : INetworkDataFetcher
     private ILogger logger;
     private string cachePath;
     private const int maxCacheAge = 30; // days
-    public TflModelWrapper(ILogger logger, string cachePath)
+    public TflModelWrapper(ILogger logger, string cachePath = "")
     {
         this.logger = logger;
         var apiconfig = new Configuration
@@ -193,7 +193,10 @@ public class TflModelWrapper : INetworkDataFetcher
         DataContractSerializer serializer = new DataContractSerializer(typeof(TflApiPresentationEntitiesRouteSequence));
         
         // create cache directory if it doesn't exist
-        Directory.CreateDirectory(cachePath);
+        if (!string.IsNullOrWhiteSpace(cachePath))
+        {
+            Directory.CreateDirectory(cachePath);
+        }
 
         // cache which lines there are too to be completely independent of the API in case of no network connection
         DataContractSerializer lineSerializer =
