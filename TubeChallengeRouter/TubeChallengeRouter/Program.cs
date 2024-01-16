@@ -24,7 +24,6 @@ namespace TubeChallengeRouter
                 .CreateLogger();
             logger.Information("Hello World! Logging is {Description}.","online");
 
-            WriteStationsToFile();
             TestTubeGen();
             //TestTubeGenFloyd();
         }
