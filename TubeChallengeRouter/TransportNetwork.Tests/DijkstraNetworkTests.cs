@@ -69,8 +69,18 @@ public class DijkstraNetworkTests
     }
 
     [Test]
+    public void RandomRoute_CostAccurate()
+    {
+        Route route = _tubeNetwork.GenerateRandomRoute();
+        // TotalSeconds should always be an integer, since the smallest unit we use is seconds
+        Assert.That((int)route.Duration.TotalSeconds == _tubeNetwork.CostFunction(route));
+
+        Route smallRoute = _network.GenerateRandomRoute();
+        Assert.That((int)smallRoute.Duration.TotalSeconds == _network.CostFunction(smallRoute));
+    }
+    [Test]
     public void TubeNetwork_RouteCostEqualToSegmentSum()
     {
-        
+        // use solver (move to different file?)
     }
 }

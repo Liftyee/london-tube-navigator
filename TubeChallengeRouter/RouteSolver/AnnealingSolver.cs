@@ -24,9 +24,6 @@ public class AnnealingSolver : ISolver
         Route route = net.GenerateRandomRoute();
         logger.Debug("Random route: {A}",route.ToString());
 
-        // TODO: move this assert into a unit test
-        Debug.Assert(route.Duration.TotalSeconds == net.CostFunction(route));
-
         // this function lets me deduplicate the logic later
         static bool AcceptSolution(int oldCost, int newCost, double temperature, Random generator)
         {
@@ -51,6 +48,7 @@ public class AnnealingSolver : ISolver
         {
             nIterations++;
             // pick a random pair of stations to swap
+            // TODO: implement "swap intermediate" action
             do
             {
                 randomA = randomGenerator.Next(0, route.Count);
