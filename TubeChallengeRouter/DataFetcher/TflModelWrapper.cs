@@ -104,7 +104,7 @@ public class TflModelWrapper : INetworkDataFetcher
 
     public void PopulateNetworkStructure(ref Network network)
     {
-        logger.Information("Populating network from cache...");
+        logger.Information("Populating network from cache at {A}...", cachePath);
         // use caches if possible
         if (File.Exists($"{cachePath}lastUpdated.txt"))
         {
@@ -118,7 +118,7 @@ public class TflModelWrapper : INetworkDataFetcher
         }
         else
         {
-            logger.Information("No cache found, updating...");
+            logger.Information("No cache found at {A}, updating...", cachePath);
             UpdateStructureCache();
         }
 
