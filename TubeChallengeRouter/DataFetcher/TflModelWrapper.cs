@@ -15,7 +15,7 @@ public class TflModelWrapper : INetworkDataFetcher
     private ILogger logger;
     private string cachePath;
     private const int maxCacheAge = 30; // days
-    public TflModelWrapper(ILogger logger)
+    public TflModelWrapper(ILogger logger, string cachePath)
     {
         this.logger = logger;
         var apiconfig = new Configuration
@@ -24,11 +24,8 @@ public class TflModelWrapper : INetworkDataFetcher
         };
         lineApi = new LineApi(apiconfig);
         stationFetcher = new StopPointApi(apiconfig);
-        
-        // work out the cache path in a platform-agnostic way
-        string homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        const string furtherPath = ".cache/TubeNetworkCache/"; // Linux standard but works for Windows too
-        cachePath = Path.Combine(homeDir, furtherPath);
+
+        this.cachePath = cachePath;
         
         logger.Debug("TfL API data fetcher initialised at {A}", apiconfig.BasePath);
     }

@@ -27,6 +27,9 @@ public class DijkstraNetworkTests
     public void RandomRoute_HasIntermediate()
     {
         Route result = _network.GenerateRandomRoute();
-        
+
+        List<string> intermediate;
+        int cost = _network.CostFunction("A", "E", out intermediate);
+        Console.WriteLine(intermediate);        
     }
 }
