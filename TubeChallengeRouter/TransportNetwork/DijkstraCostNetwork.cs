@@ -48,12 +48,13 @@ public class DijkstraCostNetwork : Network
                 {
                     _costCache[stationID][station2ID] = 0; // station has no cost to itself
                 }                    
-                _pathCache[stationID][station2ID] = new List<string>();
+                // _pathCache[stationID][station2ID] = new List<string>();
             }
         }
     }
     public override int CostFunction(string startId, string endId, out List<string> path)
     {
+        // if it's a direct path, just return nothing!
         if (Stations[startId].HasLink(endId))
         {
             path = new List<string>();
@@ -179,7 +180,9 @@ public class DijkstraCostNetwork : Network
 
     private int UpdatePathReturnCost(Route route, int idxA)
     {
-        List<string> toA = route.GetIntermediateStations(idxA - 1);
-        return CostFunction(route.targetStations[idxA - 1], route.targetStations[idxA], out toA);
+        List<string> newpath;
+        int cost = CostFunction(route.targetStations[idxA - 1], route.targetStations[idxA], out newpath);
+        route.intermediateStations[idxA - 1] = newpath;
+        return cost;
     }
 }
