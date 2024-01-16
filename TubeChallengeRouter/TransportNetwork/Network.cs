@@ -132,12 +132,12 @@ public class Network
             {
                 stationIDs.Add(nextID);
                 visitedIDs.Add(nextID);
-                List<string> pathToNext = new List<string>();
+                List<string> pathToNext;
                 if (visitedIDs.Count > 1)
                 {
                     totalCost += CostFunction(stationIDs[^2], stationIDs[^1], out pathToNext);
+                    intermediateStations.Add(pathToNext);
                 }
-                intermediateStations.Add(pathToNext);
             }
         }
         

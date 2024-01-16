@@ -39,11 +39,11 @@ public class TestNetwork1 : INetworkDataFetcher
         _network.AddStation(new Station("C"));
         _network.AddStation(new Station("D"));
         _network.AddStation(new Station("E"));
-        _network.LinkStationsPartial("A", "B", Dir.Inbound, null);
-        _network.LinkStationsPartial("B", "C", Dir.Inbound, null);
-        _network.LinkStationsPartial("B", "D", Dir.Inbound, null);
-        _network.LinkStationsPartial("C", "E", Dir.Inbound, null);
-        _network.LinkStationsPartial("D", "E", Dir.Inbound, null);
+        _network.LinkStationsPartial("A", "B", Dir.Bidirectional, null);
+        _network.LinkStationsPartial("B", "C", Dir.Bidirectional, null);
+        _network.LinkStationsPartial("B", "D", Dir.Bidirectional, null);
+        _network.LinkStationsPartial("C", "E", Dir.Bidirectional, null);
+        _network.LinkStationsPartial("D", "E", Dir.Bidirectional, null);
     }
 }
 
