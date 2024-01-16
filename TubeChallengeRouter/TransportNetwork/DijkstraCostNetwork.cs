@@ -33,9 +33,11 @@ public class DijkstraCostNetwork : Network
     {
         // initialise cost matrix to all null's
         _costCache = new Dictionary<string, Dictionary<string, int?>>();
+        _pathCache = new Dictionary<string, Dictionary<string, List<string>>>();
         foreach (string stationID in Stations.Keys)
         {
             _costCache[stationID] = new Dictionary<string, int?>();
+            _pathCache[stationID] = new Dictionary<string, List<string>>();
             foreach (string station2ID in Stations.Keys)
             {
                 if (stationID != station2ID)
@@ -45,7 +47,8 @@ public class DijkstraCostNetwork : Network
                 else
                 {
                     _costCache[stationID][station2ID] = 0; // station has no cost to itself
-                }
+                }                    
+                _pathCache[stationID][station2ID] = new List<string>();
             }
         }
     }
@@ -69,6 +72,12 @@ public class DijkstraCostNetwork : Network
         _pathCache[startId][endId] = result; // TODO: might induce undesired referencing? 
         path = result;
         return _costCache[startId][endId].Value;
+    }
+
+    public override int CostFunction(string startId, string endId)
+    {
+        List<string> _ = new List<string>();
+        return CostFunction(startId, endId, out _);
     }
 
     private int DijkstraLookup(string startId, string endId, out List<string> path)
