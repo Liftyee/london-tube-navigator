@@ -5,7 +5,8 @@ namespace TransportNetwork;
 public enum Dir
 {
     Inbound,
-    Outbound
+    Outbound,
+    Bidirectional
 }
 
 public class Line

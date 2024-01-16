@@ -49,7 +49,15 @@ public class Network
     {
         Station startStation = Stations[startId];
         Station endStation = Stations[endId];
-        startStation.AddLink(new Link(startStation, endStation, line, direction));
+
+        if (direction == Dir.Bidirectional)
+        {
+            startStation.AddLink(new Link(startStation, endStation, line, direction));
+            endStation.AddLink(new Link(endStation, startStation, line, direction));
+        } else {
+            startStation.AddLink(new Link(startStation, endStation, line, direction));
+        }
+        
         NEdges++;
     }
     
