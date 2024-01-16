@@ -7,12 +7,14 @@ namespace StationTests;
 public class DijkstraNetworkTests
 {
     private Network _network;
-
+    private Network _tubeNetwork;
+    
     [SetUp]
     public void SetUp()
     {
         ILogger stubLogger = new LoggerConfiguration().CreateLogger();
         _network = new NetworkFactory(new TestNetwork1()).Generate(NetworkType.Dijkstra, stubLogger);
+        _tubeNetwork = new NetworkFactory(new TflModelWrapper(stubLogger, "./")).Generate(NetworkType.Dijkstra, stubLogger);
     }
 
     [Test]
@@ -48,5 +50,27 @@ public class DijkstraNetworkTests
             _network.CostFunction(result.targetStations[idx], result.targetStations[idx + 1], out dijResult);
             Assert.That(result.intermediateStations[idx], Is.EqualTo(dijResult));
         }
+    }
+
+    [Test]
+    public void AdjacentStations_NoIntermediate()
+    {
+        List<string> inter;
+        int cost = _network.CostFunction("A", "B", out inter);
+        
+        Assert.That(inter.Count, Is.EqualTo(0));
+    }
+    
+    [Test]
+    public void TubeNetwork_AdjacentStationsNoIntermediate()
+    {
+        List<string> inter;
+        int cost = _tubeNetwork.CostFunction("940GZZLUGPK", "940GZZLUHPC", out inter);
+    }
+
+    [Test]
+    public void TubeNetwork_RouteCostEqualToSegmentSum()
+    {
+        
     }
 }
