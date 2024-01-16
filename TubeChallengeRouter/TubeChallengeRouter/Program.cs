@@ -57,7 +57,7 @@ namespace TubeChallengeRouter
         }
         private static void TestTubeGen()
         {
-            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger));
+            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger, GetCachePath()));
             Network tube = tubeFactory.Generate(NetworkType.Dijkstra, logger);
             logger.Information("Result: {A}",tube.ToString());
             //logger.Debug(tube.EnumerateStations());
@@ -65,17 +65,22 @@ namespace TubeChallengeRouter
             ISolver solver = new AnnealingSolver(logger);
             Route route = solver.Solve(tube);
             logger.Debug("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
-            
+
+            // TODO: extract this output code to a function
+            var now = DateTime.Now;
+            string datecode = $"{now.Year}-{now.Month}-{now.Day}_{now.Hour}-{now.Minute}";
+            string outputpath = $"{GetCachePath()}route{datecode}.txt";
             // write route to a file
-            using (var file = new System.IO.FileStream("route.txt", System.IO.FileMode.Create))
+            using (var file = new FileStream(outputpath, FileMode.Create))
             {
                 tube.RouteDetailsToStream(route, file);
+                logger.Information("Result written to {A}", outputpath);
             }
         }
 
         private static void WriteStationsToFile()
         {
-            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger));
+            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger, GetCachePath()));
             Network tube = tubeFactory.Generate(NetworkType.Simple, logger);
             
             using (FileStream file = new FileStream("stations.txt", System.IO.FileMode.Create))
@@ -89,7 +94,7 @@ namespace TubeChallengeRouter
         
         private static void TestTubeGenFloyd()
         {
-            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger));
+            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger, GetCachePath()));
             Network tube = tubeFactory.Generate(NetworkType.Floyd, logger);
             logger.Information("Result: {A}",tube.ToString());
             //logger.Debug(tube.EnumerateStations());
@@ -109,6 +114,14 @@ namespace TubeChallengeRouter
             
             ISolver solver = new AnnealingSolver(logger);
             Route route = solver.Solve(net);
+        }
+
+        private static string GetCachePath()
+        {
+            // work out the cache path in a platform-agnostic way
+            string homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            const string furtherPath = ".cache/TubeNetworkCache/"; // Linux standard but works for Windows too
+            return Path.Combine(homeDir, furtherPath);
         }
     }
 }
