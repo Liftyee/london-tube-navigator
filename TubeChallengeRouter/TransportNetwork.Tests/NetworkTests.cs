@@ -1,3 +1,4 @@
+using System.Text.Json;
 using DataFetcher;
 using Serilog;
 using TransportNetwork;
@@ -12,7 +13,11 @@ public class NetworkTests
     public void SetUp()
     {
         ILogger stubLogger = new LoggerConfiguration().CreateLogger();
-        _network = new NetworkFactory(new TestNetwork1()).Generate(NetworkType.Dijkstra, stubLogger);
+        ILogger consoleLogger = new LoggerConfiguration()
+            .MinimumLevel.Verbose()
+            .WriteTo.Console()
+            .CreateLogger();
+        _network = new NetworkFactory(new TestNetwork1()).Generate(NetworkType.Dijkstra, consoleLogger);
     }
 
     [Test]
@@ -58,5 +63,38 @@ public class NetworkTests
         _network.TakeAndInsert(route, 3, 1);
         Assert.That(route.Cost, Is.EqualTo(_network.CostFunction(route)));
         Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
+    }
+
+    [Test]
+    public void VerifyTestNetworkCosts()
+    {
+        // links:
+        // A > B, B > C, B > D, C > E, D > E (all cost 1)
+        Assert.That(_network.CostFunction("A","B"), Is.EqualTo(1*60));
+        Assert.That(_network.CostFunction("A","C"), Is.EqualTo(2*60));
+        Assert.That(_network.CostFunction("A","D"), Is.EqualTo(2*60));
+        Assert.That(_network.CostFunction("A","E"), Is.EqualTo(3*60));
+        
+        Assert.That(_network.CostFunction("B","C"), Is.EqualTo(1*60));
+        Assert.That(_network.CostFunction("B","D"), Is.EqualTo(1*60));
+        Assert.That(_network.CostFunction("B","E"), Is.EqualTo(2*60));
+        
+        Assert.That(_network.CostFunction("C","D"), Is.EqualTo(2*60));
+        Assert.That(_network.CostFunction("C","E"), Is.EqualTo(1*60));
+        
+        Assert.That(_network.CostFunction("D","E"), Is.EqualTo(1*60));
+    }
+
+    // TODO: Fix this test
+    [Test]
+    public void TestNetwork_CostSymmetric()
+    {
+        foreach (string stationA in _network.GetStationIDs())
+        {
+            foreach (string stationB in _network.GetStationIDs())
+            {
+                Assert.That(_network.CostFunction(stationA, stationB), Is.EqualTo(_network.CostFunction(stationB, stationA)));
+            }
+        }
     }
 }

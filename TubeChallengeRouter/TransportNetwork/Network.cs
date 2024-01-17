@@ -95,9 +95,14 @@ public class Network
         return output.ToString();
     }
     
-    public List<Station> GetStations()
+    private List<Station> GetStations()
     {
         return Stations.Values.ToList();
+    }
+
+    public List<string> GetStationIDs()
+    {
+        return Stations.Keys.ToList();
     }
 
     public virtual int CostFunction(string startId, string endId, out List<string> path)
