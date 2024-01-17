@@ -60,7 +60,7 @@ public class AnnealingSolver : ISolver
         const double coolDownFactor = 0.99;
         const int noChangeThreshold = 10000;
         double Temperature = 1000;
-        int stationA, stationB, oldCost, newCost, interSegmentIdx;
+        int stationA, stationB, oldCost, newCost, interSegmentIdx, interStationIdx;
         int loopsSinceLastAccept = 0;
         Random randomGenerator = new Random();
 
@@ -93,8 +93,8 @@ public class AnnealingSolver : ISolver
                     {
                         interSegmentIdx = randomGenerator.Next(0, route.IntermediateStations.Count);
                     } while (route.IntermediateStations[interSegmentIdx].Count == 0); // can't swap if there aren't intermediate stations
-                    
-                    int random
+
+                    interStationIdx = randomGenerator.Next(0, route.IntermediateStations[interSegmentIdx].Count);
                         // TODO: choose a station to swap out
                         // TODO: insert the station between these two stations
                         
