@@ -235,25 +235,27 @@ public class DijkstraCostNetwork : Network
         if (insertBefore > 0)
         {
             updatedTime += TravelTime(stations[insertBefore - 1], stations[insertBefore]);
-            updatedCost += CostFunction(stations[insertBefore - 1], stations[insertBefore]);
+            updatedCost += UpdatePathReturnCost(route, insertBefore);
         }
         
         if (insertBefore < route.Count-1)
         {
             updatedTime += TravelTime(stations[insertBefore], stations[insertBefore+1]);
-            updatedCost += CostFunction(stations[insertBefore], stations[insertBefore+1]);
+            updatedCost += UpdatePathReturnCost(route, insertBefore+1);
         }
 
         if (takeFrom > 0)
         {
             updatedTime += TravelTime(stations[takeFrom - 1], stations[takeFrom]);
-            updatedCost += CostFunction(stations[takeFrom - 1], stations[takeFrom]);
+            updatedCost += UpdatePathReturnCost(route, takeFrom);
         }
         
         route.UpdateDuration(updatedTime);
         route.UpdateCost(updatedCost);
     }
 
+    // Function to update the intermediate station path of an indexed segment of a Route
+    // Deduplicates code in Swap() and TakeInsert() functions
     private int UpdatePathReturnCost(Route route, int idxA)
     {
         List<string> newpath;

@@ -74,6 +74,7 @@ public class Route// : IRoute
         IntermediateStations[segmentIndex] = updateTo;
     }
 
+    // TODO: this is a shallow copy, which doesn't work
     public Route Copy()
     {
         return new Route(this.TargetStations, this.Duration, this.Cost, this.IntermediateStations);

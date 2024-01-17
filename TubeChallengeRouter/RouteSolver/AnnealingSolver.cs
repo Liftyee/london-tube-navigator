@@ -22,7 +22,7 @@ public class AnnealingSolver : ISolver
 
     private AnnealOpType pickRandomOperation(Random generator)
     {
-        const double randomSwapProbability = 0.5;
+        const double randomSwapProbability = 1;
         if (generator.NextDouble() < randomSwapProbability)
         {
             return AnnealOpType.SwapRandom;
@@ -60,7 +60,7 @@ public class AnnealingSolver : ISolver
         const double coolDownFactor = 0.99;
         const int noChangeThreshold = 10000;
         double Temperature = 1000;
-        int stationA, stationB, oldCost, newCost, interSegmentIdx, interStationIdx;
+        int stationA=0, stationB=0, oldCost, newCost, interSegmentIdx, interStationIdx;
         int loopsSinceLastAccept = 0;
         Random randomGenerator = new Random();
         Route oldRoute;
@@ -72,8 +72,9 @@ public class AnnealingSolver : ISolver
             // TODO: implement "swap intermediate" action
             AnnealOpType operation = pickRandomOperation(randomGenerator);
 
+            oldCost = route.Cost;  // int is a value type so we don't have to worry about copy doing referencing things
             oldRoute = route.Copy();
-            oldCost = oldRoute.Cost;  // int is a value type so we don't have to worry about copying
+
             switch (operation)
             {
                 case AnnealOpType.SwapRandom:
@@ -107,6 +108,22 @@ public class AnnealingSolver : ISolver
                     int swapTo = interStationIdx + 1;
                     
                     net.TakeAndInsert(route, swapFrom, swapTo);
+
+                    if (swapFrom == swapTo)
+                    {
+                        logger.Warning("Swapping at same position... put a breakpoint here");
+                    }
+                    
+                    try
+                    {
+                        net.TakeAndInsert(route, swapFrom, swapTo);
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                        logger.Fatal("Tried to reinsert at the same position {A} (iteration number {B}). Exception {C}", swapFrom, nIterations, e);
+                        throw new Exception();
+                    }
+
                     newCost = route.Cost;
 
                     break;
@@ -124,7 +141,13 @@ public class AnnealingSolver : ISolver
             else
             {
                 // reject the change (swap back)
-                route = oldRoute.Copy(); // TODO: how slow is copying?
+                if (operation == AnnealOpType.SwapRandom)
+                {
+                    net.Swap(route, stationA, stationB);
+                }
+                 else {
+                    route = oldRoute.Copy(); // TODO: how slow is copying?
+                }
                 loopsSinceLastAccept++;
             }
             
