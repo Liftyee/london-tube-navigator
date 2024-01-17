@@ -72,5 +72,10 @@ public class Route// : IRoute
     public void UpdateIntermediateStations(int segmentIndex, List<string> updateTo)
     {
         IntermediateStations[segmentIndex] = updateTo;
-    } 
+    }
+
+    public Route Copy()
+    {
+        return new Route(this.TargetStations, this.Duration, this.Cost, this.IntermediateStations);
+    }
 }

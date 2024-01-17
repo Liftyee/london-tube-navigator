@@ -278,7 +278,8 @@ public class Network
     // i.e. the element that was at that index gets pushed back to insert the new one.
     public virtual void TakeAndInsert(Route route, int takeFrom, int insertBefore)
     {
-        throw new NotSupportedException("TakeAndInsert not supported by Simple Network (use DijkstraCostNetwork instead)")
+        throw new NotSupportedException(
+            "TakeAndInsert not supported by Simple Network (use DijkstraCostNetwork instead)");
     }
 
     public void RecalculateRouteCosts(ref Route route)

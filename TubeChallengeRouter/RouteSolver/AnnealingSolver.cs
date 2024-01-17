@@ -63,7 +63,8 @@ public class AnnealingSolver : ISolver
         int stationA, stationB, oldCost, newCost, interSegmentIdx, interStationIdx;
         int loopsSinceLastAccept = 0;
         Random randomGenerator = new Random();
-
+        Route oldRoute;
+        
         for (int i = 1; i < maxIterations; i++)
         {
             nIterations++;
@@ -71,6 +72,8 @@ public class AnnealingSolver : ISolver
             // TODO: implement "swap intermediate" action
             AnnealOpType operation = pickRandomOperation(randomGenerator);
 
+            oldRoute = route.Copy();
+            oldCost = oldRoute.Cost;  // int is a value type so we don't have to worry about copying
             switch (operation)
             {
                 case AnnealOpType.SwapRandom:
@@ -80,7 +83,6 @@ public class AnnealingSolver : ISolver
                         stationB = randomGenerator.Next(0, route.Count);
                     } while (stationA == stationB); // don't swap station with itself
                     
-                    oldCost = route.Cost; // int is a value type so we don't have to worry about copying
                     net.Swap(route, stationA, stationB);
                     newCost = route.Cost;
                     
@@ -95,10 +97,17 @@ public class AnnealingSolver : ISolver
                     } while (route.IntermediateStations[interSegmentIdx].Count == 0); // can't swap if there aren't intermediate stations
 
                     interStationIdx = randomGenerator.Next(0, route.IntermediateStations[interSegmentIdx].Count);
-                        // TODO: choose a station to swap out
-                        // TODO: insert the station between these two stations
-                        
-                        // TODO: set oldCost, newCost
+                    string interStationId = route.IntermediateStations[interSegmentIdx][interStationIdx]; 
+                    // find the position of the station in the target stations list, and move it to a place
+                    // between the stations at the end of our intermediate station segment
+                    int swapFrom = route.TargetStations.FindIndex(e => e == interStationId);
+                    
+                    // the station at the start of the segment has the same index as interSegmentIdx, so add one to get
+                    // the end station of the segment
+                    int swapTo = interStationIdx + 1;
+                    
+                    net.TakeAndInsert(route, swapFrom, swapTo);
+                    newCost = route.Cost;
 
                     break;
                 case AnnealOpType.Transpose:
@@ -109,13 +118,13 @@ public class AnnealingSolver : ISolver
 
             if (AcceptSolution(oldCost, newCost, Temperature, randomGenerator))
             {
-                // accept the change (duration has already been updated by the swap)
+                // accept the change (duration and cost have already been updated by the operation)
                 loopsSinceLastAccept = 0;
             }
             else
             {
                 // reject the change (swap back)
-                net.Swap(route, stationA, stationB);
+                route = oldRoute.Copy(); // TODO: how slow is copying?
                 loopsSinceLastAccept++;
             }
             
