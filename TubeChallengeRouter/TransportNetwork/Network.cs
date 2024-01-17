@@ -102,7 +102,7 @@ public class Network
 
     public virtual int CostFunction(string startId, string endId, out List<string> path)
     {
-        throw new InvalidOperationException("Simple network doesn't support cost function with path (use overrides)");
+        throw new NotSupportedException("Simple network doesn't support cost function with path (use overrides)");
     }
 
     public virtual int CostFunction(string startId, string endId)
@@ -113,7 +113,7 @@ public class Network
         }
         else
         {
-            throw new ArgumentException("Simple network doesn't support cost function for non-linked stations (use overrides)");
+            throw new NotSupportedException("Simple network doesn't support cost function for non-linked stations (use overrides)");
         }
     }
 
@@ -225,6 +225,7 @@ public class Network
         route.UpdateCost(updatedCost);
     }
     
+    // TODO: use "ref"
     public virtual void Swap(Route route, int idxA, int idxB)
     {
         List<string> stations = route.GetTargetPath();
@@ -277,75 +278,7 @@ public class Network
     // i.e. the element that was at that index gets pushed back to insert the new one.
     public virtual void TakeAndInsert(Route route, int takeFrom, int insertBefore)
     {
-        List<string> stations = route.GetTargetPath();
-
-        TimeSpan updatedTime = route.Duration;
-        int updatedCost = route.Cost;
-
-        string station = route.TargetStations[takeFrom];
-        
-        // subtract travel cost to and from the station we are removing
-        if (takeFrom > 0)
-        {
-            updatedTime -= TravelTime(stations[takeFrom - 1], stations[takeFrom]);
-            updatedCost -= CostFunction(stations[takeFrom - 1], stations[takeFrom]);
-        }
-
-        if (takeFrom < route.Count - 1)
-        {
-            updatedTime -= TravelTime(stations[takeFrom], stations[takeFrom + 1]);
-            updatedCost -= CostFunction(stations[takeFrom], stations[takeFrom + 1]);
-        }
-        
-        // also subtract travel cost between the stations we will be inserting between, to get ready for insert
-        if (insertBefore > 0)
-        {
-            updatedTime -= TravelTime(stations[insertBefore - 1], stations[insertBefore]);
-            updatedCost -= CostFunction(stations[insertBefore - 1], stations[insertBefore]);
-        }
-        route.TargetStations.RemoveAt(takeFrom);
-        
-        // if the indices are the same, we might need to subtract
-        // we should never be doing this anyways, so throw an exception
-        if (insertBefore == takeFrom)
-        {
-            throw new InvalidOperationException("Why are you taking and reinserting at the same place?");
-        }
-        
-        // if the index we are going to insert at is after the index we are removing from, we need to subtract one
-        // so the final index in the array is between the elements we want TODO: rewrite this comment
-        if (insertBefore > takeFrom)
-        {
-            insertBefore--;
-        }
-
-        route.TargetStations.Insert(insertBefore, station);
-        
-        // update our copy of the stations list 
-        // stations = route.GetTargetPath(); (wait we don't need to??)
-        // TODO: this is sus, is the unit test SwapInsert_UpdatesCost wrong?
-        
-        // add back the new travel cost to and from the station we inserted
-        if (insertBefore > 0)
-        {
-            updatedTime += TravelTime(stations[insertBefore - 1], stations[insertBefore]);
-            updatedCost += CostFunction(stations[insertBefore - 1], stations[insertBefore]);
-        }
-        
-        if (insertBefore < route.Count-1)
-        {
-            updatedTime += TravelTime(stations[insertBefore], stations[insertBefore+1]);
-            updatedCost += CostFunction(stations[insertBefore], stations[insertBefore+1]);
-        }
-
-        if (takeFrom > 0)
-        {
-            updatedTime += TravelTime(stations[takeFrom - 1], stations[takeFrom]);
-            updatedCost += CostFunction(stations[takeFrom - 1], stations[takeFrom]);
-        }
-        
-        route.UpdateDuration(updatedTime);
-        route.UpdateCost(updatedCost);
+        throw new NotSupportedException("TakeAndInsert not supported by Simple Network (use DijkstraCostNetwork instead)")
     }
 
     public void RecalculateRouteCosts(ref Route route)
