@@ -1,6 +1,6 @@
 namespace TransportNetwork;
 
-// HACK: class name temporarily changed
+// TODO: class name temporarily changed
 public class Route// : IRoute
 {
     public List<string> TargetStations;
@@ -25,6 +25,11 @@ public class Route// : IRoute
         {
             this.IntermediateStations = intermediateStations;
         }
+    }
+
+    public Route(List<string> stations)
+    {
+        TargetStations = stations;
     }
     
     public override string ToString()
