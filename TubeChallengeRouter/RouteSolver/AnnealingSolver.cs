@@ -22,7 +22,7 @@ public class AnnealingSolver : ISolver
 
     private AnnealOpType pickRandomOperation(Random generator)
     {
-        const double randomSwapProbability = 1;
+        const double randomSwapProbability = 0.5;
         if (generator.NextDouble() < randomSwapProbability)
         {
             return AnnealOpType.SwapRandom;
@@ -55,15 +55,16 @@ public class AnnealingSolver : ISolver
             return generator.NextDouble() < probability;
         }
         
+        // TODO: clean up these constants
         const int tempStepIterations = 1000;
         const int maxIterations = 2000000;
         const double coolDownFactor = 0.99;
         const int noChangeThreshold = 10000;
         double Temperature = 1000;
         int stationA=0, stationB=0, oldCost, newCost, interSegmentIdx, interStationIdx;
+        int swapFrom=0, swapTo=0;
         int loopsSinceLastAccept = 0;
         Random randomGenerator = new Random();
-        Route oldRoute;
         
         for (int i = 1; i < maxIterations; i++)
         {
@@ -73,7 +74,6 @@ public class AnnealingSolver : ISolver
             AnnealOpType operation = pickRandomOperation(randomGenerator);
 
             oldCost = route.Cost;  // int is a value type so we don't have to worry about copy doing referencing things
-            oldRoute = route.Copy();
 
             switch (operation)
             {
@@ -101,11 +101,11 @@ public class AnnealingSolver : ISolver
                     string interStationId = route.IntermediateStations[interSegmentIdx][interStationIdx]; 
                     // find the position of the station in the target stations list, and move it to a place
                     // between the stations at the end of our intermediate station segment
-                    int swapFrom = route.TargetStations.FindIndex(e => e == interStationId);
+                    swapFrom = route.TargetStations.FindIndex(e => e == interStationId);
                     
                     // the station at the start of the segment has the same index as interSegmentIdx, so add one to get
                     // the end station of the segment
-                    int swapTo = interStationIdx + 1;
+                    swapTo = interStationIdx + 1;
 
                     if (swapFrom == swapTo)
                     {
@@ -126,9 +126,9 @@ public class AnnealingSolver : ISolver
 
                     break;
                 case AnnealOpType.Transpose:
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("Transpose operation not implemented");
                 default:
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException("Invalid annealing operation type");
             }
 
             if (newCost < 0)
@@ -145,12 +145,31 @@ public class AnnealingSolver : ISolver
             else
             {
                 // reject the change (swap back)
-                if (operation == AnnealOpType.SwapRandom)
+                switch (operation)
                 {
-                    net.Swap(route, stationA, stationB);
-                }
-                 else {
-                    route = oldRoute.Copy(); // TODO: how slow is copying?
+                    case AnnealOpType.SwapRandom:
+                        net.Swap(route, stationA, stationB);
+                        break;
+                    case AnnealOpType.SwapIntermediate:
+                        if (swapFrom < swapTo)
+                        {
+                            net.TakeAndInsert(route, swapTo-1, swapFrom);
+                        }
+                        else
+                        {
+                            if (swapFrom < route.Count - 1)
+                            {
+                                net.TakeAndInsert(route, swapTo, swapFrom + 1);
+                            }
+                            else
+                            {
+                                net.TakeAndInsert(route, swapTo, swapFrom);
+                            }
+                        }
+
+                        break;
+                    default:
+                        throw new InvalidOperationException("Invalid annealing operation type");
                 }
                 loopsSinceLastAccept++;
             }
