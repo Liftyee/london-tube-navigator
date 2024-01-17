@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using PriorityQueue;
 
 namespace TransportNetwork;
@@ -188,6 +189,8 @@ public class DijkstraCostNetwork : Network
     // i.e. the element that was at that index gets pushed back to insert the new one.
     public override void TakeAndInsert(Route route, int takeFrom, int insertBefore)
     {
+        Logger.Verbose("Taking from {A} and inserting before {B}", takeFrom, insertBefore);
+        Logger.Verbose("Route is {A}", route.ToString());
         List<string> stations = route.GetTargetPath();
 
         TimeSpan updatedTime = route.Duration;
@@ -198,12 +201,14 @@ public class DijkstraCostNetwork : Network
         // subtract travel cost to and from the station we are removing
         if (takeFrom > 0)
         {
+            Logger.Verbose("Subtracting travel time from {A} to {B}", takeFrom-1, takeFrom);
             updatedTime -= TravelTime(stations[takeFrom - 1], stations[takeFrom]);
             updatedCost -= CostFunction(stations[takeFrom - 1], stations[takeFrom]);
         }
 
         if (takeFrom < route.Count - 1)
         {
+            Logger.Verbose("Subtracting travel time from {A} to {B}", takeFrom, takeFrom + 1);
             updatedTime -= TravelTime(stations[takeFrom], stations[takeFrom + 1]);
             updatedCost -= CostFunction(stations[takeFrom], stations[takeFrom + 1]);
         }
@@ -211,11 +216,12 @@ public class DijkstraCostNetwork : Network
         // also subtract travel cost between the stations we will be inserting between, to get ready for insert
         if (insertBefore > 0)
         {
+            Logger.Verbose("Subtracting travel time from {A} to {B}", insertBefore-1, insertBefore);
             updatedTime -= TravelTime(stations[insertBefore - 1], stations[insertBefore]);
             updatedCost -= CostFunction(stations[insertBefore - 1], stations[insertBefore]);
         }
         route.TargetStations.RemoveAt(takeFrom);
-        
+        Logger.Verbose("Yoinked station {A}", station);
         // if the indices are the same, we might need to subtract
         // we should never be doing this anyways, so throw an exception
         if (insertBefore == takeFrom)
@@ -226,38 +232,75 @@ public class DijkstraCostNetwork : Network
         
         // if the index we are going to insert at is after the index we are removing from, we need to subtract one
         // so the final index in the array is between the elements we want TODO: rewrite this comment
+        int actualInsertPos;
         if (insertBefore > takeFrom)
         {
-            insertBefore--;
+            actualInsertPos = insertBefore - 1;
+        }
+        else
+        {
+            actualInsertPos = insertBefore;
         }
 
-        route.TargetStations.Insert(insertBefore, station);
+        route.TargetStations.Insert(actualInsertPos, station);
         
         // update our copy of the stations list 
-        // stations = route.GetTargetPath(); (wait we don't need to??)
+        stations = route.GetTargetPath();
         // TODO: this is sus, is the unit test SwapInsert_UpdatesCost wrong?
-        
-        // add back the new travel cost to and from the station we inserted
-        if (insertBefore > 0)
+
+        if (insertBefore > takeFrom)
         {
-            updatedTime += TravelTime(stations[insertBefore - 1], stations[insertBefore]);
-            updatedCost += UpdatePathReturnCost(route, insertBefore);
+            // add back the new travel cost to and from the station we inserted
+            if (insertBefore > 0)
+            {
+                Logger.Verbose("Adding travel time from {A} to {B}", insertBefore-1, insertBefore);
+                updatedTime += TravelTime(stations[insertBefore - 1], stations[insertBefore]);
+                updatedCost += UpdatePathReturnCost(route, insertBefore);
+            }
+            
+            if (insertBefore > 1)
+            {
+                Logger.Verbose("Adding travel time from {A} to {B}", insertBefore-2, insertBefore-1);
+                updatedTime += TravelTime(stations[insertBefore - 2], stations[insertBefore-1]);
+                updatedCost += UpdatePathReturnCost(route, insertBefore);
+            }
+            
+            if (takeFrom > 0)
+            {
+                Logger.Verbose("Adding travel time from {A} to {B}", takeFrom-1, takeFrom);
+                updatedTime += TravelTime(stations[takeFrom - 1], stations[takeFrom]);
+                updatedCost += UpdatePathReturnCost(route, takeFrom);
+            }
         }
-        
-        if (insertBefore < route.Count-1)
+        else
         {
-            updatedTime += TravelTime(stations[insertBefore], stations[insertBefore+1]);
-            updatedCost += UpdatePathReturnCost(route, insertBefore+1);
+            // add back the new travel cost to and from the station we inserted
+            if (insertBefore > 0)
+            {
+                Logger.Verbose("Adding travel time from {A} to {B}", insertBefore-1, insertBefore);
+                updatedTime += TravelTime(stations[insertBefore - 1], stations[insertBefore]);
+                updatedCost += UpdatePathReturnCost(route, insertBefore);
+            }
+        
+            if (insertBefore < route.Count-1)
+            {
+                Logger.Verbose("Adding travel time from {A} to {B}", insertBefore, insertBefore+1);
+                updatedTime += TravelTime(stations[insertBefore], stations[insertBefore+1]);
+                updatedCost += UpdatePathReturnCost(route, insertBefore+1);
+            }
+
+            if (takeFrom < route.Count-1)
+            {
+                Logger.Verbose("Adding travel time from {A} to {B}", takeFrom, takeFrom+1);
+                updatedTime += TravelTime(stations[takeFrom], stations[takeFrom+1]);
+                updatedCost += UpdatePathReturnCost(route, takeFrom);
+            }
+
         }
 
-        if (takeFrom > 0)
-        {
-            updatedTime += TravelTime(stations[takeFrom - 1], stations[takeFrom]);
-            updatedCost += UpdatePathReturnCost(route, takeFrom);
-        }
-        
         route.UpdateDuration(updatedTime);
         route.UpdateCost(updatedCost);
+        Logger.Verbose("Route is {A}", route.ToString());
     }
 
     // Function to update the intermediate station path of an indexed segment of a Route
