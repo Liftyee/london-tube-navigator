@@ -202,11 +202,32 @@ public class Network
             writer.WriteLine("Done");
         } 
     }
+
+    protected virtual void RemoveStationFromTotals(ref Route route, int index)
+    {
+        List<string> stations = route.GetTargetPath();
+        TimeSpan updatedTime = route.Duration;
+        int updatedCost = route.Cost;
+
+        if (index > 0)
+        {
+            updatedTime -= TravelTime(stations[index - 1], stations[index]);
+            updatedCost -= CostFunction(stations[index - 1], stations[index]);
+        }
+
+        if (index < route.Count - 1)
+        {
+            updatedTime -= TravelTime(stations[index], stations[index + 1]);
+            updatedCost -= CostFunction(stations[index], stations[index + 1]);
+        }
+
+        route.UpdateDuration(updatedTime);
+        route.UpdateCost(updatedCost);
+    }
     
     public virtual void Swap(Route route, int idxA, int idxB)
     {
         List<string> stations = route.GetTargetPath();
-        List<List<string>> interStations = route.GetIntermediateStations();
         
         TimeSpan updatedTime = route.Duration;
         int updatedCost = route.Cost;
@@ -249,5 +270,84 @@ public class Network
         
         // update the route's cost (unitless value based on number of factors)
         route.UpdateCost(updatedCost);
+    }
+    
+    // Remove a station from one position and insert it so that it ends up in another.
+    // The final position will be one before the index of the element at insertBefore
+    // i.e. the element that was at that index gets pushed back to insert the new one.
+    public virtual void TakeAndInsert(Route route, int takeFrom, int insertBefore)
+    {
+        List<string> stations = route.GetTargetPath();
+
+        TimeSpan updatedTime = route.Duration;
+        int updatedCost = route.Cost;
+
+        string station = route.TargetStations[takeFrom];
+        
+        // subtract travel cost to and from the station we are removing
+        if (takeFrom > 0)
+        {
+            updatedTime -= TravelTime(stations[takeFrom - 1], stations[takeFrom]);
+            updatedCost -= CostFunction(stations[takeFrom - 1], stations[takeFrom]);
+        }
+
+        if (takeFrom < route.Count - 1)
+        {
+            updatedTime -= TravelTime(stations[takeFrom], stations[takeFrom + 1]);
+            updatedCost -= CostFunction(stations[takeFrom], stations[takeFrom + 1]);
+        }
+        
+        // also subtract travel cost between the stations we will be inserting between, to get ready for insert
+        if (insertBefore > 0)
+        {
+            updatedTime -= TravelTime(stations[insertBefore - 1], stations[insertBefore]);
+            updatedCost -= CostFunction(stations[insertBefore - 1], stations[insertBefore]);
+        }
+        route.TargetStations.RemoveAt(takeFrom);
+        
+        // if the indices are the same, we might need to subtract
+        // we should never be doing this anyways, so throw an exception
+        if (insertBefore == takeFrom)
+        {
+            throw new InvalidOperationException("Why are you taking and reinserting at the same place?");
+        }
+        
+        // if the index we are going to insert at is after the index we are removing from, we need to subtract one
+        // so the final index in the array is between the elements we want TODO: rewrite this comment
+        if (insertBefore > takeFrom)
+        {
+            insertBefore--;
+        }
+
+        route.TargetStations.Insert(insertBefore, station);
+        
+        
+        // add back the new travel cost to and from the station we inserted
+        if (insertBefore > 0)
+        {
+            updatedTime += TravelTime(stations[insertBefore - 1], stations[insertBefore]);
+            updatedCost += CostFunction(stations[insertBefore - 1], stations[insertBefore]);
+        }
+        
+        if (insertBefore < route.Count-1)
+        {
+            updatedTime += TravelTime(stations[insertBefore], stations[insertBefore+1]);
+            updatedCost += CostFunction(stations[insertBefore], stations[insertBefore+1]);
+        }
+
+        if (takeFrom > 0)
+        {
+            updatedTime += TravelTime(stations[takeFrom - 1], stations[takeFrom]);
+            updatedCost += CostFunction(stations[takeFrom - 1], stations[takeFrom]);
+        }
+        
+        route.UpdateDuration(updatedTime);
+        route.UpdateCost(updatedCost);
+    }
+
+    public void RecalculateRouteCosts(ref Route route)
+    {
+        route.UpdateCost(CostFunction(route));
+        route.UpdateDuration(TravelTime(route));
     }
 }
