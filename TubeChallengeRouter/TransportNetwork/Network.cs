@@ -321,6 +321,9 @@ public class Network
 
         route.TargetStations.Insert(insertBefore, station);
         
+        // update our copy of the stations list 
+        // stations = route.GetTargetPath(); (wait we don't need to??)
+        // TODO: this is sus, is the unit test SwapInsert_UpdatesCost wrong?
         
         // add back the new travel cost to and from the station we inserted
         if (insertBefore > 0)
