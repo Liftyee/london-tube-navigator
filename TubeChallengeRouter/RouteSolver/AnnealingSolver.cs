@@ -106,8 +106,6 @@ public class AnnealingSolver : ISolver
                     // the station at the start of the segment has the same index as interSegmentIdx, so add one to get
                     // the end station of the segment
                     int swapTo = interStationIdx + 1;
-                    
-                    net.TakeAndInsert(route, swapFrom, swapTo);
 
                     if (swapFrom == swapTo)
                     {
@@ -131,6 +129,12 @@ public class AnnealingSolver : ISolver
                     throw new NotImplementedException();
                 default:
                     throw new InvalidOperationException();
+            }
+
+            if (newCost < 0)
+            {
+                logger.Fatal("Cost of new route (iteration {A}) is negative!", nIterations);
+                throw new Exception("Cost is negative!");
             }
 
             if (AcceptSolution(oldCost, newCost, Temperature, randomGenerator))

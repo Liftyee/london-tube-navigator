@@ -72,6 +72,11 @@ public class DijkstraCostNetwork : Network
         _costCache[startId][endId] = DijkstraLookup(startId, endId, out result);
         _pathCache[startId][endId] = result; // TODO: might induce undesired referencing? 
         path = result;
+
+        if (_costCache[startId][endId].Value < 0)
+        {
+            throw new InvalidDataException("Cost function is negative!");
+        } 
         return _costCache[startId][endId].Value;
     }
 
@@ -215,7 +220,8 @@ public class DijkstraCostNetwork : Network
         // we should never be doing this anyways, so throw an exception
         if (insertBefore == takeFrom)
         {
-            throw new InvalidOperationException("Why are you taking and reinserting at the same place?");
+            // TODO: figure out if this is actually bad
+            // throw new InvalidOperationException("Why are you taking and reinserting at the same place?");
         }
         
         // if the index we are going to insert at is after the index we are removing from, we need to subtract one
