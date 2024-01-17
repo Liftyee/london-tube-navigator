@@ -46,7 +46,7 @@ public class SVGMapViewModel : ReactiveObject
 
         SvgMap = new SKSvg();
         //svgMap.Load("/home/yee/tubemapgrouped.svg");
-        SvgMap.Load("/home/yee/SVG_Logo.svg");
+        SvgMap.Load("SVG_Logo.svg");
         //UpdateSVG();
     }
 

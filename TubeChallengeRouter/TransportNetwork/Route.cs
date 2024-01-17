@@ -3,55 +3,55 @@ namespace TransportNetwork;
 // HACK: class name temporarily changed
 public class Route// : IRoute
 {
-    public List<string> targetStations;
-    internal List<List<string>> intermediateStations;
+    public List<string> TargetStations;
+    public List<List<string>> IntermediateStations;
     private TimeSpan _duration;
     private int _cost;
-    public int Count => targetStations.Count;
+    public int Count => TargetStations.Count;
     public int Cost => _cost;
     public TimeSpan Duration => _duration;
 
     public Route(List<string> stations, TimeSpan duration, int cost, List<List<string>>? intermediateStations = null)
     {
-        targetStations = stations;
+        TargetStations = stations;
         _duration = duration;
         _cost = cost;
         
         if (intermediateStations is null)
         {
-            this.intermediateStations = new List<List<string>>();
+            this.IntermediateStations = new List<List<string>>();
         }
         else
         {
-            this.intermediateStations = intermediateStations;
+            this.IntermediateStations = intermediateStations;
         }
     }
     
     public override string ToString()
     {
-        if (targetStations.Count < 20)
+        if (TargetStations.Count < 20)
         {
-            return $"Route with {targetStations.Count} stations and length {_duration.TotalMinutes} minutes: {String.Join(", ", targetStations)}";
+            return $"Route with {TargetStations.Count} stations and length {_duration.TotalMinutes} minutes: {String.Join(", ", TargetStations)}";
         }
         else // don't return all the stations if there are too many
         {
-            return $"Route with {targetStations.Count} stations and length {_duration.TotalMinutes} minutes"; 
+            return $"Route with {TargetStations.Count} stations and length {_duration.TotalMinutes} minutes"; 
         }
     }
 
     public List<string> GetTargetPath()
     {
-        return targetStations;
+        return TargetStations;
     }
     
     internal List<string> GetIntermediateStations(int segmentIndex)
     {
-        return intermediateStations[segmentIndex];
+        return IntermediateStations[segmentIndex];
     }
     
     internal List<List<string>> GetIntermediateStations()
     {
-        return intermediateStations;
+        return IntermediateStations;
     }
     
     public void UpdateDuration(TimeSpan newDuration)
@@ -66,6 +66,6 @@ public class Route// : IRoute
 
     public void UpdateIntermediateStations(int segmentIndex, List<string> updateTo)
     {
-        intermediateStations[segmentIndex] = updateTo;
+        IntermediateStations[segmentIndex] = updateTo;
     } 
 }

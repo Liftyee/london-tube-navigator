@@ -181,8 +181,8 @@ public class DijkstraCostNetwork : Network
     private int UpdatePathReturnCost(Route route, int idxA)
     {
         List<string> newpath;
-        int cost = CostFunction(route.targetStations[idxA - 1], route.targetStations[idxA], out newpath);
-        route.intermediateStations[idxA - 1] = newpath;
+        int cost = CostFunction(route.TargetStations[idxA - 1], route.TargetStations[idxA], out newpath);
+        route.IntermediateStations[idxA - 1] = newpath;
         return cost;
     }
 }

@@ -47,8 +47,8 @@ public class DijkstraNetworkTests
         for (int idx = 0; idx < result.Count-1; idx++)
         {
             List<string> dijResult;
-            _network.CostFunction(result.targetStations[idx], result.targetStations[idx + 1], out dijResult);
-            Assert.That(result.intermediateStations[idx], Is.EqualTo(dijResult));
+            _network.CostFunction(result.TargetStations[idx], result.TargetStations[idx + 1], out dijResult);
+            Assert.That(result.IntermediateStations[idx], Is.EqualTo(dijResult));
         }
     }
 
