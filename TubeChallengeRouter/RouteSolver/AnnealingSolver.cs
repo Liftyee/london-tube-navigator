@@ -70,7 +70,6 @@ public class AnnealingSolver : ISolver
         {
             nIterations++;
             // pick a random pair of stations to swap
-            // TODO: implement "swap intermediate" action
             AnnealOpType operation = pickRandomOperation(randomGenerator);
 
             oldCost = route.Cost;  // int is a value type so we don't have to worry about copy doing referencing things

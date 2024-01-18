@@ -214,7 +214,6 @@ public class TflModelWrapper : INetworkDataFetcher
             TflApiPresentationEntitiesRouteSequence inboundResult = lineApi.LineRouteSequence(line.Id, "inbound");
             logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
             
-            // TODO: path doesn't work on Windows
             using (FileStream fs = new FileStream($"{cachePath}{line.Id}_inbound.xml", FileMode.Create))
             {
                 serializer.WriteObject(fs, inboundResult);
