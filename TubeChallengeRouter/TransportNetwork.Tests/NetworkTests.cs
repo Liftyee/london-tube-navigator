@@ -86,7 +86,6 @@ public class NetworkTests
         Assert.That(_network.CostFunction("D","E"), Is.EqualTo(1*60));
     }
 
-    // TODO: Fix this test
     [Test]
     public void TestNetwork_CostSymmetric()
     {

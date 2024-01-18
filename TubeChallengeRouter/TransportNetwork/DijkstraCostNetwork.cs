@@ -48,11 +48,12 @@ public class DijkstraCostNetwork : Network
                 else
                 {
                     _costCache[stationID][station2ID] = 0; // station has no cost to itself
+                    _pathCache[stationID][station2ID] = new List<string>();
                 }                    
-                // _pathCache[stationID][station2ID] = new List<string>();
             }
         }
     }
+    
     public override int CostFunction(string startId, string endId, out List<string> path)
     {
         // if it's a direct path, just return nothing!
@@ -62,6 +63,7 @@ public class DijkstraCostNetwork : Network
             return Stations[startId].CostTo(endId);
         }
         // first, lookup in cache to see if we have calculated it before
+        // if it's in costCache, it should be in pathCache too
         if (_costCache[startId][endId] is not null)
         {
             path = _pathCache[startId][endId];
@@ -89,6 +91,12 @@ public class DijkstraCostNetwork : Network
 
     private int DijkstraLookup(string startId, string endId, out List<string> path)
     {
+        if (startId == endId)
+        {
+            path = new List<string>();
+            return 0;
+        }
+        
         Dictionary<string, string> prev = new();
         PriorityQueue<DijkstraNode>
             nextNodes = new PriorityQueue<DijkstraNode>(Stations.Count + 20, Priority.Smallest);
