@@ -129,6 +129,8 @@ public class DijkstraCostNetwork : Network
                 }
                 result.Reverse();
                 path = result;
+                Debug.Assert(!path.Contains(startId));
+                Debug.Assert(!path.Contains(endId));
                 return minCostNode.Cost;
             }
         }
@@ -147,18 +149,24 @@ public class DijkstraCostNetwork : Network
         /* Instead of recalculating the travel time by summing all travel times between stations, we can just
            change the travel times to and from the stations that are being swapped. All other travel times should
            remain constant, so we are only concerned with what happens around our swapped stations. */
-        
-        // These four times are the time taken to travel to and from both stations being swapped (before the swap)
-        if (idxA > 0)             updatedTime -= TravelTime(stations[idxA - 1], stations[idxA]);
-        if (idxA < route.Count-1) updatedTime -= TravelTime(stations[idxA], stations[idxA + 1]);
-        if (idxB > 0)             updatedTime -= TravelTime(stations[idxB - 1], stations[idxB]);
-        if (idxB < route.Count-1) updatedTime -= TravelTime(stations[idxB], stations[idxB + 1]);
 
-        // Do the same for costs (unitless value considering but not limited to duration)
-        if (idxA > 0)             updatedCost -= CostFunction(stations[idxA - 1], stations[idxA]);
-        if (idxA < route.Count-1) updatedCost -= CostFunction(stations[idxA], stations[idxA + 1]);
-        if (idxB > 0)             updatedCost -= CostFunction(stations[idxB - 1], stations[idxB]);
-        if (idxB < route.Count-1) updatedCost -= CostFunction(stations[idxB], stations[idxB + 1]);
+        void UpdateCostsTo(int statIdx)
+        {
+            if (statIdx > 0)
+            {
+                updatedTime -= TravelTime(stations[statIdx - 1], stations[statIdx]);
+                updatedCost -= CostFunction(stations[statIdx - 1], stations[statIdx]);
+            }
+            
+            if (statIdx < route.Count-1)
+            {
+                updatedTime -= TravelTime(stations[statIdx], stations[statIdx + 1]);
+                updatedCost -= CostFunction(stations[statIdx], stations[statIdx + 1]);
+            }
+        }
+        
+        UpdateCostsTo(idxA);
+        UpdateCostsTo(idxB);
         
         // swap the stations in the route
         string temp = stations[idxA];
@@ -274,6 +282,7 @@ public class DijkstraCostNetwork : Network
         }
         else
         {
+            // TODO: path not updated properly.
             // add back the new travel cost to and from the station we inserted
             if (insertBefore > 0)
             {
