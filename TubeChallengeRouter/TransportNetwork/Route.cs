@@ -1,7 +1,7 @@
 namespace TransportNetwork;
 
 // TODO: class name temporarily changed
-public class Route// : IRoute
+public class Route
 {
     public List<string> TargetStations;
     public List<List<string>> IntermediateStations;

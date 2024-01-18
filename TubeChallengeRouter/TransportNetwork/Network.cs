@@ -300,4 +300,21 @@ public class Network
         route.UpdateCost(CostFunction(route));
         route.UpdateDuration(TravelTime(route));
     }
+
+    // function to recalculate the intermediate stations of the route
+    public void RecalculateRouteData(ref Route route)
+    {
+        List<string> stations = route.GetTargetPath();
+        route.IntermediateStations.RemoveAll(e => true); // clear the list of intermediate stations
+        int totalCost = 0;
+        for (int i = 0; i < stations.Count - 1; i++)
+        {
+            List<string> inter;
+            totalCost += CostFunction(stations[i], stations[i + 1], out inter);
+            route.IntermediateStations.Add(inter);
+        }
+
+        route.UpdateCost(totalCost);
+        route.UpdateDuration(TravelTime(route));
+    }
 }

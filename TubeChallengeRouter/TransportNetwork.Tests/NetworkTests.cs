@@ -98,4 +98,16 @@ public class NetworkTests
             }
         }
     }
+
+    [Test]
+    public void RecalculateRoute_DataAccurate()
+    {
+        Route genRoute = _network.GenerateRandomRoute();
+        Route newRoute = new Route(genRoute.TargetStations);
+        _network.RecalculateRouteData(ref newRoute);
+        Assert.That(newRoute.Cost, Is.EqualTo(genRoute.Cost));
+        Assert.That(newRoute.Duration, Is.EqualTo(genRoute.Duration));
+        Assert.That(newRoute.TargetStations, Is.EqualTo(genRoute.TargetStations));
+        Assert.That(newRoute.IntermediateStations, Is.EqualTo(genRoute.IntermediateStations));
+    }
 }

@@ -86,12 +86,22 @@ public class DijkstraNetworkTests
     public void Swap_SwapsStations()
     {
         Route route = new Route(new List<string> { "A", "B", "C", "D", "E" });
+        _network.RecalculateRouteData(ref route);
         
         // edge case: last
         _network.Swap(route, 1, 4);
         Assert.That(route.TargetStations, Is.EqualTo(new List<string> { "A", "E", "C", "D", "B" }));
         
         // edge case: first
-        _network.Swap();
+        _network.Swap(route, 0, 3);
+        Assert.That(route.TargetStations, Is.EqualTo(new List<string> { "D", "E", "C", "A", "B" }));
+        
+        // just a normal swap
+        _network.Swap(route, 2, 3);
+        Assert.That(route.TargetStations, Is.EqualTo(new List<string> { "D", "E", "A", "C", "B" }));
+        
+        // swap with self
+        _network.Swap(route, 2, 2);
+        Assert.That(route.TargetStations, Is.EqualTo(new List<string> { "D", "E", "A", "C", "B" }));
     }
 }
