@@ -30,6 +30,7 @@ public class Route// : IRoute
     public Route(List<string> stations)
     {
         TargetStations = stations;
+        IntermediateStations = new List<List<string>>();
     }
     
     public override string ToString()
