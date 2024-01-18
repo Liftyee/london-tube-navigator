@@ -104,4 +104,44 @@ public class DijkstraNetworkTests
         _network.Swap(route, 2, 2);
         Assert.That(route.TargetStations, Is.EqualTo(new List<string> { "D", "E", "A", "C", "B" }));
     }
+
+    [Test]
+    public void Swap_UpdatesCosts()
+    {
+        Route route = new Route(new List<string> { "A", "B", "C", "D", "E" });
+        _network.RecalculateRouteData(ref route);
+        
+        // edge case: last
+        _network.Swap(route, 1, 4);
+        Assert.That(route.Cost, Is.EqualTo(_network.CostFunction(route)));
+        Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
+        
+        // edge case: first
+        _network.Swap(route, 0, 3);
+        Assert.That(route.Cost, Is.EqualTo(_network.CostFunction(route)));
+        Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
+        
+        // just a normal swap
+        _network.Swap(route, 2, 3);
+        Assert.That(route.Cost, Is.EqualTo(_network.CostFunction(route)));
+        Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
+        
+        // swap with self
+        _network.Swap(route, 2, 2);
+        Assert.That(route.Cost, Is.EqualTo(_network.CostFunction(route)));
+        Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
+    }
+
+    [Test]
+    public void Swap_UpdatesPath()
+    {
+        Route route = new Route(new List<string> { "A", "B", "C", "D", "E" });
+        _network.RecalculateRouteData(ref route);
+        
+        // edge case: last
+        _network.Swap(route, 1, 4);
+        Assert.That(route.IntermediateStations, Is.EqualTo(new List<List<string>> {new List<string>{"B","C"}, new List<string>(), new List<string>{"B"}, new List<string>()}));
+        
+        
+    }
 }
