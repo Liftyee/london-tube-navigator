@@ -16,6 +16,11 @@ public class NetworkTests
     }
 
     [Test]
+    public void UpdatePathReturnCost_updatesPath()
+    {
+        UpdatePathReturnCost();
+    }
+    [Test]
     public void SwapInsert_InsertsStation()
     {
         // generate a random route
