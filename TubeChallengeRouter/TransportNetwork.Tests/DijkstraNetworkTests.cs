@@ -75,9 +75,23 @@ public class DijkstraNetworkTests
         Route smallRoute = _network.GenerateRandomRoute();
         Assert.That((int)smallRoute.Duration.TotalSeconds == _network.CostFunction(smallRoute));
     }
+    
     [Test]
     public void TubeNetwork_RouteCostEqualToSegmentSum()
     {
         // use solver (move to different file?)
+    }
+
+    [Test]
+    public void Swap_SwapsStations()
+    {
+        Route route = new Route(new List<string> { "A", "B", "C", "D", "E" });
+        
+        // edge case: last
+        _network.Swap(route, 1, 4);
+        Assert.That(route.TargetStations, Is.EqualTo(new List<string> { "A", "E", "C", "D", "B" }));
+        
+        // edge case: first
+        _network.Swap();
     }
 }

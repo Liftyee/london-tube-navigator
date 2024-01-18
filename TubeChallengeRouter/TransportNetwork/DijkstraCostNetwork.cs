@@ -261,14 +261,14 @@ public class DijkstraCostNetwork : Network
             // add back the new travel cost to and from the station we inserted
             if (insertBefore > 0)
             {
-                Logger.Verbose("Adding travel time from {A} to {B}", insertBefore-1, insertBefore);
+                Logger.Verbose("Adding cost from {A} to {B}, {C}", insertBefore-1, insertBefore, CostFunction(stations[insertBefore - 1], stations[insertBefore]));
                 updatedTime += TravelTime(stations[insertBefore - 1], stations[insertBefore]);
                 updatedCost += UpdatePathReturnCost(route, insertBefore);
             }
             
             if (insertBefore > 1)
             {
-                Logger.Verbose("Adding travel time from {A} to {B}", insertBefore-2, insertBefore-1);
+                Logger.Verbose("Adding cost from {A} to {B}, {C}", insertBefore-2, insertBefore-1);
                 updatedTime += TravelTime(stations[insertBefore - 2], stations[insertBefore-1]);
                 updatedCost += UpdatePathReturnCost(route, insertBefore);
             }
@@ -306,12 +306,12 @@ public class DijkstraCostNetwork : Network
             }
 
         }
-
+   
         // route.UpdateDuration(updatedTime);
         // route.UpdateCost(updatedCost);
         // TODO: figure out why the quick cost update doesn't work
         // for now, just recalculate the whole cost
-        RecalculateRouteCosts(ref route);
+        // RecalculateRouteCosts(ref route);
         Logger.Verbose("Route is {A}", route.ToString());
     }
 

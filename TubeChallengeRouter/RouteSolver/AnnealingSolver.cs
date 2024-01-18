@@ -22,7 +22,7 @@ public class AnnealingSolver : ISolver
 
     private AnnealOpType pickRandomOperation(Random generator)
     {
-        const double randomSwapProbability = 0.9;
+        const double randomSwapProbability = 1;
         if (generator.NextDouble() < randomSwapProbability)
         {
             return AnnealOpType.SwapRandom;
@@ -89,14 +89,17 @@ public class AnnealingSolver : ISolver
                     
                     break;
                 case AnnealOpType.SwapIntermediate:
-                    // If we pass by a station while going from A to B, it might be more efficient to move the station
+                    // If we pass by a station while going from A to B (ie. an Intermediate Station), it might be more efficient to move the station
                     // from its position in the route to between A and B
                     
+                    // Find a segment which has nonzero number of Intermediate Stations
                     do
                     {
                         interSegmentIdx = randomGenerator.Next(0, route.IntermediateStations.Count);
                     } while (route.IntermediateStations[interSegmentIdx].Count == 0); // can't swap if there aren't intermediate stations
-
+                    
+                    // Pick a random station on this segment
+                    // The stations where the segment starts and ends shouldn't be contained on this segment, so we can pick any station
                     interStationIdx = randomGenerator.Next(0, route.IntermediateStations[interSegmentIdx].Count);
                     string interStationId = route.IntermediateStations[interSegmentIdx][interStationIdx]; 
                     // find the position of the station in the target stations list, and move it to a place
