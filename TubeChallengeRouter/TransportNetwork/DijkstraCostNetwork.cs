@@ -298,8 +298,11 @@ public class DijkstraCostNetwork : Network
 
         }
 
-        route.UpdateDuration(updatedTime);
-        route.UpdateCost(updatedCost);
+        // route.UpdateDuration(updatedTime);
+        // route.UpdateCost(updatedCost);
+        // TODO: figure out why the quick cost update doesn't work
+        // for now, just recalculate the whole cost
+        RecalculateRouteCosts(ref route);
         Logger.Verbose("Route is {A}", route.ToString());
     }
 
