@@ -44,6 +44,14 @@ public class Network
             this.AddStation(new Station(naptanId, name));
         }
     }
+
+    public void WriteStationsToFile(FileStream file)
+    {
+        foreach (var station in Stations.Values)
+        {
+            file.Write(Encoding.UTF8.GetBytes($"{station.NaptanId}:{station.Name.Replace(" Underground Station", "")}\n"));
+        }
+    }
     
     public void LinkStationsPartial(string startId, string endId, Dir direction, Line? line=null)
     {

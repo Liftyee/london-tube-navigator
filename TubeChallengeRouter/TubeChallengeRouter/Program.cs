@@ -51,10 +51,7 @@ namespace TubeChallengeRouter
             
             using (FileStream file = new FileStream("stations.txt", System.IO.FileMode.Create))
             {
-                foreach (var station in tube.GetStations())
-                {
-                    file.Write(Encoding.UTF8.GetBytes($"{station.NaptanId}:{station.Name.Replace(" Underground Station", "")}\n"));
-                }
+                tube.WriteStationsToFile(file);
             }
         }
         
