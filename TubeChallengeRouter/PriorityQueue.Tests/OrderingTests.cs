@@ -1,5 +1,3 @@
-using PriorityQueue;
-
 namespace PriorityQueueTests;
 
 [TestFixture]

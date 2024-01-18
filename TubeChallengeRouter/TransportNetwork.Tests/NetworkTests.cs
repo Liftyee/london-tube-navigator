@@ -1,8 +1,3 @@
-using System.Text.Json;
-using DataFetcher;
-using Serilog;
-using TransportNetwork;
-
 namespace StationTests;
 
 public class NetworkTests

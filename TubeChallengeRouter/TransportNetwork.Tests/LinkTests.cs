@@ -1,9 +1,7 @@
-using TransportNetwork;
-
 namespace StationTests;
 
 [TestFixture]
-public class LinkTests
+public class  LinkTests
 {
     private Station _stubStation1, _stubStation2;
     private Link _link;

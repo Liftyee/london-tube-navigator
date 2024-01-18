@@ -22,7 +22,7 @@ public class AnnealingSolver : ISolver
 
     private AnnealOpType pickRandomOperation(Random generator)
     {
-        const double randomSwapProbability = 0.5;
+        const double randomSwapProbability = 0.9;
         if (generator.NextDouble() < randomSwapProbability)
         {
             return AnnealOpType.SwapRandom;
@@ -110,6 +110,11 @@ public class AnnealingSolver : ISolver
                     if (swapFrom == swapTo)
                     {
                         logger.Warning("Swapping at same position... put a breakpoint here");
+                    }
+
+                    if (swapFrom == swapTo - 1)
+                    {
+                        logger.Warning("Swap will have no effect, station is already in right position");
                     }
                     
                     try
