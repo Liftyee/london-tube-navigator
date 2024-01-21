@@ -14,23 +14,19 @@ public class NetworkTests
             .CreateLogger();
         _network = new NetworkFactory(new TestNetwork1()).Generate(NetworkType.Dijkstra, consoleLogger);
     }
-
-    [Test]
-    public void UpdatePathReturnCost_updatesPath()
-    {
-        UpdatePathReturnCost();
-    }
+    
     [Test]
     public void SwapInsert_InsertsStation()
     {
         // generate a random route
-        Route route = _network.GenerateRandomRoute();
+        Route route = new Route(new List<string> { "A", "B", "C", "D", "E" });
+        _network.RecalculateRouteData(ref route);
         
         // keep track of what they were so we can compare
         string old2 = route.TargetStations[2];
         string old4 = route.TargetStations[4];
         
-        _network.TakeAndInsert(route, 2, 4);
+        _network.TakeAndInsert(ref route, 2, 4);
         
         // because we are taking from before our target position (and everything gets shifted by 1),
         // the final index should be one less than 4
@@ -38,13 +34,14 @@ public class NetworkTests
         Assert.That(route.TargetStations[4-1], Is.EqualTo(old2));
         
         // try swapping in the other direction
-        route = _network.GenerateRandomRoute();
+        route = new Route(new List<string> { "A", "B", "C", "D", "E" });
+        _network.RecalculateRouteData(ref route);
         
         // keep track of what they were so we can compare
         string old1 = route.TargetStations[1];
         string old3 = route.TargetStations[3];
         
-        _network.TakeAndInsert(route, 3, 1);
+        _network.TakeAndInsert(ref route, 3, 1);
         
         // because we are taking from after our target position, the final index should be 1
         Assert.That(route.TargetStations[3], Is.Not.EqualTo(old3));
@@ -52,17 +49,43 @@ public class NetworkTests
     }
 
     [Test]
+    public void SwapInsert_UpdatesStations()
+    {
+        Route route = new Route(new List<string> { "A", "B", "C", "D", "E" });
+        _network.RecalculateRouteData(ref route);
+        
+        _network.TakeAndInsert(ref route, 0, 3);
+        Assert.That(route.TargetStations, Is.EqualTo(new List<string> {"B", "C", "A", "D", "E"}));
+        
+        route = new Route(new List<string> { "A", "B", "C", "D", "E" });
+        _network.RecalculateRouteData(ref route);
+        
+        _network.TakeAndInsert(ref route, 4, 1);
+        Assert.That(route.TargetStations, Is.EqualTo(new List<string> {"A", "E", "B", "C", "D"}));
+    }
+
+    [Test]
     public void SwapInsert_UpdatesCost()
     {
-        Route route = _network.GenerateRandomRoute();
+        Route route = new Route(new List<string> { "A", "B", "C", "D", "E" });
+        _network.RecalculateRouteData(ref route);
 
-        _network.TakeAndInsert(route, 2, 4);
-        Assert.That(route.Cost, Is.EqualTo(_network.CostFunction(route)));
+        _network.TakeAndInsert(ref route, 0, 4); // should result in B C D A E
+        Assert.That(route.Cost, Is.EqualTo(480));
         Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
         
-        _network.TakeAndInsert(route, 3, 1);
-        Assert.That(route.Cost, Is.EqualTo(_network.CostFunction(route)));
+        _network.TakeAndInsert(ref route, 4, 1); // should result in B E C D A
+        Assert.That(route.Cost, Is.EqualTo(7*60));
         Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
+    }
+
+    [Test]
+    public void CostFunction_CorrectCost()
+    {
+        Route route = new Route(new List<string> { "A", "B", "C", "D", "E" });
+        _network.RecalculateRouteData(ref route);
+        
+        Assert.That(_network.CostFunction(route), Is.EqualTo(5*60));
     }
 
     [Test]

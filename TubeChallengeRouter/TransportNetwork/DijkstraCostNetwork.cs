@@ -203,7 +203,7 @@ public class DijkstraCostNetwork : Network
     // Remove a station from one position and insert it so that it ends up in another.
     // The final position will be one before the index of the element at insertBefore
     // i.e. the element that was at that index gets pushed back to insert the new one.
-    public override void TakeAndInsert(Route route, int takeFrom, int insertBefore)
+    public override void TakeAndInsert(ref Route route, int takeFrom, int insertBefore)
     {
         Logger.Verbose("Taking from {A} and inserting before {B}", takeFrom, insertBefore);
         Logger.Verbose("Route is {A}", route.ToString());
@@ -276,9 +276,9 @@ public class DijkstraCostNetwork : Network
             
             if (insertBefore > 1)
             {
-                Logger.Verbose("Adding cost from {A} to {B}, {C}", insertBefore-2, insertBefore-1);
+                Logger.Verbose("Adding cost from {A} to {B}, {C}", insertBefore-2, insertBefore-1, CostFunction(stations[insertBefore - 2], stations[insertBefore-1]));
                 updatedTime += TravelTime(stations[insertBefore - 2], stations[insertBefore-1]);
-                updatedCost += UpdatePathReturnCost(route, insertBefore);
+                updatedCost += UpdatePathReturnCost(route, insertBefore-1);
             }
             
             if (takeFrom > 0)

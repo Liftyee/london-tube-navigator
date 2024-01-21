@@ -289,7 +289,7 @@ public class Network
     // Remove a station from one position and insert it so that it ends up in another.
     // The final position will be one before the index of the element at insertBefore
     // i.e. the element that was at that index gets pushed back to insert the new one.
-    public virtual void TakeAndInsert(Route route, int takeFrom, int insertBefore)
+    public virtual void TakeAndInsert(ref Route route, int takeFrom, int insertBefore)
     {
         throw new NotSupportedException(
             "TakeAndInsert not supported by Simple Network (use DijkstraCostNetwork instead)");
