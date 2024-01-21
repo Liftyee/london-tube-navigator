@@ -14,8 +14,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriorityQueue.Tests", "Prio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportNetwork.Tests", "TransportNetwork.Tests\TransportNetwork.Tests.csproj", "{E18A32C4-4D4C-4024-AC60-27E6C66CCD06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TubeRouterGUI", "TubeRouterGUI\TubeRouterGUI.csproj", "{B6FFF7D7-D791-4104-B6EA-A0083242B472}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapSolverGUI", "MapSolverGUI\MapSolverGUI.csproj", "{671E1D04-0669-4E8D-9B3A-A74D14C02D03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RouteSolver.Tests", "RouteSolver.Tests\RouteSolver.Tests.csproj", "{1B9AC045-813C-4683-BEFB-F450B70994BF}"
@@ -54,10 +52,6 @@ Global
 		{E18A32C4-4D4C-4024-AC60-27E6C66CCD06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E18A32C4-4D4C-4024-AC60-27E6C66CCD06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E18A32C4-4D4C-4024-AC60-27E6C66CCD06}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6FFF7D7-D791-4104-B6EA-A0083242B472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6FFF7D7-D791-4104-B6EA-A0083242B472}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6FFF7D7-D791-4104-B6EA-A0083242B472}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6FFF7D7-D791-4104-B6EA-A0083242B472}.Release|Any CPU.Build.0 = Release|Any CPU
 		{671E1D04-0669-4E8D-9B3A-A74D14C02D03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{671E1D04-0669-4E8D-9B3A-A74D14C02D03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{671E1D04-0669-4E8D-9B3A-A74D14C02D03}.Release|Any CPU.ActiveCfg = Release|Any CPU
