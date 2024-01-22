@@ -17,6 +17,7 @@ public class AnnealingSolver : ISolver
     {
         this.logger = logger;
         randomSwapProbability = 1;
+        coolDownFactor = 0.999;
         maxIterations = 2000000;
     }
     

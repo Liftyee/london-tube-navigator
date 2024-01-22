@@ -8,6 +8,7 @@ using DataFetcher;
 using ReactiveUI;
 using RouteSolver;
 using Serilog;
+using SkiaSharp;
 using SkiaSharp.HarfBuzz;
 using TransportNetwork;
 
@@ -18,10 +19,11 @@ public class SolverControlViewModel : ReactiveObject
     private string? _startStationName;
     private double _solveProgress;
     private double _swapProb;
+    private double _tempFactor;
+    private int _maxIterations;
     private ISolver solver;
     public ICommand SolveCommand { get; }
     public ICommand TestControls { get; }
-    public ICommand SetSwapProbCmd { get; }
     public ObservableCollection<string> OutputLog { get; } = new ObservableCollection<string>();
     private static ILogger logger = new LoggerConfiguration()
         .MinimumLevel.Debug()
@@ -61,8 +63,34 @@ public class SolverControlViewModel : ReactiveObject
         }
         set
         {
-            this.SetSwapProb(value);
+            solver.SetRandomSwapProbability(value);
             this.RaiseAndSetIfChanged(ref _swapProb, value);
+        }
+    }
+    
+    public double TempFactor
+    {
+        get
+        {
+            return _tempFactor;
+        }
+        set
+        {
+            solver.SetCoolDownFactor(value);
+            this.RaiseAndSetIfChanged(ref _tempFactor, value);
+        }
+    }
+    
+    public int MaxIterations
+    {
+        get
+        {
+            return _maxIterations;
+        }
+        set
+        {
+            solver.SetMaxIterations(value);
+            this.RaiseAndSetIfChanged(ref _maxIterations, value);
         }
     }
 
@@ -71,10 +99,11 @@ public class SolverControlViewModel : ReactiveObject
         logger.Information("Hello World! Logging is {Description}.","online");
         solver = new AnnealingSolver(logger, SetProgress);
         SwapProb = solver.GetRandomSwapProbability();
+        TempFactor = solver.GetCoolDownFactor();
+        MaxIterations = solver.GetMaxIterations();
 
         SolveCommand = ReactiveCommand.CreateFromTask(SolveRouteAsync);
         TestControls = ReactiveCommand.CreateFromTask(TestOutputs);
-        SetSwapProbCmd = ReactiveCommand.Create<double>(prob => SetSwapProb(prob));
     }
 
     private void RunSolve()
@@ -132,11 +161,6 @@ public class SolverControlViewModel : ReactiveObject
     private void SetProgress(double progress)
     {
         SolveProgress = progress;
-    }
-
-    private void SetSwapProb(double prob)
-    {
-        solver.SetRandomSwapProbability(prob);
     }
     
     private static string GetCachePath()

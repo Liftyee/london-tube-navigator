@@ -32,6 +32,28 @@
                             Minimum="0"
                             Maximum="1"/>
                 </Grid>
+                <Grid ColumnDefinitions="*,*,2*">
+                    <TextBlock Grid.Column="0" 
+                               Text="Temperature decrease factor:"
+                               TextWrapping="Wrap"/>
+                    <TextBox Grid.Column="1" 
+                             Text="{Binding TempFactor}"/>
+                    <Slider Grid.Column="2" 
+                            Value="{Binding TempFactor}"
+                            Minimum="0"
+                            Maximum="1"/>
+                </Grid>
+                <Grid ColumnDefinitions="*,*,2*">
+                    <TextBlock Grid.Column="0" 
+                               Text="Max number of iterations:"
+                               TextWrapping="Wrap"/>
+                    <TextBox Grid.Column="1" 
+                             Text="{Binding MaxIterations}"/>
+                    <Slider Grid.Column="2" 
+                            Value="{Binding MaxIterations}"
+                            Minimum="0"
+                            Maximum="100000000"/>
+                </Grid>
                 <WrapPanel Orientation="Horizontal">
                     <Button Command="{Binding TestControls}"
                             Content="Test controls"/>
