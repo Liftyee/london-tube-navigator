@@ -142,7 +142,7 @@ public class SolverControlViewModel : ReactiveObject
 
     private async Task SolveRouteAsync()
     {
-        OutputLog.Add("Generating route...");
+        OutputLog.Add($"Generating route with {MaxIterations} iterations and temperature factor {TempFactor.ToString("0.###")}...");
         try
         {
             await Task.Run(() => RunSolve());
