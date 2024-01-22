@@ -17,6 +17,19 @@
     </Design.DataContext>
     
     <TabControl>
+        <TabItem Header="Solver Controls">
+            <StackPanel DataContext="{Binding SolverControlViewModel}" Spacing="10">
+                <TextBlock Text="Solver Controls"/>
+                <Button Command="{Binding SolveCommand}" 
+                        Content="Generate route"/>
+                <Button Command="{Binding TestControls}"
+                        Content="Test controls"/>
+                <ProgressBar Margin="0 10" Height="20" 
+                             Minimum="0" Maximum="100" Value="{Binding SolveProgress}"
+                             ShowProgressText="True"/>
+            </StackPanel>
+        </TabItem>
+                
         <TabItem Header="SVG Test">
             <StackPanel DataContext="{Binding SVGMapViewModel}" Spacing="10">
                 <TextBlock Text="Test SVG display"/>

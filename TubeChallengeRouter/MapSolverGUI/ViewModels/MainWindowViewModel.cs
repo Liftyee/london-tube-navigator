@@ -11,6 +11,7 @@ public class MainWindowViewModel : ViewModelBase
     public SimpleViewModel SimpleViewModel { get; } = new SimpleViewModel();
     public ReactiveViewModel ReactiveViewModel { get; } = new ReactiveViewModel();
     public SVGMapViewModel SVGMapViewModel { get; } = new();
+    public SolverControlViewModel SolverControlViewModel { get; } = new();
 }
 
 public class SimpleViewModel : INotifyPropertyChanged
