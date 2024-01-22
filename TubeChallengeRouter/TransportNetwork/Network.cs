@@ -239,7 +239,7 @@ public class Network
     }
     
     // TODO: use "ref"
-    public virtual void Swap(Route route, int idxA, int idxB)
+    public virtual void Swap(ref Route route, int idxA, int idxB)
     {
         List<string> stations = route.GetTargetPath();
         

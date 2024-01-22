@@ -147,12 +147,13 @@ public class DijkstraCostNetwork : Network
         throw new ArgumentException($"No route found between {startId} and {endId}");
     }
     
-    public override void Swap(Route route, int idxA, int idxB)
+    public override void Swap(ref Route route, int idxA, int idxB)
     {
         List<string> stations = route.GetTargetPath();
         
         TimeSpan updatedTime = route.Duration;
         int updatedCost = route.Cost;
+        int maxIdx = route.Count - 1;
         
         /* Instead of recalculating the travel time by summing all travel times between stations, we can just
            change the travel times to and from the stations that are being swapped. All other travel times should
@@ -166,7 +167,7 @@ public class DijkstraCostNetwork : Network
                 updatedCost -= CostFunction(stations[statIdx - 1], stations[statIdx]);
             }
             
-            if (statIdx < route.Count-1)
+            if (statIdx < maxIdx)
             {
                 updatedTime -= TravelTime(stations[statIdx], stations[statIdx + 1]);
                 updatedCost -= CostFunction(stations[statIdx], stations[statIdx + 1]);
