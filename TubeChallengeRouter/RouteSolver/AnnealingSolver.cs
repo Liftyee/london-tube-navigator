@@ -64,6 +64,8 @@ public class AnnealingSolver : ISolver
         }
         
         // TODO: clean up these constants
+        const bool allowNegativeContinue = true;
+        const bool recalculateEveryTime = true;
         const int tempStepIterations = 1000;
         const int maxIterations = 2000000;
         const double coolDownFactor = 0.99;
@@ -92,7 +94,7 @@ public class AnnealingSolver : ISolver
                         stationB = randomGenerator.Next(0, route.Count);
                     } while (stationA == stationB); // don't swap station with itself
                     
-                    net.Swap(route, stationA, stationB);
+                    net.Swap(ref route, stationA, stationB);
                     newCost = route.Cost;
                     
                     break;
@@ -138,6 +140,10 @@ public class AnnealingSolver : ISolver
                         throw new Exception();
                     }
 
+                    if (recalculateEveryTime)
+                    {
+                        net.RecalculateRouteData(ref route);
+                    }
                     newCost = route.Cost;
 
                     break;
@@ -149,22 +155,34 @@ public class AnnealingSolver : ISolver
 
             if (newCost < 0)
             {
-                logger.Fatal("Cost of new route (iteration {A}) is negative!", nIterations);
-                switch (operation)
+                if (allowNegativeContinue)
                 {
-                    case AnnealOpType.SwapRandom:
-                        logger.Fatal("while swapping stations {A} and {B}", stationA, stationB);
-                        break;
-                    case AnnealOpType.SwapIntermediate:
-                        logger.Fatal("while takeInserting station {A} and inserting before station {B}", swapFrom, swapTo);
-                        
-                        break;
-                    default:
-                        logger.Fatal("Unknown");
-                        break;
+                    logger.Warning("Cost of new route (iteration {A}) is negative!", nIterations);
+                    logger.Warning("Allowing post-negative continue, Let's pretend that never happened...");
+                    logger.Warning("Recalculating route data...");
+                    net.RecalculateRouteData(ref route);
                 }
-                logger.Fatal("Cost before: {A} after: {B}", oldCost, newCost);
-                stopFlag = true;
+                else
+                {
+                    logger.Fatal("Cost of new route (iteration {A}) is negative!", nIterations);
+                    switch (operation)
+                    {
+                        case AnnealOpType.SwapRandom:
+                            logger.Fatal("while swapping stations {A} and {B}", stationA, stationB);
+                            break;
+                        case AnnealOpType.SwapIntermediate:
+                            logger.Fatal("while takeInserting station {A} and inserting before station {B}", swapFrom,
+                                swapTo);
+
+                            break;
+                        default:
+                            logger.Fatal("Unknown");
+                            break;
+                    }
+
+                    logger.Fatal("Cost before: {A} after: {B}", oldCost, newCost);
+                    stopFlag = true;
+                }
             }
 
             if (AcceptSolution(oldCost, newCost, Temperature, randomGenerator) && !stopFlag)
@@ -178,7 +196,7 @@ public class AnnealingSolver : ISolver
                 switch (operation)
                 {
                     case AnnealOpType.SwapRandom:
-                        net.Swap(route, stationA, stationB);
+                        net.Swap(ref route, stationA, stationB);
                         break;
                     case AnnealOpType.SwapIntermediate:
                         if (swapFrom < swapTo)
