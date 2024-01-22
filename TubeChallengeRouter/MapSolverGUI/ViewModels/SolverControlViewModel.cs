@@ -113,6 +113,7 @@ public class SolverControlViewModel : ReactiveObject
 
     private async Task SolveRouteAsync()
     {
+        OutputLog.Add("Generating route...");
         try
         {
             await Task.Run(() => RunSolve());
