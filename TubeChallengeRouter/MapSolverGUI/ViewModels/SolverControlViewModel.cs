@@ -95,7 +95,14 @@ public class SolverControlViewModel : ReactiveObject
 
     private async Task SolveRouteAsync()
     {
-        await Task.Run(() => RunSolve());
+        try
+        {
+            await Task.Run(() => RunSolve());
+        }
+        catch (Exception e)
+        {
+            OutputLog.Add($"Error while solving: {e.Message}");
+        }
     }
 
     private void ShowSolverResult(Route result)

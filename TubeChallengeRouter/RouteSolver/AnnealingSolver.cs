@@ -29,7 +29,7 @@ public class AnnealingSolver : ISolver
 
     private AnnealOpType pickRandomOperation(Random generator)
     {
-        const double randomSwapProbability = 1;
+        const double randomSwapProbability = 0.8;
         if (generator.NextDouble() < randomSwapProbability)
         {
             return AnnealOpType.SwapRandom;
@@ -119,12 +119,12 @@ public class AnnealingSolver : ISolver
 
                     if (swapFrom == swapTo)
                     {
-                        logger.Warning("Swapping at same position... put a breakpoint here");
+                        logger.Warning("Swapping at same position... put a breakpoint here (iteration {A})", nIterations);
                     }
 
                     if (swapFrom == swapTo - 1)
                     {
-                        logger.Warning("Swap will have no effect, station is already in right position");
+                        logger.Warning("Swap will have no effect, station is already in right position (iteration {A})", nIterations);
                     }
                     
                     try
@@ -149,6 +149,19 @@ public class AnnealingSolver : ISolver
             if (newCost < 0)
             {
                 logger.Fatal("Cost of new route (iteration {A}) is negative!", nIterations);
+                switch (operation)
+                {
+                    case AnnealOpType.SwapRandom:
+                        logger.Fatal("while swapping stations {A} and {B}", stationA, stationB);
+                        break;
+                    case AnnealOpType.SwapIntermediate:
+                        logger.Fatal("while takeInserting station {A} and inserting before station {B}", swapFrom, swapTo);
+                        break;
+                    default:
+                        logger.Fatal("Unknown");
+                        break;
+                }
+                logger.Fatal("Cost before: {A} after: {B}", oldCost, newCost);
                 throw new Exception("Cost is negative!");
             }
 
