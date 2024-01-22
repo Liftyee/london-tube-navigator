@@ -17,8 +17,8 @@ public class AnnealingSolver : ISolver
     {
         this.logger = logger;
         randomSwapProbability = 1;
-        coolDownFactor = 0.999;
-        maxIterations = 2000000;
+        coolDownFactor = 0.99;
+        maxIterations = 5000000;
     }
     
     public AnnealingSolver(ILogger logger, Action<double> progressCallback) : this(logger)

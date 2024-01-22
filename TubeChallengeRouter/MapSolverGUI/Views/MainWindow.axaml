@@ -9,8 +9,8 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="MapSolverGUI"
-        Width="512"
-        Height="512">
+        Width="1024"
+        Height="768">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -40,7 +40,7 @@
                              Text="{Binding TempFactor}"/>
                     <Slider Grid.Column="2" 
                             Value="{Binding TempFactor}"
-                            Minimum="0"
+                            Minimum="0.9"
                             Maximum="1"/>
                 </Grid>
                 <Grid ColumnDefinitions="*,*,2*">
