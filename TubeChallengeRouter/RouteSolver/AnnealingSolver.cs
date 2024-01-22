@@ -8,7 +8,7 @@ public class AnnealingSolver : ISolver
 {
     private ILogger logger;
     private Action<double> progressCallback = (double progress) => { };
-    public double randomSwapProbability { get; private set; }
+    private double randomSwapProbability;
     
     public AnnealingSolver(ILogger logger)
     {
@@ -267,5 +267,10 @@ public class AnnealingSolver : ISolver
             throw new ArgumentOutOfRangeException(nameof(probability),"Probability must be between 0 and 1");
         }
         randomSwapProbability = probability;
+    }
+    
+    public double GetRandomSwapProbability()
+    {
+        return randomSwapProbability;
     }
 }

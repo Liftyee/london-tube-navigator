@@ -70,6 +70,7 @@ public class SolverControlViewModel : ReactiveObject
     {
         logger.Information("Hello World! Logging is {Description}.","online");
         solver = new AnnealingSolver(logger, SetProgress);
+        SwapProb = solver.GetRandomSwapProbability();
 
         SolveCommand = ReactiveCommand.CreateFromTask(SolveRouteAsync);
         TestControls = ReactiveCommand.CreateFromTask(TestOutputs);
