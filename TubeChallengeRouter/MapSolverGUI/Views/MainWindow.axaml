@@ -21,7 +21,6 @@
     <TabControl>
         <TabItem Header="Solver Controls">
             <StackPanel DataContext="{Binding SolverControlViewModel}" Spacing="10">
-                <TextBlock Text="Solver Controls"/>
                 <Grid ColumnDefinitions="*,*,2*">
                     <TextBlock Grid.Column="0" 
                                Text="Random swap probability:"
