@@ -211,9 +211,10 @@ public class AnnealingSolver : ISolver
 
             if (nIterations % (maxIterations / 1000) == 0)
             {
-                progressCallback(nIterations / (double)maxIterations);
+                progressCallback((nIterations / (double)maxIterations)*100);
             }
         }
+        progressCallback(100); // always finish at 100% no matter when we finished
         logger.Information("Final route: {A} (found in {B} ms, {C} ms per iteration)",route.ToString(), perfTimer.ElapsedMilliseconds, (perfTimer.ElapsedMilliseconds/(double)nIterations).ToString("0.####"));
         return route;
     }
