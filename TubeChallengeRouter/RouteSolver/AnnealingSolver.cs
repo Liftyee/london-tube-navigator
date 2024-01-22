@@ -8,15 +8,16 @@ public class AnnealingSolver : ISolver
 {
     private ILogger logger;
     private Action<double> progressCallback = (double progress) => { };
+    public double randomSwapProbability { get; private set; }
     
     public AnnealingSolver(ILogger logger)
     {
         this.logger = logger;
+        randomSwapProbability = 1;
     }
     
-    public AnnealingSolver(ILogger logger, Action<double> progressCallback)
+    public AnnealingSolver(ILogger logger, Action<double> progressCallback) : this(logger)
     {
-        this.logger = logger;
         this.progressCallback = progressCallback;
     }
 
@@ -29,7 +30,6 @@ public class AnnealingSolver : ISolver
 
     private AnnealOpType pickRandomOperation(Random generator)
     {
-        const double randomSwapProbability = 0.8;
         if (generator.NextDouble() < randomSwapProbability)
         {
             return AnnealOpType.SwapRandom;
@@ -258,5 +258,14 @@ public class AnnealingSolver : ISolver
         progressCallback(100); // always finish at 100% no matter when we finished
         logger.Information("Final route: {A} (found in {B} ms, {C} ms per iteration)",route.ToString(), perfTimer.ElapsedMilliseconds, (perfTimer.ElapsedMilliseconds/(double)nIterations).ToString("0.####"));
         return route;
+    }
+    
+    public void SetRandomSwapProbability(double probability)
+    {
+        if (probability < 0 || probability > 1)
+        {
+            throw new ArgumentOutOfRangeException(nameof(probability),"Probability must be between 0 and 1");
+        }
+        randomSwapProbability = probability;
     }
 }

@@ -17,8 +17,11 @@ public class SolverControlViewModel : ReactiveObject
 {
     private string? _startStationName;
     private double _solveProgress;
+    private double _swapProb;
+    private ISolver solver;
     public ICommand SolveCommand { get; }
     public ICommand TestControls { get; }
+    public ICommand SetSwapProbCmd { get; }
     public ObservableCollection<string> OutputLog { get; } = new ObservableCollection<string>();
     private static ILogger logger = new LoggerConfiguration()
         .MinimumLevel.Debug()
@@ -49,13 +52,28 @@ public class SolverControlViewModel : ReactiveObject
             this.RaiseAndSetIfChanged(ref _startStationName, value);
         }
     }
+    
+    public double SwapProb
+    {
+        get
+        {
+            return _swapProb;
+        }
+        set
+        {
+            this.SetSwapProb(value);
+            this.RaiseAndSetIfChanged(ref _swapProb, value);
+        }
+    }
 
     public SolverControlViewModel()
     {
         logger.Information("Hello World! Logging is {Description}.","online");
+        solver = new AnnealingSolver(logger, SetProgress);
 
         SolveCommand = ReactiveCommand.CreateFromTask(SolveRouteAsync);
         TestControls = ReactiveCommand.CreateFromTask(TestOutputs);
+        SetSwapProbCmd = ReactiveCommand.Create<double>(prob => SetSwapProb(prob));
     }
 
     private void RunSolve()
@@ -64,8 +82,7 @@ public class SolverControlViewModel : ReactiveObject
         Network tube = tubeFactory.Generate(NetworkType.Dijkstra, logger);
         logger.Information("Result: {A}",tube.ToString());
         //logger.Debug(tube.EnumerateStations());
-
-        ISolver solver = new AnnealingSolver(logger, SetProgress);
+        
         Route route = solver.Solve(tube);
         logger.Debug("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
 
@@ -113,6 +130,11 @@ public class SolverControlViewModel : ReactiveObject
     private void SetProgress(double progress)
     {
         SolveProgress = progress;
+    }
+
+    private void SetSwapProb(double prob)
+    {
+        solver.SetRandomSwapProbability(prob);
     }
     
     private static string GetCachePath()
