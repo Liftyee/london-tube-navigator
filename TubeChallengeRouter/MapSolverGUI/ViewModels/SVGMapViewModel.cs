@@ -41,12 +41,14 @@ public class SVGMapViewModel : ReactiveObject
     
     public SVGMapViewModel()
     {
+        // set current working dir to assets
+        // System.IO.Directory.SetCurrentDirectory("/home/yee/RiderProjects/tube-challenge-router/MapSolverGUI/Assets");
         this.WhenAnyValue(o => o.StationName);
         TestCommand = ReactiveCommand.Create(OpenThePodBayDoors);
 
         SvgMap = new SKSvg();
         //svgMap.Load("/home/yee/tubemapgrouped.svg");
-        SvgMap.Load("SVG_Logo.svg");
+        SvgMap.Load("/home/yee/RiderProjects/tube-challenge-router/TubeChallengeRouter/MapSolverGUI/Assets/svglogo.svg");
         //UpdateSVG();
     }
 
@@ -77,9 +79,10 @@ public class SVGMapViewModel : ReactiveObject
     public void UpdateSVG()
     {
         Stopwatch sw = new();
-        string svgtext = System.IO.File.ReadAllText("/home/yee/tubemapgrouped.svg");
+        string svgtext = System.IO.File.ReadAllText("/home/yee/RiderProjects/tube-challenge-router/TubeChallengeRouter/MapSolverGUI/Assets/groupedmap.svg");
         sw.Start();
         SvgMap.FromSvg(svgtext);
+        this.RaisePropertyChanged(nameof(SvgMap));
         Console.WriteLine($"SVG loaded in {sw.ElapsedMilliseconds} ms");
     }
     
