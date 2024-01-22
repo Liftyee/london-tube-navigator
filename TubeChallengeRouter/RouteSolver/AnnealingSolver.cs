@@ -239,6 +239,12 @@ public class AnnealingSolver : ISolver
                 
                 logger.Debug("Cooled down to {A}",Temperature);
                 logger.Debug("Current route: {A} (processing for {B} ms)",route.ToString(), perfTimer.ElapsedMilliseconds);
+                int calcCost = net.CostFunction(route);
+                if (calcCost != route.Cost)
+                {
+                    logger.Fatal("Cost mismatch! Calculated cost {A} but route cost is {B}",calcCost,route.Cost);
+                    throw new Exception("Cost mismatch!");
+                }
             }
             
             // if we haven't changed anything for a while then we're probably done
