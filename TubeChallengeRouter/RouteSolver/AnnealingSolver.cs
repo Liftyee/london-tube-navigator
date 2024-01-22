@@ -121,7 +121,7 @@ public class AnnealingSolver : ISolver
                     
                     try
                     {
-                        net.TakeAndInsert(route, swapFrom, swapTo);
+                        net.TakeAndInsert(ref route, swapFrom, swapTo);
                     }
                     catch (InvalidOperationException e)
                     {
@@ -160,17 +160,17 @@ public class AnnealingSolver : ISolver
                     case AnnealOpType.SwapIntermediate:
                         if (swapFrom < swapTo)
                         {
-                            net.TakeAndInsert(route, swapTo-1, swapFrom);
+                            net.TakeAndInsert(ref route, swapTo-1, swapFrom);
                         }
                         else
                         {
                             if (swapFrom < route.Count - 1)
                             {
-                                net.TakeAndInsert(route, swapTo, swapFrom + 1);
+                                net.TakeAndInsert(ref route, swapTo, swapFrom + 1);
                             }
                             else
                             {
-                                net.TakeAndInsert(route, swapTo, swapFrom);
+                                net.TakeAndInsert(ref route, swapTo, swapFrom);
                             }
                         }
 
