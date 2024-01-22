@@ -125,12 +125,12 @@ public class AnnealingSolver : ISolver
 
                     if (swapFrom == swapTo)
                     {
-                        logger.Warning("Swapping at same position... put a breakpoint here (iteration {A})", nIterations);
+                        logger.Verbose("Swapping at same position... put a breakpoint here (iteration {A})", nIterations);
                     }
 
                     if (swapFrom == swapTo - 1)
                     {
-                        logger.Warning("Swap will have no effect, station is already in right position (iteration {A})", nIterations);
+                        logger.Verbose("Swap will have no effect, station is already in right position (iteration {A})", nIterations);
                     }
                     
                     try
