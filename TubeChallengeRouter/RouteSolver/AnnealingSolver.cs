@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Numerics;
 using TransportNetwork;
 using Serilog;
 
@@ -9,11 +10,14 @@ public class AnnealingSolver : ISolver
     private ILogger logger;
     private Action<double> progressCallback = (double progress) => { };
     private double randomSwapProbability;
+    private int maxIterations;
+    private double coolDownFactor;
     
     public AnnealingSolver(ILogger logger)
     {
         this.logger = logger;
         randomSwapProbability = 1;
+        maxIterations = 2000000;
     }
     
     public AnnealingSolver(ILogger logger, Action<double> progressCallback) : this(logger)
@@ -66,9 +70,7 @@ public class AnnealingSolver : ISolver
         // TODO: clean up these constants
         const bool allowNegativeContinue = true;
         const bool recalculateEveryTime = true;
-        const int tempStepIterations = 1000;
-        const int maxIterations = 2000000;
-        const double coolDownFactor = 0.99;
+        int tempStepIterations = maxIterations/1000;
         const int noChangeThreshold = 10000;
         double Temperature = 1000;
         int stationA=0, stationB=0, oldCost, newCost, interSegmentIdx, interStationIdx;
@@ -272,5 +274,29 @@ public class AnnealingSolver : ISolver
     public double GetRandomSwapProbability()
     {
         return randomSwapProbability;
+    }
+
+    public void SetMaxIterations(int max)
+    {
+        maxIterations = max;
+    }
+
+    public int GetMaxIterations()
+    {
+        return maxIterations;
+    }
+    
+    public void SetCoolDownFactor(double factor)
+    {
+        if (factor < 0 || factor > 1)
+        {
+            throw new ArgumentOutOfRangeException(nameof(factor),"Cool down factor must be between 0 and 1");
+        }
+        coolDownFactor = factor;
+    }
+    
+    public double GetCoolDownFactor()
+    {
+        return coolDownFactor;
     }
 }
