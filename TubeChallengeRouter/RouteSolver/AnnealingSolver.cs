@@ -42,6 +42,7 @@ public class AnnealingSolver : ISolver
 
     public Route Solve(Network net)
     {
+        progressCallback(0); // reset progress bar
         logger.Information("Annealing route for {A}...", net.ToString());
         // performance tracking metrics
         Stopwatch perfTimer = Stopwatch.StartNew();
