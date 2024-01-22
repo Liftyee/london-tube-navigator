@@ -58,7 +58,7 @@ public class SolverControlViewModel : ReactiveObject
         TestControls = ReactiveCommand.CreateFromTask(TestOutputs);
     }
 
-    private Action RunSolve()
+    private void RunSolve()
     {
         NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger, GetCachePath()));
         Network tube = tubeFactory.Generate(NetworkType.Dijkstra, logger);
@@ -80,7 +80,6 @@ public class SolverControlViewModel : ReactiveObject
             logger.Information("Result written to {A}", outputpath);
         }
         ShowSolverResult(route);
-        return () => { };
     }
 
     private async Task TestOutputs()
@@ -89,15 +88,14 @@ public class SolverControlViewModel : ReactiveObject
         for (int i = 0; i <= 100; i++)
         {
             SolveProgress = i;
-            await Task.Delay(100); // ms
+            await Task.Delay(50); // ms
         }
         OutputLog.Add("Done!");
     }
 
     private async Task SolveRouteAsync()
     {
-        Route result;
-        await Task.Run(RunSolve());
+        await Task.Run(() => RunSolve());
     }
 
     private void ShowSolverResult(Route result)
