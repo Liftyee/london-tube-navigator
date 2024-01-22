@@ -73,6 +73,7 @@ public class AnnealingSolver : ISolver
         int swapFrom=0, swapTo=0;
         int loopsSinceLastAccept = 0;
         Random randomGenerator = new Random();
+        bool stopFlag = false;
         
         for (int i = 1; i < maxIterations; i++)
         {
@@ -156,16 +157,17 @@ public class AnnealingSolver : ISolver
                         break;
                     case AnnealOpType.SwapIntermediate:
                         logger.Fatal("while takeInserting station {A} and inserting before station {B}", swapFrom, swapTo);
+                        
                         break;
                     default:
                         logger.Fatal("Unknown");
                         break;
                 }
                 logger.Fatal("Cost before: {A} after: {B}", oldCost, newCost);
-                throw new Exception("Cost is negative!");
+                stopFlag = true;
             }
 
-            if (AcceptSolution(oldCost, newCost, Temperature, randomGenerator))
+            if (AcceptSolution(oldCost, newCost, Temperature, randomGenerator) && !stopFlag)
             {
                 // accept the change (duration and cost have already been updated by the operation)
                 loopsSinceLastAccept = 0;
@@ -198,6 +200,13 @@ public class AnnealingSolver : ISolver
                         break;
                     default:
                         throw new InvalidOperationException("Invalid annealing operation type");
+                }
+
+                if (stopFlag)
+                {
+                    logger.Fatal("Route: {A}", string.Join(";", route.TargetStations));
+                    logger.Fatal("{A}", route.ToString());
+                    throw new Exception("Cost is negative!");
                 }
                 loopsSinceLastAccept++;
             }

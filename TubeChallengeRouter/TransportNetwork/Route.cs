@@ -41,7 +41,7 @@ public class Route
         }
         else // don't return all the stations if there are too many
         {
-            return $"Route with {TargetStations.Count} stations and length {_duration.TotalMinutes} minutes"; 
+            return $"Route with {TargetStations.Count} stations and length {_duration.TotalMinutes} minutes (cost {_cost})"; 
         }
     }
 
