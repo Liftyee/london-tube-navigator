@@ -27,6 +27,8 @@
                 <ProgressBar Margin="0 10" Height="20" 
                              Minimum="0" Maximum="100" Value="{Binding SolveProgress}"
                              ShowProgressText="True"/>
+                <ItemsControl Margin="5"
+                              ItemsSource="{Binding OutputLog}"/>
             </StackPanel>
         </TabItem>
                 

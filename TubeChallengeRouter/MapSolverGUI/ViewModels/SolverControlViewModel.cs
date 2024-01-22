@@ -51,10 +51,12 @@ public class SolverControlViewModel : ReactiveObject
 
     private async Task TestOutputs()
     {
+        OutputLog.Add("Testing...");
         for (int i = 0; i <= 100; i++)
         {
             SolveProgress = i;
             await Task.Delay(10); // ms
         }
+        OutputLog.Add("Done!");
     }
 }
