@@ -7,10 +7,17 @@ namespace RouteSolver;
 public class AnnealingSolver : ISolver
 {
     private ILogger logger;
+    private Action<double> progressCallback = (double progress) => { };
     
     public AnnealingSolver(ILogger logger)
     {
         this.logger = logger;
+    }
+    
+    public AnnealingSolver(ILogger logger, Action<double> progressCallback)
+    {
+        this.logger = logger;
+        this.progressCallback = progressCallback;
     }
 
     private enum AnnealOpType
@@ -200,6 +207,11 @@ public class AnnealingSolver : ISolver
             if (nIterations % (maxIterations / 10) == 0)
             {
                 logger.Information("{A} percent complete", nIterations*100 / (maxIterations));
+            }
+
+            if (nIterations % (maxIterations / 1000) == 0)
+            {
+                progressCallback(nIterations / (double)maxIterations);
             }
         }
         logger.Information("Final route: {A} (found in {B} ms, {C} ms per iteration)",route.ToString(), perfTimer.ElapsedMilliseconds, (perfTimer.ElapsedMilliseconds/(double)nIterations).ToString("0.####"));

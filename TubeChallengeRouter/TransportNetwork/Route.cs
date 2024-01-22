@@ -80,4 +80,15 @@ public class Route
     {
         return new Route(this.TargetStations, this.Duration, this.Cost, this.IntermediateStations);
     }
+    
+    public int InterStationCount()
+    {
+        int count = 0;
+        foreach (var segment in IntermediateStations)
+        {
+            count += segment.Count;
+        }
+
+        return count;
+    }
 }
