@@ -37,7 +37,7 @@
                         <Button Grid.Column="1" 
                                 VerticalContentAlignment="Top"
                                 VerticalAlignment="Top"
-                                Background="Pink"
+                                Background="Transparent"
                                 Command="{Binding OutputLog.Clear}"
                                 Content="Clear ❌"/>
                     </Grid>

@@ -41,14 +41,20 @@ public class SVGMapViewModel : ReactiveObject
     
     public SVGMapViewModel()
     {
-        // set current working dir to assets
-        // System.IO.Directory.SetCurrentDirectory("/home/yee/RiderProjects/tube-challenge-router/MapSolverGUI/Assets");
+        // find the assets directory and switch to it
+        System.IO.Directory.GetCurrentDirectory();
+        while (!System.IO.Directory.GetCurrentDirectory().EndsWith("MapSolverGUI"))
+        {
+            System.IO.Directory.SetCurrentDirectory(System.IO.Directory.GetParent(System.IO.Directory.GetCurrentDirectory())!.FullName);
+        }
+        System.IO.Directory.SetCurrentDirectory(System.IO.Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Assets"));
+        
         this.WhenAnyValue(o => o.StationName);
         TestCommand = ReactiveCommand.Create(OpenThePodBayDoors);
 
         SvgMap = new SKSvg();
         //svgMap.Load("/home/yee/tubemapgrouped.svg");
-        SvgMap.Load("/home/yee/RiderProjects/tube-challenge-router/TubeChallengeRouter/MapSolverGUI/Assets/svglogo.svg");
+        SvgMap.Load("svglogo.svg");
         //UpdateSVG();
     }
 
@@ -79,7 +85,7 @@ public class SVGMapViewModel : ReactiveObject
     public void UpdateSVG()
     {
         Stopwatch sw = new();
-        string svgtext = System.IO.File.ReadAllText("/home/yee/RiderProjects/tube-challenge-router/TubeChallengeRouter/MapSolverGUI/Assets/groupedmap.svg");
+        string svgtext = System.IO.File.ReadAllText("groupedmap.svg");
         sw.Start();
         SvgMap.FromSvg(svgtext);
         this.RaisePropertyChanged(nameof(SvgMap));
