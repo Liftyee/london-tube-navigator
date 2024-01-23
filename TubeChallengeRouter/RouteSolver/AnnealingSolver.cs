@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Numerics;
 using TransportNetwork;
 using Serilog;
 
@@ -7,35 +6,35 @@ namespace RouteSolver;
 
 public class AnnealingSolver : ISolver
 {
-    private ILogger logger;
-    private Action<double> progressCallback = (double progress) => { };
-    private double randomSwapProbability;
-    private int maxIterations;
-    private double coolDownFactor;
+    protected readonly ILogger Logger;
+    protected readonly Action<double> ProgressCallback = (_) => { };
+    private double _randomSwapProbability;
+    protected int MaxIterations;
+    protected double CoolDownFactor;
     
     public AnnealingSolver(ILogger logger)
     {
-        this.logger = logger;
-        randomSwapProbability = 1;
-        coolDownFactor = 0.99;
-        maxIterations = 5000000;
+        this.Logger = logger;
+        _randomSwapProbability = 1;
+        CoolDownFactor = 0.99;
+        MaxIterations = 5000000;
     }
     
     public AnnealingSolver(ILogger logger, Action<double> progressCallback) : this(logger)
     {
-        this.progressCallback = progressCallback;
+        this.ProgressCallback = progressCallback;
     }
 
-    private enum AnnealOpType
+    protected enum AnnealOpType
     {
         SwapRandom,
         SwapIntermediate,
         Transpose
     }
 
-    private AnnealOpType pickRandomOperation(Random generator)
+    protected AnnealOpType PickRandomOperation(Random generator)
     {
-        if (generator.NextDouble() < randomSwapProbability)
+        if (generator.NextDouble() < _randomSwapProbability)
         {
             return AnnealOpType.SwapRandom;
         }
@@ -45,17 +44,17 @@ public class AnnealingSolver : ISolver
         }
     }
 
-    public Route Solve(Network net)
+    public virtual Route Solve(Network net)
     {
-        progressCallback(0); // reset progress bar
-        logger.Information("Annealing route for {A}...", net.ToString());
+        ProgressCallback(0); // reset progress bar
+        Logger.Information("Annealing route for {A}...", net.ToString());
         // performance tracking metrics
         Stopwatch perfTimer = Stopwatch.StartNew();
         int nIterations = 0;
         
         // generate a random route
         Route route = net.GenerateRandomRoute();
-        logger.Debug("Random route: {A}",route.ToString());
+        Logger.Debug("Random route: {A}",route.ToString());
 
         // this function lets me deduplicate the logic later
         static bool AcceptSolution(int oldCost, int newCost, double temperature, Random generator)
@@ -71,20 +70,20 @@ public class AnnealingSolver : ISolver
         // TODO: clean up these constants
         const bool allowNegativeContinue = true;
         const bool recalculateEveryTime = true;
-        int tempStepIterations = maxIterations/1000;
+        int tempStepIterations = MaxIterations/1000;
         const int noChangeThreshold = 10000;
-        double Temperature = 1000;
+        double temperature = 1000;
         int stationA=0, stationB=0, oldCost, newCost, interSegmentIdx, interStationIdx;
         int swapFrom=0, swapTo=0;
         int loopsSinceLastAccept = 0;
         Random randomGenerator = new Random();
         bool stopFlag = false;
         
-        for (int i = 1; i < maxIterations; i++)
+        for (int i = 1; i < MaxIterations; i++)
         {
             nIterations++;
             // pick a random pair of stations to swap
-            AnnealOpType operation = pickRandomOperation(randomGenerator);
+            AnnealOpType operation = PickRandomOperation(randomGenerator);
 
             oldCost = route.Cost;  // int is a value type so we don't have to worry about copy doing referencing things
 
@@ -125,12 +124,12 @@ public class AnnealingSolver : ISolver
 
                     if (swapFrom == swapTo)
                     {
-                        logger.Verbose("Swapping at same position... put a breakpoint here (iteration {A})", nIterations);
+                        Logger.Verbose("Swapping at same position... put a breakpoint here (iteration {A})", nIterations);
                     }
 
                     if (swapFrom == swapTo - 1)
                     {
-                        logger.Verbose("Swap will have no effect, station is already in right position (iteration {A})", nIterations);
+                        Logger.Verbose("Swap will have no effect, station is already in right position (iteration {A})", nIterations);
                     }
                     
                     try
@@ -139,7 +138,7 @@ public class AnnealingSolver : ISolver
                     }
                     catch (InvalidOperationException e)
                     {
-                        logger.Fatal("Tried to reinsert at the same position {A} (iteration number {B}). Exception {C}", swapFrom, nIterations, e);
+                        Logger.Fatal("Tried to reinsert at the same position {A} (iteration number {B}). Exception {C}", swapFrom, nIterations, e);
                         throw new Exception();
                     }
 
@@ -160,35 +159,14 @@ public class AnnealingSolver : ISolver
             {
                 if (allowNegativeContinue)
                 {
-                    logger.Warning("Cost of new route (iteration {A}) is negative!", nIterations);
-                    logger.Warning("Allowing post-negative continue, Let's pretend that never happened...");
-                    logger.Warning("Recalculating route data...");
+                    Logger.Warning("Cost of new route (iteration {A}) is negative!", nIterations);
+                    Logger.Warning("Allowing post-negative continue, Let's pretend that never happened...");
+                    Logger.Warning("Recalculating route data...");
                     net.RecalculateRouteData(ref route);
-                }
-                else
-                {
-                    logger.Fatal("Cost of new route (iteration {A}) is negative!", nIterations);
-                    switch (operation)
-                    {
-                        case AnnealOpType.SwapRandom:
-                            logger.Fatal("while swapping stations {A} and {B}", stationA, stationB);
-                            break;
-                        case AnnealOpType.SwapIntermediate:
-                            logger.Fatal("while takeInserting station {A} and inserting before station {B}", swapFrom,
-                                swapTo);
-
-                            break;
-                        default:
-                            logger.Fatal("Unknown");
-                            break;
-                    }
-
-                    logger.Fatal("Cost before: {A} after: {B}", oldCost, newCost);
-                    stopFlag = true;
                 }
             }
 
-            if (AcceptSolution(oldCost, newCost, Temperature, randomGenerator) && !stopFlag)
+            if (AcceptSolution(oldCost, newCost, temperature, randomGenerator) && !stopFlag)
             {
                 // accept the change (duration and cost have already been updated by the operation)
                 loopsSinceLastAccept = 0;
@@ -225,8 +203,8 @@ public class AnnealingSolver : ISolver
 
                 if (stopFlag)
                 {
-                    logger.Fatal("Route: {A}", string.Join(";", route.TargetStations));
-                    logger.Fatal("{A}", route.ToString());
+                    Logger.Fatal("Route: {A}", string.Join(";", route.TargetStations));
+                    Logger.Fatal("{A}", route.ToString());
                     throw new Exception("Cost is negative!");
                 }
                 loopsSinceLastAccept++;
@@ -235,14 +213,14 @@ public class AnnealingSolver : ISolver
             // cool down every tempStepIterations cycles to avoid cooling too fast
             if (i % tempStepIterations == 0)
             {
-                Temperature *= coolDownFactor;
+                temperature *= CoolDownFactor;
                 
-                logger.Debug("Cooled down to {A}",Temperature);
-                logger.Debug("Current route: {A} (processing for {B} ms)",route.ToString(), perfTimer.ElapsedMilliseconds);
+                Logger.Debug("Cooled down to {A}",temperature);
+                Logger.Debug("Current route: {A} (processing for {B} ms)",route.ToString(), perfTimer.ElapsedMilliseconds);
                 int calcCost = net.CostFunction(route);
                 if (calcCost != route.Cost)
                 {
-                    logger.Fatal("Cost mismatch! Calculated cost {A} but route cost is {B}",calcCost,route.Cost);
+                    Logger.Fatal("Cost mismatch! Calculated cost {A} but route cost is {B}",calcCost,route.Cost);
                     throw new Exception("Cost mismatch!");
                 }
             }
@@ -250,22 +228,22 @@ public class AnnealingSolver : ISolver
             // if we haven't changed anything for a while then we're probably done
             if (loopsSinceLastAccept >= noChangeThreshold)
             {
-                logger.Debug("No change for {A} iterations, stopping annealing",loopsSinceLastAccept);
+                Logger.Debug("No change for {A} iterations, stopping annealing",loopsSinceLastAccept);
                 break;
             }
 
-            if (nIterations % (maxIterations / 10) == 0)
+            if (nIterations % (MaxIterations / 10) == 0)
             {
-                logger.Information("{A} percent complete", nIterations*100 / (maxIterations));
+                Logger.Information("{A} percent complete", nIterations*100 / (MaxIterations));
             }
 
-            if (nIterations % (maxIterations / 1000) == 0)
+            if (nIterations % (MaxIterations / 1000) == 0)
             {
-                progressCallback((nIterations / (double)maxIterations)*100);
+                ProgressCallback((nIterations / (double)MaxIterations)*100);
             }
         }
-        progressCallback(100); // always finish at 100% no matter when we finished
-        logger.Information("Final route: {A} (found in {B} ms, {C} ms per iteration)",route.ToString(), perfTimer.ElapsedMilliseconds, (perfTimer.ElapsedMilliseconds/(double)nIterations).ToString("0.####"));
+        ProgressCallback(100); // always finish at 100% no matter when we finished
+        Logger.Information("Final route: {A} (found in {B} ms, {C} ms per iteration)",route.ToString(), perfTimer.ElapsedMilliseconds, (perfTimer.ElapsedMilliseconds/(double)nIterations).ToString("0.####"));
         return route;
     }
     
@@ -275,22 +253,22 @@ public class AnnealingSolver : ISolver
         {
             throw new ArgumentOutOfRangeException(nameof(probability),"Probability must be between 0 and 1");
         }
-        randomSwapProbability = probability;
+        _randomSwapProbability = probability;
     }
     
     public double GetRandomSwapProbability()
     {
-        return randomSwapProbability;
+        return _randomSwapProbability;
     }
 
     public void SetMaxIterations(int max)
     {
-        maxIterations = max;
+        MaxIterations = max;
     }
 
     public int GetMaxIterations()
     {
-        return maxIterations;
+        return MaxIterations;
     }
     
     public void SetCoolDownFactor(double factor)
@@ -299,11 +277,28 @@ public class AnnealingSolver : ISolver
         {
             throw new ArgumentOutOfRangeException(nameof(factor),"Cool down factor must be between 0 and 1");
         }
-        coolDownFactor = factor;
+        CoolDownFactor = factor;
     }
     
     public double GetCoolDownFactor()
     {
-        return coolDownFactor;
+        return CoolDownFactor;
     }
+    
+    protected class NegativeCostException : ApplicationException
+    {
+        public NegativeCostException(int cost) : base($"Cost of route is negative ({cost})")
+        {
+            
+        }
+    }
+
+    protected class CostMismatchException : ApplicationException
+    {
+        public CostMismatchException(int calculatedCost, int routeCost) : base($"Calculated cost ({calculatedCost}) does not match route cost ({routeCost})")
+        {
+            
+        }
+    }
+
 }
