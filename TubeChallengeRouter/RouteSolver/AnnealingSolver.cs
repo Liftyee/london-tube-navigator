@@ -184,7 +184,7 @@ public class AnnealingSolver : ISolver
 
             if (nIterations % (MaxIterations / 10) == 0)
             {
-                Logger.Information("{A} percent complete", nIterations*100 / (MaxIterations));
+                Logger.Information("{A} percent complete", Math.Ceiling(nIterations*100.0 / MaxIterations));
             }
 
             if (nIterations % (MaxIterations / 1000) == 0)
