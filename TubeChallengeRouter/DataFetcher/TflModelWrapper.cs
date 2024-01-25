@@ -271,7 +271,9 @@ public class TflModelWrapper : INetworkDataFetcher
                 }
                 catch (ArgumentException)
                 {
-                    logger.Warning("Tried to update a link that doesn't exist! {A} -> {B}", edgeDetails[0], edgeDetails[1]);
+                    logger.Debug("Tried to update a link that doesn't exist! {A} -> {B}", edgeDetails[0], edgeDetails[1]);
+                    network.LinkStationsPartial(edgeDetails[0], edgeDetails[1], Dir.Bidirectional, new Line("Unknown", "Unknown"));
+                    network.UpdateLink(edgeDetails[0], edgeDetails[1], new TimeSpan(0, minutes, seconds));
                 }
             }
         }
