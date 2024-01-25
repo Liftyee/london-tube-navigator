@@ -74,10 +74,8 @@ public class AnnealingSolver : ISolver
         const int noChangeThreshold = 10000;
         double temperature = 1000;
         int stationA=0, stationB=0, oldCost, newCost, interSegmentIdx, interStationIdx;
-        int swapFrom=0, swapTo=0;
         int loopsSinceLastAccept = 0;
         Random randomGenerator = new Random();
-        bool stopFlag = false;
         
         for (int i = 1; i < MaxIterations; i++)
         {
@@ -116,29 +114,19 @@ public class AnnealingSolver : ISolver
                     string interStationId = route.IntermediateStations[interSegmentIdx][interStationIdx]; 
                     // find the position of the station in the target stations list, and move it to a place
                     // between the stations at the end of our intermediate station segment
-                    swapFrom = route.TargetStations.FindIndex(e => e == interStationId);
+                    stationA = route.TargetStations.FindIndex(e => e == interStationId);
                     
                     // the station at the start of the segment has the same index as interSegmentIdx, so add one to get
                     // the end station of the segment
-                    swapTo = interStationIdx + 1;
-
-                    if (swapFrom == swapTo)
-                    {
-                        Logger.Verbose("Swapping at same position... put a breakpoint here (iteration {A})", nIterations);
-                    }
-
-                    if (swapFrom == swapTo - 1)
-                    {
-                        Logger.Verbose("Swap will have no effect, station is already in right position (iteration {A})", nIterations);
-                    }
+                    stationB = interStationIdx + 1;
                     
                     try
                     {
-                        net.TakeAndInsert(ref route, swapFrom, swapTo);
+                        net.TakeAndInsert(ref route, stationA, stationB);
                     }
                     catch (InvalidOperationException e)
                     {
-                        Logger.Fatal("Tried to reinsert at the same position {A} (iteration number {B}). Exception {C}", swapFrom, nIterations, e);
+                        Logger.Fatal("Tried to reinsert at the same position {A} (iteration number {B}). Exception {C}", stationA, nIterations, e);
                         throw new Exception();
                     }
 
@@ -166,7 +154,7 @@ public class AnnealingSolver : ISolver
                 }
             }
 
-            if (AcceptSolution(oldCost, newCost, temperature, randomGenerator) && !stopFlag)
+            if (AcceptSolution(oldCost, newCost, temperature, randomGenerator))
             {
                 // accept the change (duration and cost have already been updated by the operation)
                 loopsSinceLastAccept = 0;
@@ -174,39 +162,7 @@ public class AnnealingSolver : ISolver
             else
             {
                 // reject the change (swap back)
-                switch (operation)
-                {
-                    case AnnealOpType.SwapRandom:
-                        net.Swap(ref route, stationA, stationB);
-                        break;
-                    case AnnealOpType.SwapIntermediate:
-                        if (swapFrom < swapTo)
-                        {
-                            net.TakeAndInsert(ref route, swapTo-1, swapFrom);
-                        }
-                        else
-                        {
-                            if (swapFrom < route.Count - 1)
-                            {
-                                net.TakeAndInsert(ref route, swapTo, swapFrom + 1);
-                            }
-                            else
-                            {
-                                net.TakeAndInsert(ref route, swapTo, swapFrom);
-                            }
-                        }
-
-                        break;
-                    default:
-                        throw new InvalidOperationException("Invalid annealing operation type");
-                }
-
-                if (stopFlag)
-                {
-                    Logger.Fatal("Route: {A}", string.Join(";", route.TargetStations));
-                    Logger.Fatal("{A}", route.ToString());
-                    throw new Exception("Cost is negative!");
-                }
+                route = RevertOperation(net, operation, route, stationA, stationB);
                 loopsSinceLastAccept++;
             }
             
@@ -217,12 +173,6 @@ public class AnnealingSolver : ISolver
                 
                 Logger.Debug("Cooled down to {A}",temperature);
                 Logger.Debug("Current route: {A} (processing for {B} ms)",route.ToString(), perfTimer.ElapsedMilliseconds);
-                int calcCost = net.CostFunction(route);
-                if (calcCost != route.Cost)
-                {
-                    Logger.Fatal("Cost mismatch! Calculated cost {A} but route cost is {B}",calcCost,route.Cost);
-                    throw new Exception("Cost mismatch!");
-                }
             }
             
             // if we haven't changed anything for a while then we're probably done
@@ -244,6 +194,38 @@ public class AnnealingSolver : ISolver
         }
         ProgressCallback(100); // always finish at 100% no matter when we finished
         Logger.Information("Final route: {A} (found in {B} ms, {C} ms per iteration)",route.ToString(), perfTimer.ElapsedMilliseconds, (perfTimer.ElapsedMilliseconds/(double)nIterations).ToString("0.####"));
+        return route;
+    }
+
+    private static Route RevertOperation(Network net, AnnealOpType operation, Route route, int stationA, int stationB)
+    {
+        switch (operation)
+        {
+            case AnnealOpType.SwapRandom:
+                net.Swap(ref route, stationA, stationB);
+                break;
+            case AnnealOpType.SwapIntermediate:
+                if (stationA < stationB)
+                {
+                    net.TakeAndInsert(ref route, stationB-1, stationA);
+                }
+                else
+                {
+                    if (stationA < route.Count - 1)
+                    {
+                        net.TakeAndInsert(ref route, stationB, stationA + 1);
+                    }
+                    else
+                    {
+                        net.TakeAndInsert(ref route, stationB, stationA);
+                    }
+                }
+
+                break;
+            default:
+                throw new InvalidOperationException("Invalid annealing operation type");
+        }
+
         return route;
     }
     
