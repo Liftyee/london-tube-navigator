@@ -32,7 +32,7 @@ public class SolverControlViewModel : ReactiveObject
     private static ILogger logger = new LoggerConfiguration()
         .MinimumLevel.Debug()
         .WriteTo.Console()
-        .WriteTo.Sink(UILogger)
+        .WriteTo.Sink(UILogger, LogEventLevel.Information)
         .CreateLogger();
     
     internal class UIOutputSink : ILogEventSink
