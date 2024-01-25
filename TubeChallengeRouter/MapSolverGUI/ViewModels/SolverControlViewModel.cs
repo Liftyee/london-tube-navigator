@@ -8,6 +8,8 @@ using DataFetcher;
 using ReactiveUI;
 using RouteSolver;
 using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 using SkiaSharp;
 using SkiaSharp.HarfBuzz;
 using TransportNetwork;
@@ -25,11 +27,33 @@ public class SolverControlViewModel : ReactiveObject
     public ICommand SolveCommand { get; }
     public ICommand TestControls { get; }
     public ObservableCollection<string> OutputLog { get; } = new ObservableCollection<string>();
+    
+    private static UIOutputSink UILogger { get; } = new UIOutputSink();
     private static ILogger logger = new LoggerConfiguration()
         .MinimumLevel.Debug()
         .WriteTo.Console()
+        .WriteTo.Sink(UILogger)
         .CreateLogger();
     
+    internal class UIOutputSink : ILogEventSink
+    {
+        private ObservableCollection<string>? outputLog;
+        
+        public void Emit(LogEvent logEvent)
+        {
+            if (outputLog == null)
+            {
+                throw new NullReferenceException("Tried to log but Output log not set");
+            }
+            
+            outputLog.Add(logEvent.RenderMessage());
+        }
+
+        public void AddOutput(ObservableCollection<string> output)
+        {
+            outputLog = output;
+        }
+    }
 
     public double SolveProgress
     {
@@ -97,6 +121,7 @@ public class SolverControlViewModel : ReactiveObject
     public SolverControlViewModel()
     {
         logger.Information("Hello World! Logging is {Description}.","online");
+        UILogger.AddOutput(OutputLog);
         solver = new AnnealingSolver(logger, SetProgress);
         SwapProb = solver.GetRandomSwapProbability();
         TempFactor = solver.GetCoolDownFactor();
