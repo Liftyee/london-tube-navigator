@@ -89,10 +89,14 @@ public class TflModelWrapper : INetworkDataFetcher
                     network.LinkStationsPartial(lastStationOfCurrentSegment.Id, firstStationOfNextSegment.Id, direction, currentLine);
                 } catch (InvalidBranchIDException ex)
                 {
-                    logger.Warning("Segment list (on line {A}) did not contain a segment with given ID {B}! Search started by segment id {C}",
-                        currentLine.Id,
-                        id,
-                        segment.BranchId);
+                    if (id != 11)
+                    {
+                        logger.Warning(
+                            "Segment list (on line {A}) did not contain a segment with given ID {B}! Search started by segment id {C}",
+                            currentLine.Id,
+                            id,
+                            segment.BranchId);
+                    }
                 }
             }
 #warning "Need to add line information to the links!"
@@ -220,7 +224,7 @@ public class TflModelWrapper : INetworkDataFetcher
             }
             
             // process outbound separately as our graph is directed
-            logger.Debug("Processing outbound segments for line {A}", line.Name);
+            logger.Debug("Processing outbound segments for line {A}", line.Id);
             
             watch.Restart();
             TflApiPresentationEntitiesRouteSequence outboundResult = lineApi.LineRouteSequence(line.Id, "outbound");
@@ -230,6 +234,7 @@ public class TflModelWrapper : INetworkDataFetcher
             {
                 serializer.WriteObject(fs, outboundResult);
             }
+            logger.Information("Processing line {A}...", line.Name);
         }
         
         // write a metadata file so we know when the cache was updated
