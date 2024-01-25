@@ -15,6 +15,10 @@ public class TflModelWrapper : INetworkDataFetcher
     private ILogger logger;
     private string cachePath;
     private const int maxCacheAge = 30; // days
+
+    private const int percentOfTotal = 90;
+    private const double initialPercent = 3.0;
+    private Action<double> progressCallback = (double _) => { };
     public TflModelWrapper(ILogger logger, string cachePath = "")
     {
         this.logger = logger;
@@ -106,6 +110,7 @@ public class TflModelWrapper : INetworkDataFetcher
     public void PopulateNetworkStructure(ref Network network)
     {
         logger.Information("Populating network from cache at {A}...", cachePath);
+        progressCallback(0.0);
         // use caches if possible
         if (File.Exists($"{cachePath}lastUpdated.txt"))
         {
@@ -141,6 +146,12 @@ public class TflModelWrapper : INetworkDataFetcher
         }
         
         PopulateNetworkTimesTimingsLib(ref network);
+        progressCallback(100.0);
+    }
+
+    public void SetProgressCallback(Action<double> callback)
+    {
+        progressCallback = callback;
     }
 
     private void PopulateNetworkStructureFromCache(ref Network network)
@@ -189,6 +200,7 @@ public class TflModelWrapper : INetworkDataFetcher
 
     private void UpdateStructureCache()
     {
+        progressCallback(initialPercent);
         var watch = System.Diagnostics.Stopwatch.StartNew(); // timer to report performance in logs
 
         logger.Information("Populating local cache from API...");
@@ -210,31 +222,36 @@ public class TflModelWrapper : INetworkDataFetcher
             lineSerializer.WriteObject(fs, rawLines);
         }
         
-        foreach (var line in rawLines)
+        for (int idx = 0; idx < rawLines.Count; idx++)
         {
-            logger.Debug("Processing inbound segments for line {A}", line.Id);
+            logger.Debug("Processing inbound segments for line {A}", rawLines[idx].Id);
             
             watch.Restart();
-            TflApiPresentationEntitiesRouteSequence inboundResult = lineApi.LineRouteSequence(line.Id, "inbound");
+            
+            progressCallback(initialPercent + percentOfTotal * idx / (double)rawLines.Count);
+
+            TflApiPresentationEntitiesRouteSequence inboundResult = lineApi.LineRouteSequence(rawLines[idx].Id, "inbound");
             logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
             
-            using (FileStream fs = new FileStream($"{cachePath}{line.Id}_inbound.xml", FileMode.Create))
+            using (FileStream fs = new FileStream($"{cachePath}{rawLines[idx].Id}_inbound.xml", FileMode.Create))
             {
                 serializer.WriteObject(fs, inboundResult);
             }
             
+            progressCallback(initialPercent + percentOfTotal * (idx+0.5) / (double)rawLines.Count);
+            
             // process outbound separately as our graph is directed
-            logger.Debug("Processing outbound segments for line {A}", line.Id);
+            logger.Debug("Processing outbound segments for line {A}", rawLines[idx].Id);
             
             watch.Restart();
-            TflApiPresentationEntitiesRouteSequence outboundResult = lineApi.LineRouteSequence(line.Id, "outbound");
+            TflApiPresentationEntitiesRouteSequence outboundResult = lineApi.LineRouteSequence(rawLines[idx].Id, "outbound");
             logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
             
-            using (FileStream fs = new FileStream($"{cachePath}{line.Id}_outbound.xml", FileMode.Create))
+            using (FileStream fs = new FileStream($"{cachePath}{rawLines[idx].Id}_outbound.xml", FileMode.Create))
             {
                 serializer.WriteObject(fs, outboundResult);
             }
-            logger.Information("Processing line {A}...", line.Name);
+            logger.Information("Processing line {A}...", rawLines[idx].Name);
         }
         
         // write a metadata file so we know when the cache was updated
@@ -245,6 +262,8 @@ public class TflModelWrapper : INetworkDataFetcher
                 sw.WriteLine(DateTime.Now.ToString());
             }
         }
+
+        progressCallback(initialPercent + percentOfTotal);
     }
 
     private void UpdateTimingsLib()

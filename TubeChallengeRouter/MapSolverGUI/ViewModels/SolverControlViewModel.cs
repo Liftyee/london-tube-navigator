@@ -133,7 +133,9 @@ public class SolverControlViewModel : ReactiveObject
 
     private void RunSolve()
     {
-        NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger, GetCachePath()));
+        INetworkDataFetcher fetcher = new TflModelWrapper(logger, GetCachePath());
+        fetcher.SetProgressCallback(SetProgress);
+        NetworkFactory tubeFactory = new NetworkFactory(fetcher);
         Network tube = tubeFactory.Generate(NetworkType.Dijkstra, logger);
         logger.Debug("Result: {A}",tube.ToString());
         

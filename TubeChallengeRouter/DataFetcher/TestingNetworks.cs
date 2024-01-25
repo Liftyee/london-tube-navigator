@@ -28,6 +28,11 @@ public class LinearNetwork : INetworkDataFetcher
             network.LinkStationsPartial((i+1).ToString(), i.ToString(), Dir.Outbound);
         }
     }
+
+    public void SetProgressCallback(Action<double> callback)
+    {
+        throw new NotSupportedException();
+    }
 }
 
 public class TestNetwork1 : INetworkDataFetcher
@@ -44,6 +49,11 @@ public class TestNetwork1 : INetworkDataFetcher
         _network.LinkStationsPartial("B", "D", Dir.Bidirectional, null);
         _network.LinkStationsPartial("C", "E", Dir.Bidirectional, null);
         _network.LinkStationsPartial("D", "E", Dir.Bidirectional, null);
+    }
+
+    public void SetProgressCallback(Action<double> callback)
+    {
+        throw new NotSupportedException();
     }
 }
 

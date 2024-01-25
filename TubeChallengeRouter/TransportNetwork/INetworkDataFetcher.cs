@@ -9,4 +9,5 @@ public interface INetworkDataFetcher
     //public void UpdateLineData(ref Line line);
 
     public void PopulateNetworkStructure(ref Network network);
+    public void SetProgressCallback(Action<double> callback);
 } 
