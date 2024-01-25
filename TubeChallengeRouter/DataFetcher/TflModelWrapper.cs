@@ -180,7 +180,7 @@ public class TflModelWrapper : INetworkDataFetcher
             
             AddLinksForLineSequence(outboundResult.StopPointSequences, ref network, line, Dir.Outbound);
         }
-        logger.Information("Done in {A}ms", watch.ElapsedMilliseconds);
+        logger.Debug("Done in {A}ms", watch.ElapsedMilliseconds);
     } 
 
     private void UpdateStructureCache()
@@ -253,7 +253,7 @@ public class TflModelWrapper : INetworkDataFetcher
 
     private void PopulateNetworkTimesTimingsLib(ref Network network)
     {
-        logger.Information("Populating network times from Eliyahu's library...");
+        logger.Debug("Populating network times from timings file...");
         UpdateTimingsLib();
         using (StreamReader dataFile = File.OpenText($"{cachePath}timingsData.txt"))
         {

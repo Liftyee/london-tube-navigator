@@ -135,8 +135,7 @@ public class SolverControlViewModel : ReactiveObject
     {
         NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger, GetCachePath()));
         Network tube = tubeFactory.Generate(NetworkType.Dijkstra, logger);
-        logger.Information("Result: {A}",tube.ToString());
-        //logger.Debug(tube.EnumerateStations());
+        logger.Debug("Result: {A}",tube.ToString());
         
         Route route = solver.Solve(tube);
         logger.Debug("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
