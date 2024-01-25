@@ -184,7 +184,7 @@ public class AnnealingSolver : ISolver
 
             if (nIterations % (MaxIterations / 10) == 0)
             {
-                Logger.Information("{A} percent complete", Math.Ceiling(nIterations*100.0 / MaxIterations));
+                Logger.Debug("{A} percent complete", Math.Ceiling(nIterations*100.0 / MaxIterations));
             }
 
             if (nIterations % (MaxIterations / 1000) == 0)
@@ -193,7 +193,7 @@ public class AnnealingSolver : ISolver
             }
         }
         ProgressCallback(100); // always finish at 100% no matter when we finished
-        Logger.Information("Final route: {A} (found in {B} ms, {C} ms per iteration)",route.ToString(), perfTimer.ElapsedMilliseconds, (perfTimer.ElapsedMilliseconds/(double)nIterations).ToString("0.####"));
+        Logger.Debug("Final route: {A} (found in {B} ms, {C} ms per iteration)",route.ToString(), perfTimer.ElapsedMilliseconds, (perfTimer.ElapsedMilliseconds/(double)nIterations).ToString("0.####"));
         return route;
     }
 
