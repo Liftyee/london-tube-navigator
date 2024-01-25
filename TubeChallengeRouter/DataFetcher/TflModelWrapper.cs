@@ -136,7 +136,7 @@ public class TflModelWrapper : INetworkDataFetcher
             PopulateNetworkStructureFromCache(ref network);
         }
         
-        PopulateNetworkTimesEliyahuLib(ref network);
+        PopulateNetworkTimesTimingsLib(ref network);
     }
 
     private void PopulateNetworkStructureFromCache(ref Network network)
@@ -242,19 +242,19 @@ public class TflModelWrapper : INetworkDataFetcher
         }
     }
 
-    private void UpdateEliyahuLib()
+    private void UpdateTimingsLib()
     {
-        const string address = "https://raw.githubusercontent.com/egkoppel/tube-timings/main/data.txt";
+        const string address = "https://raw.githubusercontent.com/Liftyee/tube-timings/main/data.txt";
         using (WebClient client = new WebClient())
         {
             client.DownloadFile(address, $"{cachePath}timingsData.txt");
         }
     }
 
-    private void PopulateNetworkTimesEliyahuLib(ref Network network)
+    private void PopulateNetworkTimesTimingsLib(ref Network network)
     {
         logger.Information("Populating network times from Eliyahu's library...");
-        UpdateEliyahuLib();
+        UpdateTimingsLib();
         using (StreamReader dataFile = File.OpenText($"{cachePath}timingsData.txt"))
         {
             while (!dataFile.EndOfStream)
