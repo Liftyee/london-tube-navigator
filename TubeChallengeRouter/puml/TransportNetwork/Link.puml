@@ -2,6 +2,7 @@
 enum Dir {
     Inbound,
     Outbound,
+    Bidirectional,
 }
 class Line {
     + <<readonly>> Name : string
@@ -9,12 +10,17 @@ class Line {
     + Line(id:string, name:string)
 }
 class Link {
+    - TrainTimes : ITimetable?
     + Line : Line? <<get>>
+    - _durationEdited : bool
     + Link(start:Station, end:Station, line:Line?, dir:Dir)
+    <<internal>> SetDuration(duration:TimeSpan) : void
+    <<internal>> SetLine(line:Line) : void
     + <<override>> Equals(other:Object) : bool
     + GetCost() : int
 }
 Link --> "Destination" Station
 Link --> "Origin" Station
+Link --> "Duration" TimeSpan
 Link --> "Dir" Dir
 @enduml

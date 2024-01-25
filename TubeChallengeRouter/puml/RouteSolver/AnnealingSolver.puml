@@ -1,7 +1,39 @@
 @startuml
 class AnnealingSolver {
+    - _randomSwapProbability : double
+    # MaxIterations : int
+    # CoolDownFactor : double
     + AnnealingSolver(logger:ILogger)
-    + Solve(net:Network) : Route
+    + AnnealingSolver(logger:ILogger, progressCallback:Action<double>)
+    # PickRandomOperation(generator:Random) : AnnealOpType
+    + <<virtual>> Solve(net:Network) : Route
+    - {static} RevertOperation(net:Network, operation:AnnealOpType, route:Route, stationA:int, stationB:int) : Route
+    + SetRandomSwapProbability(probability:double) : void
+    + GetRandomSwapProbability() : double
+    + SetMaxIterations(max:int) : void
+    + GetMaxIterations() : int
+    + SetCoolDownFactor(factor:double) : void
+    + GetCoolDownFactor() : double
+}
+class "Action`1"<T> {
+}
+enum AnnealOpType {
+    SwapRandom,
+    SwapIntermediate,
+    Transpose,
+}
+class NegativeCostException {
+    + NegativeCostException(cost:int)
+}
+class CostMismatchException {
+    + CostMismatchException(calculatedCost:int, routeCost:int)
 }
 ISolver <|-- AnnealingSolver
+AnnealingSolver --> "Logger" ILogger
+AnnealingSolver o-> "ProgressCallback<double>" "Action`1"
+AnnealingSolver +-- AnnealOpType
+AnnealingSolver +-- NegativeCostException
+ApplicationException <|-- NegativeCostException
+AnnealingSolver +-- CostMismatchException
+ApplicationException <|-- CostMismatchException
 @enduml

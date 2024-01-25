@@ -1,0 +1,12 @@
+@startuml
+class ViewModelBase {
+}
+class ReactiveViewModel {
+    + ReactiveViewModel()
+    - _Name : string?
+    + Name : string? <<get>> <<set>>
+    + Greeting : string <<get>>
+}
+ReactiveObject <|-- ViewModelBase
+ReactiveObject <|-- ReactiveViewModel
+@enduml

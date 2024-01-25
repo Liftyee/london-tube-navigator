@@ -1,0 +1,11 @@
+@startuml
+class ExceptionTests {
+    + SetUp() : void
+    + InsertingIntoFullQueue_ThrowsException() : void
+    + RemovingFromEmptyQueue_ThrowsException() : void
+    + TopOfEmptyQueue_ThrowsException() : void
+}
+class "PriorityQueue`1"<T> {
+}
+ExceptionTests --> "_queue<int>" "PriorityQueue`1"
+@enduml

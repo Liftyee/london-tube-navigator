@@ -1,0 +1,29 @@
+@startuml
+class SolverControlViewModel {
+    - _startStationName : string?
+    - _solveProgress : double
+    - _swapProb : double
+    - _tempFactor : double
+    - _maxIterations : int
+    + SolveProgress : double <<get>> <<set>>
+    + StartStation : string? <<get>> <<set>>
+    + SwapProb : double <<get>> <<set>>
+    + TempFactor : double <<get>> <<set>>
+    + MaxIterations : int <<get>> <<set>>
+    + SolverControlViewModel()
+    - RunSolve() : void
+    - <<async>> TestOutputs() : Task
+    - <<async>> SolveRouteAsync() : Task
+    - ShowSolverResult(result:Route) : void
+    - SetProgress(progress:double) : void
+    - {static} GetCachePath() : string
+}
+class "ObservableCollection`1"<T> {
+}
+ReactiveObject <|-- SolverControlViewModel
+SolverControlViewModel --> "solver" ISolver
+SolverControlViewModel --> "SolveCommand" ICommand
+SolverControlViewModel --> "TestControls" ICommand
+SolverControlViewModel o-> "OutputLog<string>" "ObservableCollection`1"
+SolverControlViewModel o-> "logger" ILogger
+@enduml

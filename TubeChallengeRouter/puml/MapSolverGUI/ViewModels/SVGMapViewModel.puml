@@ -1,0 +1,22 @@
+@startuml
+class SVGMapViewModel {
+    - _StationName : string?
+    - _ShowSVG : bool
+    - AddToConvo(content:string) : void
+    + SVGMapViewModel()
+    + StationName : string? <<get>> <<set>>
+    + showSVG : bool <<get>> <<set>>
+    + UpdateSVG() : void
+    - OpenThePodBayDoors() : void
+    + CanvasControl_OnDraw(sender:object?, e:SKCanvasEventArgs) : void
+    - HideGroup(canvas:SKCanvas, groupId:string) : void
+    - HideSVG() : void
+}
+class "ObservableCollection`1"<T> {
+}
+ReactiveObject <|-- SVGMapViewModel
+SVGMapViewModel --> "TestCommand" ICommand
+SVGMapViewModel o-> "ConversationLog<string>" "ObservableCollection`1"
+SVGMapViewModel --> "_SvgMap" SKSvg
+SVGMapViewModel --> "SvgMap" SKSvg
+@enduml

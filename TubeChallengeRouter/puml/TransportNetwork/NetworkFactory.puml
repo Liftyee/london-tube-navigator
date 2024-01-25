@@ -8,4 +8,5 @@ class NetworkFactory {
     + NetworkFactory(dataSource:INetworkDataFetcher)
     + Generate(type:NetworkType, logger:ILogger) : Network
 }
+NetworkFactory --> "_dataSource" INetworkDataFetcher
 @enduml

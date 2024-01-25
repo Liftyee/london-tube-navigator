@@ -1,0 +1,7 @@
+@startuml
+class ProblemCaseTests {
+    + SetUp() : void
+    + ProblemCase_CostPositive() : void
+}
+ProblemCaseTests --> "_network" Network
+@enduml

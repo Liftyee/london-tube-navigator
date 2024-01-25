@@ -1,5 +1,11 @@
 @startuml
 interface ISolver {
     + Solve(network:Network) : Route
+    + SetRandomSwapProbability(prob:double) : void
+    + GetRandomSwapProbability() : double
+    + SetMaxIterations(max:int) : void
+    + GetMaxIterations() : int
+    + SetCoolDownFactor(factor:double) : void
+    + GetCoolDownFactor() : double
 }
 @enduml

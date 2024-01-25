@@ -4,12 +4,19 @@ enum Priority {
     Largest,
 }
 class "PriorityQueue`1"<T> <<sealed>> {
+    - _nodeCount : int
     + Count : int <<get>>
     + PriorityQueue(size:int, prio:Priority)
     + Insert(item:T) : void
     + Pop() : T
+    - push_up(currentPosition:int) : void
+    - push_down(currentPosition:int) : void
+    - OutOfOrder(node1:T, node2:T) : bool
+    - SwapIndices(pos1:int, pos2:int) : void
+    - Size() : int
     + Top() : T
 }
 class "IComparable`1"<T> {
 }
+"PriorityQueue`1" --> "_priority" Priority
 @enduml

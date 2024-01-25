@@ -1,0 +1,11 @@
+@startuml
+class Tests {
+    + Setup() : void
+    + Constructor_SetsNaptan() : void
+    + Constructor_SetsName() : void
+    + AddingLink_UpdatesGetLinks() : void
+    + AddingLink_UpdatesHasLink() : void
+}
+Tests --> "_stat1" Station
+Tests --> "_stat2" Station
+@enduml
