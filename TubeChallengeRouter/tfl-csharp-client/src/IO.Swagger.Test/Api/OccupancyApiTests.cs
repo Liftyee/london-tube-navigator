@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class OccupancyApiTests
     {
-        private OccupancyApi instance;
+        private OccupancyApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new OccupancyApi();
+            _instance = new OccupancyApi();
         }
 
         /// <summary>

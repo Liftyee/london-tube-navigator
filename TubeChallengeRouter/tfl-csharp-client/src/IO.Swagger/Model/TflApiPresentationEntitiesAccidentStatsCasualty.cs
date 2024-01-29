@@ -34,14 +34,14 @@ namespace IO.Swagger.Model
         /// Initializes a new instance of the <see cref="TflApiPresentationEntitiesAccidentStatsCasualty" /> class.
         /// </summary>
         /// <param name="age">age.</param>
-        /// <param name="_class">_class.</param>
+        /// <param name="class">_class.</param>
         /// <param name="severity">severity.</param>
         /// <param name="mode">mode.</param>
         /// <param name="ageBand">ageBand.</param>
-        public TflApiPresentationEntitiesAccidentStatsCasualty(int? age = default(int?), string _class = default(string), string severity = default(string), string mode = default(string), string ageBand = default(string))
+        public TflApiPresentationEntitiesAccidentStatsCasualty(int? age = default(int?), string @class = default(string), string severity = default(string), string mode = default(string), string ageBand = default(string))
         {
             this.Age = age;
-            this.Class = _class;
+            this.Class = @class;
             this.Severity = severity;
             this.Mode = mode;
             this.AgeBand = ageBand;

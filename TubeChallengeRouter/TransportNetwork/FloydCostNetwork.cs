@@ -28,18 +28,18 @@ public class FloydCostNetwork : Network
         
         // initialise cost matrix
         _costMatrix = new Dictionary<string, Dictionary<string, int>>();
-        foreach (string stationID in Stations.Keys)
+        foreach (string stationId in Stations.Keys)
         {
-            _costMatrix[stationID] = new Dictionary<string, int>();
-            foreach (string station2ID in Stations.Keys)
+            _costMatrix[stationId] = new Dictionary<string, int>();
+            foreach (string station2Id in Stations.Keys)
             {
-                if (stationID != station2ID)
+                if (stationId != station2Id)
                 {
-                    _costMatrix[stationID][station2ID] = INF_COST;
+                    _costMatrix[stationId][station2Id] = InfCost;
                 }
                 else
                 {
-                    _costMatrix[stationID][station2ID] = 0; // station has no cost to itself
+                    _costMatrix[stationId][station2Id] = 0; // station has no cost to itself
                 }
             }
         }
@@ -95,12 +95,12 @@ public class FloydCostNetwork : Network
     public string EnumerateCostMatrix()
     {
         StringBuilder output = new StringBuilder();
-        foreach (string stationID in Stations.Keys)
+        foreach (string stationId in Stations.Keys)
         {
-            output.Append($"Station {stationID} has cost matrix: ");
-            foreach (string station2ID in Stations.Keys)
+            output.Append($"Station {stationId} has cost matrix: ");
+            foreach (string station2Id in Stations.Keys)
             {
-                output.Append($"{station2ID} ({_costMatrix[stationID][station2ID]}), ");
+                output.Append($"{station2Id} ({_costMatrix[stationId][station2Id]}), ");
             }
 
             output.Append("\n");

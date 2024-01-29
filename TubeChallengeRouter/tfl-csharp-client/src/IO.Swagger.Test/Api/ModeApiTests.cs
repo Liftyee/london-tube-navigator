@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class ModeApiTests
     {
-        private ModeApi instance;
+        private ModeApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new ModeApi();
+            _instance = new ModeApi();
         }
 
         /// <summary>

@@ -40,13 +40,13 @@ namespace IO.Swagger.Model
         /// <param name="routeCode">routeCode.</param>
         /// <param name="description">description.</param>
         /// <param name="displayName">displayName.</param>
-        /// <param name="_operator">_operator.</param>
+        /// <param name="operator">_operator.</param>
         /// <param name="displayOrder">displayOrder.</param>
         /// <param name="isPopularFare">isPopularFare.</param>
         /// <param name="isPopularTravelCard">isPopularTravelCard.</param>
         /// <param name="isTour">isTour.</param>
         /// <param name="messages">messages.</param>
-        public TflApiPresentationEntitiesFaresFareBounds(int? id = default(int?), string from = default(string), string to = default(string), string via = default(string), string routeCode = default(string), string description = default(string), string displayName = default(string), string _operator = default(string), int? displayOrder = default(int?), bool? isPopularFare = default(bool?), bool? isPopularTravelCard = default(bool?), bool? isTour = default(bool?), List<TflApiPresentationEntitiesMessage> messages = default(List<TflApiPresentationEntitiesMessage>))
+        public TflApiPresentationEntitiesFaresFareBounds(int? id = default(int?), string from = default(string), string to = default(string), string via = default(string), string routeCode = default(string), string description = default(string), string displayName = default(string), string @operator = default(string), int? displayOrder = default(int?), bool? isPopularFare = default(bool?), bool? isPopularTravelCard = default(bool?), bool? isTour = default(bool?), List<TflApiPresentationEntitiesMessage> messages = default(List<TflApiPresentationEntitiesMessage>))
         {
             this.Id = id;
             this.From = from;
@@ -55,7 +55,7 @@ namespace IO.Swagger.Model
             this.RouteCode = routeCode;
             this.Description = description;
             this.DisplayName = displayName;
-            this.Operator = _operator;
+            this.Operator = @operator;
             this.DisplayOrder = displayOrder;
             this.IsPopularFare = isPopularFare;
             this.IsPopularTravelCard = isPopularTravelCard;

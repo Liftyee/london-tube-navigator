@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class SearchApiTests
     {
-        private SearchApi instance;
+        private SearchApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new SearchApi();
+            _instance = new SearchApi();
         }
 
         /// <summary>

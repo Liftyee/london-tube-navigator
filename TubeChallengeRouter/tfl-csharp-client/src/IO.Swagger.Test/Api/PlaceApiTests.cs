@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class PlaceApiTests
     {
-        private PlaceApi instance;
+        private PlaceApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new PlaceApi();
+            _instance = new PlaceApi();
         }
 
         /// <summary>

@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class RoadApiTests
     {
-        private RoadApi instance;
+        private RoadApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new RoadApi();
+            _instance = new RoadApi();
         }
 
         /// <summary>

@@ -29,17 +29,17 @@ public class Station
         return this._links.ToList();
     }
 
-    public int CostTo(string destID)
+    public int CostTo(string destId)
     {
-        return this.GetLinkByDestId(destID).GetCost();
+        return this.GetLinkByDestId(destId).GetCost();
     }
 
     // NOTE: Can't use a dictionary, because the link destinations are not unique!
-    public bool HasLink(string destID)
+    public bool HasLink(string destId)
     {
         foreach (Link link in _links)
         {
-            if (link.Destination.NaptanId == destID)
+            if (link.Destination.NaptanId == destId)
             {
                 return true;
             }
@@ -48,39 +48,39 @@ public class Station
         return false;
     }
 
-    public Link GetLinkByDestId(string Id)
+    public Link GetLinkByDestId(string id)
     {
         foreach (Link link in _links)
         {
-            if (link.Destination.NaptanId == Id)
+            if (link.Destination.NaptanId == id)
             {
                 return link;
             }
         }
 
-        throw new ArgumentException($"No link found with ID {Id}");
+        throw new ArgumentException($"No link found with ID {id}");
     }
     
-    public void ModifyLink(string lineID, string destID, TimeSpan newTime)
+    public void ModifyLink(string lineId, string destId, TimeSpan newTime)
     {
         foreach (Link link in _links)
         {
-            if (link.Destination.NaptanId == destID && link.Line?.Id == lineID)
+            if (link.Destination.NaptanId == destId && link.Line?.Id == lineId)
             {
                 link.SetDuration(newTime);
                 return; // only one link should match
             }
         }
 
-        throw new ArgumentException($"No link found with ID {destID} on line {lineID}");
+        throw new ArgumentException($"No link found with ID {destId} on line {lineId}");
     }
     
-    public void ModifyLink(string destID, TimeSpan newTime)
+    public void ModifyLink(string destId, TimeSpan newTime)
     {
         bool matched = false;
         foreach (Link link in _links)
         {
-            if (link.Destination.NaptanId == destID)
+            if (link.Destination.NaptanId == destId)
             {
                 matched = true;
                 link.SetDuration(newTime);
@@ -88,6 +88,6 @@ public class Station
             }
         }
 
-        if (!matched) throw new ArgumentException($"No link found with ID {destID}");
+        if (!matched) throw new ArgumentException($"No link found with ID {destId}");
     }
 }

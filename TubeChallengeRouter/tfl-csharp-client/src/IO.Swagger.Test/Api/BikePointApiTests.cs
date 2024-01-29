@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class BikePointApiTests
     {
-        private BikePointApi instance;
+        private BikePointApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new BikePointApi();
+            _instance = new BikePointApi();
         }
 
         /// <summary>

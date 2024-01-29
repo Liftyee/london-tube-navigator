@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class AccidentStatsApiTests
     {
-        private AccidentStatsApi instance;
+        private AccidentStatsApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new AccidentStatsApi();
+            _instance = new AccidentStatsApi();
         }
 
         /// <summary>

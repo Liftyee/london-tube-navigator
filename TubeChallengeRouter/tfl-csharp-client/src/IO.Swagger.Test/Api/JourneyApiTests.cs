@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class JourneyApiTests
     {
-        private JourneyApi instance;
+        private JourneyApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new JourneyApi();
+            _instance = new JourneyApi();
         }
 
         /// <summary>

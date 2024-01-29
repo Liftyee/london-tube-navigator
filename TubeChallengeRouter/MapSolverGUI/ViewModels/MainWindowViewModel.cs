@@ -10,7 +10,7 @@ public class MainWindowViewModel : ViewModelBase
 #pragma warning restore CA1822 // Mark members as static
     public SimpleViewModel SimpleViewModel { get; } = new SimpleViewModel();
     public ReactiveViewModel ReactiveViewModel { get; } = new ReactiveViewModel();
-    public SVGMapViewModel SVGMapViewModel { get; } = new();
+    public SvgMapViewModel SvgMapViewModel { get; } = new();
     public SolverControlViewModel SolverControlViewModel { get; } = new();
 }
 
@@ -24,20 +24,20 @@ public class SimpleViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    private string? _Name;
+    private string? _name;
 
     public string? Name
     {
         get
         {
-            return _Name;
+            return _name;
         }
         set
         {
             // only notify the UI if the name actually changed.
-            if (_Name != value)
+            if (_name != value)
             {
-                _Name = value;
+                _name = value;
                 
                 // We call this to notify the UI about changes. 
                 RaisePropertyChanged();

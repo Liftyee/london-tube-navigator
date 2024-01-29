@@ -41,11 +41,10 @@ public class StrictAnnealingSolver : AnnealingSolver, ISolver
         }
         
         // TODO: clean up these constants
-        const bool allowNegativeContinue = false;
         const bool recalculateEveryTime = true;
         int tempStepIterations = MaxIterations/1000;
         const int noChangeThreshold = 10000;
-        double Temperature = 1000;
+        double temperature = 1000;
         int stationA=0, stationB=0, oldCost, newCost, interSegmentIdx, interStationIdx;
         int swapFrom=0, swapTo=0;
         int loopsSinceLastAccept = 0;
@@ -146,8 +145,7 @@ public class StrictAnnealingSolver : AnnealingSolver, ISolver
                             break;
                         default:
                             Logger.Fatal("Unknown");
-                            break;                    stopFlag = true;
-
+                            break;                  
                     }
 
                     Logger.Fatal("Cost before: {A} after: {B}", oldCost, newCost);
@@ -162,7 +160,7 @@ public class StrictAnnealingSolver : AnnealingSolver, ISolver
                     throw new CostMismatchException(calcCost, route.Cost);
                 }
 
-                if (AcceptSolution(oldCost, newCost, Temperature, randomGenerator) && !stopFlag)
+                if (AcceptSolution(oldCost, newCost, temperature, randomGenerator) && !stopFlag)
                 {
                     // accept the change (duration and cost have already been updated by the operation)
                     loopsSinceLastAccept = 0;
@@ -209,8 +207,8 @@ public class StrictAnnealingSolver : AnnealingSolver, ISolver
                 // cool down every tempStepIterations cycles to avoid cooling too fast
                 if (i % tempStepIterations == 0)
                 {
-                    Temperature *= CoolDownFactor;
-                    Logger.Debug("Cooled down to {A}",Temperature);
+                    temperature *= CoolDownFactor;
+                    Logger.Debug("Cooled down to {A}",temperature);
                     Logger.Debug("Current route: {A} (processing for {B} ms)",route.ToString(), perfTimer.ElapsedMilliseconds);
                 }
             

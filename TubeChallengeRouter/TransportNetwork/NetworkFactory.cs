@@ -22,8 +22,7 @@ public class NetworkFactory
         switch (type)
         {
             case NetworkType.Simple:
-                result = new Network(logger);
-                break;
+                throw new NotSupportedException("Simple network is an abstract class and cannot be instantiated");
             case NetworkType.Floyd:
                 result = new FloydCostNetwork(logger);
                 break;
@@ -31,7 +30,7 @@ public class NetworkFactory
                 result = new DijkstraCostNetwork(logger);
                 break;
             default:
-                throw new NotImplementedException();
+                throw new NotSupportedException("Network type given not supported");
         }
         
         _dataSource.PopulateNetworkStructure(ref result);

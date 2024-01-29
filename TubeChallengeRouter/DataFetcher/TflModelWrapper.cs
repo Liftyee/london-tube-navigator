@@ -10,26 +10,26 @@ namespace DataFetcher;
 
 public class TflModelWrapper : INetworkDataFetcher
 {
-    private StopPointApi stationFetcher;
-    private LineApi lineApi;
-    private ILogger logger;
-    private string cachePath;
-    private const int maxCacheAge = 30; // days
+    private StopPointApi _stationFetcher;
+    private LineApi _lineApi;
+    private ILogger _logger;
+    private string _cachePath;
+    private const int MaxCacheAge = 30; // days
 
-    private const int percentOfTotal = 90;
-    private const double initialPercent = 3.0;
-    private Action<double> progressCallback = (double _) => { };
+    private const int PercentOfTotal = 90;
+    private const double InitialPercent = 3.0;
+    private Action<double> _progressCallback = (double _) => { };
     public TflModelWrapper(ILogger logger, string cachePath = "")
     {
-        this.logger = logger;
+        this._logger = logger;
         var apiconfig = new Configuration
         {
             BasePath = "https://api.tfl.gov.uk"
         };
-        lineApi = new LineApi(apiconfig);
-        stationFetcher = new StopPointApi(apiconfig);
+        _lineApi = new LineApi(apiconfig);
+        _stationFetcher = new StopPointApi(apiconfig);
 
-        this.cachePath = cachePath;
+        this._cachePath = cachePath;
         
         logger.Debug("TfL API data fetcher initialised at {A}", apiconfig.BasePath);
     }
@@ -45,7 +45,7 @@ public class TflModelWrapper : INetworkDataFetcher
             }
         }
 
-        throw new InvalidBranchIDException("Sequence did not contain a segment with given ID!");
+        throw new InvalidBranchIdException("Sequence did not contain a segment with given ID!");
     }
 
     internal TflApiPresentationEntitiesMatchedStop GetFirstStop(TflApiPresentationEntitiesStopPointSequence segment)
@@ -67,14 +67,14 @@ public class TflModelWrapper : INetworkDataFetcher
             // link the stations together
             for (int i = 0; i < segment.StopPoint.Count; i++)
             {
-                string currentID = segment.StopPoint[i].Id;
-                network.AddStationByIdIfNotPresent(currentID, segment.StopPoint[i].Name);
+                string currentId = segment.StopPoint[i].Id;
+                network.AddStationId(currentId, segment.StopPoint[i].Name);
                     
                 // link the previous station (if it exists) to the current station, in an ordered way
                 if (i > 0)
                 {
-                    string prevID = segment.StopPoint[i - 1].Id;
-                    network.LinkStationsPartial(prevID, currentID, direction, currentLine);
+                    string prevId = segment.StopPoint[i - 1].Id;
+                    network.LinkStationsPartial(prevId, currentId, direction, currentLine);
                 }
             }
                 
@@ -88,14 +88,14 @@ public class TflModelWrapper : INetworkDataFetcher
                 {
                     var firstStationOfNextSegment = GetFirstStop(GetSequenceById(segments, id));
                     // link the last station of our segment to the first station of the new chain
-                    network.AddStationByIdIfNotPresent(lastStationOfCurrentSegment.Id, lastStationOfCurrentSegment.Name);
-                    network.AddStationByIdIfNotPresent(firstStationOfNextSegment.Id, firstStationOfNextSegment.Name);
+                    network.AddStationId(lastStationOfCurrentSegment.Id, lastStationOfCurrentSegment.Name);
+                    network.AddStationId(firstStationOfNextSegment.Id, firstStationOfNextSegment.Name);
                     network.LinkStationsPartial(lastStationOfCurrentSegment.Id, firstStationOfNextSegment.Id, direction, currentLine);
-                } catch (InvalidBranchIDException ex)
+                } catch (InvalidBranchIdException ex)
                 {
                     if (id != 11)
                     {
-                        logger.Warning(
+                        _logger.Warning(
                             "Segment list (on line {A}) did not contain a segment with given ID {B}! Search started by segment id {C}",
                             currentLine.Id,
                             id,
@@ -109,22 +109,22 @@ public class TflModelWrapper : INetworkDataFetcher
 
     public void PopulateNetworkStructure(ref Network network)
     {
-        logger.Information("Populating network from cache at {A}...", cachePath);
-        progressCallback(0.0);
+        _logger.Information("Populating network from cache at {A}...", _cachePath);
+        _progressCallback(0.0);
         // use caches if possible
-        if (File.Exists($"{cachePath}lastUpdated.txt"))
+        if (File.Exists($"{_cachePath}lastUpdated.txt"))
         {
             // check if the cache is older than 24 hours
-            DateTime lastUpdated = File.GetLastWriteTime($"{cachePath}lastUpdated.txt");
-            if (lastUpdated < DateTime.Now.AddDays(-maxCacheAge))
+            DateTime lastUpdated = File.GetLastWriteTime($"{_cachePath}lastUpdated.txt");
+            if (lastUpdated < DateTime.Now.AddDays(-MaxCacheAge))
             {
-                logger.Information($"Cache is older than {maxCacheAge} days, updating...");
+                _logger.Information($"Cache is older than {MaxCacheAge} days, updating...");
                 UpdateStructureCache();
             }
         }
         else
         {
-            logger.Information("No cache found at {A}, updating...", cachePath);
+            _logger.Information("No cache found at {A}, updating...", _cachePath);
             UpdateStructureCache();
         }
 
@@ -134,24 +134,24 @@ public class TflModelWrapper : INetworkDataFetcher
         }
         catch (System.IO.FileNotFoundException)
         {
-            logger.Warning("Cache file missing!, Regenerating from API...");
+            _logger.Warning("Cache file missing!, Regenerating from API...");
             UpdateStructureCache();
             PopulateNetworkStructureFromCache(ref network);
         }
         catch (System.Runtime.Serialization.SerializationException)
         {
-            logger.Warning("Cache file corrupt! Regenerating from API...");
+            _logger.Warning("Cache file corrupt! Regenerating from API...");
             UpdateStructureCache();
             PopulateNetworkStructureFromCache(ref network);
         }
         
         PopulateNetworkTimesTimingsLib(ref network);
-        progressCallback(100.0);
+        _progressCallback(100.0);
     }
 
     public void SetProgressCallback(Action<double> callback)
     {
-        progressCallback = callback;
+        _progressCallback = callback;
     }
 
     private void PopulateNetworkStructureFromCache(ref Network network)
@@ -161,11 +161,11 @@ public class TflModelWrapper : INetworkDataFetcher
         DataContractSerializer lineSerializer =
             new DataContractSerializer(typeof(List<TflApiPresentationEntitiesLine>));
         List<TflApiPresentationEntitiesLine> rawLines;
-        using (FileStream fs = new FileStream($"{cachePath}lines.xml", FileMode.Open))
+        using (FileStream fs = new FileStream($"{_cachePath}lines.xml", FileMode.Open))
         {
             rawLines = (List<TflApiPresentationEntitiesLine>) lineSerializer.ReadObject(fs);
         }
-        logger.Debug("Got {A} lines from cached file", rawLines.Count);
+        _logger.Debug("Got {A} lines from cached file", rawLines.Count);
         
         List<Line> lines = new List<Line>();
         foreach (var l in rawLines)
@@ -176,10 +176,10 @@ public class TflModelWrapper : INetworkDataFetcher
         DataContractSerializer serializer = new DataContractSerializer(typeof(TflApiPresentationEntitiesRouteSequence));
         foreach (Line line in lines)
         {
-            logger.Debug("Processing segments for line {A}", line.Name);
+            _logger.Debug("Processing segments for line {A}", line.Name);
             
             TflApiPresentationEntitiesRouteSequence inboundResult;
-            using (FileStream fs = new FileStream($"{cachePath}{line.Id}_inbound.xml", FileMode.Open))
+            using (FileStream fs = new FileStream($"{_cachePath}{line.Id}_inbound.xml", FileMode.Open))
             {
                 inboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs);
             }
@@ -188,74 +188,74 @@ public class TflModelWrapper : INetworkDataFetcher
             
             // process outbound separately as our graph is directed
             TflApiPresentationEntitiesRouteSequence outboundResult;
-            using (FileStream fs = new FileStream($"{cachePath}{line.Id}_outbound.xml", FileMode.Open))
+            using (FileStream fs = new FileStream($"{_cachePath}{line.Id}_outbound.xml", FileMode.Open))
             {
                 outboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs);
             }
             
             AddLinksForLineSequence(outboundResult.StopPointSequences, ref network, line, Dir.Outbound);
         }
-        logger.Debug("Done in {A}ms", watch.ElapsedMilliseconds);
+        _logger.Debug("Done in {A}ms", watch.ElapsedMilliseconds);
     } 
 
     private void UpdateStructureCache()
     {
-        progressCallback(initialPercent);
+        _progressCallback(InitialPercent);
         var watch = System.Diagnostics.Stopwatch.StartNew(); // timer to report performance in logs
 
-        logger.Information("Populating local cache from API...");
-        var rawLines = lineApi.LineGetByMode(new List<string> { "tube" });
-        logger.Debug("Got {A} lines from API", rawLines.Count);
+        _logger.Information("Populating local cache from API...");
+        var rawLines = _lineApi.LineGetByMode(new List<string> { "tube" });
+        _logger.Debug("Got {A} lines from API", rawLines.Count);
         DataContractSerializer serializer = new DataContractSerializer(typeof(TflApiPresentationEntitiesRouteSequence));
         
         // create cache directory if it doesn't exist
-        if (!string.IsNullOrWhiteSpace(cachePath))
+        if (!string.IsNullOrWhiteSpace(_cachePath))
         {
-            Directory.CreateDirectory(cachePath);
+            Directory.CreateDirectory(_cachePath);
         }
 
         // cache which lines there are too to be completely independent of the API in case of no network connection
         DataContractSerializer lineSerializer =
             new DataContractSerializer(typeof(List<TflApiPresentationEntitiesLine>));
-        using (FileStream fs = new FileStream($"{cachePath}lines.xml", FileMode.Create))
+        using (FileStream fs = new FileStream($"{_cachePath}lines.xml", FileMode.Create))
         {
             lineSerializer.WriteObject(fs, rawLines);
         }
         
         for (int idx = 0; idx < rawLines.Count; idx++)
         {
-            logger.Debug("Processing inbound segments for line {A}", rawLines[idx].Id);
+            _logger.Debug("Processing inbound segments for line {A}", rawLines[idx].Id);
             
             watch.Restart();
             
-            progressCallback(initialPercent + percentOfTotal * idx / (double)rawLines.Count);
+            _progressCallback(InitialPercent + PercentOfTotal * idx / (double)rawLines.Count);
 
-            TflApiPresentationEntitiesRouteSequence inboundResult = lineApi.LineRouteSequence(rawLines[idx].Id, "inbound");
-            logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
+            TflApiPresentationEntitiesRouteSequence inboundResult = _lineApi.LineRouteSequence(rawLines[idx].Id, "inbound");
+            _logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
             
-            using (FileStream fs = new FileStream($"{cachePath}{rawLines[idx].Id}_inbound.xml", FileMode.Create))
+            using (FileStream fs = new FileStream($"{_cachePath}{rawLines[idx].Id}_inbound.xml", FileMode.Create))
             {
                 serializer.WriteObject(fs, inboundResult);
             }
             
-            progressCallback(initialPercent + percentOfTotal * (idx+0.5) / (double)rawLines.Count);
+            _progressCallback(InitialPercent + PercentOfTotal * (idx+0.5) / (double)rawLines.Count);
             
             // process outbound separately as our graph is directed
-            logger.Debug("Processing outbound segments for line {A}", rawLines[idx].Id);
+            _logger.Debug("Processing outbound segments for line {A}", rawLines[idx].Id);
             
             watch.Restart();
-            TflApiPresentationEntitiesRouteSequence outboundResult = lineApi.LineRouteSequence(rawLines[idx].Id, "outbound");
-            logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
+            TflApiPresentationEntitiesRouteSequence outboundResult = _lineApi.LineRouteSequence(rawLines[idx].Id, "outbound");
+            _logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
             
-            using (FileStream fs = new FileStream($"{cachePath}{rawLines[idx].Id}_outbound.xml", FileMode.Create))
+            using (FileStream fs = new FileStream($"{_cachePath}{rawLines[idx].Id}_outbound.xml", FileMode.Create))
             {
                 serializer.WriteObject(fs, outboundResult);
             }
-            logger.Information("Processing line {A}...", rawLines[idx].Name);
+            _logger.Information("Processing line {A}...", rawLines[idx].Name);
         }
         
         // write a metadata file so we know when the cache was updated
-        using (FileStream fs = new FileStream($"{cachePath}lastUpdated.txt", FileMode.Create))
+        using (FileStream fs = new FileStream($"{_cachePath}lastUpdated.txt", FileMode.Create))
         {
             using (StreamWriter sw = new StreamWriter(fs))
             {
@@ -263,7 +263,7 @@ public class TflModelWrapper : INetworkDataFetcher
             }
         }
 
-        progressCallback(initialPercent + percentOfTotal);
+        _progressCallback(InitialPercent + PercentOfTotal);
     }
 
     private void UpdateTimingsLib()
@@ -271,15 +271,15 @@ public class TflModelWrapper : INetworkDataFetcher
         const string address = "https://raw.githubusercontent.com/Liftyee/tube-timings/main/data.txt";
         using (WebClient client = new WebClient())
         {
-            client.DownloadFile(address, $"{cachePath}timingsData.txt");
+            client.DownloadFile(address, $"{_cachePath}timingsData.txt");
         }
     }
 
     private void PopulateNetworkTimesTimingsLib(ref Network network)
     {
-        logger.Debug("Populating network times from timings file...");
+        _logger.Debug("Populating network times from timings file...");
         UpdateTimingsLib();
-        using (StreamReader dataFile = File.OpenText($"{cachePath}timingsData.txt"))
+        using (StreamReader dataFile = File.OpenText($"{_cachePath}timingsData.txt"))
         {
             while (!dataFile.EndOfStream)
             {
@@ -295,7 +295,7 @@ public class TflModelWrapper : INetworkDataFetcher
                 }
                 catch (ArgumentException)
                 {
-                    logger.Debug("Tried to update a link that doesn't exist! {A} -> {B}", edgeDetails[0], edgeDetails[1]);
+                    _logger.Debug("Tried to update a link that doesn't exist! {A} -> {B}", edgeDetails[0], edgeDetails[1]);
                     network.LinkStationsPartial(edgeDetails[0], edgeDetails[1], Dir.Bidirectional, new Line("Unknown", "Unknown"));
                     network.UpdateLink(edgeDetails[0], edgeDetails[1], new TimeSpan(0, minutes, seconds));
                 }
@@ -305,8 +305,8 @@ public class TflModelWrapper : INetworkDataFetcher
 
     private void PopulateNetworkTimes(ref Network network)
     {
-        var rawLines = lineApi.LineGetByMode(new List<string> { "tube" });
-        logger.Debug("Got {A} lines from API", rawLines.Count);
+        var rawLines = _lineApi.LineGetByMode(new List<string> { "tube" });
+        _logger.Debug("Got {A} lines from API", rawLines.Count);
 
         foreach (var line in rawLines)
         {
@@ -319,18 +319,18 @@ public class TflModelWrapper : INetworkDataFetcher
         throw new NotImplementedException();
         var watch = System.Diagnostics.Stopwatch.StartNew(); // timer to report performance in logs
         
-        var rawLines = lineApi.LineGetByMode(new List<string> { "tube" });
+        var rawLines = _lineApi.LineGetByMode(new List<string> { "tube" });
 
         DataContractSerializer serializer = new DataContractSerializer(typeof(TflApiPresentationEntitiesTimetableResponse));
         foreach (var line in rawLines)
         {
-            var stations = lineApi.LineStopPoints(line.Id);
-            logger.Debug("Got {A} stations from API for line {B}", stations.Count, line.Name);
+            var stations = _lineApi.LineStopPoints(line.Id);
+            _logger.Debug("Got {A} stations from API for line {B}", stations.Count, line.Name);
             foreach (var station in stations)
             {
-                var result = lineApi.LineTimetable(station.NaptanId, line.Id);
+                var result = _lineApi.LineTimetable(station.NaptanId, line.Id);
                 
-                using (FileStream fs = new FileStream($"{cachePath}z{station.NaptanId}.xml", FileMode.Create))
+                using (FileStream fs = new FileStream($"{_cachePath}z{station.NaptanId}.xml", FileMode.Create))
                 {
                     serializer.WriteObject(fs, result);
                 }

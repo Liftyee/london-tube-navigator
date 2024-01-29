@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class CabwiseApiTests
     {
-        private CabwiseApi instance;
+        private CabwiseApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new CabwiseApi();
+            _instance = new CabwiseApi();
         }
 
         /// <summary>

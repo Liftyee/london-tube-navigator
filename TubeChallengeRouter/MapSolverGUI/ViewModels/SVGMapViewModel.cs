@@ -10,36 +10,36 @@ using Svg.Skia;
 
 namespace MapSolverGUI.ViewModels;
 
-public class SVGMapViewModel : ReactiveObject
+public class SvgMapViewModel : ReactiveObject
 {
-    private string? _StationName;
-    private bool _ShowSVG;
+    private string? _stationName;
+    private bool _showSvg;
     public ICommand TestCommand { get; }
     // use observablecollection so the UI is automatically updated when it changes
     public ObservableCollection<string> ConversationLog { get; } = new ObservableCollection<string>();
 
-    private SKSvg _SvgMap;
+    private SKSvg _svgMap;
 
     private SKSvg SvgMap
     {
         get
         {
-            return _SvgMap;
+            return _svgMap;
         }
         set
         {
-            this.RaiseAndSetIfChanged(ref _SvgMap, value);
+            this.RaiseAndSetIfChanged(ref _svgMap, value);
         }
     }
     
-    private Avalonia.Svg.Skia.Svg svg;
+    private Avalonia.Svg.Skia.Svg _svg;
 
     private void AddToConvo(string content)
     {
         ConversationLog.Add(content);
     }
     
-    public SVGMapViewModel()
+    public SvgMapViewModel()
     {
         // find the assets directory and switch to it
         System.IO.Directory.GetCurrentDirectory();
@@ -62,27 +62,27 @@ public class SVGMapViewModel : ReactiveObject
     {
         get
         {
-            return _StationName;
+            return _stationName;
         }
         set
         {
-            this.RaiseAndSetIfChanged(ref _StationName, value);
+            this.RaiseAndSetIfChanged(ref _stationName, value);
         }
     }
 
-    public bool showSVG
+    public bool ShowSvg
     {
         get
         {
-            return _ShowSVG;
+            return _showSvg;
         }
         set
         {
-            this.RaiseAndSetIfChanged(ref _ShowSVG, value);
+            this.RaiseAndSetIfChanged(ref _showSvg, value);
         }
     }
 
-    public void UpdateSVG()
+    public void UpdateSvg()
     {
         Stopwatch sw = new();
         string svgtext = System.IO.File.ReadAllText("groupedmap.svg");
@@ -95,7 +95,7 @@ public class SVGMapViewModel : ReactiveObject
     private void OpenThePodBayDoors()
     {
         AddToConvo("I'm sorry, Dave, I'm afraid I can't do that.");
-        showSVG = !showSVG; // update the public one to make changes visible
+        ShowSvg = !ShowSvg; // update the public one to make changes visible
     }
     
     public void CanvasControl_OnDraw(object? sender, SKCanvasEventArgs e)
@@ -109,7 +109,7 @@ public class SVGMapViewModel : ReactiveObject
 
     }
 
-    private void HideSVG()
+    private void HideSvg()
     {
         
     }

@@ -3,48 +3,44 @@ namespace TransportNetwork;
 using Serilog;
 
 [Serializable]
-public class Network
+public abstract class Network
 {
     protected Dictionary<string, Station> Stations;
     protected Dictionary<int, Line> Lines;
     protected ILogger Logger;
-    protected const int INF_COST = 1000000000; // use 1 billion instead of MaxValue to avoid overflow issues
-    public int StationCount => Stations.Count;
+    protected const int InfCost = 1000000000; // use 1 billion instead of MaxValue to avoid overflow issues
     protected int NEdges;
     
     public Network(ILogger logger)
     {
-        this.Logger = logger;
+        Logger = logger;
         Stations = new Dictionary<string, Station>();
         Lines = new Dictionary<int, Line>();
     }
 
+    // Not used here, but other Networks inheriting from this class override this procedure to initialise their data
     internal virtual void Initialise()
     {
         
     }
 
-    public void AddStation(Station stationToAdd)
+    // Add a station object to the network
+    private void AddStationObject(Station stationToAdd)
     {
         Stations.Add(stationToAdd.NaptanId, stationToAdd);
     }
 
-    public void AddStationByIdIfNotPresent(string naptanId)
+    // Adds a station with given ID to the network if a station with that ID is not already present
+    public void AddStationId(string naptanId, string? name = null)
     {
-        if (!this.HasStationById(naptanId))
+        if (!HasStationById(naptanId))
         {
-            this.AddStation(new Station(naptanId));
+            // use the full constructor if our name is not null, otherwise use the constructor without a name
+            AddStationObject(name is not null ? new Station(naptanId, name) : new Station(naptanId));
         }
     }
 
-    public void AddStationByIdIfNotPresent(string naptanId, string name)
-    {
-        if (!this.HasStationById(naptanId))
-        {
-            this.AddStation(new Station(naptanId, name));
-        }
-    }
-
+    // Write a machine-readable list of station names to a file (for use in other programs)
     public void WriteStationsToFile(FileStream file)
     {
         foreach (var station in Stations.Values)
@@ -53,6 +49,7 @@ public class Network
         }
     }
     
+    // Link two stations with an edge, but leave the edge cost unpopulated.
     public void LinkStationsPartial(string startId, string endId, Dir direction, Line? line=null)
     {
         Station startStation = Stations[startId];
@@ -69,50 +66,33 @@ public class Network
         NEdges++;
     }
     
+    // For a station's link to another station, set the cost of the link
     public void UpdateLink(string startId, string endId, TimeSpan newTime)
     {
         Station startStation = Stations[startId];
         startStation.ModifyLink(endId, newTime);
     }
 
-    public bool HasStationById(string ID)
+    // Is a station with the given ID present in the network?
+    public bool HasStationById(string id)
     {
-        return Stations.Keys.Contains(ID);
+        return Stations.Keys.Contains(id);
     }
     
+    // Give a human-readable summary of the network's properties
     public override string ToString()
     {
         return $"Network with {Stations.Count} stations and {Lines.Count} lines ({NEdges} directed edges)";
     }
-
-    public string EnumerateStations()
-    {
-        // output each station and its links
-        StringBuilder output = new StringBuilder();
-        foreach (KeyValuePair<string, Station> station in Stations)
-        {
-            output.Append($"Station {station.Key} has links to: ");
-            foreach (Link link in station.Value.GetLinks())
-            {
-                output.Append($"{link.Destination.NaptanId} ({link.Duration.ToString()}) {link.Dir.ToString()}, ");
-            }
-
-            output.Append("\n");
-        }
-
-        return output.ToString();
-    }
     
-    private List<Station> GetStations()
-    {
-        return Stations.Values.ToList();
-    }
-
+    // Return list of all station IDs in the network
     public List<string> GetStationIDs()
     {
         return Stations.Keys.ToList();
     }
 
+    // Function to calculate Cost (travel time) between two stations
+    // Not implemented here because other classes inheriting from this one provide various implementations
     public virtual int CostFunction(string startId, string endId, out List<string> path)
     {
         throw new NotSupportedException("Simple network doesn't support cost function with path (use overrides)");
@@ -140,11 +120,11 @@ public class Network
         
         while (visitedIDs.Count < Stations.Count)
         {
-            string nextID = Stations.Keys.ElementAt(new Random().Next(Stations.Count));
-            if (!visitedIDs.Contains(nextID))
+            string nextId = Stations.Keys.ElementAt(new Random().Next(Stations.Count));
+            if (!visitedIDs.Contains(nextId))
             {
-                stationIDs.Add(nextID);
-                visitedIDs.Add(nextID);
+                stationIDs.Add(nextId);
+                visitedIDs.Add(nextId);
                 List<string> pathToNext;
                 if (visitedIDs.Count > 1)
                 {

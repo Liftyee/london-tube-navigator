@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class LineApiTests
     {
-        private LineApi instance;
+        private LineApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new LineApi();
+            _instance = new LineApi();
         }
 
         /// <summary>

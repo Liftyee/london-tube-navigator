@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class AirQualityApiTests
     {
-        private AirQualityApi instance;
+        private AirQualityApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new AirQualityApi();
+            _instance = new AirQualityApi();
         }
 
         /// <summary>

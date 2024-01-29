@@ -16,18 +16,18 @@ public class ReactiveViewModel : ReactiveObject
             .Subscribe(new Action<object>(o => this.RaisePropertyChanged(nameof(Greeting))));
     }
     
-    private string? _Name;
+    private string? _name;
 
     public string? Name
     {
         get
         {
-            return _Name;
+            return _name;
         }
         set
         {
             // ReactiveUI function to raise (notify) the UI if anything changed and also set our backing field
-            this.RaiseAndSetIfChanged(ref _Name, value);
+            this.RaiseAndSetIfChanged(ref _name, value);
         }
     }
     

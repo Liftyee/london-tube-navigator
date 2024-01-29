@@ -33,7 +33,7 @@ namespace IO.Swagger.Test
     [TestFixture]
     public class StopPointApiTests
     {
-        private StopPointApi instance;
+        private StopPointApi _instance;
 
         /// <summary>
         /// Setup before each unit test
@@ -41,7 +41,7 @@ namespace IO.Swagger.Test
         [SetUp]
         public void Init()
         {
-            instance = new StopPointApi();
+            _instance = new StopPointApi();
         }
 
         /// <summary>

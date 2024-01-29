@@ -8,7 +8,7 @@ public class DijkstraCostNetwork : Network
 {
     private readonly struct DijkstraNode : IComparable<DijkstraNode>
     {
-        public readonly string StationID;
+        public readonly string StationId;
         public readonly int Cost;
 
         public int CompareTo(DijkstraNode other)
@@ -16,9 +16,9 @@ public class DijkstraCostNetwork : Network
             return Cost.CompareTo(other.Cost);
         }
         
-        public DijkstraNode(string stationID, int cost)
+        public DijkstraNode(string stationId, int cost)
         {
-            StationID = stationID;
+            StationId = stationId;
             Cost = cost;
         }
     }
@@ -35,20 +35,20 @@ public class DijkstraCostNetwork : Network
         // initialise cost matrix to all null's
         _costCache = new Dictionary<string, Dictionary<string, int?>>();
         _pathCache = new Dictionary<string, Dictionary<string, List<string>>>();
-        foreach (string stationID in Stations.Keys)
+        foreach (string stationId in Stations.Keys)
         {
-            _costCache[stationID] = new Dictionary<string, int?>();
-            _pathCache[stationID] = new Dictionary<string, List<string>>();
-            foreach (string station2ID in Stations.Keys)
+            _costCache[stationId] = new Dictionary<string, int?>();
+            _pathCache[stationId] = new Dictionary<string, List<string>>();
+            foreach (string station2Id in Stations.Keys)
             {
-                if (stationID != station2ID)
+                if (stationId != station2Id)
                 {
-                    _costCache[stationID][station2ID] = null;
+                    _costCache[stationId][station2Id] = null;
                 }
                 else
                 {
-                    _costCache[stationID][station2ID] = 0; // station has no cost to itself
-                    _pathCache[stationID][station2ID] = new List<string>();
+                    _costCache[stationId][station2Id] = 0; // station has no cost to itself
+                    _pathCache[stationId][station2Id] = new List<string>();
                 }                    
             }
         }
@@ -105,14 +105,14 @@ public class DijkstraCostNetwork : Network
         Dictionary<string, int> dist = new();
         foreach (string stationId in Stations.Keys)
         {
-            dist[stationId] = INF_COST;
+            dist[stationId] = InfCost;
         }
         dist[startId] = 0;
         
         while (nextNodes.Count > 0)
         {
             DijkstraNode minCostNode = nextNodes.Pop();
-            foreach (Link link in Stations[minCostNode.StationID].GetLinks())
+            foreach (Link link in Stations[minCostNode.StationId].GetLinks())
             {
                 if (visited.Contains(link.Destination.NaptanId)) continue;
                 int costToNeighbour = link.GetCost();
@@ -120,12 +120,12 @@ public class DijkstraCostNetwork : Network
                 if (newCost < dist[link.Destination.NaptanId])
                 {
                     dist[link.Destination.NaptanId] = newCost;
-                    prev[link.Destination.NaptanId] = minCostNode.StationID;
+                    prev[link.Destination.NaptanId] = minCostNode.StationId;
                     nextNodes.Insert(new DijkstraNode(link.Destination.NaptanId, newCost));
                 }
             }
-            visited.Add(minCostNode.StationID);
-            if (minCostNode.StationID == endId)
+            visited.Add(minCostNode.StationId);
+            if (minCostNode.StationId == endId)
             {
                 // reconstruct path
                 List<string> result = new();

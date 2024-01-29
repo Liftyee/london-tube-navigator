@@ -28,7 +28,7 @@ namespace IO.Swagger.Client
     /// </summary>
     public partial class ApiClient
     {
-        private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
+        private JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
         };
@@ -320,7 +320,7 @@ namespace IO.Swagger.Client
             // at this point, it must be a model (json)
             try
             {
-                return JsonConvert.DeserializeObject(response.Content, type, serializerSettings);
+                return JsonConvert.DeserializeObject(response.Content, type, _serializerSettings);
             }
             catch (Exception e)
             {

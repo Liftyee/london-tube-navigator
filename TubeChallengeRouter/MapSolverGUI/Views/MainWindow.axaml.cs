@@ -11,9 +11,9 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        DataContext = new SVGMapViewModel();
+        DataContext = new SvgMapViewModel();
         
-        if (DataContext is SVGMapViewModel viewModel)
+        if (DataContext is SvgMapViewModel viewModel)
         {
             CanvasControl.Draw += viewModel.CanvasControl_OnDraw;
         }

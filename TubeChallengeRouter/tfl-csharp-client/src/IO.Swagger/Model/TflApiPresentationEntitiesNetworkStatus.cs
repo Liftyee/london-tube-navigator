@@ -33,13 +33,13 @@ namespace IO.Swagger.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="TflApiPresentationEntitiesNetworkStatus" /> class.
         /// </summary>
-        /// <param name="_operator">_operator.</param>
+        /// <param name="operator">_operator.</param>
         /// <param name="status">status.</param>
         /// <param name="message">message.</param>
         /// <param name="statusLevel">statusLevel.</param>
-        public TflApiPresentationEntitiesNetworkStatus(string _operator = default(string), string status = default(string), string message = default(string), int? statusLevel = default(int?))
+        public TflApiPresentationEntitiesNetworkStatus(string @operator = default(string), string status = default(string), string message = default(string), int? statusLevel = default(int?))
         {
-            this.Operator = _operator;
+            this.Operator = @operator;
             this.Status = status;
             this.Message = message;
             this.StatusLevel = statusLevel;

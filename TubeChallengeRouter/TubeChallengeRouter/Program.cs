@@ -8,14 +8,14 @@ namespace TubeChallengeRouter
 {
     internal class Program
     {
-        private static ILogger logger;
+        private static ILogger _logger;
         private static void Main(string[] args)
         {
-            logger = new LoggerConfiguration()
+            _logger = new LoggerConfiguration()
                 .MinimumLevel.Information()
                 .WriteTo.Console()
                 .CreateLogger();
-            logger.Information("Hello World! Logging is {Description}.","online");
+            _logger.Information("Hello World! Logging is {Description}.","online");
 
             TestTubeGen();
             //TestTubeGenFloyd();
@@ -23,14 +23,14 @@ namespace TubeChallengeRouter
         
         private static void TestTubeGen()
         {
-            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger, GetCachePath()));
-            Network tube = tubeFactory.Generate(NetworkType.Dijkstra, logger);
-            logger.Information("Result: {A}",tube.ToString());
+            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(_logger, GetCachePath()));
+            Network tube = tubeFactory.Generate(NetworkType.Dijkstra, _logger);
+            _logger.Information("Result: {A}",tube.ToString());
             //logger.Debug(tube.EnumerateStations());
 
-            ISolver solver = new AnnealingSolver(logger);
+            ISolver solver = new AnnealingSolver(_logger);
             Route route = solver.Solve(tube);
-            logger.Debug("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
+            _logger.Debug("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
 
             // TODO: extract this output code to a function
             var now = DateTime.Now;
@@ -40,14 +40,14 @@ namespace TubeChallengeRouter
             using (var file = new FileStream(outputpath, FileMode.Create))
             {
                 tube.RouteDetailsToStream(route, file);
-                logger.Information("Result written to {A}", outputpath);
+                _logger.Information("Result written to {A}", outputpath);
             }
         }
 
         private static void WriteStationsToFile()
         {
-            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger, GetCachePath()));
-            Network tube = tubeFactory.Generate(NetworkType.Simple, logger);
+            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(_logger, GetCachePath()));
+            Network tube = tubeFactory.Generate(NetworkType.Simple, _logger);
             
             using (FileStream file = new FileStream("stations.txt", System.IO.FileMode.Create))
             {
@@ -57,25 +57,25 @@ namespace TubeChallengeRouter
         
         private static void TestTubeGenFloyd()
         {
-            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(logger, GetCachePath()));
-            Network tube = tubeFactory.Generate(NetworkType.Floyd, logger);
-            logger.Information("Result: {A}",tube.ToString());
+            NetworkFactory tubeFactory = new NetworkFactory(new TflModelWrapper(_logger, GetCachePath()));
+            Network tube = tubeFactory.Generate(NetworkType.Floyd, _logger);
+            _logger.Information("Result: {A}",tube.ToString());
             //logger.Debug(tube.EnumerateStations());
 
-            ISolver solver = new AnnealingSolver(logger);
+            ISolver solver = new AnnealingSolver(_logger);
             Route route = solver.Solve(tube);
-            logger.Debug("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
+            _logger.Debug("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
         }
         
         private static void LinearNetworkTestRouting()
         {
             // create a simple linear network of 10 stations
             NetworkFactory linearFactory = new NetworkFactory(new LinearNetwork(10));
-            Network net = linearFactory.Generate(NetworkType.Floyd, logger);
-            logger.Information("Result: {A}",net.ToString());
+            Network net = linearFactory.Generate(NetworkType.Floyd, _logger);
+            _logger.Information("Result: {A}",net.ToString());
             // logger.Debug(tube.EnumerateStations());
             
-            ISolver solver = new AnnealingSolver(logger);
+            ISolver solver = new AnnealingSolver(_logger);
             Route route = solver.Solve(net);
         }
 

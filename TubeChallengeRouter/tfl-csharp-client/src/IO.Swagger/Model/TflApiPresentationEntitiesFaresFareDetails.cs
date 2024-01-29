@@ -38,7 +38,7 @@ namespace IO.Swagger.Model
         /// <param name="endDate">endDate.</param>
         /// <param name="mode">mode.</param>
         /// <param name="passengerType">passengerType.</param>
-        /// <param name="contactlessPAYGOnlyFare">contactlessPAYGOnlyFare.</param>
+        /// <param name="contactlessPaygOnlyFare">contactlessPAYGOnlyFare.</param>
         /// <param name="from">from.</param>
         /// <param name="to">to.</param>
         /// <param name="fromStation">fromStation.</param>
@@ -49,20 +49,20 @@ namespace IO.Swagger.Model
         /// <param name="displayOrder">displayOrder.</param>
         /// <param name="routeDescription">routeDescription.</param>
         /// <param name="validatorInformation">validatorInformation.</param>
-        /// <param name="_operator">_operator.</param>
+        /// <param name="operator">_operator.</param>
         /// <param name="specialFare">specialFare.</param>
         /// <param name="throughFare">throughFare.</param>
         /// <param name="isTour">isTour.</param>
         /// <param name="ticketsAvailable">ticketsAvailable.</param>
         /// <param name="messages">messages.</param>
-        public TflApiPresentationEntitiesFaresFareDetails(int? boundsId = default(int?), DateTime? startDate = default(DateTime?), DateTime? endDate = default(DateTime?), string mode = default(string), string passengerType = default(string), bool? contactlessPAYGOnlyFare = default(bool?), string from = default(string), string to = default(string), string fromStation = default(string), string toStation = default(string), string via = default(string), string routeCode = default(string), string displayName = default(string), int? displayOrder = default(int?), string routeDescription = default(string), string validatorInformation = default(string), string _operator = default(string), bool? specialFare = default(bool?), bool? throughFare = default(bool?), bool? isTour = default(bool?), List<TflApiPresentationEntitiesFaresTicket> ticketsAvailable = default(List<TflApiPresentationEntitiesFaresTicket>), List<TflApiPresentationEntitiesMessage> messages = default(List<TflApiPresentationEntitiesMessage>))
+        public TflApiPresentationEntitiesFaresFareDetails(int? boundsId = default(int?), DateTime? startDate = default(DateTime?), DateTime? endDate = default(DateTime?), string mode = default(string), string passengerType = default(string), bool? contactlessPaygOnlyFare = default(bool?), string from = default(string), string to = default(string), string fromStation = default(string), string toStation = default(string), string via = default(string), string routeCode = default(string), string displayName = default(string), int? displayOrder = default(int?), string routeDescription = default(string), string validatorInformation = default(string), string @operator = default(string), bool? specialFare = default(bool?), bool? throughFare = default(bool?), bool? isTour = default(bool?), List<TflApiPresentationEntitiesFaresTicket> ticketsAvailable = default(List<TflApiPresentationEntitiesFaresTicket>), List<TflApiPresentationEntitiesMessage> messages = default(List<TflApiPresentationEntitiesMessage>))
         {
             this.BoundsId = boundsId;
             this.StartDate = startDate;
             this.EndDate = endDate;
             this.Mode = mode;
             this.PassengerType = passengerType;
-            this.ContactlessPAYGOnlyFare = contactlessPAYGOnlyFare;
+            this.ContactlessPaygOnlyFare = contactlessPaygOnlyFare;
             this.From = from;
             this.To = to;
             this.FromStation = fromStation;
@@ -73,7 +73,7 @@ namespace IO.Swagger.Model
             this.DisplayOrder = displayOrder;
             this.RouteDescription = routeDescription;
             this.ValidatorInformation = validatorInformation;
-            this.Operator = _operator;
+            this.Operator = @operator;
             this.SpecialFare = specialFare;
             this.ThroughFare = throughFare;
             this.IsTour = isTour;
@@ -115,7 +115,7 @@ namespace IO.Swagger.Model
         /// Gets or Sets ContactlessPAYGOnlyFare
         /// </summary>
         [DataMember(Name="contactlessPAYGOnlyFare", EmitDefaultValue=false)]
-        public bool? ContactlessPAYGOnlyFare { get; set; }
+        public bool? ContactlessPaygOnlyFare { get; set; }
 
         /// <summary>
         /// Gets or Sets From
@@ -226,7 +226,7 @@ namespace IO.Swagger.Model
             sb.Append("  EndDate: ").Append(EndDate).Append("\n");
             sb.Append("  Mode: ").Append(Mode).Append("\n");
             sb.Append("  PassengerType: ").Append(PassengerType).Append("\n");
-            sb.Append("  ContactlessPAYGOnlyFare: ").Append(ContactlessPAYGOnlyFare).Append("\n");
+            sb.Append("  ContactlessPAYGOnlyFare: ").Append(ContactlessPaygOnlyFare).Append("\n");
             sb.Append("  From: ").Append(From).Append("\n");
             sb.Append("  To: ").Append(To).Append("\n");
             sb.Append("  FromStation: ").Append(FromStation).Append("\n");
@@ -303,9 +303,9 @@ namespace IO.Swagger.Model
                     this.PassengerType.Equals(input.PassengerType))
                 ) && 
                 (
-                    this.ContactlessPAYGOnlyFare == input.ContactlessPAYGOnlyFare ||
-                    (this.ContactlessPAYGOnlyFare != null &&
-                    this.ContactlessPAYGOnlyFare.Equals(input.ContactlessPAYGOnlyFare))
+                    this.ContactlessPaygOnlyFare == input.ContactlessPaygOnlyFare ||
+                    (this.ContactlessPaygOnlyFare != null &&
+                    this.ContactlessPaygOnlyFare.Equals(input.ContactlessPaygOnlyFare))
                 ) && 
                 (
                     this.From == input.From ||
@@ -408,8 +408,8 @@ namespace IO.Swagger.Model
                     hashCode = hashCode * 59 + this.Mode.GetHashCode();
                 if (this.PassengerType != null)
                     hashCode = hashCode * 59 + this.PassengerType.GetHashCode();
-                if (this.ContactlessPAYGOnlyFare != null)
-                    hashCode = hashCode * 59 + this.ContactlessPAYGOnlyFare.GetHashCode();
+                if (this.ContactlessPaygOnlyFare != null)
+                    hashCode = hashCode * 59 + this.ContactlessPaygOnlyFare.GetHashCode();
                 if (this.From != null)
                     hashCode = hashCode * 59 + this.From.GetHashCode();
                 if (this.To != null)
