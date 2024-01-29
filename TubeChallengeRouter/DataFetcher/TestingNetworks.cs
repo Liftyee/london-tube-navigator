@@ -1,16 +1,11 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.Metrics;
-using Serilog.Core;
-using System.Diagnostics;
-using Serilog.Debugging;
-using TransportNetwork;
+﻿using TransportNetwork;
 
 
 namespace DataFetcher;
 
 public class LinearNetwork : INetworkDataFetcher
 {
-    private int _numNodes;
+    private readonly int _numNodes;
     public LinearNetwork(int nNodes)
     {
         _numNodes = nNodes;
@@ -44,11 +39,11 @@ public class TestNetwork1 : INetworkDataFetcher
         network.AddStationId("C");
         network.AddStationId("D");
         network.AddStationId("E");
-        network.LinkStationsPartial("A", "B", Dir.Bidirectional, null);
-        network.LinkStationsPartial("B", "C", Dir.Bidirectional, null);
-        network.LinkStationsPartial("B", "D", Dir.Bidirectional, null);
-        network.LinkStationsPartial("C", "E", Dir.Bidirectional, null);
-        network.LinkStationsPartial("D", "E", Dir.Bidirectional, null);
+        network.LinkStationsPartial("A", "B", Dir.Bidirectional);
+        network.LinkStationsPartial("B", "C", Dir.Bidirectional);
+        network.LinkStationsPartial("B", "D", Dir.Bidirectional);
+        network.LinkStationsPartial("C", "E", Dir.Bidirectional);
+        network.LinkStationsPartial("D", "E", Dir.Bidirectional);
     }
 
     public void SetProgressCallback(Action<double> callback)
