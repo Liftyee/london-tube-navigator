@@ -185,7 +185,7 @@ public class SolverControlViewModel : ReactiveObject
         catch (Exception e)
         {
             OutputLog.Add($"Error while solving: {e.Message}");
-            logger.Error("Exception while solving: {A}", e);
+            logger.Debug("Exception while solving: {A}", e);
         }
     }
 
