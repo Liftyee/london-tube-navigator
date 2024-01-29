@@ -136,7 +136,16 @@ public class SolverControlViewModel : ReactiveObject
         INetworkDataFetcher fetcher = new TflModelWrapper(logger, GetCachePath());
         fetcher.SetProgressCallback(SetProgress);
         NetworkFactory tubeFactory = new NetworkFactory(fetcher);
-        Network tube = tubeFactory.Generate(NetworkType.Dijkstra, logger);
+        Network tube;
+        try
+        {
+            tube = tubeFactory.Generate(NetworkType.Dijkstra, logger);
+        }
+        catch (IO.Swagger.Client.ApiException)
+        {
+            logger.Error("Could not fetch Tube network data. Try checking your internet connection.");
+            throw new Exception("Couldn't fetch data from API.");
+        }
         logger.Debug("Result: {A}",tube.ToString());
         
         Route route = solver.Solve(tube);
@@ -176,6 +185,7 @@ public class SolverControlViewModel : ReactiveObject
         catch (Exception e)
         {
             OutputLog.Add($"Error while solving: {e.Message}");
+            logger.Error("Exception while solving: {A}", e);
         }
     }
 
