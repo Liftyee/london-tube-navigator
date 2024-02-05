@@ -26,6 +26,7 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         _nodes[0] = default(T); // the first element is not used in our indexing system
     }
 
+    // Insert an item into the queue.
     public void Insert(T item)
     {
         if (_nodeCount == _nodes.Length - 1)
@@ -34,9 +35,10 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         }
         _nodes[_nodeCount + 1] = item;
         _nodeCount++;
-        push_up(Size());
+        push_up(Count);
     }
 
+    // Pop the top item from the queue (return and delete).
     public T Pop()
     {
         if (_nodeCount == 0)
@@ -44,13 +46,14 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
             throw new InvalidOperationException("Cannot remove from empty queue");
         }
         T top = Top();
-        SwapIndices(Size(), 1);
-        _nodes[Size()] = default(T);
+        SwapIndices(Count, 1);
+        _nodes[Count] = default(T);
         _nodeCount--;
         push_down(1);
         return top;
     }
 
+    // Recursive method to cause items in the heap to "float up" to their correct position.
     private void push_up(int currentPosition)
     {
         if (currentPosition == 1)
@@ -66,17 +69,18 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         }
     }
 
+    // Recursive method to cause items in the heap to "sink down" to their correct position.
     private void push_down(int currentPosition)
     {
         int leftPosition = currentPosition * 2;
-        if (leftPosition > Size())
+        if (leftPosition > Count)
         {
             return; // if the left pos is out of bounds, the right will too (we are at a leaf node)
         }
 
         int rightPosition = currentPosition * 2 + 1;
         int targetPosition = leftPosition;
-        if (rightPosition <= Size() && OutOfOrder(_nodes[rightPosition], _nodes[leftPosition]))
+        if (rightPosition <= Count && OutOfOrder(_nodes[rightPosition], _nodes[leftPosition]))
         {
             targetPosition = rightPosition;
         }
@@ -88,8 +92,10 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         }
     }
 
+    // Compare two heap nodes to see whether they are out of order.
     private bool OutOfOrder(T node1, T node2)
     {
+        // Whether they are in order depends on the priority setting of the queue.
         if (_priority == Priority.Largest)
         {
             return node1.CompareTo(node2) > 0;
@@ -100,6 +106,7 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         }
     }
     
+    // Swap two nodes in the heap, given their indices.
     private void SwapIndices(int pos1, int pos2)
     {
         T temp = _nodes[pos1];
@@ -107,11 +114,7 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         _nodes[pos2] = temp;
     }
     
-    private int Size()
-    {
-        return _nodeCount;
-    }
-    
+    // Get first element of queue without deleting
     public T Top()
     {
         if (_nodeCount == 0)
