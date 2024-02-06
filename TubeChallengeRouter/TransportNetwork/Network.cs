@@ -7,8 +7,8 @@ public abstract class Network
     protected Dictionary<string, Station> Stations;
     protected Dictionary<int, Line> Lines;
     protected ILogger Logger;
-    protected const int InfCost = 1000000000; // use 1 billion instead of MaxValue to avoid overflow issues
     protected int NEdges;
+    protected const int InfCost = 1000000000; // use 1 billion instead of MaxValue to avoid overflow issues
     
     public Network(ILogger logger)
     {
