@@ -2,7 +2,6 @@
 namespace TransportNetwork;
 using Serilog;
 
-[Serializable]
 public abstract class Network
 {
     protected Dictionary<string, Station> Stations;

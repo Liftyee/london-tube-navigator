@@ -20,7 +20,7 @@ public class Line
     }
 }
 
-public class Link
+public struct Link
 {
     private ITimetable? _trainTimes;
     public readonly Station Destination;
