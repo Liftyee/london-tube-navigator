@@ -10,8 +10,8 @@ public enum NetworkType
 
 public class NetworkFactory
 {
-    private INetworkDataFetcher _dataSource;
-    public NetworkFactory(INetworkDataFetcher dataSource)
+    private INetworkDataSource _dataSource;
+    public NetworkFactory(INetworkDataSource dataSource)
     {
         _dataSource = dataSource;
     }

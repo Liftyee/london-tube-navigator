@@ -109,9 +109,9 @@ public class SolverControlViewModel : ReactiveObject
 
     private void RunSolve()
     {
-        INetworkDataFetcher fetcher = new TflModelWrapper(Logger, GetCachePath());
-        fetcher.SetProgressCallback(SetProgress);
-        NetworkFactory tubeFactory = new NetworkFactory(fetcher);
+        INetworkDataSource source = new TflModelWrapper(Logger, GetCachePath());
+        source.SetProgressCallback(SetProgress);
+        NetworkFactory tubeFactory = new NetworkFactory(source);
         Network tube;
         try
         {

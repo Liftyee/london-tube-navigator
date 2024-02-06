@@ -8,7 +8,7 @@ using TransportNetwork;
 
 namespace DataFetcher;
 
-public class TflModelWrapper : INetworkDataFetcher
+public class TflModelWrapper : INetworkDataSource
 {
     private StopPointApi _stationFetcher;
     private LineApi _lineApi;

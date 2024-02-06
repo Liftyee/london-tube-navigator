@@ -3,7 +3,7 @@
 
 namespace DataFetcher;
 
-public class LinearNetwork : INetworkDataFetcher
+public class LinearNetwork : INetworkDataSource
 {
     private readonly int _numNodes;
     public LinearNetwork(int nNodes)
@@ -30,7 +30,7 @@ public class LinearNetwork : INetworkDataFetcher
     }
 }
 
-public class TestNetwork1 : INetworkDataFetcher
+public class TestNetwork1 : INetworkDataSource
 {
     public void PopulateNetworkStructure(ref Network network)
     {
