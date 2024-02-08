@@ -6,8 +6,14 @@ namespace RouteSolver;
 
 public class AnnealingSolver : ISolver
 {
+    // we are given a logger object in the constructor, output messages here.
     protected readonly ILogger Logger;
+    
+    // This procedure should be called during solving to update the UI with the current progress state
+    // (e.g. to update a progress bar)
     protected readonly Action<double> ProgressCallback = (_) => { };
+    
+    // Configuration variables used in the annealing process. Not declared const so the user can change them
     private double _randomSwapProbability;
     protected int MaxIterations;
     protected double CoolDownFactor;
@@ -25,13 +31,16 @@ public class AnnealingSolver : ISolver
         this.ProgressCallback = progressCallback;
     }
 
+    // Store types of annealing operations with an enum to make later code more interpretable.
     protected enum AnnealOpType
     {
         SwapRandom,
         SwapIntermediate,
-        Transpose
+        Transpose // currently not implemented
     }
 
+    // Function that determines which operation the annealing algorithm should perform.
+    // Override in future if more operations are implemented.
     protected AnnealOpType PickRandomOperation(Random generator)
     {
         if (generator.NextDouble() < _randomSwapProbability)
@@ -44,18 +53,22 @@ public class AnnealingSolver : ISolver
         }
     }
 
+    // Main function to "solve" - generate an optimised route passing through all nodes for a given network.
     public virtual Route Solve(Network net)
     {
-        ProgressCallback(0); // reset progress bar
+        // Report status (update progress bar)
+        ProgressCallback(0); 
         Logger.Information("Annealing route for {A}...", net.ToString());
-        // performance tracking metrics
+        
+        // Set up some performance tracking metrics
         Stopwatch perfTimer = Stopwatch.StartNew();
         int nIterations = 0;
         
-        // generate a random route
+        // Generate a random challenge route (one passing through all nodes) as a starting point 
         Route route = net.GenerateRandomRoute();
         Logger.Debug("Random route: {A}",route.ToString());
 
+        // 
         // this function lets me deduplicate the logic later
         static bool AcceptSolution(int oldCost, int newCost, double temperature, Random generator)
         {
