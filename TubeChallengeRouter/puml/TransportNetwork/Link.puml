@@ -9,9 +9,13 @@ class Line {
     + <<readonly>> Id : string
     + Line(id:string, name:string)
 }
-class Link {
-    - TrainTimes : ITimetable?
+struct Link {
+    - _trainTimes : ITimetable?
+    + <<readonly>> Destination : Station
+    + <<readonly>> Origin : Station
+    <<internal>> Duration : TimeSpan <<get>>
     + Line : Line? <<get>>
+    + Dir : Dir <<get>>
     - _durationEdited : bool
     + Link(start:Station, end:Station, line:Line?, dir:Dir)
     <<internal>> SetDuration(duration:TimeSpan) : void
@@ -19,8 +23,4 @@ class Link {
     + <<override>> Equals(other:Object) : bool
     + GetCost() : int
 }
-Link --> "Destination" Station
-Link --> "Origin" Station
-Link --> "Duration" TimeSpan
-Link --> "Dir" Dir
 @enduml

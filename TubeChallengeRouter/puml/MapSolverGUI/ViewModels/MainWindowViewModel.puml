@@ -1,18 +1,18 @@
 @startuml
 class MainWindowViewModel {
     + Greeting : string <<get>>
+    + SimpleViewModel : SimpleViewModel <<get>>
+    + ReactiveViewModel : ReactiveViewModel <<get>>
+    + SvgMapViewModel : SvgMapViewModel <<get>>
+    + SolverControlViewModel : SolverControlViewModel <<get>>
 }
 class SimpleViewModel {
     +  <<event>> PropertyChanged : PropertyChangedEventHandler? 
     - RaisePropertyChanged(propertyName:string?) : void
-    - _Name : string?
+    - _name : string?
     + Name : string? <<get>> <<set>>
     + Greeting : string <<get>>
 }
 ViewModelBase <|-- MainWindowViewModel
-MainWindowViewModel o-> "SimpleViewModel" SimpleViewModel
-MainWindowViewModel o-> "ReactiveViewModel" ReactiveViewModel
-MainWindowViewModel o-> "SVGMapViewModel" SVGMapViewModel
-MainWindowViewModel o-> "SolverControlViewModel" SolverControlViewModel
 INotifyPropertyChanged <|-- SimpleViewModel
 @enduml

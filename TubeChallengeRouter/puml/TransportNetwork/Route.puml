@@ -1,8 +1,12 @@
 @startuml
 class Route {
+    + TargetStations : List<string>
+    + IntermediateStations : List<List<string>>
+    - _duration : TimeSpan
     - _cost : int
     + Count : int <<get>>
     + Cost : int <<get>>
+    + Duration : TimeSpan <<get>>
     + Route(stations:List<string>, duration:TimeSpan, cost:int, intermediateStations:List<List<string>>?)
     + Route(stations:List<string>)
     + <<override>> ToString() : string
@@ -15,10 +19,4 @@ class Route {
     + Copy() : Route
     + InterStationCount() : int
 }
-class "List`1"<T> {
-}
-Route --> "TargetStations<string>" "List`1"
-Route --> "IntermediateStations<List<string>>" "List`1"
-Route --> "_duration" TimeSpan
-Route --> "Duration" TimeSpan
 @enduml

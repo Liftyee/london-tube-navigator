@@ -3,7 +3,7 @@ class ViewModelBase {
 }
 class ReactiveViewModel {
     + ReactiveViewModel()
-    - _Name : string?
+    - _name : string?
     + Name : string? <<get>> <<set>>
     + Greeting : string <<get>>
 }

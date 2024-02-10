@@ -1,5 +1,8 @@
 @startuml
 class LinkTests {
+    - _stubStation1 : Station
+    - _stubStation2 : Station
+    - _link : Link
     + SetUp() : void
     + Constructor_SetsDetails() : void
     + SetDuration_ChangesDurationAttribute() : void
@@ -7,7 +10,4 @@ class LinkTests {
     + SetDurationMoreThanOnce_ThrowsException() : void
     + SetLineMoreThanOnce_ThrowsException() : void
 }
-LinkTests --> "_stubStation1" Station
-LinkTests --> "_stubStation2" Station
-LinkTests --> "_link" Link
 @enduml

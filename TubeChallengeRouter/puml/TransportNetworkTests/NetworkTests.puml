@@ -1,5 +1,6 @@
 @startuml
 class NetworkTests {
+    - _network : Network
     + SetUp() : void
     + SwapInsert_InsertsStation() : void
     + SwapInsert_UpdatesStations() : void
@@ -10,5 +11,4 @@ class NetworkTests {
     + TestNetwork_CostSymmetric() : void
     + RecalculateRoute_DataAccurate() : void
 }
-NetworkTests --> "_network" Network
 @enduml

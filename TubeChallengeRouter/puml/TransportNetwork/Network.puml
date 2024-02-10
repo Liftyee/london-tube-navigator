@@ -1,20 +1,19 @@
 @startuml
-class Network {
-    # <<const>> INF_COST : int = 1000000000
-    + StationCount : int <<get>>
+abstract class Network {
+    # Stations : Dictionary<string, Station>
+    # Lines : Dictionary<int, Line>
+    # Logger : ILogger
     # NEdges : int
+    # <<const>> InfCost : int = 1000000000
     + Network(logger:ILogger)
     <<internal>> <<virtual>> Initialise() : void
-    + AddStation(stationToAdd:Station) : void
-    + AddStationByIdIfNotPresent(naptanId:string) : void
-    + AddStationByIdIfNotPresent(naptanId:string, name:string) : void
+    - AddStationObject(stationToAdd:Station) : void
+    + AddStationId(naptanId:string, name:string?) : void
     + WriteStationsToFile(file:FileStream) : void
     + LinkStationsPartial(startId:string, endId:string, direction:Dir, line:Line?) : void
     + UpdateLink(startId:string, endId:string, newTime:TimeSpan) : void
-    + HasStationById(ID:string) : bool
+    + HasStationById(id:string) : bool
     + <<override>> ToString() : string
-    + EnumerateStations() : string
-    - GetStations() : List<Station>
     + GetStationIDs() : List<string>
     + <<virtual>> CostFunction(startId:string, endId:string, path:List<string>) : int
     + <<virtual>> CostFunction(startId:string, endId:string) : int
@@ -30,9 +29,4 @@ class Network {
     + RecalculateRouteCosts(route:Route) : void
     + RecalculateRouteData(route:Route) : void
 }
-class "Dictionary`2"<T1,T2> {
-}
-Network --> "Stations<string,Station>" "Dictionary`2"
-Network --> "Lines<int,Line>" "Dictionary`2"
-Network --> "Logger" ILogger
 @enduml

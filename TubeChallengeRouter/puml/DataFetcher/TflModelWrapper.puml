@@ -1,22 +1,26 @@
 @startuml
 class TflModelWrapper {
-    - cachePath : string
-    - <<const>> maxCacheAge : int = 30
+    - _stationFetcher : StopPointApi
+    - _lineApi : LineApi
+    - _logger : ILogger
+    - _cachePath : string
+    - <<const>> MaxCacheAge : int = 30
+    - <<const>> PercentOfTotal : int = 90
+    - <<const>> InitialPercent : double = 3.0
+    - _progressCallback : Action<double>
     + TflModelWrapper(logger:ILogger, cachePath:string)
     <<internal>> GetSequenceById(segments:List<TflApiPresentationEntitiesStopPointSequence>, id:int) : TflApiPresentationEntitiesStopPointSequence
     <<internal>> GetFirstStop(segment:TflApiPresentationEntitiesStopPointSequence) : TflApiPresentationEntitiesMatchedStop
     <<internal>> GetLastStop(segment:TflApiPresentationEntitiesStopPointSequence) : TflApiPresentationEntitiesMatchedStop
     + AddLinksForLineSequence(segments:List<TflApiPresentationEntitiesStopPointSequence>, network:Network, currentLine:Line, direction:Dir) : void
     + PopulateNetworkStructure(network:Network) : void
+    + SetProgressCallback(callback:Action<double>) : void
     - PopulateNetworkStructureFromCache(network:Network) : void
     - UpdateStructureCache() : void
-    - UpdateEliyahuLib() : void
-    - PopulateNetworkTimesEliyahuLib(network:Network) : void
+    - UpdateTimingsLib() : void
+    - PopulateNetworkTimesTimingsLib(network:Network) : void
     - PopulateNetworkTimes(network:Network) : void
     - UpdateTimetableCache() : void
 }
-INetworkDataFetcher <|-- TflModelWrapper
-TflModelWrapper --> "stationFetcher" StopPointApi
-TflModelWrapper --> "lineApi" LineApi
-TflModelWrapper --> "logger" ILogger
+INetworkDataSource <|-- TflModelWrapper
 @enduml

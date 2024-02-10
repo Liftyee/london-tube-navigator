@@ -1,5 +1,7 @@
 @startuml
 class DijkstraNetworkTests {
+    - _network : Network
+    - _tubeNetwork : Network
     + SetUp() : void
     + Dijkstra_FindsPath() : void
     + Dijkstra_SetsIntermediate() : void
@@ -12,6 +14,4 @@ class DijkstraNetworkTests {
     + Swap_UpdatesCosts() : void
     + Swap_UpdatesPath() : void
 }
-DijkstraNetworkTests --> "_network" Network
-DijkstraNetworkTests --> "_tubeNetwork" Network
 @enduml

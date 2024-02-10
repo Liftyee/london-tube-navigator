@@ -2,18 +2,16 @@
 class Station {
     + <<readonly>> Name : string?
     <<internal>> Lines : List<Line>?
+    - _links : HashSet<Link>
     + <<readonly>> NaptanId : string
     + Station(naptan:string)
     + Station(naptan:string, name:string)
     + AddLink(newLink:Link) : void
     + GetLinks() : List<Link>
-    + CostTo(destID:string) : int
-    + HasLink(destID:string) : bool
-    + GetLinkByDestId(Id:string) : Link
-    + ModifyLink(lineID:string, destID:string, newTime:TimeSpan) : void
-    + ModifyLink(destID:string, newTime:TimeSpan) : void
+    + CostTo(destId:string) : int
+    + HasLink(destId:string) : bool
+    <<internal>> GetLinkByDestId(id:string) : Link
+    + ModifyLink(lineId:string, destId:string, newTime:TimeSpan) : void
+    + ModifyLink(destId:string, newTime:TimeSpan) : void
 }
-class "HashSet`1"<T> {
-}
-Station --> "_links<Link>" "HashSet`1"
 @enduml

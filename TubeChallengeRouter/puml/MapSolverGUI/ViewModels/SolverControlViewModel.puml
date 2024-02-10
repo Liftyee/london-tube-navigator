@@ -5,6 +5,12 @@ class SolverControlViewModel {
     - _swapProb : double
     - _tempFactor : double
     - _maxIterations : int
+    - <<readonly>> _solver : ISolver
+    + SolveCommand : ICommand <<get>>
+    + TestControls : ICommand <<get>>
+    + OutputLog : ObservableCollection<string> <<get>>
+    - {static} UILogger : UIOutputSink <<get>>
+    - {static} <<readonly>> Logger : ILogger
     + SolveProgress : double <<get>> <<set>>
     + StartStation : string? <<get>> <<set>>
     + SwapProb : double <<get>> <<set>>
@@ -17,13 +23,14 @@ class SolverControlViewModel {
     - ShowSolverResult(result:Route) : void
     - SetProgress(progress:double) : void
     - {static} GetCachePath() : string
+    - WriteRouteToFile(tube:Network, route:Route) : void
 }
-class "ObservableCollection`1"<T> {
+class UIOutputSink {
+    - _outputLog : ObservableCollection<string>?
+    + Emit(logEvent:LogEvent) : void
+    + AddOutput(output:ObservableCollection<string>) : void
 }
 ReactiveObject <|-- SolverControlViewModel
-SolverControlViewModel --> "solver" ISolver
-SolverControlViewModel --> "SolveCommand" ICommand
-SolverControlViewModel --> "TestControls" ICommand
-SolverControlViewModel o-> "OutputLog<string>" "ObservableCollection`1"
-SolverControlViewModel o-> "logger" ILogger
+SolverControlViewModel +-- UIOutputSink
+ILogEventSink <|-- UIOutputSink
 @enduml
