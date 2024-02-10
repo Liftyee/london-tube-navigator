@@ -25,7 +25,6 @@ public class SolverControlViewModel : ReactiveObject
     private NetworkFactory _tubeFactory;
     private Network? _tube;
     public ICommand SolveCommand { get; }
-    public ICommand TestControls { get; }
     public ObservableCollection<string> OutputLog { get; } = new ObservableCollection<string>();
     
     private static UiOutputSink UiLogger { get; } = new UiOutputSink();
@@ -107,7 +106,6 @@ public class SolverControlViewModel : ReactiveObject
         MaxIterations = _solver.GetMaxIterations();
 
         SolveCommand = ReactiveCommand.CreateFromTask(SolveRouteAsync);
-        TestControls = ReactiveCommand.CreateFromTask(TestOutputs);
         
         InitializeNetwork();
     }

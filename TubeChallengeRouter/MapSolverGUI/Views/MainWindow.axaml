@@ -55,8 +55,6 @@
                             Maximum="100000000"/>
                 </Grid>
                 <WrapPanel Orientation="Horizontal">
-                    <Button Command="{Binding TestControls}"
-                            Content="Test controls"/>
                     <Button Command="{Binding SolveCommand}" 
                             Content="Generate route"/>
                 </WrapPanel>
