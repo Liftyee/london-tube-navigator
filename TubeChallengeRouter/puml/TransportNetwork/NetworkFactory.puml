@@ -5,8 +5,8 @@ enum NetworkType {
     Dijkstra,
 }
 class NetworkFactory {
-    - _dataSource : INetworkDataSource
     + NetworkFactory(dataSource:INetworkDataSource)
     + Generate(type:NetworkType, logger:ILogger) : Network
 }
+NetworkFactory --> "_dataSource" INetworkDataSource
 @enduml

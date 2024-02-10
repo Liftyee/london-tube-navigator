@@ -1,10 +1,12 @@
 @startuml
 class OrderingTests {
-    - _minQueue : PriorityQueue<int>
-    - _maxQueue : PriorityQueue<int>
     + SetUp() : void
     + MinQueue_OrdersSmallestFirst() : void
     + MaxQueue_OrdersLargestFirst() : void
     + Queue_HandlesDuplicates() : void
 }
+class "PriorityQueue`1"<T> {
+}
+OrderingTests --> "_minQueue<int>" "PriorityQueue`1"
+OrderingTests --> "_maxQueue<int>" "PriorityQueue`1"
 @enduml

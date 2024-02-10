@@ -1,9 +1,11 @@
 @startuml
 class SizeTests {
-    - _queue : PriorityQueue<int>
     + SetUp() : void
     + EmptyQueue_HasSizeZero() : void
     + InsertingOneItem_IncreasesSize() : void
     + RemovingAllItems_DecreasesSizeToZero() : void
 }
+class "PriorityQueue`1"<T> {
+}
+SizeTests --> "_queue<int>" "PriorityQueue`1"
 @enduml

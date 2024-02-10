@@ -1,8 +1,5 @@
 @startuml
 abstract class Network {
-    # Stations : Dictionary<string, Station>
-    # Lines : Dictionary<int, Line>
-    # Logger : ILogger
     # NEdges : int
     # <<const>> InfCost : int = 1000000000
     + Network(logger:ILogger)
@@ -29,4 +26,9 @@ abstract class Network {
     + RecalculateRouteCosts(route:Route) : void
     + RecalculateRouteData(route:Route) : void
 }
+class "Dictionary`2"<T1,T2> {
+}
+Network --> "Stations<string,Station>" "Dictionary`2"
+Network --> "Lines<int,Line>" "Dictionary`2"
+Network --> "Logger" ILogger
 @enduml

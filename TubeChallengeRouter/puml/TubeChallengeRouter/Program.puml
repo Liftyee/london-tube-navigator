@@ -1,6 +1,5 @@
 @startuml
 class Program {
-    - {static} _logger : ILogger
     - {static} Main(args:string[]) : void
     - {static} TestTubeGen() : void
     - {static} WriteStationsToFile() : void
@@ -8,4 +7,5 @@ class Program {
     - {static} LinearNetworkTestRouting() : void
     - {static} GetCachePath() : string
 }
+Program --> "_logger" ILogger
 @enduml

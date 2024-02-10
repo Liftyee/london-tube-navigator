@@ -2,11 +2,6 @@
 class SvgMapViewModel {
     - _stationName : string?
     - _showSvg : bool
-    + TestCommand : ICommand <<get>>
-    + ConversationLog : ObservableCollection<string> <<get>>
-    - _svgMap : SKSvg
-    - SvgMap : SKSvg <<get>> <<set>>
-    - _svg : Avalonia.Svg.Skia.Svg
     - AddToConvo(content:string) : void
     + SvgMapViewModel()
     + StationName : string? <<get>> <<set>>
@@ -17,5 +12,11 @@ class SvgMapViewModel {
     - HideGroup(canvas:SKCanvas, groupId:string) : void
     - HideSvg() : void
 }
+class "ObservableCollection`1"<T> {
+}
 ReactiveObject <|-- SvgMapViewModel
+SvgMapViewModel --> "TestCommand" ICommand
+SvgMapViewModel o-> "ConversationLog<string>" "ObservableCollection`1"
+SvgMapViewModel --> "_svgMap" SKSvg
+SvgMapViewModel --> "SvgMap" SKSvg
 @enduml

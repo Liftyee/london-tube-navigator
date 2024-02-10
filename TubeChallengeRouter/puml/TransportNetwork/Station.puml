@@ -1,8 +1,6 @@
 @startuml
 class Station {
     + <<readonly>> Name : string?
-    <<internal>> Lines : List<Line>?
-    - _links : HashSet<Link>
     + <<readonly>> NaptanId : string
     + Station(naptan:string)
     + Station(naptan:string, name:string)
@@ -14,4 +12,7 @@ class Station {
     + ModifyLink(lineId:string, destId:string, newTime:TimeSpan) : void
     + ModifyLink(destId:string, newTime:TimeSpan) : void
 }
+class "HashSet`1"<T> {
+}
+Station --> "_links<Link>" "HashSet`1"
 @enduml

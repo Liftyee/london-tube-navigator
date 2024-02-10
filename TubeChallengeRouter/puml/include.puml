@@ -5,8 +5,6 @@ enum Priority {
 }
 class "PriorityQueue`1"<T> <<sealed>> {
     - _nodeCount : int
-    - _nodes : T[]
-    - <<readonly>> _priority : Priority
     + Count : int <<get>>
     + PriorityQueue(size:int, prio:Priority)
     + Insert(item:T) : void
@@ -17,50 +15,18 @@ class "PriorityQueue`1"<T> <<sealed>> {
     - SwapIndices(pos1:int, pos2:int) : void
     + Top() : T
 }
+class "IComparable`1"<T> {
+}
+"PriorityQueue`1" --> "_priority" Priority
 class SolverTests {
     + Setup() : void
     + Test1() : void
 }
-class ExceptionTests {
-    - _queue : PriorityQueue<int>
-    + SetUp() : void
-    + InsertingIntoFullQueue_ThrowsException() : void
-    + RemovingFromEmptyQueue_ThrowsException() : void
-    + TopOfEmptyQueue_ThrowsException() : void
-}
-class OrderingTests {
-    - _minQueue : PriorityQueue<int>
-    - _maxQueue : PriorityQueue<int>
-    + SetUp() : void
-    + MinQueue_OrdersSmallestFirst() : void
-    + MaxQueue_OrdersLargestFirst() : void
-    + Queue_HandlesDuplicates() : void
-}
-class SizeTests {
-    - _queue : PriorityQueue<int>
-    + SetUp() : void
-    + EmptyQueue_HasSizeZero() : void
-    + InsertingOneItem_IncreasesSize() : void
-    + RemovingAllItems_DecreasesSizeToZero() : void
-}
-class Program {
-    - {static} _logger : ILogger
-    - {static} Main(args:string[]) : void
-    - {static} TestTubeGen() : void
-    - {static} WriteStationsToFile() : void
-    - {static} TestTubeGenFloyd() : void
-    - {static} LinearNetworkTestRouting() : void
-    - {static} GetCachePath() : string
-}
 class TflModelWrapper {
-    - _stationFetcher : StopPointApi
-    - _lineApi : LineApi
-    - _logger : ILogger
     - _cachePath : string
     - <<const>> MaxCacheAge : int = 30
     - <<const>> PercentOfTotal : int = 90
     - <<const>> InitialPercent : double = 3.0
-    - _progressCallback : Action<double>
     + TflModelWrapper(logger:ILogger, cachePath:string)
     <<internal>> GetSequenceById(segments:List<TflApiPresentationEntitiesStopPointSequence>, id:int) : TflApiPresentationEntitiesStopPointSequence
     <<internal>> GetFirstStop(segment:TflApiPresentationEntitiesStopPointSequence) : TflApiPresentationEntitiesMatchedStop
@@ -75,7 +41,13 @@ class TflModelWrapper {
     - PopulateNetworkTimes(network:Network) : void
     - UpdateTimetableCache() : void
 }
+class "Action`1"<T> {
+}
 INetworkDataSource <|-- TflModelWrapper
+TflModelWrapper --> "_stationFetcher" StopPointApi
+TflModelWrapper --> "_lineApi" LineApi
+TflModelWrapper --> "_logger" ILogger
+TflModelWrapper o-> "_progressCallback<double>" "Action`1"
 class LinearNetwork {
     - <<readonly>> _numNodes : int
     + LinearNetwork(nNodes:int)
@@ -109,13 +81,9 @@ IDataTemplate <|-- ViewLocator
 interface ITimetable {
 }
 class Route {
-    + TargetStations : List<string>
-    + IntermediateStations : List<List<string>>
-    - _duration : TimeSpan
     - _cost : int
     + Count : int <<get>>
     + Cost : int <<get>>
-    + Duration : TimeSpan <<get>>
     + Route(stations:List<string>, duration:TimeSpan, cost:int, intermediateStations:List<List<string>>?)
     + Route(stations:List<string>)
     + <<override>> ToString() : string
@@ -128,10 +96,14 @@ class Route {
     + Copy() : Route
     + InterStationCount() : int
 }
+class "List`1"<T> {
+}
+Route --> "TargetStations<string>" "List`1"
+Route --> "IntermediateStations<List<string>>" "List`1"
+Route --> "_duration" TimeSpan
+Route --> "Duration" TimeSpan
 class Station {
     + <<readonly>> Name : string?
-    <<internal>> Lines : List<Line>?
-    - _links : HashSet<Link>
     + <<readonly>> NaptanId : string
     + Station(naptan:string)
     + Station(naptan:string, name:string)
@@ -143,6 +115,9 @@ class Station {
     + ModifyLink(lineId:string, destId:string, newTime:TimeSpan) : void
     + ModifyLink(destId:string, newTime:TimeSpan) : void
 }
+class "HashSet`1"<T> {
+}
+Station --> "_links<Link>" "HashSet`1"
 interface INetworkDataSource {
     + PopulateNetworkStructure(network:Network) : void
     + SetProgressCallback(callback:Action<double>) : void
@@ -153,13 +128,11 @@ enum NetworkType {
     Dijkstra,
 }
 class NetworkFactory {
-    - _dataSource : INetworkDataSource
     + NetworkFactory(dataSource:INetworkDataSource)
     + Generate(type:NetworkType, logger:ILogger) : Network
 }
+NetworkFactory --> "_dataSource" INetworkDataSource
 class DijkstraCostNetwork {
-    - _costCache : Dictionary<string, Dictionary<string, int?>>
-    - _pathCache : Dictionary<string, Dictionary<string, List<string>>>
     + DijkstraCostNetwork(logger:ILogger)
     <<internal>> <<override>> Initialise() : void
     + <<override>> CostFunction(startId:string, endId:string, path:List<string>) : int
@@ -175,7 +148,13 @@ struct DijkstraNode {
     + CompareTo(other:DijkstraNode) : int
     + DijkstraNode(stationId:string, cost:int)
 }
+class "Dictionary`2"<T1,T2> {
+}
+class "IComparable`1"<T> {
+}
 Network <|-- DijkstraCostNetwork
+DijkstraCostNetwork --> "_costCache<string,Dictionary<string, int?>>" "Dictionary`2"
+DijkstraCostNetwork --> "_pathCache<string,Dictionary<string, List<string>>>" "Dictionary`2"
 DijkstraCostNetwork +-- DijkstraNode
 "IComparable`1" "<DijkstraNode>" <|-- DijkstraNode
 enum Dir {
@@ -190,11 +169,7 @@ class Line {
 }
 struct Link {
     - _trainTimes : ITimetable?
-    + <<readonly>> Destination : Station
-    + <<readonly>> Origin : Station
-    <<internal>> Duration : TimeSpan <<get>>
     + Line : Line? <<get>>
-    + Dir : Dir <<get>>
     - _durationEdited : bool
     + Link(start:Station, end:Station, line:Line?, dir:Dir)
     <<internal>> SetDuration(duration:TimeSpan) : void
@@ -202,10 +177,11 @@ struct Link {
     + <<override>> Equals(other:Object) : bool
     + GetCost() : int
 }
+Link --> "Destination" Station
+Link --> "Origin" Station
+Link --> "Duration" TimeSpan
+Link --> "Dir" Dir
 abstract class Network {
-    # Stations : Dictionary<string, Station>
-    # Lines : Dictionary<int, Line>
-    # Logger : ILogger
     # NEdges : int
     # <<const>> InfCost : int = 1000000000
     + Network(logger:ILogger)
@@ -232,15 +208,22 @@ abstract class Network {
     + RecalculateRouteCosts(route:Route) : void
     + RecalculateRouteData(route:Route) : void
 }
+class "Dictionary`2"<T1,T2> {
+}
+Network --> "Stations<string,Station>" "Dictionary`2"
+Network --> "Lines<int,Line>" "Dictionary`2"
+Network --> "Logger" ILogger
 class FloydCostNetwork {
-    - _costMatrix : Dictionary<string, Dictionary<string, int>>
     + FloydCostNetwork(logger:ILogger)
     <<internal>> <<override>> Initialise() : void
     + <<override>> CostFunction(startId:string, endId:string) : int
     - PreprocessFloyd() : void
     + EnumerateCostMatrix() : string
 }
+class "Dictionary`2"<T1,T2> {
+}
 Network <|-- FloydCostNetwork
+FloydCostNetwork --> "_costMatrix<string,Dictionary<string, int>>" "Dictionary`2"
 class StrictAnnealingSolver {
     + StrictAnnealingSolver(logger:ILogger)
     + StrictAnnealingSolver(logger:ILogger, progressCallback:Action<double>)
@@ -258,8 +241,6 @@ interface ISolver {
     + GetCoolDownFactor() : double
 }
 class AnnealingSolver {
-    # <<readonly>> Logger : ILogger
-    # <<readonly>> ProgressCallback : Action<double>
     - _randomSwapProbability : double
     # MaxIterations : int
     # CoolDownFactor : double
@@ -275,6 +256,8 @@ class AnnealingSolver {
     + SetCoolDownFactor(factor:double) : void
     + GetCoolDownFactor() : double
 }
+class "Action`1"<T> {
+}
 enum AnnealOpType {
     SwapRandom,
     SwapIntermediate,
@@ -287,108 +270,31 @@ class CostMismatchException {
     + CostMismatchException(calculatedCost:int, routeCost:int)
 }
 ISolver <|-- AnnealingSolver
+AnnealingSolver --> "Logger" ILogger
+AnnealingSolver o-> "ProgressCallback<double>" "Action`1"
 AnnealingSolver +-- AnnealOpType
 AnnealingSolver +-- NegativeCostException
 ApplicationException <|-- NegativeCostException
 AnnealingSolver +-- CostMismatchException
 ApplicationException <|-- CostMismatchException
-class RouteTests {
-    - _route : Route
-    + SetUp() : void
-    + TestExternalEditRoute_ChangesInternalRoute() : void
-}
-class LinkTests {
-    - _stubStation1 : Station
-    - _stubStation2 : Station
-    - _link : Link
-    + SetUp() : void
-    + Constructor_SetsDetails() : void
-    + SetDuration_ChangesDurationAttribute() : void
-    + SetLine_ChangesLineAttribute() : void
-    + SetDurationMoreThanOnce_ThrowsException() : void
-    + SetLineMoreThanOnce_ThrowsException() : void
-}
-class RouteSolverTests {
-}
-class DijkstraNetworkTests {
-    - _network : Network
-    - _tubeNetwork : Network
-    + SetUp() : void
-    + Dijkstra_FindsPath() : void
-    + Dijkstra_SetsIntermediate() : void
-    + RandomRoute_HasIntermediate() : void
-    + AdjacentStations_NoIntermediate() : void
-    + TubeNetwork_AdjacentStationsNoIntermediate() : void
-    + RandomRoute_CostAccurate() : void
-    + TubeNetwork_RouteCostEqualToSegmentSum() : void
-    + Swap_SwapsStations() : void
-    + Swap_UpdatesCosts() : void
-    + Swap_UpdatesPath() : void
-}
-class ProblemCaseTests {
-    - _network : Network
-    + SetUp() : void
-    + ProblemCase_CostPositive() : void
-}
-class Tests {
-    - _stat1 : Station
-    - _stat2 : Station
-    + Setup() : void
-    + Constructor_SetsNaptan() : void
-    + Constructor_SetsName() : void
-    + AddingLink_UpdatesGetLinks() : void
-    + AddingLink_UpdatesHasLink() : void
-}
-class NetworkTests {
-    - _network : Network
-    + SetUp() : void
-    + SwapInsert_InsertsStation() : void
-    + SwapInsert_UpdatesStations() : void
-    + SwapInsert_UpdatesCost() : void
-    + CostFunction_CorrectCost() : void
-    + SwapInsert_UpdatesRoute() : void
-    + VerifyTestNetworkCosts() : void
-    + TestNetwork_CostSymmetric() : void
-    + RecalculateRoute_DataAccurate() : void
-}
 class MainWindow <<partial>> {
     + MainWindow()
 }
 Window <|-- MainWindow
-class MainWindowViewModel {
-    + Greeting : string <<get>>
-    + SimpleViewModel : SimpleViewModel <<get>>
-    + ReactiveViewModel : ReactiveViewModel <<get>>
-    + SvgMapViewModel : SvgMapViewModel <<get>>
-    + SolverControlViewModel : SolverControlViewModel <<get>>
-}
-class SimpleViewModel {
-    +  <<event>> PropertyChanged : PropertyChangedEventHandler? 
-    - RaisePropertyChanged(propertyName:string?) : void
-    - _name : string?
-    + Name : string? <<get>> <<set>>
-    + Greeting : string <<get>>
-}
-ViewModelBase <|-- MainWindowViewModel
-INotifyPropertyChanged <|-- SimpleViewModel
 class SolverControlViewModel {
     - _startStationName : string?
     - _solveProgress : double
     - _swapProb : double
     - _tempFactor : double
     - _maxIterations : int
-    - <<readonly>> _solver : ISolver
-    + SolveCommand : ICommand <<get>>
-    + TestControls : ICommand <<get>>
-    + OutputLog : ObservableCollection<string> <<get>>
-    - {static} UILogger : UIOutputSink <<get>>
-    - {static} <<readonly>> Logger : ILogger
+    - _tube : Network?
     + SolveProgress : double <<get>> <<set>>
     + StartStation : string? <<get>> <<set>>
     + SwapProb : double <<get>> <<set>>
     + TempFactor : double <<get>> <<set>>
     + MaxIterations : int <<get>> <<set>>
     + SolverControlViewModel()
+    - InitializeNetwork() : void
     - RunSolve() : void
     - <<async>> TestOutputs() : Task
     - <<async>> SolveRouteAsync() : Task
@@ -397,22 +303,26 @@ class SolverControlViewModel {
     - {static} GetCachePath() : string
     - WriteRouteToFile(tube:Network, route:Route) : void
 }
-class UIOutputSink {
+class "ObservableCollection`1"<T> {
+}
+class UiOutputSink {
     - _outputLog : ObservableCollection<string>?
     + Emit(logEvent:LogEvent) : void
     + AddOutput(output:ObservableCollection<string>) : void
 }
 ReactiveObject <|-- SolverControlViewModel
-SolverControlViewModel +-- UIOutputSink
-ILogEventSink <|-- UIOutputSink
+SolverControlViewModel --> "_solver" ISolver
+SolverControlViewModel --> "_source" INetworkDataSource
+SolverControlViewModel --> "_tubeFactory" NetworkFactory
+SolverControlViewModel --> "SolveCommand" ICommand
+SolverControlViewModel o-> "OutputLog<string>" "ObservableCollection`1"
+SolverControlViewModel o-> "UiLogger" UiOutputSink
+SolverControlViewModel o-> "Logger" ILogger
+SolverControlViewModel +-- UiOutputSink
+ILogEventSink <|-- UiOutputSink
 class SvgMapViewModel {
     - _stationName : string?
     - _showSvg : bool
-    + TestCommand : ICommand <<get>>
-    + ConversationLog : ObservableCollection<string> <<get>>
-    - _svgMap : SKSvg
-    - SvgMap : SKSvg <<get>> <<set>>
-    - _svg : Avalonia.Svg.Skia.Svg
     - AddToConvo(content:string) : void
     + SvgMapViewModel()
     + StationName : string? <<get>> <<set>>
@@ -423,7 +333,13 @@ class SvgMapViewModel {
     - HideGroup(canvas:SKCanvas, groupId:string) : void
     - HideSvg() : void
 }
+class "ObservableCollection`1"<T> {
+}
 ReactiveObject <|-- SvgMapViewModel
+SvgMapViewModel --> "TestCommand" ICommand
+SvgMapViewModel o-> "ConversationLog<string>" "ObservableCollection`1"
+SvgMapViewModel --> "_svgMap" SKSvg
+SvgMapViewModel --> "SvgMap" SKSvg
 class ViewModelBase {
 }
 class ReactiveViewModel {

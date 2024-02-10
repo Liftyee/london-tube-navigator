@@ -5,8 +5,6 @@ enum Priority {
 }
 class "PriorityQueue`1"<T> <<sealed>> {
     - _nodeCount : int
-    - _nodes : T[]
-    - <<readonly>> _priority : Priority
     + Count : int <<get>>
     + PriorityQueue(size:int, prio:Priority)
     + Insert(item:T) : void
@@ -17,4 +15,7 @@ class "PriorityQueue`1"<T> <<sealed>> {
     - SwapIndices(pos1:int, pos2:int) : void
     + Top() : T
 }
+class "IComparable`1"<T> {
+}
+"PriorityQueue`1" --> "_priority" Priority
 @enduml
