@@ -84,7 +84,8 @@
                     </DockPanel>
             </StackPanel>
         </TabItem>
-                
+        
+        <!--
         <TabItem Header="SVG Test">
             <StackPanel DataContext="{Binding SvgMapViewModel}" Spacing="10">
                 <TextBlock Text="Test SVG display"/>
@@ -96,9 +97,10 @@
                 <ItemsControl Margin="5"
                               ItemsSource="{Binding ConversationLog}"/>
                 <Svg Path="/home/yee/tubemap.svg" IsVisible="{Binding ShowSvg}"/>
-                <!-- the Draw function of this canvas is set in MainWindow.axaml.cs -->
+                <Svg Source="{Binding SVGSource}"/>
                 <SKCanvasControl Name="CanvasControl"/>
             </StackPanel>
         </TabItem>
+        -->
     </TabControl>
 </Window>
