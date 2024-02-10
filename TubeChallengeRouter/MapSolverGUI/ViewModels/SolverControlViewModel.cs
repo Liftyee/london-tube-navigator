@@ -21,18 +21,21 @@ public class SolverControlViewModel : ReactiveObject
     private double _tempFactor;
     private int _maxIterations;
     private readonly ISolver _solver;
+    private INetworkDataSource _source;
+    private NetworkFactory _tubeFactory;
+    private Network? _tube;
     public ICommand SolveCommand { get; }
     public ICommand TestControls { get; }
     public ObservableCollection<string> OutputLog { get; } = new ObservableCollection<string>();
     
-    private static UIOutputSink UILogger { get; } = new UIOutputSink();
+    private static UiOutputSink UiLogger { get; } = new UiOutputSink();
     private static readonly ILogger Logger = new LoggerConfiguration()
         .MinimumLevel.Debug()
         .WriteTo.Console()
-        .WriteTo.Sink(UILogger, LogEventLevel.Information)
+        .WriteTo.Sink(UiLogger, LogEventLevel.Information)
         .CreateLogger();
     
-    private class UIOutputSink : ILogEventSink
+    private class UiOutputSink : ILogEventSink
     {
         private ObservableCollection<string>? _outputLog;
         
@@ -97,7 +100,7 @@ public class SolverControlViewModel : ReactiveObject
     public SolverControlViewModel()
     {
         Logger.Information("Hello World! Logging is {Description}.","online");
-        UILogger.AddOutput(OutputLog);
+        UiLogger.AddOutput(OutputLog);
         _solver = new AnnealingSolver(Logger, SetProgress);
         SwapProb = _solver.GetRandomSwapProbability();
         TempFactor = _solver.GetCoolDownFactor();
@@ -105,29 +108,39 @@ public class SolverControlViewModel : ReactiveObject
 
         SolveCommand = ReactiveCommand.CreateFromTask(SolveRouteAsync);
         TestControls = ReactiveCommand.CreateFromTask(TestOutputs);
+        
+        InitializeNetwork();
     }
 
-    private void RunSolve()
+    private void InitializeNetwork()
     {
-        INetworkDataSource source = new TflModelWrapper(Logger, GetCachePath());
-        source.SetProgressCallback(SetProgress);
-        NetworkFactory tubeFactory = new NetworkFactory(source);
-        Network tube;
+        if (_tube is not null)
+        {
+            return;
+        }
+        _source = new TflModelWrapper(Logger, GetCachePath());
+        _source.SetProgressCallback(SetProgress);
+        _tubeFactory = new NetworkFactory(_source);
         try
         {
-            tube = tubeFactory.Generate(NetworkType.Dijkstra, Logger);
+            _tube = _tubeFactory.Generate(NetworkType.Dijkstra, Logger);
         }
         catch (IO.Swagger.Client.ApiException)
         {
             Logger.Error("Could not fetch Tube network data. Try checking your internet connection.");
             throw new Exception("Couldn't fetch data from API.");
         }
-        Logger.Debug("Result: {A}",tube.ToString());
-        
-        Route route = _solver.Solve(tube);
-        Logger.Debug("Route: {A} (duration {B})",tube.RouteToStringStationSeq(route), route.Duration);
+        Logger.Debug("Result: {A}",_tube.ToString());
+    }
 
-        WriteRouteToFile(tube, route);
+    private void RunSolve()
+    {
+        InitializeNetwork();
+        
+        Route route = _solver.Solve(_tube);
+        Logger.Debug("Route: {A} (duration {B})",_tube.RouteToStringStationSeq(route), route.Duration);
+
+        WriteRouteToFile(_tube, route);
         ShowSolverResult(route);
     }
 
