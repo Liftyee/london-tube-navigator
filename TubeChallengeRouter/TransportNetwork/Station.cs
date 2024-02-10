@@ -4,7 +4,6 @@ public class Station
 {
     // some attributes internal so that data fetchers can update values after instantiation
     public readonly string? Name;
-    internal List<Line>? Lines;
     private HashSet<Link> _links;
     public readonly string NaptanId;
 
@@ -29,12 +28,14 @@ public class Station
         return this._links.ToList();
     }
 
+    // Cost function to a destination station.
     public int CostTo(string destId)
     {
         return this.GetLinkByDestId(destId).GetCost();
     }
 
-    // NOTE: Can't use a dictionary, because the link destinations are not unique!
+    // NOTE: Can't use a dictionary for storing links, because the link destinations are not unique!
+    // Predicate for checking if a link to a given destination exists
     public bool HasLink(string destId)
     {
         foreach (Link link in _links)
@@ -48,7 +49,8 @@ public class Station
         return false;
     }
 
-    public Link GetLinkByDestId(string id)
+    // Return link object for a given destination station ID
+    internal Link GetLinkByDestId(string id)
     {
         foreach (Link link in _links)
         {
@@ -61,6 +63,7 @@ public class Station
         throw new ArgumentException($"No link found with ID {id}");
     }
     
+    // Modify the duration of an existing link on a given line to a given destination
     public void ModifyLink(string lineId, string destId, TimeSpan newTime)
     {
         foreach (Link link in _links)
@@ -75,6 +78,7 @@ public class Station
         throw new ArgumentException($"No link found with ID {destId} on line {lineId}");
     }
     
+    // Modify the duration of an existing link with given destination, on any line
     public void ModifyLink(string destId, TimeSpan newTime)
     {
         bool matched = false;
@@ -84,7 +88,7 @@ public class Station
             {
                 matched = true;
                 link.SetDuration(newTime);
-                // many links might match, don't return
+                // many links might match, so don't return here
             }
         }
 
