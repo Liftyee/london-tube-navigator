@@ -1,4 +1,31 @@
 @startuml
+class SolverControlViewModel {
+    - _startStationName : string?
+    - _solveProgress : double
+    - _swapProb : double
+    - _tempFactor : double
+    - _maxIterations : int
+    - _tube : Network?
+    + SolveProgress : double <<get>> <<set>>
+    + StartStation : string? <<get>> <<set>>
+    + SwapProb : double <<get>> <<set>>
+    + TempFactor : double <<get>> <<set>>
+    + MaxIterations : int <<get>> <<set>>
+    + SolverControlViewModel()
+    - InitializeNetwork() : void
+    - RunSolve() : void
+    - <<async>> TestOutputs() : Task
+    - <<async>> SolveRouteAsync() : Task
+    - ShowSolverResult(result:Route) : void
+    - SetProgress(progress:double) : void
+    - {static} GetCachePath() : string
+    - WriteRouteToFile(tube:Network, route:Route) : void
+}
+
+SolverControlViewModel --> "_solver" ISolver
+SolverControlViewModel --> "_source" INetworkDataSource
+SolverControlViewModel --> "_tubeFactory" NetworkFactory
+
 class AnnealingSolver {
     - _randomSwapProbability : double
     # MaxIterations : int
@@ -16,6 +43,8 @@ class AnnealingSolver {
     + SetCoolDownFactor(factor:double) : void
     + GetCoolDownFactor() : double
 }
+class "Action`1"<T> {
+}
 enum AnnealOpType {
     SwapRandom,
     SwapIntermediate,
@@ -28,6 +57,7 @@ class CostMismatchException {
     + CostMismatchException(calculatedCost:int, routeCost:int)
 }
 ISolver <|-- AnnealingSolver
+AnnealingSolver o-> "ProgressCallback<double>" "Action`1"
 AnnealingSolver +-- AnnealOpType
 AnnealingSolver +-- NegativeCostException
 AnnealingSolver +-- CostMismatchException

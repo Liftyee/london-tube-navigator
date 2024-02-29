@@ -11,5 +11,4 @@ public interface ISolver
     public int GetMaxIterations();
     public void SetCoolDownFactor(double factor);
     public double GetCoolDownFactor();
-    
 }

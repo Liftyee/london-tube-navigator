@@ -21,21 +21,8 @@ class SolverControlViewModel {
     - {static} GetCachePath() : string
     - WriteRouteToFile(tube:Network, route:Route) : void
 }
-class "ObservableCollection`1"<T> {
-}
-class UiOutputSink {
-    - _outputLog : ObservableCollection<string>?
-    + Emit(logEvent:LogEvent) : void
-    + AddOutput(output:ObservableCollection<string>) : void
-}
-ReactiveObject <|-- SolverControlViewModel
+
 SolverControlViewModel --> "_solver" ISolver
 SolverControlViewModel --> "_source" INetworkDataSource
 SolverControlViewModel --> "_tubeFactory" NetworkFactory
-SolverControlViewModel --> "SolveCommand" ICommand
-SolverControlViewModel o-> "OutputLog<string>" "ObservableCollection`1"
-SolverControlViewModel o-> "UiLogger" UiOutputSink
-SolverControlViewModel o-> "Logger" ILogger
-SolverControlViewModel +-- UiOutputSink
-ILogEventSink <|-- UiOutputSink
 @enduml

@@ -1,0 +1,55 @@
+@startuml
+class Route {
+    - _cost : int
+    + Count : int <<get>>
+    + Cost : int <<get>>
+    + Route(stations:List<string>, duration:TimeSpan, cost:int, intermediateStations:List<List<string>>?)
+    + Route(stations:List<string>)
+    + <<override>> ToString() : string
+    + GetTargetPath() : List<string>
+    <<internal>> GetIntermediateStations(segmentIndex:int) : List<string>
+    <<internal>> GetIntermediateStations() : List<List<string>>
+    + UpdateDuration(newDuration:TimeSpan) : void
+    + UpdateCost(newCost:int) : void
+    + UpdateIntermediateStations(segmentIndex:int, updateTo:List<string>) : void
+    + Copy() : Route
+    + InterStationCount() : int
+}
+class "List`1"<T> {
+}
+Route --> "TargetStations<string>" "List`1"
+Route --> "IntermediateStations<List<string>>" "List`1"
+Route --> "_duration" TimeSpan
+Route --> "Duration" TimeSpan
+class Station {
+    + <<readonly>> Name : string?
+    + <<readonly>> NaptanId : string
+    + Station(naptan:string)
+    + Station(naptan:string, name:string)
+    + AddLink(newLink:Link) : void
+    + GetLinks() : List<Link>
+    + CostTo(destId:string) : int
+    + HasLink(destId:string) : bool
+    <<internal>> GetLinkByDestId(id:string) : Link
+    + ModifyLink(lineId:string, destId:string, newTime:TimeSpan) : void
+    + ModifyLink(destId:string, newTime:TimeSpan) : void
+}
+class "HashSet`1"<T> {
+}
+Station --> "_links<Link>" "HashSet`1"
+
+struct Link {
+    - _trainTimes : ITimetable?
+    + Line : Line? <<get>>
+    - _durationEdited : bool
+    + Link(start:Station, end:Station, line:Line?, dir:Dir)
+    <<internal>> SetDuration(duration:TimeSpan) : void
+    <<internal>> SetLine(line:Line) : void
+    + <<override>> Equals(other:Object) : bool
+    + GetCost() : int
+}
+Link --> "Destination" Station
+Link --> "Origin" Station
+Link --> "Duration" TimeSpan
+Link --> "Dir" Dir
+@enduml

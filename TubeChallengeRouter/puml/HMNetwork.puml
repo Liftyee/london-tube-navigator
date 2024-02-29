@@ -1,0 +1,94 @@
+@startuml
+class LinearNetwork {
+    - <<readonly>> _numNodes : int
+    + LinearNetwork(nNodes:int)
+    + PopulateNetworkStructure(network:Network) : void
+    + SetProgressCallback(callback:Action<double>) : void
+}
+class TestNetwork1 {
+    + PopulateNetworkStructure(network:Network) : void
+    + SetProgressCallback(callback:Action<double>) : void
+}
+INetworkDataSource <|-- LinearNetwork
+INetworkDataSource <|-- TestNetwork1
+
+interface INetworkDataSource {
+    + PopulateNetworkStructure(network:Network) : void
+    + SetProgressCallback(callback:Action<double>) : void
+}
+enum NetworkType {
+    Simple,
+    Floyd,
+    Dijkstra,
+}
+class NetworkFactory {
+    + NetworkFactory(dataSource:INetworkDataSource)
+    + Generate(type:NetworkType, logger:ILogger) : Network
+}
+NetworkFactory --> "_dataSource" INetworkDataSource
+class DijkstraCostNetwork {
+    + DijkstraCostNetwork(logger:ILogger)
+    <<internal>> <<override>> Initialise() : void
+    + <<override>> CostFunction(startId:string, endId:string, path:List<string>) : int
+    + <<override>> CostFunction(startId:string, endId:string) : int
+    - DijkstraLookup(startId:string, endId:string, path:List<string>) : int
+    + <<override>> Swap(route:Route, idxA:int, idxB:int) : void
+    + <<override>> TakeAndInsert(route:Route, takeFrom:int, insertBefore:int) : void
+    - UpdatePathReturnCost(route:Route, idxA:int) : int
+}
+struct DijkstraNode {
+    + <<readonly>> StationId : string
+    + <<readonly>> Cost : int
+    + CompareTo(other:DijkstraNode) : int
+    + DijkstraNode(stationId:string, cost:int)
+}
+Network <|-- DijkstraCostNetwork
+DijkstraCostNetwork +-- DijkstraNode
+enum Dir {
+    Inbound,
+    Outbound,
+    Bidirectional,
+}
+class Line {
+    + <<readonly>> Name : string
+    + <<readonly>> Id : string
+    + Line(id:string, name:string)
+}
+
+abstract class Network {
+    # NEdges : int
+    # <<const>> InfCost : int = 1000000000
+    + Network(logger:ILogger)
+    <<internal>> <<virtual>> Initialise() : void
+    - AddStationObject(stationToAdd:Station) : void
+    + AddStationId(naptanId:string, name:string?) : void
+    + WriteStationsToFile(file:FileStream) : void
+    + LinkStationsPartial(startId:string, endId:string, direction:Dir, line:Line?) : void
+    + UpdateLink(startId:string, endId:string, newTime:TimeSpan) : void
+    + HasStationById(id:string) : bool
+    + <<override>> ToString() : string
+    + GetStationIDs() : List<string>
+    + <<virtual>> CostFunction(startId:string, endId:string, path:List<string>) : int
+    + <<virtual>> CostFunction(startId:string, endId:string) : int
+    + <<virtual>> GenerateRandomRoute() : Route
+    + <<virtual>> CostFunction(route:Route) : int
+    + <<virtual>> TravelTime(route:Route) : TimeSpan
+    + <<virtual>> TravelTime(startId:string, endId:string) : TimeSpan
+    + RouteToStringStationSeq(route:Route) : string
+    + RouteDetailsToStream(route:Route, outStream:Stream) : void
+    # <<virtual>> RemoveStationFromTotals(route:Route, index:int) : void
+    + <<virtual>> Swap(route:Route, idxA:int, idxB:int) : void
+    + <<virtual>> TakeAndInsert(route:Route, takeFrom:int, insertBefore:int) : void
+    + RecalculateRouteCosts(route:Route) : void
+    + RecalculateRouteData(route:Route) : void
+}
+class FloydCostNetwork {
+    + FloydCostNetwork(logger:ILogger)
+    <<internal>> <<override>> Initialise() : void
+    + <<override>> CostFunction(startId:string, endId:string) : int
+    - PreprocessFloyd() : void
+    + EnumerateCostMatrix() : string
+}
+Network <|-- FloydCostNetwork
+
+@enduml
