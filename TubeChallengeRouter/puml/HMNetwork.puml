@@ -1,31 +1,5 @@
 @startuml
-class LinearNetwork {
-    - <<readonly>> _numNodes : int
-    + LinearNetwork(nNodes:int)
-    + PopulateNetworkStructure(network:Network) : void
-    + SetProgressCallback(callback:Action<double>) : void
-}
-class TestNetwork1 {
-    + PopulateNetworkStructure(network:Network) : void
-    + SetProgressCallback(callback:Action<double>) : void
-}
-INetworkDataSource <|-- LinearNetwork
-INetworkDataSource <|-- TestNetwork1
 
-interface INetworkDataSource {
-    + PopulateNetworkStructure(network:Network) : void
-    + SetProgressCallback(callback:Action<double>) : void
-}
-enum NetworkType {
-    Simple,
-    Floyd,
-    Dijkstra,
-}
-class NetworkFactory {
-    + NetworkFactory(dataSource:INetworkDataSource)
-    + Generate(type:NetworkType, logger:ILogger) : Network
-}
-NetworkFactory --> "_dataSource" INetworkDataSource
 class DijkstraCostNetwork {
     + DijkstraCostNetwork(logger:ILogger)
     <<internal>> <<override>> Initialise() : void
