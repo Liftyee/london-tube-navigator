@@ -207,6 +207,8 @@ public class AnnealingSolver : ISolver
         }
         ProgressCallback(100); // always finish at 100% no matter when we finished
         Logger.Debug("Final route: {A} (found in {B} ms, {C} ms per iteration)",route.ToString(), perfTimer.ElapsedMilliseconds, (perfTimer.ElapsedMilliseconds/(double)nIterations).ToString("0.####"));
+        
+        net.RecalculateRouteData(ref route);
         return route;
     }
 

@@ -64,5 +64,6 @@ class FloydCostNetwork {
     + EnumerateCostMatrix() : string
 }
 Network <|-- FloydCostNetwork
+Network o--> Station
 
 @enduml

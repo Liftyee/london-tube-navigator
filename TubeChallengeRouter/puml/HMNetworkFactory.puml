@@ -25,5 +25,5 @@ class NetworkFactory {
     + NetworkFactory(dataSource:INetworkDataSource)
     + Generate(type:NetworkType, logger:ILogger) : Network
 }
-NetworkFactory --> "_dataSource" INetworkDataSource
+NetworkFactory --* "_dataSource" INetworkDataSource
 @enduml

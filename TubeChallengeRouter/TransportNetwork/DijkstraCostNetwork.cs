@@ -67,20 +67,19 @@ public class DijkstraCostNetwork : Network
         if (_costCache[startId][endId] is not null)
         {
             path = _pathCache[startId][endId];
-            return _costCache[startId][endId].Value;
+            return _costCache[startId][endId]!.Value;
         }
         
         // otherwise, calculate it and update the cache
-        List<string> result;
-        _costCache[startId][endId] = DijkstraLookup(startId, endId, out result);
+        _costCache[startId][endId] = DijkstraLookup(startId, endId, out var result);
         _pathCache[startId][endId] = result; // TODO: might induce undesired referencing? 
         path = result;
 
-        if (_costCache[startId][endId].Value < 0)
+        if (_costCache[startId][endId]!.Value < 0)
         {
             throw new InvalidDataException("Cost function is negative!");
         } 
-        return _costCache[startId][endId].Value;
+        return _costCache[startId][endId]!.Value;
     }
 
     public override int CostFunction(string startId, string endId)
@@ -208,6 +207,10 @@ public class DijkstraCostNetwork : Network
     {
         Logger.Verbose("Taking from {A} and inserting before {B}", takeFrom, insertBefore);
         Logger.Verbose("Route is {A}", route.ToString());
+        if (insertBefore == takeFrom)
+        {
+            return;
+        }
         List<string> stations = route.GetTargetPath();
 
         TimeSpan updatedTime = route.Duration;

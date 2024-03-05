@@ -105,9 +105,7 @@ public class SolverControlViewModel : ReactiveObject
         TempFactor = _solver.GetCoolDownFactor();
         MaxIterations = _solver.GetMaxIterations();
 
-        SolveCommand = ReactiveCommand.CreateFromTask(SolveRouteAsync);
-        
-        InitializeNetwork();
+        SolveCommand = ReactiveCommand.CreateFromTask(SolveRouteAsync); 
     }
 
     private void InitializeNetwork()
