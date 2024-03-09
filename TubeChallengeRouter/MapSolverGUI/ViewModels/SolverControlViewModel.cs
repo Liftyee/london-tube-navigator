@@ -167,7 +167,7 @@ public class SolverControlViewModel : ReactiveObject
 
     private void ShowSolverResult(Route result)
     {
-        OutputLog.Add($"Result: Route with {result.Duration.TotalMinutes} minutes and {result.InterStationCount()} intermediate stations.");
+        OutputLog.Add($"Result: Route with duration {result.Duration} and {result.InterStationCount()} intermediate stations.");
     }
     
     private void SetProgress(double progress)
