@@ -37,16 +37,14 @@ public class TflModelWrapper : INetworkDataSource
             apiconfig.BasePath);
     }
 
-    public void AddLinksForLineSequence(
+    private void AddLinksForLineSequence(
         List<TflApiPresentationEntitiesStopPointSequence> segments, 
         ref Network network, 
         Line currentLine, 
         Dir direction)
     {
-        for (int j = 0; j < segments.Count; j++)
+        foreach (var segment in segments)
         {
-            var segment = segments[j];
-                
             /* Link the stations within the segment
                NOTE: The segments are inclusive of the end stations of adjacent 
                segments, so we don't need to explicitly link the ends of
@@ -94,13 +92,13 @@ public class TflModelWrapper : INetworkDataSource
         {
             PopulateNetworkStructureFromCache(ref network);
         }
-        catch (System.IO.FileNotFoundException)
+        catch (FileNotFoundException)
         {
             _logger.Warning("Cache file missing!, Regenerating from API...");
             UpdateStructureCache();
             PopulateNetworkStructureFromCache(ref network);
         }
-        catch (System.Runtime.Serialization.SerializationException)
+        catch (SerializationException)
         {
             _logger.Warning("Cache file corrupt! Regenerating from API...");
             UpdateStructureCache();
@@ -123,19 +121,20 @@ public class TflModelWrapper : INetworkDataSource
         DataContractSerializer lineSerializer =
             new DataContractSerializer(typeof(List<TflApiPresentationEntitiesLine>));
         List<TflApiPresentationEntitiesLine> rawLines;
-        using (FileStream fs = new FileStream($"{_cachePath}lines.xml", FileMode.Open))
+        using (FileStream fs = new($"{_cachePath}lines.xml", FileMode.Open))
         {
-            rawLines = (List<TflApiPresentationEntitiesLine>) lineSerializer.ReadObject(fs);
+            rawLines = (List<TflApiPresentationEntitiesLine>) lineSerializer.ReadObject(fs)!;
         }
         _logger.Debug("Got {A} lines from cached file", rawLines.Count);
         
         List<Line> lines = new List<Line>();
-        foreach (var l in rawLines)
+        foreach (TflApiPresentationEntitiesLine l in rawLines)
         {
             lines.Add(new Line(l.Id, l.Name));
         }
         
-        DataContractSerializer serializer = new DataContractSerializer(typeof(TflApiPresentationEntitiesRouteSequence));
+        DataContractSerializer serializer = new DataContractSerializer(
+            typeof(TflApiPresentationEntitiesRouteSequence));
         foreach (Line line in lines)
         {
             _logger.Debug("Processing segments for line {A}", line.Name);
@@ -143,7 +142,7 @@ public class TflModelWrapper : INetworkDataSource
             TflApiPresentationEntitiesRouteSequence inboundResult;
             using (FileStream fs = new FileStream($"{_cachePath}{line.Id}_inbound.xml", FileMode.Open))
             {
-                inboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs);
+                inboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs)!;
             }
             
             AddLinksForLineSequence(inboundResult.StopPointSequences, ref network, line, Dir.Inbound);
