@@ -10,15 +10,18 @@ namespace DataFetcher;
 
 public class TflModelWrapper : INetworkDataSource
 {
-    private StopPointApi _stationFetcher;
-    private LineApi _lineApi;
-    private ILogger _logger;
-    private string _cachePath;
+    private readonly LineApi _lineApi;
+    private readonly ILogger _logger;
+    private readonly string _cachePath;
     private const int MaxCacheAge = 30; // days
 
-    private const int PercentOfTotal = 90;
-    private const double InitialPercent = 3.0;
-    private Action<double> _progressCallback = (double _) => { };
+    // These are arbitrary values to make the progress bar behave nicely
+    private const int PercentOfTotal = 90; // Value to reach when we are done
+    private const double InitialPercent = 3.0; // Value to set when we start
+    
+    // This callback will be set by the GUI to update a progress bar
+    // but the empty lambda lets us operate without it
+    private Action<double> _progressCallback = (_) => { };
     public TflModelWrapper(ILogger logger, string cachePath = "")
     {
         this._logger = logger;
@@ -27,54 +30,40 @@ public class TflModelWrapper : INetworkDataSource
             BasePath = "https://api.tfl.gov.uk"
         };
         _lineApi = new LineApi(apiconfig);
-        _stationFetcher = new StopPointApi(apiconfig);
 
         this._cachePath = cachePath;
         
-        logger.Debug("TfL API data fetcher initialised at {A}", apiconfig.BasePath);
+        logger.Debug("TfL API data fetcher initialised at {A}",
+            apiconfig.BasePath);
     }
 
-    internal TflApiPresentationEntitiesStopPointSequence GetSequenceById(List<TflApiPresentationEntitiesStopPointSequence> segments,
-        int id)
-    {
-        foreach (TflApiPresentationEntitiesStopPointSequence seq in segments)
-        {
-            if (seq.BranchId == id)
-            {
-                return seq;
-            }
-        }
-
-        throw new InvalidBranchIdException("Sequence did not contain a segment with given ID!");
-    }
-
-    internal TflApiPresentationEntitiesMatchedStop GetFirstStop(TflApiPresentationEntitiesStopPointSequence segment)
-    {
-        return segment.StopPoint[0];
-    }
-
-    internal TflApiPresentationEntitiesMatchedStop GetLastStop(TflApiPresentationEntitiesStopPointSequence segment)
-    {
-        return segment.StopPoint.Last();
-    }
-
-    public void AddLinksForLineSequence(List<TflApiPresentationEntitiesStopPointSequence> segments, ref Network network, Line currentLine, Dir direction)
+    public void AddLinksForLineSequence(
+        List<TflApiPresentationEntitiesStopPointSequence> segments, 
+        ref Network network, 
+        Line currentLine, 
+        Dir direction)
     {
         for (int j = 0; j < segments.Count; j++)
         {
             var segment = segments[j];
                 
-            // link the stations together
+            /* Link the stations within the segment
+               NOTE: The segments are inclusive of the end stations of adjacent 
+               segments, so we don't need to explicitly link the ends of
+               segments together */
             for (int i = 0; i < segment.StopPoint.Count; i++)
             {
                 string currentId = segment.StopPoint[i].Id;
+                
+                // NOTE: Duplicate stations cannot be added to the network,
+                // the AddStationId function only adds if not already present
                 network.AddStationId(currentId, segment.StopPoint[i].Name);
-                    
-                // link the previous station (if it exists) to the current station, in an ordered way
+                
                 if (i > 0)
                 {
                     string prevId = segment.StopPoint[i - 1].Id;
-                    network.LinkStationsPartial(prevId, currentId, direction, currentLine);
+                    network.LinkStationsPartial(prevId, 
+                        currentId, direction, currentLine);
                 }
             }
         }
@@ -187,7 +176,7 @@ public class TflModelWrapper : INetworkDataSource
             Directory.CreateDirectory(_cachePath);
         }
 
-        // cache which lines there are too to be completely independent of the API in case of no network connection
+        // cache which lines there are to be completely independent of the API in case of no network connection
         DataContractSerializer lineSerializer =
             new DataContractSerializer(typeof(List<TflApiPresentationEntitiesLine>));
         using (FileStream fs = new FileStream($"{_cachePath}lines.xml", FileMode.Create))
