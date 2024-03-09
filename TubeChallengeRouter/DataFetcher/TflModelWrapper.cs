@@ -77,33 +77,6 @@ public class TflModelWrapper : INetworkDataSource
                     network.LinkStationsPartial(prevId, currentId, direction, currentLine);
                 }
             }
-                
-            // we need to link this route segment to its next ones if present
-            // TODO: actually not needed since the ends of route segments overlap
-            foreach (int id in segment.NextBranchIds)
-            {
-                var lastStationOfCurrentSegment = GetLastStop(segment);
-
-                try
-                {
-                    var firstStationOfNextSegment = GetFirstStop(GetSequenceById(segments, id));
-                    // link the last station of our segment to the first station of the new chain
-                    network.AddStationId(lastStationOfCurrentSegment.Id, lastStationOfCurrentSegment.Name);
-                    network.AddStationId(firstStationOfNextSegment.Id, firstStationOfNextSegment.Name);
-                    network.LinkStationsPartial(lastStationOfCurrentSegment.Id, firstStationOfNextSegment.Id, direction, currentLine);
-                } catch (InvalidBranchIdException ex)
-                {
-                    if (id != 11)
-                    {
-                        _logger.Warning(
-                            "Segment list (on line {A}) did not contain a segment with given ID {B}! Search started by segment id {C}",
-                            currentLine.Id,
-                            id,
-                            segment.BranchId);
-                    }
-                }
-            }
-#warning "Need to add line information to the links!"
         }
     }
 
