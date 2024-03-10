@@ -464,9 +464,6 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Api\LineApi.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Api\LineApi.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Api\StopPointApi.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Api\StopPointApi.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Client\ApiClient.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Client\ApiClient.cs</Link>
       </Compile>
@@ -506,12 +503,6 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonDateRangeNullable.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonDateRangeNullable.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonGeoPoint.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonGeoPoint.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonPlaceGeo.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonPlaceGeo.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAdditionalProperties.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAdditionalProperties.cs</Link>
       </Compile>
@@ -524,9 +515,6 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCrowding.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCrowding.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruptedPoint.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruptedPoint.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruptedRoute.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruptedRoute.cs</Link>
       </Compile>
@@ -538,12 +526,6 @@
       </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesIdentifier.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesIdentifier.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInstruction.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInstruction.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInstructionStep.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInstructionStep.cs</Link>
       </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInterval.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInterval.cs</Link>
@@ -610,9 +592,6 @@
       </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlaceCategory.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlaceCategory.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlacePolygon.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlacePolygon.cs</Link>
       </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPoint.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPoint.cs</Link>
