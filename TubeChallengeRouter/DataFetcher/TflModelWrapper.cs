@@ -263,39 +263,4 @@ public class TflModelWrapper : INetworkDataSource
             }
         }
     }
-
-    private void PopulateNetworkTimes(ref Network network)
-    {
-        var rawLines = _lineApi.LineGetByMode(new List<string> { "tube" });
-        _logger.Debug("Got {A} lines from API", rawLines.Count);
-
-        foreach (var line in rawLines)
-        {
-            
-        }
-    }
-
-    private void UpdateTimetableCache()
-    {
-        throw new NotImplementedException();
-        var watch = System.Diagnostics.Stopwatch.StartNew(); // timer to report performance in logs
-        
-        var rawLines = _lineApi.LineGetByMode(new List<string> { "tube" });
-
-        DataContractSerializer serializer = new DataContractSerializer(typeof(TflApiPresentationEntitiesTimetableResponse));
-        foreach (var line in rawLines)
-        {
-            var stations = _lineApi.LineStopPoints(line.Id);
-            _logger.Debug("Got {A} stations from API for line {B}", stations.Count, line.Name);
-            foreach (var station in stations)
-            {
-                var result = _lineApi.LineTimetable(station.NaptanId, line.Id);
-                
-                using (FileStream fs = new FileStream($"{_cachePath}z{station.NaptanId}.xml", FileMode.Create))
-                {
-                    serializer.WriteObject(fs, result);
-                }
-            }
-        }
-    }
 }

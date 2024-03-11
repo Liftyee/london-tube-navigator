@@ -491,9 +491,6 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Client\SwaggerDateConverter.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Client\SwaggerDateConverter.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\SystemObject.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\SystemObject.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonApiVersionInfo.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonApiVersionInfo.cs</Link>
       </Compile>
@@ -506,12 +503,6 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAdditionalProperties.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAdditionalProperties.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesArrivalDeparture.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesArrivalDeparture.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesArrivalDepartureWithLine.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesArrivalDepartureWithLine.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCrowding.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesCrowding.cs</Link>
       </Compile>
@@ -521,14 +512,8 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruption.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesDisruption.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesGeoCodeSearchMatch.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesGeoCodeSearchMatch.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesIdentifier.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesIdentifier.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInterval.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesInterval.cs</Link>
       </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesKnownJourney.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesKnownJourney.cs</Link>
@@ -569,12 +554,6 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMessage.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMessage.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMode.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMode.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesNetworkStatus.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesNetworkStatus.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesOrderedRoute.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesOrderedRoute.cs</Link>
       </Compile>
@@ -584,23 +563,11 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPathAttribute.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPathAttribute.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPeriod.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPeriod.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlace.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlace.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlaceCategory.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlaceCategory.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPoint.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPoint.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPrediction.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPrediction.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPredictionTiming.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPredictionTiming.cs</Link>
       </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRedirect.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRedirect.cs</Link>
@@ -617,24 +584,6 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSequence.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSequence.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSchedule.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSchedule.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSearchMatch.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSearchMatch.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSearchResponse.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesSearchResponse.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesServiceFrequency.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesServiceFrequency.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStationInterval.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStationInterval.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStatusSeverity.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStatusSeverity.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPoint.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPoint.cs</Link>
       </Compile>
@@ -650,26 +599,8 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointsResponse.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointsResponse.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetable.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetable.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetableResponse.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetableResponse.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetableRoute.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetableRoute.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetablesDisambiguation.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetablesDisambiguation.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetablesDisambiguationOption.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTimetablesDisambiguationOption.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTrainLoading.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTrainLoading.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTwentyFourHourClockTime.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTwentyFourHourClockTime.cs</Link>
       </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesValidityPeriod.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesValidityPeriod.cs</Link>
