@@ -491,15 +491,6 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Client\SwaggerDateConverter.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Client\SwaggerDateConverter.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonApiVersionInfo.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonApiVersionInfo.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonDateRange.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonDateRange.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonDateRangeNullable.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiCommonDateRangeNullable.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAdditionalProperties.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAdditionalProperties.cs</Link>
       </Compile>
@@ -515,9 +506,6 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesIdentifier.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesIdentifier.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesKnownJourney.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesKnownJourney.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLine.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLine.cs</Link>
       </Compile>
@@ -527,17 +515,8 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineModeGroup.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineModeGroup.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineRouteSection.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineRouteSection.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineServiceType.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineServiceType.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineServiceTypeInfo.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineServiceTypeInfo.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineSpecificServiceType.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineSpecificServiceType.cs</Link>
       </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineStatus.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesLineStatus.cs</Link>
@@ -545,14 +524,8 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedRoute.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedRoute.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedRouteSections.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedRouteSections.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedStop.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMatchedStop.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMessage.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesMessage.cs</Link>
       </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesOrderedRoute.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesOrderedRoute.cs</Link>
@@ -560,23 +533,8 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPassengerFlow.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPassengerFlow.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPathAttribute.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPathAttribute.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlace.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPlace.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPoint.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesPoint.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRedirect.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRedirect.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSearchMatch.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSearchMatch.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSearchResponse.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSearchResponse.cs</Link>
       </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSectionNaptanEntrySequence.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesRouteSectionNaptanEntrySequence.cs</Link>
@@ -587,17 +545,8 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPoint.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPoint.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointCategory.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointCategory.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointRouteSection.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointRouteSection.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointSequence.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointSequence.cs</Link>
-      </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointsResponse.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesStopPointsResponse.cs</Link>
       </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTrainLoading.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesTrainLoading.cs</Link>
