@@ -1,8 +1,4 @@
-using System.Runtime.InteropServices.ComTypes;
 using Avalonia.Controls;
-using Avalonia.Controls.Skia;
-using SkiaSharp;
-using MapSolverGUI.ViewModels;
 
 namespace MapSolverGUI.Views;
 

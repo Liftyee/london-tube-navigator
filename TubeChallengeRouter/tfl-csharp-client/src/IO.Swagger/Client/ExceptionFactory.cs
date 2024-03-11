@@ -9,7 +9,6 @@
  */
 
 
-using System;
 using RestSharp;
 
 namespace IO.Swagger.Client

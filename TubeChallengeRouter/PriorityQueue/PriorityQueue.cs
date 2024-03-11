@@ -1,9 +1,4 @@
-﻿using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Xml.Serialization;
-
-namespace PriorityQueue;
+﻿namespace PriorityQueue;
 
 public enum Priority
 {

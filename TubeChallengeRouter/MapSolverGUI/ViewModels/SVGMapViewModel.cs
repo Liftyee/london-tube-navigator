@@ -1,7 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Net;
 using System.Windows.Input;
 using Avalonia.Controls.Skia;
 using ReactiveUI;

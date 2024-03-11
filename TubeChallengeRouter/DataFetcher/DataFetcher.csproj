@@ -488,9 +488,6 @@
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Client\IReadableConfiguration.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Client\IReadableConfiguration.cs</Link>
       </Compile>
-      <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Client\SwaggerDateConverter.cs">
-        <Link>tfl-csharp-client\src\IO.Swagger\Client\SwaggerDateConverter.cs</Link>
-      </Compile>
       <Compile Include="..\tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAdditionalProperties.cs">
         <Link>tfl-csharp-client\src\IO.Swagger\Model\TflApiPresentationEntitiesAdditionalProperties.cs</Link>
       </Compile>

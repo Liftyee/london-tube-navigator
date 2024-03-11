@@ -9,8 +9,6 @@
  */
 
 
-using System.Collections.Generic;
-
 namespace IO.Swagger.Client
 {
     /// <summary>
