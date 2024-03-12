@@ -23,10 +23,12 @@
         <Grid ColumnDefinitions="*,*,2*">
             <TextBlock Grid.Column="0" 
                        Text="Random swap probability:"
-                       TextWrapping="Wrap"/>
-            <TextBox Grid.Column="1" 
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" 
                      Text="{Binding SwapProb}"
-                     Margin="10 0"/>
+                     Margin="10 0"
+                     VerticalAlignment="Center"/>
             <Slider Grid.Column="2" 
                     Value="{Binding SwapProb}"
                     Minimum="0"
@@ -35,10 +37,12 @@
         <Grid ColumnDefinitions="*,*,2*">
             <TextBlock Grid.Column="0" 
                        Text="Temperature decrease factor:"
-                       TextWrapping="Wrap"/>
-            <TextBox Grid.Column="1" 
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" 
                      Text="{Binding TempFactor}"
-                     Margin="10 0"/>
+                     Margin="10 0"
+                     VerticalAlignment="Center"/>
             <Slider Grid.Column="2" 
                     Value="{Binding TempFactor}"
                     Minimum="0.9"
@@ -47,14 +51,16 @@
         <Grid ColumnDefinitions="*,*,2*">
             <TextBlock Grid.Column="0" 
                        Text="Max number of iterations:"
-                       TextWrapping="Wrap"/>
-            <TextBox Grid.Column="1" 
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" 
                      Text="{Binding MaxIterations}"
-                     Margin="10 0"/>
+                     Margin="10 0"
+                     VerticalAlignment="Center"/>
             <Slider Grid.Column="2" 
                     Value="{Binding MaxIterations}"
-                    Minimum="0"
-                    Maximum="100000000"/>
+                    Minimum="100000"
+                    Maximum="10000000"/>
         </Grid>
         <DockPanel Dock="Left" Margin="0 10">
             <Button Command="{Binding SolveCommand}" 
