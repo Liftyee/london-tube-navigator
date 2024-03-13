@@ -13,17 +13,18 @@ public class TflModelWrapper : INetworkDataSource
     private readonly LineApi _lineApi;
     private readonly ILogger _logger;
     private readonly string _cachePath;
-    private const int MaxCacheAge = 30; // days
 
+    private const int MaxCacheAge = 30; // Cache invalid after 30 days (~1 month)
     // These are arbitrary values to make the progress bar behave nicely
     private const int PercentOfTotal = 90; // Value to reach when we are done
     private const double InitialPercent = 3.0; // Value to set when we start
     
-    // This callback will be set by the GUI to update a progress bar
-    // but the empty lambda lets us operate without it
+    // This callback will be set by the GUI, and we will call it to update the
+    // progress bar, but the empty lambda lets us operate without it
     private Action<double> _progressCallback = (_) => { };
     public TflModelWrapper(ILogger logger, string cachePath = "")
     {
+        // Initialise the objects we'll need (logger and API client)
         this._logger = logger;
         var apiconfig = new Configuration
         {
@@ -37,6 +38,9 @@ public class TflModelWrapper : INetworkDataSource
             apiconfig.BasePath);
     }
 
+    // For a list of route segments and a given network/line/direction combination,
+    // add the stations and links needed to represent that route segment 
+    // to the network
     private void AddLinksForLineSequence(
         List<TflApiPresentationEntitiesStopPointSequence> segments, 
         ref Network network, 
@@ -67,19 +71,23 @@ public class TflModelWrapper : INetworkDataSource
         }
     }
 
-    public void PopulateNetworkStructure(ref Network network)
+    // Check if the cache is too old, and try and update it if so
+    private void EnsureCacheUpdated()
     {
-        _logger.Information("Populating network from cache at {A}...", _cachePath);
-        _progressCallback(0.0);
-        // use caches if possible
         if (File.Exists($"{_cachePath}lastUpdated.txt"))
         {
-            // check if the cache is older than 24 hours
             DateTime lastUpdated = File.GetLastWriteTime($"{_cachePath}lastUpdated.txt");
             if (lastUpdated < DateTime.Now.AddDays(-MaxCacheAge))
             {
-                _logger.Information($"Cache is older than {MaxCacheAge} days, updating...");
-                UpdateStructureCache();
+                _logger.Information($"Cache is outdated, updating...");
+                try
+                {
+                    UpdateStructureCache();
+                }
+                catch (ApiException)
+                {
+                    _logger.Warning("Update failed, using old cache from {A}", lastUpdated);
+                }
             }
         }
         else
@@ -87,6 +95,16 @@ public class TflModelWrapper : INetworkDataSource
             _logger.Information("No cache found at {A}, updating...", _cachePath);
             UpdateStructureCache();
         }
+    }
+
+    // Populate a given network with the structure of the London Tube,
+    // using the local cache if possible
+    public void PopulateNetworkStructure(ref Network network)
+    {
+        _logger.Information("Populating network from cache at {A}...", _cachePath);
+        _progressCallback(0.0);
+        
+        EnsureCacheUpdated();
 
         try
         {
@@ -109,15 +127,21 @@ public class TflModelWrapper : INetworkDataSource
         _progressCallback(100.0);
     }
 
+    // This setter implements an interface procedure, so we don't have to make
+    // _progressCallback public
     public void SetProgressCallback(Action<double> callback)
     {
         _progressCallback = callback;
     }
 
+    // Populate the given network with the stations and line structure of the 
+    // London Tube, which is stored in our cache (caller must handle exceptions
+    // caused by the cache being invalid or missing)
     private void PopulateNetworkStructureFromCache(ref Network network)
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
 
+        // Load the line IDs from the cache
         DataContractSerializer lineSerializer =
             new DataContractSerializer(typeof(List<TflApiPresentationEntitiesLine>));
         List<TflApiPresentationEntitiesLine> rawLines;
@@ -127,12 +151,16 @@ public class TflModelWrapper : INetworkDataSource
         }
         _logger.Debug("Got {A} lines from cached file", rawLines.Count);
         
+        // Convert the Swagger API line objects to my own Line objects,
+        // which will be passed to the constructors of Station and Link
         List<Line> lines = new List<Line>();
         foreach (TflApiPresentationEntitiesLine l in rawLines)
         {
             lines.Add(new Line(l.Id, l.Name));
         }
         
+        // Process the route segments of each line by deserialising the 
+        // XML files we have cached
         DataContractSerializer serializer = new DataContractSerializer(
             typeof(TflApiPresentationEntitiesRouteSequence));
         foreach (Line line in lines)
@@ -140,16 +168,16 @@ public class TflModelWrapper : INetworkDataSource
             _logger.Debug("Processing segments for line {A}", line.Name);
             
             TflApiPresentationEntitiesRouteSequence inboundResult;
-            using (FileStream fs = new FileStream($"{_cachePath}{line.Id}_inbound.xml", FileMode.Open))
+            using (FileStream fs = new($"{_cachePath}{line.Id}_inbound.xml", FileMode.Open))
             {
                 inboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs)!;
             }
             
             AddLinksForLineSequence(inboundResult.StopPointSequences, ref network, line, Dir.Inbound);
             
-            // process outbound separately as our graph is directed
+            // Process outbound links separately as our graph is directed
             TflApiPresentationEntitiesRouteSequence outboundResult;
-            using (FileStream fs = new FileStream($"{_cachePath}{line.Id}_outbound.xml", FileMode.Open))
+            using (FileStream fs = new($"{_cachePath}{line.Id}_outbound.xml", FileMode.Open))
             {
                 outboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs);
             }
@@ -158,7 +186,9 @@ public class TflModelWrapper : INetworkDataSource
         }
         _logger.Debug("Done in {A}ms", watch.ElapsedMilliseconds);
     } 
-
+    
+    // Update the local cache of the Tube network structure
+    // with the latest data from the TfL API
     private void UpdateStructureCache()
     {
         _progressCallback(InitialPercent);
