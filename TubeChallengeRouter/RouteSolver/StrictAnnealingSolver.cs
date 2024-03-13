@@ -151,7 +151,6 @@ public class StrictAnnealingSolver : AnnealingSolver, ISolver
                     throw new NegativeCostException(newCost);
                 }
             
-                // strict solver feature: check cost function every iteration. 
                 int calcCost = net.CostFunction(route);
                 if (calcCost != route.Cost)
                 {

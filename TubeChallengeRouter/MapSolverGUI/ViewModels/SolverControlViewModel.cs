@@ -123,7 +123,8 @@ public class SolverControlViewModel : ReactiveObject
         }
         catch (IO.Swagger.Client.ApiException)
         {
-            Logger.Error("Could not fetch Tube network data. Try checking your internet connection.");
+            Logger.Error("Could not fetch Tube network data. " +
+                         "Try checking your internet connection.");
             throw new Exception("Couldn't fetch data from API.");
         }
         Logger.Debug("Result: {A}",_tube.ToString());
@@ -153,7 +154,8 @@ public class SolverControlViewModel : ReactiveObject
 
     private async Task SolveRouteAsync()
     {
-        OutputLog.Add($"Generating route with {MaxIterations} iterations and temperature factor {TempFactor:0.###}...");
+        OutputLog.Add($"Generating route with {MaxIterations} iterations " +
+                      $"and temperature factor {TempFactor:0.###}...");
         try
         {
             await Task.Run(RunSolve);

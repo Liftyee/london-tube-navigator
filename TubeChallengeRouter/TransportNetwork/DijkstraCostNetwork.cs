@@ -207,6 +207,9 @@ public class DijkstraCostNetwork : Network
     {
         Logger.Verbose("Taking from {A} and inserting before {B}", takeFrom, insertBefore);
         Logger.Verbose("Route is {A}", route.ToString());
+        
+        // If the two indices are the same, our operation will have no effect,
+        // so just return early.
         if (insertBefore == takeFrom)
         {
             return;
