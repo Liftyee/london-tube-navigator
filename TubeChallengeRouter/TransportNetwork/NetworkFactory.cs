@@ -3,7 +3,6 @@ using Serilog;
 
 public enum NetworkType
 {
-    Simple,
     Floyd,
     Dijkstra
 }
@@ -21,8 +20,6 @@ public class NetworkFactory
         Network result;
         switch (type)
         {
-            case NetworkType.Simple:
-                throw new NotSupportedException("Simple network is an abstract class and cannot be instantiated");
             case NetworkType.Floyd:
                 result = new FloydCostNetwork(logger);
                 break;
