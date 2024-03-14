@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TubeChallengeRouter", "TubeChallengeRouter\TubeChallengeRouter.csproj", "{A7FC9D10-D696-4925-A604-A7E4CA051500}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransportNetwork", "TransportNetwork\TransportNetwork.csproj", "{0CA73BF5-468A-4154-BB93-E97B3634DEBE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataFetcher", "DataFetcher\DataFetcher.csproj", "{3C0C820D-F37C-45ED-82FB-C72B4633DF90}"
@@ -24,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A7FC9D10-D696-4925-A604-A7E4CA051500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7FC9D10-D696-4925-A604-A7E4CA051500}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7FC9D10-D696-4925-A604-A7E4CA051500}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7FC9D10-D696-4925-A604-A7E4CA051500}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0CA73BF5-468A-4154-BB93-E97B3634DEBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0CA73BF5-468A-4154-BB93-E97B3634DEBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CA73BF5-468A-4154-BB93-E97B3634DEBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
