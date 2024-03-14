@@ -1,3 +1,5 @@
+using NUnit.Framework.Interfaces;
+
 namespace StationTests;
 
 [TestFixture]
@@ -30,5 +32,25 @@ public class DataSourceTests
                 .Generate(NetworkType.Dijkstra, stubLogger);
             Assert.That(linearNetwork.GetStationIDs().Count, Is.EqualTo(i));
         }
+    }
+
+    [Test]
+    public void TflDataSource_CallsProgressCallback()
+    {
+        bool callbackFired = false;
+        // dummy callback to pass to TflModelWrapper, to check if it's called
+        void Callback(double progress)
+        {
+            callbackFired = true;
+        }
+        
+        TflModelWrapper dataSource = new TflModelWrapper(stubLogger, "./");
+        dataSource.SetProgressCallback(Callback); 
+        
+        Network tubeNetwork = new NetworkFactory(dataSource)
+            .Generate(NetworkType.Dijkstra, stubLogger);
+        
+        // The progress callback should have fired at least once
+        Assert.That(callbackFired, Is.True); 
     }
 }
