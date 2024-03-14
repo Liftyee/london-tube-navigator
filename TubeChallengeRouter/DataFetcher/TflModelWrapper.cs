@@ -205,7 +205,7 @@ public class TflModelWrapper : INetworkDataSource
             Directory.CreateDirectory(_cachePath);
         }
 
-        // cache which lines there are to be completely independent of the API in case of no network connection
+        // Cache which lines there are to be completely independent of the API in case of no network connection
         DataContractSerializer lineSerializer =
             new DataContractSerializer(typeof(List<TflApiPresentationEntitiesLine>));
         using (FileStream fs = new FileStream($"{_cachePath}lines.xml", FileMode.Create))
@@ -213,14 +213,15 @@ public class TflModelWrapper : INetworkDataSource
             lineSerializer.WriteObject(fs, rawLines);
         }
         
+        // Fetch and cache the data for each line
         for (int idx = 0; idx < rawLines.Count; idx++)
         {
+            _logger.Information("Processing line {A}...", rawLines[idx].Name);
             _logger.Debug("Processing inbound segments for line {A}", rawLines[idx].Id);
             
+            _progressCallback(InitialPercent + PercentOfTotal * idx / (double)rawLines.Count);
             watch.Restart();
             
-            _progressCallback(InitialPercent + PercentOfTotal * idx / (double)rawLines.Count);
-
             TflApiPresentationEntitiesRouteSequence inboundResult = _lineApi.LineRouteSequence(rawLines[idx].Id, "inbound");
             _logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
             
@@ -231,7 +232,7 @@ public class TflModelWrapper : INetworkDataSource
             
             _progressCallback(InitialPercent + PercentOfTotal * (idx+0.5) / (double)rawLines.Count);
             
-            // process outbound separately as our graph is directed
+            // Process outbound route segments separately as our graph is directed
             _logger.Debug("Processing outbound segments for line {A}", rawLines[idx].Id);
             
             watch.Restart();
@@ -242,10 +243,9 @@ public class TflModelWrapper : INetworkDataSource
             {
                 serializer.WriteObject(fs, outboundResult);
             }
-            _logger.Information("Processing line {A}...", rawLines[idx].Name);
         }
         
-        // write a metadata file so we know when the cache was updated
+        // Write to a metadata file so we know when the cache was updated
         using (FileStream fs = new FileStream($"{_cachePath}lastUpdated.txt", FileMode.Create))
         {
             using (StreamWriter sw = new StreamWriter(fs))
