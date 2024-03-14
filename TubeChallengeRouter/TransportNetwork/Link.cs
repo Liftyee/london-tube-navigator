@@ -20,7 +20,6 @@ public class Line
 
 public struct Link
 {
-    private ITimetable? _trainTimes;
     public readonly Station Destination;
     public readonly Station Origin;
     internal TimeSpan Duration { get; private set; }
