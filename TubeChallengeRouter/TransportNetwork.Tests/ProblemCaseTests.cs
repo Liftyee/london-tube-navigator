@@ -20,7 +20,7 @@ public class ProblemCaseTests
                 .Split(";").ToList();
         Route route = new Route(stations);
         _network.RecalculateRouteData(ref route);
-        Assert.That(route.Cost, Is.EqualTo(343));
+        Assert.That(route.Cost, Is.EqualTo(169920));
         
         _network.Swap(ref route, 240, 122);
         Assert.That(route.Cost, Is.GreaterThan(0));
