@@ -14,7 +14,8 @@ public class NetworkFactory
     {
         _dataSource = dataSource;
     }
-
+    
+    // Create and populate a Network of the given type using our data source.
     public Network Generate(NetworkType type, ILogger logger)
     {
         Network result;

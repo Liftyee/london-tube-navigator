@@ -3,6 +3,9 @@
 
 namespace DataFetcher;
 
+// Data source for a network consisting of a line of N nodes.
+// Nodes are connected bidirectionally in a line. All link weights are 1.
+// A -- B -- C -- D 
 public class LinearNetwork : INetworkDataSource
 {
     private readonly int _numNodes;
@@ -30,6 +33,11 @@ public class LinearNetwork : INetworkDataSource
     }
 }
 
+/* Data source for a network with a loop and branches.
+         /- C -\
+ A -- B |      | E 
+        \- D -/
+ */
 public class TestNetwork1 : INetworkDataSource
 {
     public void PopulateNetworkStructure(ref Network network)
@@ -49,12 +57,5 @@ public class TestNetwork1 : INetworkDataSource
     public void SetProgressCallback(Action<double> callback)
     {
         throw new NotSupportedException();
-    }
-}
-
-public class InvalidBranchIdException : Exception
-{
-    public InvalidBranchIdException(string message) : base(message)
-    {
     }
 }
