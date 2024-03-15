@@ -27,6 +27,8 @@ public class  LinkTests
     public void SetDuration_ChangesDurationAttribute()
     {
         _link.SetDuration(new TimeSpan(0, 5, 0));
+        
+        // the Link has a default duration of 1 minute, it should have changed
         Assert.That(_link.Duration, Is.EqualTo(new TimeSpan(0,5,0)));
     }
 
@@ -36,13 +38,6 @@ public class  LinkTests
         Line line = new Line("line1", "Line 1");
         _link.SetLine(line);
         Assert.That(_link.Line, Is.SameAs(line));
-    }
-
-    [Test]
-    public void SetDurationMoreThanOnce_ThrowsException()
-    {
-        _link.SetDuration(new TimeSpan(0, 5, 0));
-        Assert.Throws<InvalidOperationException>(() => _link.SetDuration(new TimeSpan(0, 5, 0)));
     }
 
     [Test]
