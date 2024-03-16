@@ -133,9 +133,10 @@ public class SolverControlViewModel : ReactiveObject
     private void RunSolve()
     {
         InitializeNetwork();
-        
+
         Route route = _solver.Solve(_tube);
-        Logger.Debug("Route: {A} (duration {B})",_tube.RouteToStringStationSeq(route), route.Duration);
+        Logger.Debug("Route: {A} (duration {B})",
+            _tube.RouteToStringStationSeq(route), route.Duration);
 
         WriteRouteToFile(_tube, route);
         ShowSolverResult(route);

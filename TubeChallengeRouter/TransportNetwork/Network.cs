@@ -8,7 +8,10 @@ public abstract class Network
     protected Dictionary<int, Line> Lines;
     protected ILogger Logger;
     protected int NEdges;
-    protected const int InfCost = 1000000000; // use 1 billion instead of MaxValue to avoid overflow issues
+    
+    // A constant for cost comparisons, no cost should ever exceed this value.
+    // Use 1 billion instead of MaxValue to avoid overflow issues
+    protected const int InfCost = 1000000000;
     
     public Network(ILogger logger)
     {
@@ -17,34 +20,27 @@ public abstract class Network
         Lines = new Dictionary<int, Line>();
     }
 
-    // Not used here, but other Networks inheriting from this class override this procedure to initialise their data
+    // Not used here, but other Networks inheriting from this class override
+    // this procedure to perform preprocessing tasks after stations are added 
     internal virtual void Initialise()
     {
         
     }
 
-    // Add a station object to the network
-    private void AddStationObject(Station stationToAdd)
-    {
-        Stations.Add(stationToAdd.NaptanId, stationToAdd);
-    }
-
-    // Adds a station with given ID to the network if a station with that ID is not already present
+    // Creates a station with given ID if that station is not already present
     public void AddStationId(string naptanId, string? name = null)
     {
-        if (!HasStationById(naptanId))
+        if (!HasStationById(naptanId)) // Do not add duplicate stations
         {
-            // use the full constructor if our name is not null, otherwise use the constructor without a name
-            AddStationObject(name is not null ? new Station(naptanId, name) : new Station(naptanId));
-        }
-    }
-
-    // Write a machine-readable list of station names to a file (for use in other programs)
-    public void WriteStationsToFile(FileStream file)
-    {
-        foreach (var station in Stations.Values)
-        {
-            file.Write(Encoding.UTF8.GetBytes($"{station.NaptanId}:{station.Name.Replace(" Underground Station", "")}\n"));
+            // Use the ID-only constructor if we weren't given a name
+            if (name is null)
+            {
+                Stations.Add(naptanId, new Station(naptanId));
+            }
+            else
+            {
+                Stations.Add(naptanId,new Station(naptanId, name));
+            }
         }
     }
     
@@ -54,6 +50,7 @@ public abstract class Network
         Station startStation = Stations[startId];
         Station endStation = Stations[endId];
 
+        // Add links in both directions only if the link is bidirectional
         if (direction == Dir.Bidirectional)
         {
             startStation.AddLink(new Link(endStation, line, direction));
@@ -65,7 +62,7 @@ public abstract class Network
         NEdges++;
     }
     
-    // For a station's link to another station, set the cost of the link
+    // For a station's link to another station, set the duration of the link
     public void UpdateLink(string startId, string endId, TimeSpan newTime)
     {
         Station startStation = Stations[startId];
@@ -207,7 +204,7 @@ public abstract class Network
             updatedCost -= CostFunction(stations[index - 1], stations[index]);
         }
 
-        if (index < route.Count - 1)
+        if (index < (route.Count - 1))
         {
             updatedTime -= TravelTime(stations[index], stations[index + 1]);
             updatedCost -= CostFunction(stations[index], stations[index + 1]);
@@ -217,7 +214,6 @@ public abstract class Network
         route.UpdateCost(updatedCost);
     }
     
-    // TODO: use "ref"
     public virtual void Swap(ref Route route, int idxA, int idxB)
     {
         List<string> stations = route.GetTargetPath();
@@ -284,7 +280,7 @@ public abstract class Network
     public void RecalculateRouteData(ref Route route)
     {
         List<string> stations = route.GetTargetPath();
-        route.IntermediateStations.RemoveAll(e => true); // clear the list of intermediate stations
+        route.IntermediateStations.RemoveAll(_ => true); // clear the list of intermediate stations
         int totalCost = 0;
         for (int i = 0; i < stations.Count - 1; i++)
         {

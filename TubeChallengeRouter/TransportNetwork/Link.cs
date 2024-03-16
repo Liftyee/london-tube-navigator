@@ -1,5 +1,6 @@
 namespace TransportNetwork;
 
+// Enum to clearly represent the direction of a link
 public enum Dir
 {
     Inbound,
