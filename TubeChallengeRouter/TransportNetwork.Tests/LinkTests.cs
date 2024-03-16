@@ -11,13 +11,12 @@ public class  LinkTests
     {
         _stubStation1 = new Station("A", "Station A");
         _stubStation2 = new Station("B", "Station B");
-        _link = new Link(_stubStation1, _stubStation2, null, Dir.Inbound);
+        _link = new Link(_stubStation2, null, Dir.Inbound);
     }
 
     [Test]
     public void Constructor_SetsDetails()
     {
-        Assert.That(_link.Origin, Is.SameAs(_stubStation1));
         Assert.That(_link.Destination, Is.SameAs(_stubStation2));
         Assert.That(_link.Line, Is.Null);
         Assert.That(_link.Dir, Is.EqualTo(Dir.Inbound));

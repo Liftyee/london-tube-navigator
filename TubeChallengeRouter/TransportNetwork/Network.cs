@@ -56,10 +56,10 @@ public abstract class Network
 
         if (direction == Dir.Bidirectional)
         {
-            startStation.AddLink(new Link(startStation, endStation, line, direction));
-            endStation.AddLink(new Link(endStation, startStation, line, direction));
+            startStation.AddLink(new Link(endStation, line, direction));
+            endStation.AddLink(new Link(startStation, line, direction));
         } else {
-            startStation.AddLink(new Link(startStation, endStation, line, direction));
+            startStation.AddLink(new Link(endStation, line, direction));
         }
         
         NEdges++;

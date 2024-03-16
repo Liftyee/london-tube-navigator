@@ -27,7 +27,7 @@ public class Tests
     [Test]
     public void AddingLink_UpdatesGetLinks()
     {
-        Link link = new Link(_stat1, _stat2, null, Dir.Inbound);
+        Link link = new Link(_stat2, null, Dir.Inbound);
         _stat1.AddLink(link);
         Assert.That(_stat1.GetLinks(), Is.EquivalentTo(new List<Link>{link}));
     }
@@ -35,7 +35,7 @@ public class Tests
     [Test]
     public void AddingLink_UpdatesHasLink()
     {
-        Link link = new Link(_stat1, _stat2, null, Dir.Inbound);
+        Link link = new Link(_stat2, null, Dir.Inbound);
         _stat1.AddLink(link);
         Assert.That(_stat1.HasLink("B"), Is.True);
     }

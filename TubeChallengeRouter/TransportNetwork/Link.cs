@@ -21,15 +21,13 @@ public class Line
 public struct Link
 {
     public readonly Station Destination;
-    public readonly Station Origin;
     internal TimeSpan Duration { get; private set; }
     internal Line? Line { get; private set; }
     internal Dir Dir { get; private set; }
     
-    public Link(Station start, Station end, Line? line, Dir dir)
+    public Link(Station end, Line? line, Dir dir)
     {
         Destination = end;
-        Origin = start;
         Line = line;
         Dir = dir;
         Duration = new TimeSpan(0, 1, 0);

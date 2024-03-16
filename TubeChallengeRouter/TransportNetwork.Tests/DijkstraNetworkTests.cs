@@ -21,6 +21,7 @@ public class DijkstraNetworkTests
         Assert.That(result, Is.EqualTo(180)); // cost is in seconds
     }
 
+    // Test that the Dijkstra cost function returns the correct intermediate stations
     [Test]
     public void Dijkstra_SetsIntermediate()
     {
@@ -35,7 +36,8 @@ public class DijkstraNetworkTests
         expectedIntermediate.Add("C");
         Assert.That(intermediate, Is.EqualTo(expectedIntermediate));
     }
-
+    
+    // Check that the intermediate stations are set for a new random route
     [Test]
     public void RandomRoute_HasIntermediate()
     {
@@ -48,7 +50,8 @@ public class DijkstraNetworkTests
             Assert.That(result.IntermediateStations[idx], Is.EqualTo(dijResult));
         }
     }
-
+    
+    // Directly linked stations should have no intermediates between them
     [Test]
     public void AdjacentStations_NoIntermediate()
     {
