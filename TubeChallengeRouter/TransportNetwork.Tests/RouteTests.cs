@@ -14,10 +14,10 @@ public class RouteTests
     [Test]
     public void TestExternalEditRoute_ChangesInternalRoute()
     {
-        List<string> path = _route.GetTargetPath();
+        List<string> path = _route.TargetStations;
         string temp = path[1];
         path[1] = path[2];
         path[2] = temp;
-        Assert.That(_route.GetTargetPath(), Is.EqualTo(new List<string> {"A", "C", "B"}));
+        Assert.That(_route.TargetStations, Is.EqualTo(new List<string> {"A", "C", "B"}));
     }
 }
