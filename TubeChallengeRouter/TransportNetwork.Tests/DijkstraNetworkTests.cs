@@ -35,6 +35,8 @@ public class DijkstraNetworkTests
         expectedIntermediate.Add("B");
         expectedIntermediate.Add("C");
         Assert.That(intermediate, Is.EqualTo(expectedIntermediate));
+        // Debug.Assert(!path.Contains(startId));
+        // Debug.Assert(!path.Contains(endId));
     }
     
     // Check that the intermediate stations are set for a new random route

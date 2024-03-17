@@ -4,17 +4,16 @@ public struct Route
 {
     public List<string> TargetStations;
     public List<List<string>> IntermediateStations;
-    private int _cost;
     public int Count => TargetStations.Count;
-    public int Cost => _cost;
-    
+    public int Cost { get; private set; }
+
     // NOTE: This is only true as long as cost = journey time in seconds
-    public int Duration => _cost / 60;
+    public int Duration => Cost / 60;
 
     public Route(List<string> stations, int cost, List<List<string>>? intermediateStations = null)
     {
         TargetStations = stations;
-        _cost = cost;
+        Cost = cost;
         
         if (intermediateStations is null)
         {
@@ -40,13 +39,13 @@ public struct Route
         }
         else // don't return all the stations if there are too many
         {
-            return $"Route with {TargetStations.Count} stations and length {Duration} minutes (cost {_cost})"; 
+            return $"Route with {TargetStations.Count} stations and length {Duration} minutes (cost {Cost})"; 
         }
     }
     
     public void UpdateCost(int newCost)
     {
-        _cost = newCost;
+        Cost = newCost;
     }
     
     private int InterStationCount()
