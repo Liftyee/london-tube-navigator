@@ -10,13 +10,19 @@ public class FloydCostNetwork : Network
 
     public FloydCostNetwork(ILogger logger) : base(logger)
     {
-        
+        _costMatrix = new Dictionary<string, Dictionary<string, int>>();
     }
     
     internal override void Initialise()
     {
         PreprocessFloyd();
     }
+
+    public override int CostFunction(string startId, string endId, out List<string> path)
+    {
+        throw new NotSupportedException("Floyd cost function network does not support intermediate path tracking");
+    }
+
     public override int CostFunction(string startId, string endId)
     {
         return _costMatrix[startId][endId];
@@ -26,8 +32,7 @@ public class FloydCostNetwork : Network
     {
         Logger.Information("Preprocessing Floyd-Warshall weights...");
         
-        // initialise cost matrix
-        _costMatrix = new Dictionary<string, Dictionary<string, int>>();
+        // initialise cost matrix with infinities and zeroes to the same station
         foreach (string stationId in Stations.Keys)
         {
             _costMatrix[stationId] = new Dictionary<string, int>();

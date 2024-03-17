@@ -88,40 +88,38 @@ public abstract class Network
     }
 
     // Function to calculate Cost (travel time) between two stations
-    // Not implemented here because other classes inheriting from this one provide various implementations
-    public virtual int CostFunction(string startId, string endId, out List<string> path)
-    {
-        throw new NotSupportedException("Simple network doesn't support cost function with path (use overrides)");
-    }
+    // Derived classes must implement an algorithm to do this
+    public abstract int CostFunction(string startId, string endId, out List<string> path);
 
-    public virtual int CostFunction(string startId, string endId)
-    {
-        if (Stations[startId].HasLink(endId))
-        {
-            return (int)Stations[startId].GetLinkByDestId(endId).Duration.TotalSeconds;
-        }
-        else
-        {
-            throw new NotSupportedException("Simple network doesn't support cost function for non-linked stations (use overrides)");
-        }
-    }
+    public abstract int CostFunction(string startId, string endId);
 
-    // generate random route through all stations
+    // Generate a random valid route (visiting all stations)
     public virtual Route GenerateRandomRoute()
     {
+        // Our resulting list of target stations
         List<string> stationIDs = new List<string>(); 
-        HashSet<string> visitedIDs = new HashSet<string>();
-        int totalCost = 0;
+        
+        // The intermediate stations between each target station pair
         List<List<string>> intermediateStations = new List<List<string>>();
         
+        // Track which stations we've visited in a set for O(1) lookups
+        HashSet<string> visitedIDs = new HashSet<string>();
+        
+        // Our total cost of route (assumes cost = travel time in seconds)
+        int totalCost = 0;
+        
+        // Just the count is enough to know whether we've visited all stations
+        // Iterate until we have all the stations in our route
         while (visitedIDs.Count < Stations.Count)
         {
+            // Pick a random station but only add it if we've not visited it yet
             string nextId = Stations.Keys.ElementAt(new Random().Next(Stations.Count));
             if (!visitedIDs.Contains(nextId))
             {
                 stationIDs.Add(nextId);
                 visitedIDs.Add(nextId);
                 List<string> pathToNext;
+                // Add the cost of the last two stations if this isn't the first
                 if (visitedIDs.Count > 1)
                 {
                     totalCost += CostFunction(stationIDs[^2], stationIDs[^1], out pathToNext);
@@ -131,10 +129,10 @@ public abstract class Network
         }
         
         Route result = new Route(stationIDs, new TimeSpan(0, 0, totalCost), totalCost, intermediateStations);
-
         return result;
     }
 
+    // Calculate the total cost function of a route
     public virtual int CostFunction(Route route)
     {
         int cost = 0;

@@ -21,8 +21,8 @@ public class SolverControlViewModel : ReactiveObject
     private double _tempFactor;
     private int _maxIterations;
     private readonly ISolver _solver;
-    private INetworkDataSource _source;
-    private NetworkFactory _tubeFactory;
+    private INetworkDataSource? _source;
+    private NetworkFactory? _tubeFactory;
     private Network? _tube;
     public ICommand SolveCommand { get; }
     public ObservableCollection<string> OutputLog { get; } = new ObservableCollection<string>();
@@ -140,17 +140,6 @@ public class SolverControlViewModel : ReactiveObject
 
         WriteRouteToFile(_tube, route);
         ShowSolverResult(route);
-    }
-
-    private async Task TestOutputs()
-    {
-        OutputLog.Add("Testing...");
-        for (int i = 0; i <= 100; i++)
-        {
-            SolveProgress = i;
-            await Task.Delay(50); // ms
-        }
-        OutputLog.Add("Done!");
     }
 
     private async Task SolveRouteAsync()
