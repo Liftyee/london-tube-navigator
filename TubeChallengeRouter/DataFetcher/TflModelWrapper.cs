@@ -38,7 +38,7 @@ public class TflModelWrapper : INetworkDataSource
             apiconfig.BasePath);
     }
 
-    // For a list of route segments and a given network/line/direction combination,
+    // For a list of route segments and a given network+line+direction,
     // add the stations and links needed to represent that route segment 
     // to the network
     private void AddLinksForLineSequence(
@@ -50,8 +50,8 @@ public class TflModelWrapper : INetworkDataSource
         foreach (var segment in segments)
         {
             /* Link the stations within the segment
-               NOTE: The segments are inclusive of the end stations of adjacent 
-               segments, so we don't need to explicitly link the ends of
+               NOTE: The segments are inclusive of adjacent segments' end 
+               stations, so we don't need to explicitly link the ends of
                segments together */
             for (int i = 0; i < segment.StopPoint.Count; i++)
             {

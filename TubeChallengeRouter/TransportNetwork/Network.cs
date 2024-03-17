@@ -161,13 +161,14 @@ public abstract class Network
         return CostFunction(stations[idxA], stations[idxB]);
     }
 
-    // convert route naptan IDs into a string for readability
+    // Convert route naptan IDs into a string for readability
     public string RouteToStringStationSeq(Route route)
     {
         StringBuilder output = new StringBuilder();
         List<string> stationIDs = route.TargetStations;
         for (int i = 0; i < stationIDs.Count(); i++)
         {
+            // Remove "Underground Station" from each station's name
             output.Append($"{Stations[stationIDs[i]].Name.Replace(" Underground Station", "")}, ");
         }
 
