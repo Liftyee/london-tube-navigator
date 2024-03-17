@@ -6,7 +6,8 @@ public enum Priority
     Largest
 }
 
-public sealed class PriorityQueue<T> where T : IComparable<T>
+// Priority queue class using a binary heap to store items.
+public class PriorityQueue<T> where T : IComparable<T>
 {
     private int _nodeCount;
     private T[] _nodes; // this array is used like a binary tree: node at index N has left child 2N and right child 2N+1
@@ -18,7 +19,6 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         _nodes = new T[size+1]; // add one because of our dummy first element
         _priority = prio;
         _nodeCount = 0;
-        _nodes[0] = default(T); // the first element is not used in our indexing system
     }
 
     // Insert an item into the queue.
@@ -28,12 +28,12 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         {
             throw new InvalidOperationException("Cannot insert into full queue");
         }
-        _nodes[_nodeCount + 1] = item;
+        _nodes[_nodeCount + 1] = item; // Add the item as a leaf node
         _nodeCount++;
-        push_up(Count);
+        PushUp(Count); // Move the item up to its correct position
     }
 
-    // Pop the top item from the queue (return and delete).
+    // Pop the top item from the queue (return its value and delete item).
     public T Pop()
     {
         if (_nodeCount == 0)
@@ -41,31 +41,32 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
             throw new InvalidOperationException("Cannot remove from empty queue");
         }
         T top = Top();
-        SwapIndices(Count, 1);
-        _nodes[Count] = default(T);
-        _nodeCount--;
-        push_down(1);
+        SwapIndices(Count, 1); // Swap the top node and the last leaf node
+        _nodes[Count] = default(T); // Erase the last node to delete the top
+        _nodeCount--; 
+        PushDown(1); // Move the new top to its correct position
         return top;
     }
 
     // Recursive method to cause items in the heap to "float up" to their correct position.
-    private void push_up(int currentPosition)
+    private void PushUp(int currentPosition)
     {
         if (currentPosition == 1)
         {
             return;
         }
 
-        int parentPosition = currentPosition / 2; // the FLOOR of integer division rounds down to give us the right node
+        // Integer division always rounds down to give us the right node
+        int parentPosition = currentPosition / 2; 
         if (OutOfOrder(_nodes[currentPosition], _nodes[parentPosition]))
         {
             SwapIndices(currentPosition, parentPosition);
-            push_up(parentPosition);
+            PushUp(parentPosition);
         }
     }
 
     // Recursive method to cause items in the heap to "sink down" to their correct position.
-    private void push_down(int currentPosition)
+    private void PushDown(int currentPosition)
     {
         int leftPosition = currentPosition * 2;
         if (leftPosition > Count)
@@ -83,7 +84,7 @@ public sealed class PriorityQueue<T> where T : IComparable<T>
         if (OutOfOrder(_nodes[targetPosition], _nodes[currentPosition]))
         {
             SwapIndices(targetPosition, currentPosition);
-            push_down(targetPosition);
+            PushDown(targetPosition);
         }
     }
 
