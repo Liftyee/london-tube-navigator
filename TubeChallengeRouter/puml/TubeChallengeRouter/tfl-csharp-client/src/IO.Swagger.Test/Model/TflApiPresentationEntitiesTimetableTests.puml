@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesTimetableTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesTimetableInstanceTest() : void
-    + DepartureStopIdTest() : void
-    + RoutesTest() : void
-}
-@enduml

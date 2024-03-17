@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesPointTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesPointInstanceTest() : void
-    + LatTest() : void
-    + LonTest() : void
-}
-@enduml

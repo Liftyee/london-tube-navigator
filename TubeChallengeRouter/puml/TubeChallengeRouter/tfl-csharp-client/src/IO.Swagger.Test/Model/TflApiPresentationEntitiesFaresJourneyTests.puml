@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesFaresJourneyTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesFaresJourneyInstanceTest() : void
-    + FromStationTest() : void
-    + ToStationTest() : void
-}
-@enduml

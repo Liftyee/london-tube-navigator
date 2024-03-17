@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesServiceFrequencyTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesServiceFrequencyInstanceTest() : void
-    + LowestFrequencyTest() : void
-    + HighestFrequencyTest() : void
-}
-@enduml

@@ -1,9 +1,0 @@
-@startuml
-class TravelTimeApiTests {
-    + Init() : void
-    + Cleanup() : void
-    + InstanceTest() : void
-    + TravelTimeGetCompareOverlayTest() : void
-    + TravelTimeGetOverlayTest() : void
-}
-@enduml

@@ -1,9 +1,0 @@
-@startuml
-class ModeApiTests {
-    + Init() : void
-    + Cleanup() : void
-    + InstanceTest() : void
-    + ModeArrivalsTest() : void
-    + ModeGetActiveServiceTypesTest() : void
-}
-@enduml

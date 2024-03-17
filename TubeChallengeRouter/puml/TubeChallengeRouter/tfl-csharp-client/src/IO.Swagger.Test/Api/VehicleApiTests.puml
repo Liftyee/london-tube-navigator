@@ -1,8 +1,0 @@
-@startuml
-class VehicleApiTests {
-    + Init() : void
-    + Cleanup() : void
-    + InstanceTest() : void
-    + VehicleGetTest() : void
-}
-@enduml

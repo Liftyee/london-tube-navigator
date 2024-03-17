@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesFaresTicketTimeTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesFaresTicketTimeInstanceTest() : void
-    + TypeTest() : void
-    + DescriptionTest() : void
-}
-@enduml

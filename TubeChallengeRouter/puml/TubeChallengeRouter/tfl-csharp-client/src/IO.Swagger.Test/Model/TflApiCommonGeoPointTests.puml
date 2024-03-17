@@ -1,9 +1,0 @@
-@startuml
-class TflApiCommonGeoPointTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiCommonGeoPointInstanceTest() : void
-    + LatTest() : void
-    + LonTest() : void
-}
-@enduml

@@ -1,9 +1,0 @@
-@startuml
-class JourneyApiTests {
-    + Init() : void
-    + Cleanup() : void
-    + InstanceTest() : void
-    + JourneyJourneyResultsTest() : void
-    + JourneyMetaTest() : void
-}
-@enduml

@@ -1,8 +1,0 @@
-@startuml
-class AirQualityApiTests {
-    + Init() : void
-    + Cleanup() : void
-    + InstanceTest() : void
-    + AirQualityGetTest() : void
-}
-@enduml

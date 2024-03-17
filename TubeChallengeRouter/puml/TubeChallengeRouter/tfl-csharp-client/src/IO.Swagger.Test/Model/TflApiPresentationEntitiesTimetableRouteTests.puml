@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesTimetableRouteTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesTimetableRouteInstanceTest() : void
-    + StationIntervalsTest() : void
-    + SchedulesTest() : void
-}
-@enduml

@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesActiveServiceTypeTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesActiveServiceTypeInstanceTest() : void
-    + ModeTest() : void
-    + ServiceTypeTest() : void
-}
-@enduml

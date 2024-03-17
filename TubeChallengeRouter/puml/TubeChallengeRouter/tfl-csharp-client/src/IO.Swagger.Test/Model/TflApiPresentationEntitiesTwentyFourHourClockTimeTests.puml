@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesTwentyFourHourClockTimeTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesTwentyFourHourClockTimeInstanceTest() : void
-    + HourTest() : void
-    + MinuteTest() : void
-}
-@enduml

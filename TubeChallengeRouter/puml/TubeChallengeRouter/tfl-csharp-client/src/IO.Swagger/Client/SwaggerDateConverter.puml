@@ -1,6 +1,0 @@
-@startuml
-class SwaggerDateConverter {
-    + SwaggerDateConverter()
-}
-IsoDateTimeConverter <|-- SwaggerDateConverter
-@enduml

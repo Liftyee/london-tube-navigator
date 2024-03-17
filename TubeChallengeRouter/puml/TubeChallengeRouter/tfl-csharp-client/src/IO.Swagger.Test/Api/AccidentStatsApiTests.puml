@@ -1,8 +1,0 @@
-@startuml
-class AccidentStatsApiTests {
-    + Init() : void
-    + Cleanup() : void
-    + InstanceTest() : void
-    + AccidentStatsGetTest() : void
-}
-@enduml

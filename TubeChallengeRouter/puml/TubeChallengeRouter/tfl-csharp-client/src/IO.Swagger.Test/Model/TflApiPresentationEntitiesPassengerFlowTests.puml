@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesPassengerFlowTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesPassengerFlowInstanceTest() : void
-    + TimeSliceTest() : void
-    + ValueTest() : void
-}
-@enduml

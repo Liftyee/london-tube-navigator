@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesPlaceCategoryTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesPlaceCategoryInstanceTest() : void
-    + CategoryTest() : void
-    + AvailableKeysTest() : void
-}
-@enduml

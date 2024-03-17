@@ -1,7 +1,0 @@
-@startuml
-class RouteTests {
-    + SetUp() : void
-    + TestExternalEditRoute_ChangesInternalRoute() : void
-}
-RouteTests --> "_route" Route
-@enduml

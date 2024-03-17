@@ -1,8 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesTimetablesDisambiguationTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesTimetablesDisambiguationInstanceTest() : void
-    + DisambiguationOptionsTest() : void
-}
-@enduml

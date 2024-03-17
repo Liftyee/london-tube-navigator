@@ -1,8 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesAccidentStatsVehicleTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesAccidentStatsVehicleInstanceTest() : void
-    + TypeTest() : void
-}
-@enduml

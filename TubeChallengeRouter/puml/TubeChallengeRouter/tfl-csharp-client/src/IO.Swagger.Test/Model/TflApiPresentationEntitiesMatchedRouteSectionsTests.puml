@@ -1,8 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesMatchedRouteSectionsTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesMatchedRouteSectionsInstanceTest() : void
-    + IdTest() : void
-}
-@enduml

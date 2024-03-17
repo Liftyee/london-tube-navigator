@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesLineModeGroupTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesLineModeGroupInstanceTest() : void
-    + ModeNameTest() : void
-    + LineIdentifierTest() : void
-}
-@enduml

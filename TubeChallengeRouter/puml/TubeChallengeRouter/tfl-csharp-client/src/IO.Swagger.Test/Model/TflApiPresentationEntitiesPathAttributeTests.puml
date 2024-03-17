@@ -1,9 +1,0 @@
-@startuml
-class TflApiPresentationEntitiesPathAttributeTests {
-    + Init() : void
-    + Cleanup() : void
-    + TflApiPresentationEntitiesPathAttributeInstanceTest() : void
-    + NameTest() : void
-    + ValueTest() : void
-}
-@enduml
