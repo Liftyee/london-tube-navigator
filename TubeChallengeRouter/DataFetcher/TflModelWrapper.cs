@@ -44,7 +44,7 @@ public class TflModelWrapper : INetworkDataSource
     private void AddLinksForLineSequence(
         List<TflApiPresentationEntitiesStopPointSequence> segments, 
         ref Network network, 
-        Line currentLine, 
+        string currentLineId, 
         Dir direction)
     {
         foreach (var segment in segments)
@@ -65,7 +65,7 @@ public class TflModelWrapper : INetworkDataSource
                 {
                     string prevId = segment.StopPoint[i - 1].Id;
                     network.LinkStationsPartial(prevId, 
-                        currentId, direction, currentLine);
+                        currentId, direction, currentLineId);
                 }
             }
         }
@@ -151,11 +151,14 @@ public class TflModelWrapper : INetworkDataSource
         }
         _logger.Debug("Got {A} lines from cached file", rawLines.Count);
         
-        // Convert the Swagger API line objects to my own Line objects,
-        // which will be passed to the constructors of Station and Link
+        // Convert the Swagger API line objects to my own Line objects, as
+        // well as adding the corresponding lines to the network
+        // The created Line objects are never passed into the Network,
+        // but are used to keep track of the lines within this function
         List<Line> lines = new List<Line>();
         foreach (TflApiPresentationEntitiesLine l in rawLines)
         {
+            network.AddLine(l.Id, l.Name);
             lines.Add(new Line(l.Id, l.Name));
         }
         
@@ -173,7 +176,7 @@ public class TflModelWrapper : INetworkDataSource
                 inboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs)!;
             }
             
-            AddLinksForLineSequence(inboundResult.StopPointSequences, ref network, line, Dir.Inbound);
+            AddLinksForLineSequence(inboundResult.StopPointSequences, ref network, line.Id, Dir.Inbound);
             
             // Process outbound links separately as our graph is directed
             TflApiPresentationEntitiesRouteSequence outboundResult;
@@ -182,7 +185,7 @@ public class TflModelWrapper : INetworkDataSource
                 outboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs);
             }
             
-            AddLinksForLineSequence(outboundResult.StopPointSequences, ref network, line, Dir.Outbound);
+            AddLinksForLineSequence(outboundResult.StopPointSequences, ref network, line.Id, Dir.Outbound);
         }
         _logger.Debug("Done in {A}ms", watch.ElapsedMilliseconds);
     } 
@@ -287,7 +290,7 @@ public class TflModelWrapper : INetworkDataSource
                 catch (ArgumentException)
                 {
                     _logger.Debug("Tried to update a link that doesn't exist! {A} -> {B}", edgeDetails[0], edgeDetails[1]);
-                    network.LinkStationsPartial(edgeDetails[0], edgeDetails[1], Dir.Bidirectional, new Line("Unknown", "Unknown"));
+                    network.LinkStationsPartial(edgeDetails[0], edgeDetails[1], Dir.Bidirectional, null);
                     network.UpdateLink(edgeDetails[0], edgeDetails[1], new TimeSpan(0, minutes, seconds));
                 }
             }

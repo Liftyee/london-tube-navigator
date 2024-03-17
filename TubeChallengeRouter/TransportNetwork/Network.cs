@@ -5,7 +5,7 @@ using Serilog;
 public abstract class Network
 {
     protected Dictionary<string, Station> Stations;
-    protected Dictionary<int, Line> Lines;
+    protected Dictionary<string, Line> Lines;
     protected ILogger Logger;
     protected int NEdges;
     
@@ -17,7 +17,7 @@ public abstract class Network
     {
         Logger = logger;
         Stations = new Dictionary<string, Station>();
-        Lines = new Dictionary<int, Line>();
+        Lines = new Dictionary<string, Line>();
     }
 
     // Not used here, but other Networks inheriting from this class override
@@ -45,11 +45,14 @@ public abstract class Network
     }
     
     // Link two stations with an edge, but leave the edge cost unpopulated.
-    public void LinkStationsPartial(string startId, string endId, Dir direction, Line? line=null)
+    public void LinkStationsPartial(string startId, string endId, Dir direction, string? lineId = null)
     {
         Station startStation = Stations[startId];
         Station endStation = Stations[endId];
-
+        
+        // Get the line object if an ID was given
+        Line? line = lineId is not null ? Lines[lineId] : null;
+        
         // Add links in both directions only if the link is bidirectional
         if (direction == Dir.Bidirectional)
         {
@@ -73,6 +76,12 @@ public abstract class Network
     public bool HasStationById(string id)
     {
         return Stations.Keys.Contains(id);
+    }
+    
+    // Add a line to the network
+    public void AddLine(string id, string name)
+    {
+        Lines.Add(id, new Line(id, name));
     }
     
     // Give a human-readable summary of the network's properties
@@ -225,11 +234,13 @@ public abstract class Network
             "TakeAndInsert not supported by Simple Network (use DijkstraCostNetwork instead)");
     }
 
-    // function to recalculate the intermediate stations of the route
+    // Function to recalculate the cost and intermediate stations of a route
     public void RecalculateRouteData(ref Route route)
     {
         List<string> stations = route.TargetStations;
-        route.IntermediateStations.RemoveAll(_ => true); // clear the list of intermediate stations
+        
+        // clear the list of intermediate stations
+        route.IntermediateStations.RemoveAll(_ => true); 
         int totalCost = 0;
         for (int i = 0; i < stations.Count - 1; i++)
         {
