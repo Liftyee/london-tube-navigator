@@ -189,29 +189,8 @@ public abstract class Network
             writer.WriteLine("Done");
         } 
     }
-
-    protected virtual void RemoveStationFromTotals(ref Route route, int index)
-    {
-        List<string> stations = route.GetTargetPath();
-        TimeSpan updatedTime = route.Duration;
-        int updatedCost = route.Cost;
-
-        if (index > 0)
-        {
-            updatedTime -= TravelTime(stations[index - 1], stations[index]);
-            updatedCost -= CostFunction(stations[index - 1], stations[index]);
-        }
-
-        if (index < (route.Count - 1))
-        {
-            updatedTime -= TravelTime(stations[index], stations[index + 1]);
-            updatedCost -= CostFunction(stations[index], stations[index + 1]);
-        }
-
-        route.UpdateDuration(updatedTime);
-        route.UpdateCost(updatedCost);
-    }
     
+    // Swap the position of two stations in a route and update costs accordingly
     public virtual void Swap(ref Route route, int idxA, int idxB)
     {
         List<string> stations = route.GetTargetPath();
@@ -219,23 +198,25 @@ public abstract class Network
         TimeSpan updatedTime = route.Duration;
         int updatedCost = route.Cost;
         
-        /* Instead of recalculating the travel time by summing all travel times between stations, we can just
-           change the travel times to and from the stations that are being swapped. All other travel times should
-           remain constant, so we are only concerned with what happens around our swapped stations. */
+        /* Instead of recalculating the travel time by summing all travel times
+           between stations, we can just change the travel times to and from the
+           stations that are being swapped. All other travel times should stay
+           constant, so the only concern is our swapped stations. */
         
-        // These four times are the time taken to travel to and from both stations being swapped (before the swap)
+        // These four times are the time taken to travel to and from the
+        // stations being swapped (before the swap)
         if (idxA > 0)             updatedTime -= TravelTime(stations[idxA - 1], stations[idxA]);
         if (idxA < route.Count-1) updatedTime -= TravelTime(stations[idxA], stations[idxA + 1]);
         if (idxB > 0)             updatedTime -= TravelTime(stations[idxB - 1], stations[idxB]);
         if (idxB < route.Count-1) updatedTime -= TravelTime(stations[idxB], stations[idxB + 1]);
 
-        // Do the same for costs (unitless value considering but not limited to duration)
+        // Do the same for costs 
         if (idxA > 0)             updatedCost -= CostFunction(stations[idxA - 1], stations[idxA]);
         if (idxA < route.Count-1) updatedCost -= CostFunction(stations[idxA], stations[idxA + 1]);
         if (idxB > 0)             updatedCost -= CostFunction(stations[idxB - 1], stations[idxB]);
         if (idxB < route.Count-1) updatedCost -= CostFunction(stations[idxB], stations[idxB + 1]);
         
-        // swap the stations in the route
+        // Swap the positions of the stations in the route
         string temp = stations[idxA];
         stations[idxA] = stations[idxB];
         stations[idxB] = temp;
