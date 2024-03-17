@@ -148,7 +148,7 @@ public class DijkstraCostNetwork : Network
     
     public override void Swap(ref Route route, int idxA, int idxB)
     {
-        List<string> stations = route.GetTargetPath();
+        List<string> stations = route.TargetStations;
         
         int updatedCost = route.Cost;
         int maxIdx = route.Count - 1;
@@ -203,7 +203,7 @@ public class DijkstraCostNetwork : Network
         {
             return;
         }
-        List<string> stations = route.GetTargetPath();
+        List<string> stations = route.TargetStations;
 
         int updatedCost = route.Cost;
 
@@ -253,7 +253,7 @@ public class DijkstraCostNetwork : Network
         route.TargetStations.Insert(actualInsertPos, station);
         
         // update our copy of the stations list 
-        stations = route.GetTargetPath();
+        stations = route.TargetStations;
         // TODO: this is sus, is the unit test SwapInsert_UpdatesCost wrong?
 
         if (insertBefore > takeFrom)

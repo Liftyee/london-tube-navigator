@@ -136,7 +136,7 @@ public abstract class Network
     public virtual int CostFunction(Route route)
     {
         int cost = 0;
-        List<string> routeStations = route.GetTargetPath();
+        List<string> routeStations = route.TargetStations;
         for (int i = 0; i < routeStations.Count - 1; i++)
         {
             cost += CostFunction(routeStations[i], routeStations[i+1]);
@@ -144,12 +144,19 @@ public abstract class Network
 
         return cost;
     }
+    
+    // Calculate the cost function between two indexed stations in a route
+    public virtual int CostFunction(Route route, int idxA, int idxB)
+    {
+        List<string> stations = route.TargetStations;
+        return CostFunction(stations[idxA], stations[idxB]);
+    }
 
     // convert route naptan IDs into a string for readability
     public string RouteToStringStationSeq(Route route)
     {
         StringBuilder output = new StringBuilder();
-        List<string> stationIDs = route.GetTargetPath();
+        List<string> stationIDs = route.TargetStations;
         for (int i = 0; i < stationIDs.Count(); i++)
         {
             output.Append($"{Stations[stationIDs[i]].Name.Replace(" Underground Station", "")}, ");
@@ -165,7 +172,7 @@ public abstract class Network
             writer.WriteLine("Route result computed at " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ssZ"));
             writer.WriteLine($"Route with {route.Count} stations and length {route.Duration} minutes");
             
-            List<string> stationIDs = route.GetTargetPath();
+            List<string> stationIDs = route.TargetStations;
             List<List<string>> interStations = route.IntermediateStations;
             for (int i = 0; i < stationIDs.Count(); i++)
             {
@@ -180,37 +187,32 @@ public abstract class Network
         } 
     }
     
-    // Swap the position of two stations in a route and update costs accordingly
+    // Swap the position of two stations in a route and update its cost
+    // Do this efficiently by only updating adjacent to the swapped stations 
     public virtual void Swap(ref Route route, int idxA, int idxB)
     {
-        List<string> stations = route.GetTargetPath();
-        
-        int updatedCost = route.Cost;
-        
-        /* Instead of recalculating the travel time by summing all travel times
-           between stations, we can just change the travel times to and from the
-           stations that are being swapped. All other travel times should stay
-           constant, so the only concern is our swapped stations. */
+        int updatedCost = route.Cost; 
+        int maxIdx = route.Count - 1;
         
         // These four costs are the costs to travel to and from the
         // stations being swapped (before the swap)
-        if (idxA > 0)             updatedCost -= CostFunction(stations[idxA - 1], stations[idxA]);
-        if (idxA < route.Count-1) updatedCost -= CostFunction(stations[idxA], stations[idxA + 1]);
-        if (idxB > 0)             updatedCost -= CostFunction(stations[idxB - 1], stations[idxB]);
-        if (idxB < route.Count-1) updatedCost -= CostFunction(stations[idxB], stations[idxB + 1]);
+        if (idxA > 0)      updatedCost -= CostFunction(route, idxA-1, idxA);
+        if (idxA < maxIdx) updatedCost -= CostFunction(route, idxA, idxA+1);
+        if (idxB > 0)      updatedCost -= CostFunction(route, idxB - 1, idxB);
+        if (idxB < maxIdx) updatedCost -= CostFunction(route, idxB, idxB + 1);
         
         // Swap the positions of the stations in the route
-        string temp = stations[idxA];
-        stations[idxA] = stations[idxB];
-        stations[idxB] = temp;
+        string temp = route.TargetStations[idxA];
+        route.TargetStations[idxA] = route.TargetStations[idxB];
+        route.TargetStations[idxB] = temp;
         
-        // Now add the updated cost to travel to/from the newly swapped stations
-        if (idxA > 0)             updatedCost += CostFunction(stations[idxA - 1], stations[idxA]);
-        if (idxA < route.Count-1) updatedCost += CostFunction(stations[idxA], stations[idxA + 1]);
-        if (idxB > 0)             updatedCost += CostFunction(stations[idxB - 1], stations[idxB]);
-        if (idxB < route.Count-1) updatedCost += CostFunction(stations[idxB], stations[idxB + 1]);
+        // Now add the updated cost to/from the newly swapped stations
+        if (idxA > 0)      updatedCost -= CostFunction(route, idxA-1, idxA);
+        if (idxA < maxIdx) updatedCost -= CostFunction(route, idxA, idxA+1);
+        if (idxB > 0)      updatedCost -= CostFunction(route, idxB - 1, idxB);
+        if (idxB < maxIdx) updatedCost -= CostFunction(route, idxB, idxB + 1);
         
-        // update the route's cost 
+        // Update the route with the new cost
         route.UpdateCost(updatedCost);
     }
     
@@ -223,15 +225,10 @@ public abstract class Network
             "TakeAndInsert not supported by Simple Network (use DijkstraCostNetwork instead)");
     }
 
-    public void RecalculateRouteCosts(ref Route route)
-    {
-        route.UpdateCost(CostFunction(route));
-    }
-
     // function to recalculate the intermediate stations of the route
     public void RecalculateRouteData(ref Route route)
     {
-        List<string> stations = route.GetTargetPath();
+        List<string> stations = route.TargetStations;
         route.IntermediateStations.RemoveAll(_ => true); // clear the list of intermediate stations
         int totalCost = 0;
         for (int i = 0; i < stations.Count - 1; i++)

@@ -43,11 +43,6 @@ public struct Route
             return $"Route with {TargetStations.Count} stations and length {Duration} minutes (cost {_cost})"; 
         }
     }
-
-    public List<string> GetTargetPath()
-    {
-        return TargetStations;
-    }
     
     public void UpdateCost(int newCost)
     {
