@@ -72,11 +72,9 @@ public class NetworkTests
 
         _network.TakeAndInsert(ref route, 0, 4); // should result in B C D A E
         Assert.That(route.Cost, Is.EqualTo(480));
-        Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
         
         _network.TakeAndInsert(ref route, 4, 1); // should result in B E C D A
         Assert.That(route.Cost, Is.EqualTo(7*60));
-        Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
     }
 
     [Test]

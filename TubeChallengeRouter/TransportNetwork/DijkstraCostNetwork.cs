@@ -150,7 +150,6 @@ public class DijkstraCostNetwork : Network
     {
         List<string> stations = route.GetTargetPath();
         
-        TimeSpan updatedTime = route.Duration;
         int updatedCost = route.Cost;
         int maxIdx = route.Count - 1;
         
@@ -162,13 +161,11 @@ public class DijkstraCostNetwork : Network
         {
             if (statIdx > 0)
             {
-                updatedTime -= TravelTime(stations[statIdx - 1], stations[statIdx]);
                 updatedCost -= CostFunction(stations[statIdx - 1], stations[statIdx]);
             }
             
             if (statIdx < maxIdx)
             {
-                updatedTime -= TravelTime(stations[statIdx], stations[statIdx + 1]);
                 updatedCost -= CostFunction(stations[statIdx], stations[statIdx + 1]);
             }
         }
@@ -181,20 +178,12 @@ public class DijkstraCostNetwork : Network
         stations[idxA] = stations[idxB];
         stations[idxB] = temp;
         
-        // Now add the updated times to travel to and from the swapped stations in their new position
-        if (idxA > 0)             updatedTime += TravelTime(stations[idxA - 1], stations[idxA]);
-        if (idxA < route.Count-1) updatedTime += TravelTime(stations[idxA], stations[idxA + 1]);
-        if (idxB > 0)             updatedTime += TravelTime(stations[idxB - 1], stations[idxB]);
-        if (idxB < route.Count-1) updatedTime += TravelTime(stations[idxB], stations[idxB + 1]);
-        
-        // and costs too
+        // Now add the updated cost to travel to/from the newly swapped stations
         if (idxA > 0)               updatedCost += UpdatePathReturnCost(route, idxA);
         if (idxA < route.Count - 1) updatedCost += UpdatePathReturnCost(route, idxA + 1);
         if (idxB > 0)               updatedCost += UpdatePathReturnCost(route, idxB);
         if (idxB < route.Count - 1) updatedCost += UpdatePathReturnCost(route, idxB + 1);
         
-        // update the route's length (time taken)
-        route.UpdateDuration(updatedTime);
         
         // update the route's cost (unitless value based on number of factors)
         route.UpdateCost(updatedCost);
@@ -216,7 +205,6 @@ public class DijkstraCostNetwork : Network
         }
         List<string> stations = route.GetTargetPath();
 
-        TimeSpan updatedTime = route.Duration;
         int updatedCost = route.Cost;
 
         string station = route.TargetStations[takeFrom];
@@ -225,14 +213,12 @@ public class DijkstraCostNetwork : Network
         if (takeFrom > 0)
         {
             Logger.Verbose("Subtracting travel time from {A} to {B}", takeFrom-1, takeFrom);
-            updatedTime -= TravelTime(stations[takeFrom - 1], stations[takeFrom]);
             updatedCost -= CostFunction(stations[takeFrom - 1], stations[takeFrom]);
         }
 
         if (takeFrom < route.Count - 1)
         {
             Logger.Verbose("Subtracting travel time from {A} to {B}", takeFrom, takeFrom + 1);
-            updatedTime -= TravelTime(stations[takeFrom], stations[takeFrom + 1]);
             updatedCost -= CostFunction(stations[takeFrom], stations[takeFrom + 1]);
         }
         
@@ -240,7 +226,6 @@ public class DijkstraCostNetwork : Network
         if (insertBefore > 0)
         {
             Logger.Verbose("Subtracting travel time from {A} to {B}", insertBefore-1, insertBefore);
-            updatedTime -= TravelTime(stations[insertBefore - 1], stations[insertBefore]);
             updatedCost -= CostFunction(stations[insertBefore - 1], stations[insertBefore]);
         }
         route.TargetStations.RemoveAt(takeFrom);
@@ -277,21 +262,18 @@ public class DijkstraCostNetwork : Network
             if (insertBefore > 0)
             {
                 Logger.Verbose("Adding cost from {A} to {B}, {C}", insertBefore-1, insertBefore, CostFunction(stations[insertBefore - 1], stations[insertBefore]));
-                updatedTime += TravelTime(stations[insertBefore - 1], stations[insertBefore]);
                 updatedCost += UpdatePathReturnCost(route, insertBefore);
             }
             
             if (insertBefore > 1)
             {
                 Logger.Verbose("Adding cost from {A} to {B}, {C}", insertBefore-2, insertBefore-1, CostFunction(stations[insertBefore - 2], stations[insertBefore-1]));
-                updatedTime += TravelTime(stations[insertBefore - 2], stations[insertBefore-1]);
                 updatedCost += UpdatePathReturnCost(route, insertBefore-1);
             }
             
             if (takeFrom > 0)
             {
                 Logger.Verbose("Adding travel time from {A} to {B}", takeFrom-1, takeFrom);
-                updatedTime += TravelTime(stations[takeFrom - 1], stations[takeFrom]);
                 updatedCost += UpdatePathReturnCost(route, takeFrom);
             }
         }
@@ -302,27 +284,23 @@ public class DijkstraCostNetwork : Network
             if (insertBefore > 0)
             {
                 Logger.Verbose("Adding travel time from {A} to {B}", insertBefore-1, insertBefore);
-                updatedTime += TravelTime(stations[insertBefore - 1], stations[insertBefore]);
                 updatedCost += UpdatePathReturnCost(route, insertBefore);
             }
         
             if (insertBefore < route.Count-1)
             {
                 Logger.Verbose("Adding travel time from {A} to {B}", insertBefore, insertBefore+1);
-                updatedTime += TravelTime(stations[insertBefore], stations[insertBefore+1]);
                 updatedCost += UpdatePathReturnCost(route, insertBefore+1);
             }
 
             if (takeFrom < route.Count-1)
             {
                 Logger.Verbose("Adding travel time from {A} to {B}", takeFrom, takeFrom+1);
-                updatedTime += TravelTime(stations[takeFrom], stations[takeFrom+1]);
                 updatedCost += UpdatePathReturnCost(route, takeFrom);
             }
 
         }
    
-        route.UpdateDuration(updatedTime);
         route.UpdateCost(updatedCost);
         // TODO: figure out why the quick cost update doesn't work
         // for now, just recalculate the whole cost

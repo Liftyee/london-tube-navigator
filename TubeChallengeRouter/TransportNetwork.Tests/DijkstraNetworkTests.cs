@@ -72,11 +72,10 @@ public class DijkstraNetworkTests
     public void RandomRoute_CostAccurate()
     {
         Route route = _tubeNetwork.GenerateRandomRoute();
-        // TotalSeconds should always be an integer, since the smallest unit we use is seconds
-        Assert.That((int)route.Duration.TotalSeconds == _tubeNetwork.CostFunction(route));
+        Assert.That((int)route.Cost == _tubeNetwork.CostFunction(route));
 
         Route smallRoute = _network.GenerateRandomRoute();
-        Assert.That((int)smallRoute.Duration.TotalSeconds == _network.CostFunction(smallRoute));
+        Assert.That((int)smallRoute.Cost == _network.CostFunction(smallRoute));
     }
     
     [Test]
@@ -117,22 +116,18 @@ public class DijkstraNetworkTests
         // edge case: last
         _network.Swap(ref route, 1, 4);
         Assert.That(route.Cost, Is.EqualTo(_network.CostFunction(route)));
-        Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
         
         // edge case: first
         _network.Swap(ref route, 0, 3);
         Assert.That(route.Cost, Is.EqualTo(_network.CostFunction(route)));
-        Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
         
         // just a normal swap
         _network.Swap(ref route, 2, 3);
         Assert.That(route.Cost, Is.EqualTo(_network.CostFunction(route)));
-        Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
         
         // swap with self
         _network.Swap(ref route, 2, 2);
         Assert.That(route.Cost, Is.EqualTo(_network.CostFunction(route)));
-        Assert.That(route.Duration, Is.EqualTo(_network.TravelTime(route)));
     }
 
     [Test]
@@ -145,6 +140,6 @@ public class DijkstraNetworkTests
         _network.Swap(ref route, 1, 4);
         Assert.That(route.IntermediateStations, Is.EqualTo(new List<List<string>> {new List<string>{"B","C"}, new List<string>(), new List<string>{"B"}, new List<string>()}));
         
-        
+        // TODO: finish this test
     }
 }

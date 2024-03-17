@@ -5,16 +5,16 @@ public class Route
 {
     public List<string> TargetStations;
     public List<List<string>> IntermediateStations;
-    private TimeSpan _duration;
     private int _cost;
     public int Count => TargetStations.Count;
     public int Cost => _cost;
-    public TimeSpan Duration => _duration;
+    
+    // NOTE: This is only true as long as cost = journey time in seconds
+    public int Duration => _cost / 60;
 
-    public Route(List<string> stations, TimeSpan duration, int cost, List<List<string>>? intermediateStations = null)
+    public Route(List<string> stations, int cost, List<List<string>>? intermediateStations = null)
     {
         TargetStations = stations;
-        _duration = duration;
         _cost = cost;
         
         if (intermediateStations is null)
@@ -37,11 +37,11 @@ public class Route
     {
         if (TargetStations.Count < 20)
         {
-            return $"Route with {TargetStations.Count} stations and length {_duration.TotalMinutes} minutes: {String.Join(", ", TargetStations)}";
+            return $"Route with {TargetStations.Count} stations and length {Duration} minutes: {String.Join(", ", TargetStations)}";
         }
         else // don't return all the stations if there are too many
         {
-            return $"Route with {TargetStations.Count} stations and length {_duration.TotalMinutes} minutes (cost {_cost})"; 
+            return $"Route with {TargetStations.Count} stations and length {Duration} minutes (cost {_cost})"; 
         }
     }
 
@@ -60,11 +60,6 @@ public class Route
         return IntermediateStations;
     }
     
-    public void UpdateDuration(TimeSpan newDuration)
-    {
-        _duration = newDuration;
-    }
-
     public void UpdateCost(int newCost)
     {
         _cost = newCost;
@@ -78,7 +73,7 @@ public class Route
     // TODO: this is a shallow copy, which doesn't work
     public Route Copy()
     {
-        return new Route(this.TargetStations, this.Duration, this.Cost, this.IntermediateStations);
+        return new Route(this.TargetStations, this.Cost, this.IntermediateStations);
     }
     
     public int InterStationCount()

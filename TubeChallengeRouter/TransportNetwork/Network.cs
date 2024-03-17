@@ -128,7 +128,7 @@ public abstract class Network
             }
         }
         
-        Route result = new Route(stationIDs, new TimeSpan(0, 0, totalCost), totalCost, intermediateStations);
+        Route result = new Route(stationIDs, totalCost, intermediateStations);
         return result;
     }
 
@@ -143,16 +143,6 @@ public abstract class Network
         }
 
         return cost;
-    }
-
-    public virtual TimeSpan TravelTime(Route route)
-    {
-        return new TimeSpan(0,0,CostFunction(route));
-    }
-    
-    public virtual TimeSpan TravelTime(string startId, string endId)
-    {
-        return new TimeSpan(0,0,CostFunction(startId, endId));
     }
 
     // convert route naptan IDs into a string for readability
@@ -173,7 +163,7 @@ public abstract class Network
         using (StreamWriter writer = new StreamWriter(outStream))
         {
             writer.WriteLine("Route result computed at " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ssZ"));
-            writer.WriteLine($"Route with {route.Count} stations and length {route.Duration.TotalMinutes} minutes");
+            writer.WriteLine($"Route with {route.Count} stations and length {route.Duration} minutes");
             
             List<string> stationIDs = route.GetTargetPath();
             List<List<string>> interStations = route.GetIntermediateStations();
@@ -195,7 +185,6 @@ public abstract class Network
     {
         List<string> stations = route.GetTargetPath();
         
-        TimeSpan updatedTime = route.Duration;
         int updatedCost = route.Cost;
         
         /* Instead of recalculating the travel time by summing all travel times
@@ -203,14 +192,8 @@ public abstract class Network
            stations that are being swapped. All other travel times should stay
            constant, so the only concern is our swapped stations. */
         
-        // These four times are the time taken to travel to and from the
+        // These four costs are the costs to travel to and from the
         // stations being swapped (before the swap)
-        if (idxA > 0)             updatedTime -= TravelTime(stations[idxA - 1], stations[idxA]);
-        if (idxA < route.Count-1) updatedTime -= TravelTime(stations[idxA], stations[idxA + 1]);
-        if (idxB > 0)             updatedTime -= TravelTime(stations[idxB - 1], stations[idxB]);
-        if (idxB < route.Count-1) updatedTime -= TravelTime(stations[idxB], stations[idxB + 1]);
-
-        // Do the same for costs 
         if (idxA > 0)             updatedCost -= CostFunction(stations[idxA - 1], stations[idxA]);
         if (idxA < route.Count-1) updatedCost -= CostFunction(stations[idxA], stations[idxA + 1]);
         if (idxB > 0)             updatedCost -= CostFunction(stations[idxB - 1], stations[idxB]);
@@ -221,22 +204,13 @@ public abstract class Network
         stations[idxA] = stations[idxB];
         stations[idxB] = temp;
         
-        // Now add the updated times to travel to and from the swapped stations in their new position
-        if (idxA > 0)             updatedTime += TravelTime(stations[idxA - 1], stations[idxA]);
-        if (idxA < route.Count-1) updatedTime += TravelTime(stations[idxA], stations[idxA + 1]);
-        if (idxB > 0)             updatedTime += TravelTime(stations[idxB - 1], stations[idxB]);
-        if (idxB < route.Count-1) updatedTime += TravelTime(stations[idxB], stations[idxB + 1]);
-        
-        // and costs too
+        // Now add the updated cost to travel to/from the newly swapped stations
         if (idxA > 0)             updatedCost += CostFunction(stations[idxA - 1], stations[idxA]);
         if (idxA < route.Count-1) updatedCost += CostFunction(stations[idxA], stations[idxA + 1]);
         if (idxB > 0)             updatedCost += CostFunction(stations[idxB - 1], stations[idxB]);
         if (idxB < route.Count-1) updatedCost += CostFunction(stations[idxB], stations[idxB + 1]);
         
-        // update the route's length (time taken)
-        route.UpdateDuration(updatedTime);
-        
-        // update the route's cost (unitless value based on number of factors)
+        // update the route's cost 
         route.UpdateCost(updatedCost);
     }
     
@@ -252,7 +226,6 @@ public abstract class Network
     public void RecalculateRouteCosts(ref Route route)
     {
         route.UpdateCost(CostFunction(route));
-        route.UpdateDuration(TravelTime(route));
     }
 
     // function to recalculate the intermediate stations of the route
@@ -269,6 +242,5 @@ public abstract class Network
         }
 
         route.UpdateCost(totalCost);
-        route.UpdateDuration(TravelTime(route));
     }
 }
