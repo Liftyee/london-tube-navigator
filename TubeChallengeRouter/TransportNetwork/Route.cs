@@ -1,7 +1,6 @@
 namespace TransportNetwork;
 
-// TODO: class name temporarily changed
-public class Route
+public struct Route
 {
     public List<string> TargetStations;
     public List<List<string>> IntermediateStations;
@@ -50,33 +49,12 @@ public class Route
         return TargetStations;
     }
     
-    internal List<string> GetIntermediateStations(int segmentIndex)
-    {
-        return IntermediateStations[segmentIndex];
-    }
-    
-    internal List<List<string>> GetIntermediateStations()
-    {
-        return IntermediateStations;
-    }
-    
     public void UpdateCost(int newCost)
     {
         _cost = newCost;
     }
-
-    public void UpdateIntermediateStations(int segmentIndex, List<string> updateTo)
-    {
-        IntermediateStations[segmentIndex] = updateTo;
-    }
-
-    // TODO: this is a shallow copy, which doesn't work
-    public Route Copy()
-    {
-        return new Route(this.TargetStations, this.Cost, this.IntermediateStations);
-    }
     
-    public int InterStationCount()
+    private int InterStationCount()
     {
         int count = 0;
         foreach (var segment in IntermediateStations)
@@ -86,4 +64,6 @@ public class Route
 
         return count;
     }
+
+    public int InterCount => InterStationCount();
 }

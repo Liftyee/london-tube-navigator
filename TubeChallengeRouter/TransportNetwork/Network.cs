@@ -166,7 +166,7 @@ public abstract class Network
             writer.WriteLine($"Route with {route.Count} stations and length {route.Duration} minutes");
             
             List<string> stationIDs = route.GetTargetPath();
-            List<List<string>> interStations = route.GetIntermediateStations();
+            List<List<string>> interStations = route.IntermediateStations;
             for (int i = 0; i < stationIDs.Count(); i++)
             {
                 writer.WriteLine($"Visit: {Stations[stationIDs[i]].Name.Replace(" Underground Station", "")}");
