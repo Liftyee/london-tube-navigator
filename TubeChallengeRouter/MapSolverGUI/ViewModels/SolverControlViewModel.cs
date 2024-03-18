@@ -157,9 +157,20 @@ public class SolverControlViewModel : ReactiveObject
         }
     }
 
+    private string FormatMins(int mins)
+    {
+        return $"{mins / 60}h {mins % 60}m";
+    }
+
     private void ShowSolverResult(Route result)
     {
-        OutputLog.Add($"Result: Route with duration {result.Duration} and {result.InterCount} intermediate stations.");
+        string first = _tube.GetStationName(result.TargetStations[0]);
+        string last = _tube.GetStationName(result.TargetStations[1]);
+        OutputLog.Add("Route generation complete.");
+        OutputLog.Add($"Result: {FormatMins(result.Duration)} long Route" + 
+                      $" starting at {first}, ending at {last}.");
+        OutputLog.Add($"Route has {result.InterCount} intermediate stations.");
+        OutputLog.Add($"Actual Route: {_tube.RouteToStringStationSeq(result)}");
     }
     
     private void SetProgress(double progress)

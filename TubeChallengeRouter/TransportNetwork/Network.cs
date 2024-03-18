@@ -179,19 +179,20 @@ public abstract class Network
     {
         using (StreamWriter writer = new StreamWriter(outStream))
         {
-            writer.WriteLine("Route result computed at " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ssZ"));
-            writer.WriteLine($"Route with {route.Count} stations and length {route.Duration} minutes");
+            writer.WriteLine("Challenge route computed at " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ssZ"));
+            writer.WriteLine($"Route with {route.Count} stations and length {route.Duration} minutes with {route.InterCount} intermediate ('via') stations");
             
             List<string> stationIDs = route.TargetStations;
             List<List<string>> interStations = route.IntermediateStations;
-            for (int i = 0; i < stationIDs.Count(); i++)
+            for (int i = 0; i < stationIDs.Count; i++)
             {
-                writer.WriteLine($"Visit: {Stations[stationIDs[i]].Name.Replace(" Underground Station", "")}");
-                if (i < stationIDs.Count() - 1)
-                {
-                    writer.WriteLine(
-                        $"Pass thru: {String.Join(", ", interStations[i].Select(s => Stations[s].Name.Replace(" Underground Station", "")))}");
-                }
+                writer.WriteLine($"Visit: {Stations[stationIDs[i]].Name}");
+                if (i >= stationIDs.Count() - 1) continue;
+                if (interStations[i].Count == 0) continue;
+                
+                writer.WriteLine(
+                    $"Travel via: {String.Join(", ", interStations[i].Select(s => Stations[s].Name))}");
+                 
             }
             writer.WriteLine("Done");
         } 
@@ -251,5 +252,11 @@ public abstract class Network
         }
 
         route.UpdateCost(totalCost);
+    }
+    
+    // Return the human-readable name of a station, given its ID.
+    public string GetStationName(string id)
+    {
+        return Stations[id].Name;
     }
 }
