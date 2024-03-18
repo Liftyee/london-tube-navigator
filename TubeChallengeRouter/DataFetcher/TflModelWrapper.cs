@@ -59,7 +59,7 @@ public class TflModelWrapper : INetworkDataSource
                 
                 // NOTE: Duplicate stations cannot be added to the network,
                 // the AddStationId function only adds if not already present
-                network.AddStationId(currentId, segment.StopPoint[i].Name);
+                network.AddStationId(currentId, segment.StopPoint[i].Name.Replace(" Underground Station", ""));
                 
                 if (i > 0)
                 {
