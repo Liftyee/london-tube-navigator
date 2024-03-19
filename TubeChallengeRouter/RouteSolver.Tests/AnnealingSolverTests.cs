@@ -16,10 +16,12 @@ public class SolverTests
     }
 
     [Test]
-    public void Solver_GeneratesSolution()
+    public void Solver_GeneratesOptimalSolution()
     {
+        // The 10 node network is small enough that the optimal solution 
+        // should always be found by the solver
         Route result = _solver.Solve(_net);
-        Assert.Pass(); // TODO: make this better
+        Assert.That(result.Duration, Is.EqualTo(9));
     }
     
     // Test that the solver can handle changes to its settings.

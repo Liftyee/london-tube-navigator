@@ -19,7 +19,7 @@ public class DataSourceTests
                 new TflModelWrapper(stubLogger, "./"))
                             .Generate(NetworkType.Dijkstra, stubLogger);
         
-        // As of Mar 2024, the Tube network has 273 station IDs
+        // As of Mar 2024, the Tube network has unique 273 station IDs
         Assert.That(tubeNetwork.GetStationIDs().Count, Is.EqualTo(273)); 
     }
 
