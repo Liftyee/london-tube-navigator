@@ -248,6 +248,9 @@ public class TflModelWrapper : INetworkDataSource
             }
         }
         
+        // Update the timings too
+        UpdateTimingsLib();
+        
         // Write to a metadata file so we know when the cache was updated
         using (FileStream fs = new FileStream($"{_cachePath}lastUpdated.txt", FileMode.Create))
         {
@@ -272,7 +275,6 @@ public class TflModelWrapper : INetworkDataSource
     private void PopulateNetworkTimesTimingsLib(ref Network network)
     {
         _logger.Debug("Populating network times from timings file...");
-        UpdateTimingsLib();
         using (StreamReader dataFile = File.OpenText($"{_cachePath}timingsData.txt"))
         {
             while (!dataFile.EndOfStream)
