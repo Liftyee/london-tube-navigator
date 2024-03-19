@@ -138,8 +138,8 @@ public class SolverControlViewModel : ReactiveObject
         Logger.Debug("Route: {A} (duration {B})",
             _tube.RouteToStringStationSeq(route), route.Duration);
 
-        WriteRouteToFile(_tube, route);
         ShowSolverResult(route);
+        WriteRouteToFile(_tube, route);
     }
 
     private async Task SolveRouteAsync()
@@ -165,12 +165,12 @@ public class SolverControlViewModel : ReactiveObject
     private void ShowSolverResult(Route result)
     {
         string first = _tube.GetStationName(result.TargetStations[0]);
-        string last = _tube.GetStationName(result.TargetStations[1]);
+        string last = _tube.GetStationName(result.TargetStations[^1]);
         OutputLog.Add("Route generation complete.");
-        OutputLog.Add($"Result: {FormatMins(result.Duration)} long Route" + 
+        OutputLog.Add($"Result: {FormatMins(result.Duration)} long route" + 
                       $" starting at {first}, ending at {last}.");
         OutputLog.Add($"Route has {result.InterCount} intermediate stations.");
-        OutputLog.Add($"Actual Route: {_tube.RouteToStringStationSeq(result)}");
+        OutputLog.Add($"Actual Route: {_tube.RouteToStringStationSeq(result).Substring(0, 100)}");
     }
     
     private void SetProgress(double progress)
@@ -196,6 +196,6 @@ public class SolverControlViewModel : ReactiveObject
         // write the route directly to the filestream
         using var file = new FileStream(outputPath, FileMode.Create);
         tube.RouteDetailsToStream(route, file);
-        Logger.Information("Result written to {A}", outputPath);
+        Logger.Information("Route saved to {A}", outputPath);
     }
 }
