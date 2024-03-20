@@ -3,7 +3,7 @@ namespace TransportNetwork;
 public struct Route
 {
     public List<string> TargetStations;
-    public List<List<string>> IntermediateStations;
+    public List<List<string>> InterStations;
     public int Count => TargetStations.Count;
     public int Cost { get; private set; }
 
@@ -17,18 +17,18 @@ public struct Route
         
         if (intermediateStations is null)
         {
-            this.IntermediateStations = new List<List<string>>();
+            this.InterStations = new List<List<string>>();
         }
         else
         {
-            this.IntermediateStations = intermediateStations;
+            this.InterStations = intermediateStations;
         }
     }
 
     public Route(List<string> stations)
     {
         TargetStations = stations;
-        IntermediateStations = new List<List<string>>();
+        InterStations = new List<List<string>>();
     }
     
     public override string ToString()
@@ -51,7 +51,7 @@ public struct Route
     private int InterStationCount()
     {
         int count = 0;
-        foreach (var segment in IntermediateStations)
+        foreach (var segment in InterStations)
         {
             count += segment.Count;
         }

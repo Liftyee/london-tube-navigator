@@ -183,7 +183,7 @@ public abstract class Network
             writer.WriteLine($"Route with {route.Count} stations and length {route.Duration} minutes with {route.InterCount} intermediate ('via') stations");
             
             List<string> stationIDs = route.TargetStations;
-            List<List<string>> interStations = route.IntermediateStations;
+            List<List<string>> interStations = route.InterStations;
             for (int i = 0; i < stationIDs.Count; i++)
             {
                 writer.WriteLine($"Visit: {Stations[stationIDs[i]].Name}");
@@ -242,13 +242,13 @@ public abstract class Network
         List<string> stations = route.TargetStations;
         
         // clear the list of intermediate stations
-        route.IntermediateStations.RemoveAll(_ => true); 
+        route.InterStations.RemoveAll(_ => true); 
         int totalCost = 0;
         for (int i = 0; i < stations.Count - 1; i++)
         {
             List<string> inter;
             totalCost += CostFunction(stations[i], stations[i + 1], out inter);
-            route.IntermediateStations.Add(inter);
+            route.InterStations.Add(inter);
         }
 
         route.UpdateCost(totalCost);

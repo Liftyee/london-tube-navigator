@@ -81,13 +81,13 @@ public class StrictAnnealingSolver : AnnealingSolver, ISolver
                         // Find a segment which has nonzero number of Intermediate Stations
                         do
                         {
-                            interSegmentIdx = randomGenerator.Next(0, route.IntermediateStations.Count);
-                        } while (route.IntermediateStations[interSegmentIdx].Count == 0); // can't swap if there aren't intermediate stations
+                            interSegmentIdx = randomGenerator.Next(0, route.InterStations.Count);
+                        } while (route.InterStations[interSegmentIdx].Count == 0); // can't swap if there aren't intermediate stations
                     
                         // Pick a random station on this segment
                         // The stations where the segment starts and ends shouldn't be contained on this segment, so we can pick any station
-                        interStationIdx = randomGenerator.Next(0, route.IntermediateStations[interSegmentIdx].Count);
-                        string interStationId = route.IntermediateStations[interSegmentIdx][interStationIdx]; 
+                        interStationIdx = randomGenerator.Next(0, route.InterStations[interSegmentIdx].Count);
+                        string interStationId = route.InterStations[interSegmentIdx][interStationIdx]; 
                         // find the position of the station in the target stations list, and move it to a place
                         // between the stations at the end of our intermediate station segment
                         swapFrom = route.TargetStations.FindIndex(e => e == interStationId);

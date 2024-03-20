@@ -6,14 +6,15 @@ namespace RouteSolver;
 
 public class AnnealingSolver : ISolver
 {
-    // we are given a logger object in the constructor, output messages here.
+    // Logger object given to the constructor, we will send output to it
     protected readonly ILogger Logger;
     
-    // This procedure should be called during solving to update the UI with the current progress state
-    // (e.g. to update a progress bar)
+    // We call this callback during solving to update the UI with
+    // the current progress state (e.g. to update a progress bar)
     protected readonly Action<double> ProgressCallback = (_) => { };
     
-    // Configuration variables used in the annealing process. Not declared const so the user can change them
+    // Configuration variables used in the annealing process. Not declared
+    // const so the user can change them
     private double _randomSwapProbability;
     protected int MaxIterations;
     protected double CoolDownFactor;
@@ -39,8 +40,8 @@ public class AnnealingSolver : ISolver
         Transpose // currently not implemented
     }
 
-    // Function that determines which operation the annealing algorithm should perform.
-    // Override in future if more operations are implemented.
+    // Function that determines which operation the annealing algorithm
+    // should perform. Override in future if more operations are implemented.
     protected AnnealOpType PickRandomOperation(Random generator)
     {
         if (generator.NextDouble() < _randomSwapProbability)
@@ -53,10 +54,11 @@ public class AnnealingSolver : ISolver
         }
     }
 
-    // Main function to "solve" - generate an optimised route passing through all nodes for a given network.
+    // Main function to "solve" - generate an optimised route passing
+    // through all nodes for a given network using Simulated Annealing.
     public virtual Route Solve(Network net)
     {
-        // Report status (update progress bar)
+        // Reset progress (update progress bar to zero)
         ProgressCallback(0); 
         Logger.Information("Annealing route for {A}...", net.ToString());
         
@@ -64,13 +66,15 @@ public class AnnealingSolver : ISolver
         Stopwatch perfTimer = Stopwatch.StartNew();
         int nIterations = 0;
         
-        // Generate a random challenge route (one passing through all nodes) as a starting point 
+        // Generate a random valid route as a starting point 
         Route route = net.GenerateRandomRoute();
         Logger.Debug("Random route: {A}",route.ToString());
-
-        // 
-        // this function lets me deduplicate the logic later
-        static bool AcceptSolution(int oldCost, int newCost, double temperature, Random generator)
+        
+        // This function lets me deduplicate the logic later
+        // It determines whether we should accept the current solution
+        // based on the Simulated Annealing algorithm's exponential formula
+        static bool AcceptSolution(int oldCost,
+            int newCost, double temperature, Random generator)
         {
             if (newCost < oldCost) return true; // just accept if it's better
             
@@ -80,73 +84,73 @@ public class AnnealingSolver : ISolver
             return generator.NextDouble() < probability;
         }
         
-        // TODO: clean up these constants
-        const bool allowNegativeContinue = true;
-        const bool recalculateEveryTime = true;
+        // Constants for the Simulated Annealing process
         int tempStepIterations = MaxIterations/1000;
-        const int noChangeThreshold = 10000;
-        double temperature = 1000;
-        int stationA=0, stationB=0, oldCost, newCost, interSegmentIdx, interStationIdx;
+        const int noChangeThreshold = 1000; 
+        double temperature = 1000; // Initial temperature
         int loopsSinceLastAccept = 0;
-        Random randomGenerator = new Random();
+        Random prng = new Random(); // Pseudorandom number generator builtin
         
         for (int i = 1; i < MaxIterations; i++)
         {
             nIterations++;
             // pick a random pair of stations to swap
-            AnnealOpType operation = PickRandomOperation(randomGenerator);
+            AnnealOpType operation = PickRandomOperation(prng);
 
-            oldCost = route.Cost;  // int is a value type so we don't have to worry about copy doing referencing things
+            int oldCost = route.Cost;
 
+            int stationA;
+            int stationB;
+            int newCost;
             switch (operation)
             {
                 case AnnealOpType.SwapRandom:
+                    // Pick two different stations to swap
                     do
                     {
-                        stationA = randomGenerator.Next(0, route.Count);
-                        stationB = randomGenerator.Next(0, route.Count);
-                    } while (stationA == stationB); // don't swap station with itself
+                        stationA = prng.Next(0, route.Count);
+                        stationB = prng.Next(0, route.Count);
+                    } while (stationA == stationB); 
                     
                     net.Swap(ref route, stationA, stationB);
                     newCost = route.Cost;
                     
                     break;
                 case AnnealOpType.SwapIntermediate:
-                    // If we pass by a station while going from A to B (ie. an Intermediate Station), it might be more efficient to move the station
-                    // from its position in the route to between A and B
+                    /* If we pass by a station while going from A to B
+                       (ie. an Intermediate Station), it might be more
+                       efficient to move the station from its position
+                       in the route to between A and B */
                     
-                    // Find a segment which has nonzero number of Intermediate Stations
+                    // Pick a random segment which has some Intermediate
+                    // Stations (we can't swap if there are none)
+                    int intSegIdx;
                     do
                     {
-                        interSegmentIdx = randomGenerator.Next(0, route.IntermediateStations.Count);
-                    } while (route.IntermediateStations[interSegmentIdx].Count == 0); // can't swap if there aren't intermediate stations
+                        intSegIdx = prng.Next(0, route.InterStations.Count);
+                    } while (route.InterStations[intSegIdx].Count == 0); 
                     
                     // Pick a random station on this segment
-                    // The stations where the segment starts and ends shouldn't be contained on this segment, so we can pick any station
-                    interStationIdx = randomGenerator.Next(0, route.IntermediateStations[interSegmentIdx].Count);
-                    string interStationId = route.IntermediateStations[interSegmentIdx][interStationIdx]; 
-                    // find the position of the station in the target stations list, and move it to a place
-                    // between the stations at the end of our intermediate station segment
+                    // The stations where the segment starts and ends
+                    // shouldn't be contained in the InterStations list, so
+                    // we can pick any station
+                    int interStationIdx = 
+                        prng.Next(0, route.InterStations[intSegIdx].Count);
+                    string interStationId = 
+                        route.InterStations[intSegIdx][interStationIdx]; 
+                    
+                    // Find the position of the chosen station in the target
+                    // stations list
                     stationA = route.TargetStations.FindIndex(e => e == interStationId);
                     
-                    // the station at the start of the segment has the same index as interSegmentIdx, so add one to get
-                    // the end station of the segment
+                    // The station at the start of the segment has the same
+                    // index as interSegmentIdx, so add one to get the end
+                    // station of the segment
                     stationB = interStationIdx + 1;
                     
-                    try
-                    {
-                        net.TakeAndInsert(ref route, stationA, stationB);
-                    }
-                    catch (InvalidOperationException e)
-                    {
-                        Logger.Fatal("Tried to reinsert at the same position {A} (iteration number {B}). Exception {C}", stationA, nIterations, e);
-                        throw new Exception();
-                    }
-
-                    if (recalculateEveryTime)
-                    {
-                        net.RecalculateRouteData(ref route);
-                    }
+                    // Move the chosen station to between the two
+                    // stations at the start and end of our segment
+                    net.TakeAndInsert(ref route, stationA, stationB);
                     newCost = route.Cost;
 
                     break;
@@ -155,31 +159,20 @@ public class AnnealingSolver : ISolver
                 default:
                     throw new InvalidOperationException("Invalid annealing operation type");
             }
-
-            if (newCost < 0)
+            
+            // Determine whether we should accept the new solution
+            if (AcceptSolution(oldCost, newCost, temperature, prng))
             {
-                if (allowNegativeContinue)
-                {
-                    Logger.Warning("Cost of new route (iteration {A}) is negative!", nIterations);
-                    Logger.Warning("Allowing post-negative continue, Let's pretend that never happened...");
-                    Logger.Warning("Recalculating route data...");
-                    net.RecalculateRouteData(ref route);
-                }
-            }
-
-            if (AcceptSolution(oldCost, newCost, temperature, randomGenerator))
-            {
-                // accept the change (duration and cost have already been updated by the operation)
                 loopsSinceLastAccept = 0;
             }
             else
             {
-                // reject the change (swap back)
+                // Reject the change and revert the route's data
                 route = RevertOperation(net, operation, route, stationA, stationB);
                 loopsSinceLastAccept++;
             }
             
-            // cool down every tempStepIterations cycles to avoid cooling too fast
+            // Cool down every tempStepIterations cycles (not too quickly)
             if (i % tempStepIterations == 0)
             {
                 temperature *= CoolDownFactor;
@@ -188,26 +181,30 @@ public class AnnealingSolver : ISolver
                 Logger.Debug("Current route: {A} (processing for {B} ms)",route.ToString(), perfTimer.ElapsedMilliseconds);
             }
             
-            // if we haven't changed anything for a while then we're probably done
+            // If nothing's changed for a while then we're probably done
             if (loopsSinceLastAccept >= noChangeThreshold)
             {
-                Logger.Debug("No change for {A} iterations, stopping annealing",loopsSinceLastAccept);
+                Logger.Debug("No change for {A} iterations, stopping annealing", loopsSinceLastAccept);
                 break;
             }
-
+            
+            // Log a debug progress message every 10% iterations
             if (nIterations % (MaxIterations / 10) == 0)
             {
                 Logger.Debug("{A} percent complete", Math.Ceiling(nIterations*100.0 / MaxIterations));
             }
-
+            
+            // Update the progress bar every 0.1% iterations
             if (nIterations % (MaxIterations / 1000) == 0)
             {
                 ProgressCallback((nIterations / (double)MaxIterations)*100);
             }
         }
-        ProgressCallback(100); // always finish at 100% no matter when we finished
+        // When we're finished always set the progress bar to 100%
+        ProgressCallback(100); 
         Logger.Debug("Final route: {A} (found in {B} ms, {C} ms per iteration)",route.ToString(), perfTimer.ElapsedMilliseconds, (perfTimer.ElapsedMilliseconds/(double)nIterations).ToString("0.####"));
         
+        // Reset the route's data for good measure
         net.RecalculateRouteData(ref route);
         return route;
     }
@@ -297,5 +294,4 @@ public class AnnealingSolver : ISolver
             
         }
     }
-
 }

@@ -49,7 +49,7 @@ public class DijkstraNetworkTests
         {
             List<string> dijResult;
             _network.CostFunction(result.TargetStations[idx], result.TargetStations[idx + 1], out dijResult);
-            Assert.That(result.IntermediateStations[idx], Is.EqualTo(dijResult));
+            Assert.That(result.InterStations[idx], Is.EqualTo(dijResult));
         }
     }
     
@@ -140,7 +140,7 @@ public class DijkstraNetworkTests
         
         // edge case: last
         _network.Swap(ref route, 1, 4);
-        Assert.That(route.IntermediateStations, Is.EqualTo(new List<List<string>> {new List<string>{"B","C"}, new List<string>(), new List<string>{"B"}, new List<string>()}));
+        Assert.That(route.InterStations, Is.EqualTo(new List<List<string>> {new List<string>{"B","C"}, new List<string>(), new List<string>{"B"}, new List<string>()}));
         
         // TODO: finish this test
     }

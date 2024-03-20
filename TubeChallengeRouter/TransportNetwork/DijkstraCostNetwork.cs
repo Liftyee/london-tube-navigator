@@ -320,7 +320,7 @@ public class DijkstraCostNetwork : Network
     {
         List<string> newpath;
         int cost = CostFunction(route.TargetStations[idxA - 1], route.TargetStations[idxA], out newpath);
-        route.IntermediateStations[idxA - 1] = newpath;
+        route.InterStations[idxA - 1] = newpath;
         return cost;
     }
 }
