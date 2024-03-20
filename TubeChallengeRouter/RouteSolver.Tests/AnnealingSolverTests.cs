@@ -59,4 +59,16 @@ public class SolverTests
         // The progress callback should have fired at least once
         Assert.That(callbackFired, Is.True); 
     }
+    
+    // Test that the solver generates a route with all the stations.
+    [Test]
+    public void GeneratedRoute_VisitsAll()
+    {
+        Route result = _solver.Solve(_net);
+        List<string> stationIds = _net.GetStationIDs();
+        foreach (string stationId in stationIds)
+        {
+            Assert.That(result.TargetStations.Contains(stationId), Is.True);
+        }
+    }
 }

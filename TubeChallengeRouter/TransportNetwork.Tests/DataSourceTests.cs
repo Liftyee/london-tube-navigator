@@ -21,6 +21,12 @@ public class DataSourceTests
         
         // As of Mar 2024, the Tube network has unique 273 station IDs
         Assert.That(tubeNetwork.GetStationIDs().Count, Is.EqualTo(273)); 
+        
+        // Check that each station has a name and ID
+        foreach (string stationId in tubeNetwork.GetStationIDs())
+        {
+            Assert.That(tubeNetwork.GetStationName(stationId), Is.Not.Null);
+        }
     }
 
     [Test]
