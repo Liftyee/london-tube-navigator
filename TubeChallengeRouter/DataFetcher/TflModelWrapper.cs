@@ -41,7 +41,7 @@ public class TflModelWrapper : INetworkDataSource
     // For a list of route segments and a given network+line+direction,
     // add the stations and links needed to represent that route segment 
     // to the network
-    private void AddLinksForLineSequence(
+    private void AddLineSeqLinks(
         List<TflApiPresentationEntitiesStopPointSequence> segments, 
         ref Network network, 
         string currentLineId, 
@@ -135,19 +135,21 @@ public class TflModelWrapper : INetworkDataSource
     }
 
     // Populate the given network with the stations and line structure of the 
-    // London Tube, which is stored in our cache (caller must handle exceptions
-    // caused by the cache being invalid or missing)
+    // London Tube, which is stored in our cache (caller must handle 
+    // exceptions caused by the cache being invalid or missing)
     private void PopulateNetworkStructureFromCache(ref Network network)
     {
         var watch = System.Diagnostics.Stopwatch.StartNew();
 
-        // Load the line IDs from the cache
-        DataContractSerializer lineSerializer =
-            new DataContractSerializer(typeof(List<TflApiPresentationEntitiesLine>));
+        // Deserialize the line IDs from the cache
+        DataContractSerializer lineSerializer = 
+            new DataContractSerializer(
+                typeof(List<TflApiPresentationEntitiesLine>));
         List<TflApiPresentationEntitiesLine> rawLines;
         using (FileStream fs = new($"{_cachePath}lines.xml", FileMode.Open))
         {
-            rawLines = (List<TflApiPresentationEntitiesLine>) lineSerializer.ReadObject(fs)!;
+            rawLines = (List<TflApiPresentationEntitiesLine>) 
+                lineSerializer.ReadObject(fs)!;
         }
         _logger.Debug("Got {A} lines from cached file", rawLines.Count);
         
@@ -169,23 +171,22 @@ public class TflModelWrapper : INetworkDataSource
         foreach (Line line in lines)
         {
             _logger.Debug("Processing segments for line {A}", line.Name);
+            string lp = $"{_cachePath}{line.Id}"; // path for current line
             
-            TflApiPresentationEntitiesRouteSequence inboundResult;
-            using (FileStream fs = new($"{_cachePath}{line.Id}_inbound.xml", FileMode.Open))
-            {
-                inboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs)!;
-            }
+            List<TflApiPresentationEntitiesStopPointSequence> inboundResult;
+            using FileStream ifs = new($"{lp}_inbound.xml", FileMode.Open);
+            inboundResult = ((TflApiPresentationEntitiesRouteSequence) 
+                serializer.ReadObject(ifs)!).StopPointSequences;
             
-            AddLinksForLineSequence(inboundResult.StopPointSequences, ref network, line.Id, Dir.Inbound);
+            AddLineSeqLinks(inboundResult, ref network, line.Id, Dir.Inbound);
             
             // Process outbound links separately as our graph is directed
-            TflApiPresentationEntitiesRouteSequence outboundResult;
-            using (FileStream fs = new($"{_cachePath}{line.Id}_outbound.xml", FileMode.Open))
-            {
-                outboundResult = (TflApiPresentationEntitiesRouteSequence) serializer.ReadObject(fs);
-            }
+            List<TflApiPresentationEntitiesStopPointSequence> outboundResult;
+            using FileStream ofs = new($"{lp}_outbound.xml", FileMode.Open);
+            outboundResult = ((TflApiPresentationEntitiesRouteSequence) 
+                serializer.ReadObject(ofs)!).StopPointSequences;
             
-            AddLinksForLineSequence(outboundResult.StopPointSequences, ref network, line.Id, Dir.Outbound);
+            AddLineSeqLinks(outboundResult, ref network, line.Id, Dir.Outbound);
         }
         _logger.Debug("Done in {A}ms", watch.ElapsedMilliseconds);
     } 
@@ -196,6 +197,7 @@ public class TflModelWrapper : INetworkDataSource
     {
         _progressCallback(InitialPercent);
         var watch = System.Diagnostics.Stopwatch.StartNew(); // timer to report performance in logs
+        long totalMs = 0;
 
         _logger.Information("Populating local cache from API...");
         var rawLines = _lineApi.LineGetByMode(new List<string> { "tube" });
@@ -227,6 +229,7 @@ public class TflModelWrapper : INetworkDataSource
             
             TflApiPresentationEntitiesRouteSequence inboundResult = _lineApi.LineRouteSequence(rawLines[idx].Id, "inbound");
             _logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
+            totalMs += watch.ElapsedMilliseconds;
             
             using (FileStream fs = new FileStream($"{_cachePath}{rawLines[idx].Id}_inbound.xml", FileMode.Create))
             {
@@ -241,12 +244,15 @@ public class TflModelWrapper : INetworkDataSource
             watch.Restart();
             TflApiPresentationEntitiesRouteSequence outboundResult = _lineApi.LineRouteSequence(rawLines[idx].Id, "outbound");
             _logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
-            
+            totalMs += watch.ElapsedMilliseconds;
+
             using (FileStream fs = new FileStream($"{_cachePath}{rawLines[idx].Id}_outbound.xml", FileMode.Create))
             {
                 serializer.WriteObject(fs, outboundResult);
             }
         }
+        
+        _logger.Debug("Total time taken for line fetch: {A}ms", totalMs);
         
         // Update the timings too
         UpdateTimingsLib();
