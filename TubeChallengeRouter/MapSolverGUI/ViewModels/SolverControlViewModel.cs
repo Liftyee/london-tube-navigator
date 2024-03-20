@@ -189,8 +189,7 @@ public class SolverControlViewModel : ReactiveObject
     private void WriteRouteToFile(Network tube, Route route)
     {
         // generate a unique filename
-        var now = DateTime.Now;
-        string dateCode = $"{now.Year}-{now.Month}-{now.Day}_{now.Hour}-{now.Minute}";
+        string dateCode = DateTime.Now.ToString("_yyyy-MM-dd_HH-mm");
         string outputPath = $"{GetCachePath()}route{dateCode}.txt";
 
         // write the route directly to the filestream
