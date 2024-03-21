@@ -1,0 +1,54 @@
+@startuml
+class SolverGUI {
+-Network tubeNetwork
+-ISolver solver
+-NetworkFactory factory
+-INetworkDataSource dataSource
+-RunSolve()
+-SaveDataToFile() 
+}
+abstract class Network {
+-Dictionary<string, Station> stations
+-Dictionary<string, Line> lines
++AddStation()
++AddLine()
++LinkStations()
++Initialise()
++ <<virtual>> CostFunction()
++ <<virtual>> Swap()
+}
+interface ISolver {
++Solve()
++SetParams()
+}
+class AnnealingSolver  {
++Solve()
+-Double temperature
+-Double coolingRate
+-Int maxIterations
+}
+class DijkstraCostNetwork {
+    + <<override>> Initialise() : void
+    + <<override>> CostFunction() : int
+    - DijkstraLookup() : int
+    + <<override>> Swap() : void
+}
+class NetworkFactory {
+    + Generate() : Network
+}
+interface INetworkDataSource {
+    + PopulateNetworkStructure()
+}
+class TflModelWrapper {
+    - _lineApi : LineApi
+    + PopulateNetworkStructure()
+    - UpdateStructureCache()
+}
+INetworkDataSource <|-- TflModelWrapper
+NetworkFactory --* "_dataSource" INetworkDataSource
+ISolver <|-- AnnealingSolver
+SolverGUI --* ISolver
+SolverGUI --* Network
+Network <|-- DijkstraCostNetwork
+SolverGUI --* NetworkFactory
+@enduml
