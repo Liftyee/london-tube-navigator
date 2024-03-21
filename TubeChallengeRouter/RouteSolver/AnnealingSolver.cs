@@ -209,6 +209,7 @@ public class AnnealingSolver : ISolver
         return route;
     }
 
+    // How we reverse an operation depends on what that operation was
     private static Route RevertOperation(Network net, AnnealOpType operation, Route route, int stationA, int stationB)
     {
         switch (operation)
@@ -217,6 +218,8 @@ public class AnnealingSolver : ISolver
                 net.Swap(ref route, stationA, stationB);
                 break;
             case AnnealOpType.SwapIntermediate:
+                // The nuances of how TakeAndInsert works means we need to
+                // consider more cases here
                 if (stationA < stationB)
                 {
                     net.TakeAndInsert(ref route, stationB-1, stationA);
@@ -235,7 +238,7 @@ public class AnnealingSolver : ISolver
 
                 break;
             default:
-                throw new InvalidOperationException("Invalid annealing operation type");
+                throw new InvalidOperationException("Invalid or unsupported annealing operation type");
         }
 
         return route;
