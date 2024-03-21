@@ -1,0 +1,12 @@
+@startuml
+class FloydCostNetwork {
+    - _costMatrix : Dictionary<string, Dictionary<string, int>>
+    + FloydCostNetwork(logger:ILogger)
+    <<internal>> <<override>> Initialise() : void
+    + <<override>> CostFunction(startId:string, endId:string, path:List<string>) : int
+    + <<override>> CostFunction(startId:string, endId:string) : int
+    - PreprocessFloyd() : void
+    + EnumerateCostMatrix() : string
+}
+Network <|-- FloydCostNetwork
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+abstract class Network {
+    # Stations : Dictionary<string, Station>
+    # Lines : Dictionary<string, Line>
+    # Logger : ILogger
+    # NEdges : int
+    # <<const>> InfCost : int = 1000000000
+    + Network(logger:ILogger)
+    <<internal>> <<virtual>> Initialise() : void
+    + AddStationId(naptanId:string, name:string?) : void
+    + LinkStationsPartial(startId:string, endId:string, direction:Dir, lineId:string?) : void
+    + UpdateLink(startId:string, endId:string, newTime:TimeSpan) : void
+    + HasStationById(id:string) : bool
+    + AddLine(id:string, name:string) : void
+    + <<override>> ToString() : string
+    + GetStationIDs() : List<string>
+    + {abstract} CostFunction(startId:string, endId:string, path:List<string>) : int
+    + {abstract} CostFunction(startId:string, endId:string) : int
+    + <<virtual>> GenerateRandomRoute() : Route
+    + <<virtual>> CostFunction(route:Route) : int
+    + <<virtual>> CostFunction(route:Route, idxA:int, idxB:int) : int
+    + RouteToStringStationSeq(route:Route) : string
+    + RouteDetailsToStream(route:Route, outStream:Stream) : void
+    + <<virtual>> Swap(route:Route, idxA:int, idxB:int) : void
+    + <<virtual>> TakeAndInsert(route:Route, takeFrom:int, insertBefore:int) : void
+    + RecalculateRouteData(route:Route) : void
+    + GetStationName(id:string) : string
+}
+@enduml

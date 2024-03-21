@@ -1,0 +1,6 @@
+@startuml
+interface INetworkDataSource {
+    + PopulateNetworkStructure(network:Network) : void
+    + SetProgressCallback(callback:Action<double>) : void
+}
+@enduml

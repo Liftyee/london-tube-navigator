@@ -1,0 +1,22 @@
+@startuml
+enum Dir {
+    Inbound,
+    Outbound,
+    Bidirectional,
+}
+class Line {
+    + <<readonly>> Name : string
+    + <<readonly>> Id : string
+    + Line(id:string, name:string)
+}
+struct Link {
+    + <<readonly>> Destination : Station
+    <<internal>> Duration : TimeSpan <<get>>
+    <<internal>> Line : Line? <<get>>
+    <<internal>> Dir : Dir <<get>>
+    + Link(end:Station, line:Line?, dir:Dir)
+    <<internal>> SetDuration(duration:TimeSpan) : void
+    <<internal>> SetLine(line:Line) : void
+    + GetCost() : int
+}
+@enduml

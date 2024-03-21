@@ -1,0 +1,15 @@
+@startuml
+struct Route {
+    + TargetStations : List<string>
+    + InterStations : List<List<string>>
+    + Count : int <<get>>
+    + Cost : int <<get>>
+    + Duration : int <<get>>
+    + Route(stations:List<string>, cost:int, intermediateStations:List<List<string>>?)
+    + Route(stations:List<string>)
+    + <<override>> ToString() : string
+    + UpdateCost(newCost:int) : void
+    - InterStationCount() : int
+    + InterCount : int <<get>>
+}
+@enduml

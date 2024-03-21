@@ -1,0 +1,11 @@
+@startuml
+enum NetworkType {
+    Floyd,
+    Dijkstra,
+}
+class NetworkFactory {
+    - _dataSource : INetworkDataSource
+    + NetworkFactory(dataSource:INetworkDataSource)
+    + Generate(type:NetworkType, logger:ILogger) : Network
+}
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+class TflModelWrapper {
+    - <<readonly>> _lineApi : LineApi
+    - <<readonly>> _logger : ILogger
+    - <<readonly>> _cachePath : string
+    - <<const>> MaxCacheAge : int = 30
+    - <<const>> PercentOfTotal : int = 90
+    - <<const>> InitialPercent : double = 3.0
+    - _progressCallback : Action<double>
+    + TflModelWrapper(logger:ILogger, cachePath:string)
+    - AddLineSeqLinks(segments:List<TflApiPresentationEntitiesStopPointSequence>, network:Network, currentLineId:string, direction:Dir) : void
+    - EnsureCacheUpdated() : void
+    + PopulateNetworkStructure(network:Network) : void
+    + SetProgressCallback(callback:Action<double>) : void
+    - PopulateNetworkStructureFromCache(network:Network) : void
+    - UpdateStructureCache() : void
+    - UpdateTimingsLib() : void
+    - PopulateNetworkTimesTimingsLib(network:Network) : void
+}
+INetworkDataSource <|-- TflModelWrapper
+@enduml
