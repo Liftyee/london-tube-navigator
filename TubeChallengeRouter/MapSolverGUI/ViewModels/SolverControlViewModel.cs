@@ -59,12 +59,6 @@ public class SolverControlViewModel : ReactiveObject
         get => _solveProgress;
         set => this.RaiseAndSetIfChanged(ref _solveProgress, value);
     }
-
-    public string? StartStation
-    {
-        get => _startStationName;
-        set => this.RaiseAndSetIfChanged(ref _startStationName, value);
-    }
     
     public double SwapProb
     {
