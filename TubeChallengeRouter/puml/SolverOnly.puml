@@ -27,6 +27,13 @@ class NegativeCostException {
 class CostMismatchException {
     + CostMismatchException(calculatedCost:int, routeCost:int)
 }
+class StrictAnnealingSolver {
+    + StrictAnnealingSolver(logger:ILogger)
+    + StrictAnnealingSolver(logger:ILogger, progressCallback:Action<double>)
+    + <<override>> Solve(net:Network) : Route
+}
+AnnealingSolver <|-- StrictAnnealingSolver
+ISolver <|-- StrictAnnealingSolver
 ISolver <|-- AnnealingSolver
 AnnealingSolver +-- AnnealOpType
 AnnealingSolver +-- NegativeCostException
