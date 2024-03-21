@@ -8,13 +8,13 @@ enum Priority {
 class "PriorityQueue`1"<T> {
     - _nodeCount : int
     + Count : int <<get>>
-    + PriorityQueue(size:int, prio:Priority)
-    + Insert(item:T) : void
+    + PriorityQueue()
+    + Insert() : void
     + Pop() : T
-    - PushUp(currentPosition:int) : void
-    - PushDown(currentPosition:int) : void
-    - OutOfOrder(node1:T, node2:T) : bool
-    - SwapIndices(pos1:int, pos2:int) : void
+    - PushUp() : void
+    - PushDown() : void
+    - OutOfOrder() : bool
+    - SwapIndices() : void
     + Top() : T
 }
 "PriorityQueue`1" --> "_priority" Priority
@@ -23,26 +23,26 @@ class TflModelWrapper {
     - <<const>> MaxCacheAge : int = 30
     - <<const>> PercentOfTotal : int = 90
     - <<const>> InitialPercent : double = 3.0
-    + TflModelWrapper(logger:ILogger, cachePath:string)
-    - AddLineSeqLinks(segments:List<>, network:Network, currentLineId:string, direction:Dir) : void
+    + TflModelWrapper()
+    - AddLineSeqLinks() : void
     - EnsureCacheUpdated() : void
-    + PopulateNetworkStructure(network:Network) : void
-    + SetProgressCallback(callback:Action<double>) : void
-    - PopulateNetworkStructureFromCache(network:Network) : void
+    + PopulateNetworkStructure() : void
+    + SetProgressCallback() : void
+    - PopulateNetworkStructureFromCache() : void
     - UpdateStructureCache() : void
     - UpdateTimingsLib() : void
-    - PopulateNetworkTimesTimingsLib(network:Network) : void
+    - PopulateNetworkTimesTimingsLib() : void
 }
 INetworkDataSource <|-- TflModelWrapper
 class LinearNetwork {
     - <<readonly>> _numNodes : int
-    + LinearNetwork(nNodes:int)
-    + PopulateNetworkStructure(network:Network) : void
-    + SetProgressCallback(callback:Action<double>) : void
+    + LinearNetwork()
+    + PopulateNetworkStructure() : void
+    + SetProgressCallback() : void
 }
 class TestNetwork1 {
-    + PopulateNetworkStructure(network:Network) : void
-    + SetProgressCallback(callback:Action<double>) : void
+    + PopulateNetworkStructure() : void
+    + SetProgressCallback() : void
 }
 INetworkDataSource <|-- LinearNetwork
 INetworkDataSource <|-- TestNetwork1
@@ -50,10 +50,10 @@ struct Route {
     + Count : int <<get>>
     + Cost : int <<get>>
     + Duration : int <<get>>
-    + Route(stations:List<string>, cost:int, intermediateStations:List<List<string>>?)
-    + Route(stations:List<string>)
+    + Route()
+    + Route()
     + <<override>> ToString() : string
-    + UpdateCost(newCost:int) : void
+    + UpdateCost() : void
     - InterStationCount() : int
     + InterCount : int <<get>>
 }
@@ -63,44 +63,44 @@ NetworkFactory "_tubeFactory" <-- SolverControlViewModel
 class Station {
     + <<readonly>> Name : string?
     + <<readonly>> NaptanId : string
-    + Station(naptan:string)
-    + Station(naptan:string, name:string)
-    + AddLink(newLink:Link) : void
+    + Station()
+    + Station()
+    + AddLink() : void
     + GetLinks() : List<Link>
-    + CostTo(destId:string) : int
-    + HasLink(destId:string) : bool
-    <<internal>> GetLinkByDestId(id:string) : Link
-    + ModifyLink(lineId:string, destId:string, newTime:TimeSpan) : void
-    + ModifyLink(destId:string, newTime:TimeSpan) : void
+    + CostTo() : int
+    + HasLink() : bool
+    <<internal>> GetLinkByDestId() : Link
+    + ModifyLink() : void
+    + ModifyLink() : void
 }
 interface INetworkDataSource {
-    + PopulateNetworkStructure(network:Network) : void
-    + SetProgressCallback(callback:Action<double>) : void
+    + PopulateNetworkStructure() : void
+    + SetProgressCallback() : void
 }
 enum NetworkType {
     Floyd,
     Dijkstra,
 }
 class NetworkFactory {
-    + NetworkFactory(dataSource:INetworkDataSource)
-    + Generate(type:NetworkType, logger:ILogger) : Network
+    + NetworkFactory()
+    + Generate() : Network
 }
 NetworkFactory --> "_dataSource" INetworkDataSource
 class DijkstraCostNetwork {
-    + DijkstraCostNetwork(logger:ILogger)
+    + DijkstraCostNetwork()
     <<internal>> <<override>> Initialise() : void
-    + <<override>> CostFunction(startId:string, endId:string, path:List<string>) : int
-    + <<override>> CostFunction(startId:string, endId:string) : int
-    - DijkstraLookup(startId:string, endId:string, path:List<string>) : int
-    + <<override>> Swap(route:Route, idxA:int, idxB:int) : void
-    + <<override>> TakeAndInsert(route:Route, takeFrom:int, insertBefore:int) : void
-    - UpdatePath(route:Route, idxA:int) : int
+    + <<override>> CostFunction() : int
+    + <<override>> CostFunction() : int
+    - DijkstraLookup() : int
+    + <<override>> Swap() : void
+    + <<override>> TakeAndInsert() : void
+    - UpdatePath() : int
 }
 struct DijkstraNode {
     + <<readonly>> StationId : string
     + <<readonly>> Cost : int
-    + CompareTo(other:DijkstraNode) : int
-    + DijkstraNode(stationId:string, cost:int)
+    + CompareTo() : int
+    + DijkstraNode()
 }
 Network <|-- DijkstraCostNetwork
 DijkstraCostNetwork +-- DijkstraNode
@@ -112,81 +112,84 @@ enum Dir {
 class Line {
     + <<readonly>> Name : string
     + <<readonly>> Id : string
-    + Line(id:string, name:string)
+    + Line()
 }
 struct Link {
     <<internal>> Line : Line? <<get>>
-    + Link(end:Station, line:Line?, dir:Dir)
-    <<internal>> SetDuration(duration:TimeSpan) : void
-    <<internal>> SetLine(line:Line) : void
+    + Link()
+    <<internal>> SetDuration() : void
+    <<internal>> SetLine() : void
     + GetCost() : int
 }
 Link --> "Destination" Station
 Link --> "Duration" TimeSpan
 Link --> "Dir" Dir
+Network --* Station
+Network --* Line
+Station --* Link
 abstract class Network {
     # NEdges : int
     # <<const>> InfCost : int = 1000000000
-    + Network(logger:ILogger)
+    + Network()
     <<internal>> <<virtual>> Initialise() : void
-    + AddStationId(naptanId:string, name:string?) : void
-    + LinkStationsPartial(startId:string, endId:string, direction:Dir, lineId:string?) : void
-    + UpdateLink(startId:string, endId:string, newTime:TimeSpan) : void
-    + HasStationById(id:string) : bool
-    + AddLine(id:string, name:string) : void
+    + AddStationId() : void
+    + LinkStationsPartial() : void
+    + UpdateLink() : void
+    + HasStationById() : bool
+    + AddLine() : void
     + <<override>> ToString() : string
     + GetStationIDs() : List<string>
-    + {abstract} CostFunction(startId:string, endId:string, path:List<string>) : int
-    + {abstract} CostFunction(startId:string, endId:string) : int
+    + {abstract} CostFunction() : int
+    + {abstract} CostFunction() : int
     + <<virtual>> GenerateRandomRoute() : Route
-    + <<virtual>> CostFunction(route:Route) : int
-    + <<virtual>> CostFunction(route:Route, idxA:int, idxB:int) : int
-    + RouteToStringStationSeq(route:Route) : string
-    + RouteDetailsToStream(route:Route, outStream:Stream) : void
-    + <<virtual>> Swap(route:Route, idxA:int, idxB:int) : void
-    + <<virtual>> TakeAndInsert(route:Route, takeFrom:int, insertBefore:int) : void
-    + RecalculateRouteData(route:Route) : void
-    + GetStationName(id:string) : string
+    + <<virtual>> CostFunction() : int
+    + <<virtual>> CostFunction() : int
+    + RouteToStringStationSeq() : string
+    + RouteDetailsToStream() : void
+    + <<virtual>> Swap() : void
+    + <<virtual>> TakeAndInsert() : void
+    + RecalculateRouteData() : void
+    + GetStationName() : string
 }
 class FloydCostNetwork {
-    + FloydCostNetwork(logger:ILogger)
+    + FloydCostNetwork()
     <<internal>> <<override>> Initialise() : void
-    + <<override>> CostFunction(startId:string, endId:string, path:List<string>) : int
-    + <<override>> CostFunction(startId:string, endId:string) : int
+    + <<override>> CostFunction() : int
+    + <<override>> CostFunction() : int
     - PreprocessFloyd() : void
     + EnumerateCostMatrix() : string
 }
 Network <|-- FloydCostNetwork
 class StrictAnnealingSolver {
-    + StrictAnnealingSolver(logger:ILogger)
-    + StrictAnnealingSolver(logger:ILogger, progressCallback:Action<double>)
-    + <<override>> Solve(net:Network) : Route
+    + StrictAnnealingSolver()
+    + StrictAnnealingSolver()
+    + <<override>> Solve() : Route
 }
 AnnealingSolver <|-- StrictAnnealingSolver
 ISolver <|-- StrictAnnealingSolver
 interface ISolver {
-    + Solve(network:Network) : Route
-    + SetRandomSwapProbability(prob:double) : void
+    + Solve() : Route
+    + SetRandomSwapProbability() : void
     + GetRandomSwapProbability() : double
-    + SetMaxIterations(max:int) : void
+    + SetMaxIterations() : void
     + GetMaxIterations() : int
-    + SetCoolDownFactor(factor:double) : void
+    + SetCoolDownFactor() : void
     + GetCoolDownFactor() : double
 }
 class AnnealingSolver {
     - _randomSwapProbability : double
     # MaxIterations : int
     # CoolDownFactor : double
-    + AnnealingSolver(logger:ILogger)
-    + AnnealingSolver(logger:ILogger, progressCallback:Action<double>)
-    # PickRandomOperation(generator:Random) : AnnealOpType
-    + <<virtual>> Solve(net:Network) : Route
-    - {static} RevertOperation(net:Network, operation:AnnealOpType, route:Route, stationA:int, stationB:int) : Route
-    + SetRandomSwapProbability(probability:double) : void
+    + AnnealingSolver()
+    + AnnealingSolver()
+    # PickRandomOperation() : AnnealOpType
+    + <<virtual>> Solve() : Route
+    - {static} RevertOperation() : Route
+    + SetRandomSwapProbability() : void
     + GetRandomSwapProbability() : double
-    + SetMaxIterations(max:int) : void
+    + SetMaxIterations() : void
     + GetMaxIterations() : int
-    + SetCoolDownFactor(factor:double) : void
+    + SetCoolDownFactor() : void
     + GetCoolDownFactor() : double
 }
 enum AnnealOpType {
@@ -195,10 +198,10 @@ enum AnnealOpType {
     Transpose,
 }
 class NegativeCostException {
-    + NegativeCostException(cost:int)
+    + NegativeCostException()
 }
 class CostMismatchException {
-    + CostMismatchException(calculatedCost:int, routeCost:int)
+    + CostMismatchException()
 }
 ISolver <|-- AnnealingSolver
 AnnealingSolver +-- AnnealOpType
@@ -224,11 +227,11 @@ class SolverControlViewModel {
     - InitializeNetwork() : void
     - RunSolve() : void
     - <<async>> SolveRouteAsync() : Task
-    - FormatMins(mins:int) : string
-    - ShowSolverResult(result:Route) : void
-    - SetProgress(progress:double) : void
+    - FormatMins() : string
+    - ShowSolverResult() : void
+    - SetProgress() : void
     - {static} GetCachePath() : string
-    - WriteRouteToFile(tube:Network, route:Route) : void
+    - WriteRouteToFile() : void
 }
 SolverControlViewModel --> "_solver" ISolver
 @enduml
