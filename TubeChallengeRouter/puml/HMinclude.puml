@@ -5,7 +5,7 @@ enum Priority {
     Smallest,
     Largest,
 }
-class "PriorityQueue`1"<T> {
+class "PriorityQueue"<T> {
     - _nodeCount : int
     + Count : int <<get>>
     + PriorityQueue()
@@ -17,7 +17,7 @@ class "PriorityQueue`1"<T> {
     - SwapIndices() : void
     + Top() : T
 }
-"PriorityQueue`1" --> "_priority" Priority
+"PriorityQueue" --> "_priority" Priority
 class TflModelWrapper {
     - <<readonly>> _cachePath : string
     - <<const>> MaxCacheAge : int = 30
@@ -34,18 +34,6 @@ class TflModelWrapper {
     - PopulateNetworkTimesTimingsLib() : void
 }
 INetworkDataSource <|-- TflModelWrapper
-class LinearNetwork {
-    - <<readonly>> _numNodes : int
-    + LinearNetwork()
-    + PopulateNetworkStructure() : void
-    + SetProgressCallback() : void
-}
-class TestNetwork1 {
-    + PopulateNetworkStructure() : void
-    + SetProgressCallback() : void
-}
-INetworkDataSource <|-- LinearNetwork
-INetworkDataSource <|-- TestNetwork1
 struct Route {
     + Count : int <<get>>
     + Cost : int <<get>>
@@ -57,9 +45,9 @@ struct Route {
     - InterStationCount() : int
     + InterCount : int <<get>>
 }
-Route <-- SolverControlViewModel
-Network "_tube" <-- SolverControlViewModel
-NetworkFactory "_tubeFactory" <-- SolverControlViewModel
+SolverControlViewModel --> Route 
+SolverControlViewModel --> "_tube" Network 
+SolverControlViewModel --> "_tubeFactory" NetworkFactory 
 class Station {
     + <<readonly>> Name : string?
     + <<readonly>> NaptanId : string
@@ -81,6 +69,7 @@ enum NetworkType {
     Floyd,
     Dijkstra,
 }
+NetworkFactory --> NetworkType
 class NetworkFactory {
     + NetworkFactory()
     + Generate() : Network
@@ -104,6 +93,7 @@ struct DijkstraNode {
 }
 Network <|-- DijkstraCostNetwork
 DijkstraCostNetwork +-- DijkstraNode
+DijkstraCostNetwork --> PriorityQueue
 enum Dir {
     Inbound,
     Outbound,
@@ -122,7 +112,6 @@ struct Link {
     + GetCost() : int
 }
 Link --> "Destination" Station
-Link --> "Duration" TimeSpan
 Link --> "Dir" Dir
 Network --* Station
 Network --* Line
@@ -140,9 +129,7 @@ abstract class Network {
     + <<override>> ToString() : string
     + GetStationIDs() : List<string>
     + {abstract} CostFunction() : int
-    + {abstract} CostFunction() : int
     + <<virtual>> GenerateRandomRoute() : Route
-    + <<virtual>> CostFunction() : int
     + <<virtual>> CostFunction() : int
     + RouteToStringStationSeq() : string
     + RouteDetailsToStream() : void
@@ -155,13 +142,11 @@ class FloydCostNetwork {
     + FloydCostNetwork()
     <<internal>> <<override>> Initialise() : void
     + <<override>> CostFunction() : int
-    + <<override>> CostFunction() : int
     - PreprocessFloyd() : void
     + EnumerateCostMatrix() : string
 }
 Network <|-- FloydCostNetwork
 class StrictAnnealingSolver {
-    + StrictAnnealingSolver()
     + StrictAnnealingSolver()
     + <<override>> Solve() : Route
 }

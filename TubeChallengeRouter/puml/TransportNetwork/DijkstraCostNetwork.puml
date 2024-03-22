@@ -7,7 +7,7 @@ class DijkstraCostNetwork {
     - DijkstraLookup(startId:string, endId:string, path:List<string>) : int
     + <<override>> Swap(route:Route, idxA:int, idxB:int) : void
     + <<override>> TakeAndInsert(route:Route, takeFrom:int, insertBefore:int) : void
-    - UpdatePathReturnCost(route:Route, idxA:int) : int
+    - UpdatePath(route:Route, idxA:int) : int
 }
 struct DijkstraNode {
     + <<readonly>> StationId : string

@@ -1,6 +1,11 @@
 @startuml
 class SolverTests {
     + Setup() : void
-    + Test1() : void
+    + Solver_GeneratesOptimalSolution() : void
+    + Solver_SettingsChange() : void
+    + Solver_CallsProgressCallback() : void
+    + GeneratedRoute_VisitsAll() : void
 }
+SolverTests --> "_net" Network
+SolverTests --> "_solver" AnnealingSolver
 @enduml

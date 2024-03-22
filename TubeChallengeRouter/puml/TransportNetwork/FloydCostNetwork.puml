@@ -2,6 +2,7 @@
 class FloydCostNetwork {
     + FloydCostNetwork(logger:ILogger)
     <<internal>> <<override>> Initialise() : void
+    + <<override>> CostFunction(startId:string, endId:string, path:List<string>) : int
     + <<override>> CostFunction(startId:string, endId:string) : int
     - PreprocessFloyd() : void
     + EnumerateCostMatrix() : string

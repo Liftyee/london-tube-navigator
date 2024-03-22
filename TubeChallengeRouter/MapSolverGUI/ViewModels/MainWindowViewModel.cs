@@ -10,7 +10,6 @@ public class MainWindowViewModel : ViewModelBase
 #pragma warning restore CA1822 // Mark members as static
     public SimpleViewModel SimpleViewModel { get; } = new SimpleViewModel();
     public ReactiveViewModel ReactiveViewModel { get; } = new ReactiveViewModel();
-    public SvgMapViewModel SvgMapViewModel { get; } = new();
     public SolverControlViewModel SolverControlViewModel { get; } = new();
 }
 

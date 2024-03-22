@@ -4,31 +4,28 @@ abstract class Network {
     # <<const>> InfCost : int = 1000000000
     + Network(logger:ILogger)
     <<internal>> <<virtual>> Initialise() : void
-    - AddStationObject(stationToAdd:Station) : void
     + AddStationId(naptanId:string, name:string?) : void
-    + WriteStationsToFile(file:FileStream) : void
-    + LinkStationsPartial(startId:string, endId:string, direction:Dir, line:Line?) : void
+    + LinkStationsPartial(startId:string, endId:string, direction:Dir, lineId:string?) : void
     + UpdateLink(startId:string, endId:string, newTime:TimeSpan) : void
     + HasStationById(id:string) : bool
+    + AddLine(id:string, name:string) : void
     + <<override>> ToString() : string
     + GetStationIDs() : List<string>
-    + <<virtual>> CostFunction(startId:string, endId:string, path:List<string>) : int
-    + <<virtual>> CostFunction(startId:string, endId:string) : int
+    + {abstract} CostFunction(startId:string, endId:string, path:List<string>) : int
+    + {abstract} CostFunction(startId:string, endId:string) : int
     + <<virtual>> GenerateRandomRoute() : Route
     + <<virtual>> CostFunction(route:Route) : int
-    + <<virtual>> TravelTime(route:Route) : TimeSpan
-    + <<virtual>> TravelTime(startId:string, endId:string) : TimeSpan
+    + <<virtual>> CostFunction(route:Route, idxA:int, idxB:int) : int
     + RouteToStringStationSeq(route:Route) : string
     + RouteDetailsToStream(route:Route, outStream:Stream) : void
-    # <<virtual>> RemoveStationFromTotals(route:Route, index:int) : void
     + <<virtual>> Swap(route:Route, idxA:int, idxB:int) : void
     + <<virtual>> TakeAndInsert(route:Route, takeFrom:int, insertBefore:int) : void
-    + RecalculateRouteCosts(route:Route) : void
     + RecalculateRouteData(route:Route) : void
+    + GetStationName(id:string) : string
 }
 class "Dictionary`2"<T1,T2> {
 }
 Network --> "Stations<string,Station>" "Dictionary`2"
-Network --> "Lines<int,Line>" "Dictionary`2"
+Network --> "Lines<string,Line>" "Dictionary`2"
 Network --> "Logger" ILogger
 @enduml

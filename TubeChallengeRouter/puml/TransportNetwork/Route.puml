@@ -1,24 +1,17 @@
 @startuml
-class Route {
-    - _cost : int
+struct Route {
     + Count : int <<get>>
     + Cost : int <<get>>
-    + Route(stations:List<string>, duration:TimeSpan, cost:int, intermediateStations:List<List<string>>?)
+    + Duration : int <<get>>
+    + Route(stations:List<string>, cost:int, intermediateStations:List<List<string>>?)
     + Route(stations:List<string>)
     + <<override>> ToString() : string
-    + GetTargetPath() : List<string>
-    <<internal>> GetIntermediateStations(segmentIndex:int) : List<string>
-    <<internal>> GetIntermediateStations() : List<List<string>>
-    + UpdateDuration(newDuration:TimeSpan) : void
     + UpdateCost(newCost:int) : void
-    + UpdateIntermediateStations(segmentIndex:int, updateTo:List<string>) : void
-    + Copy() : Route
-    + InterStationCount() : int
+    - InterStationCount() : int
+    + InterCount : int <<get>>
 }
 class "List`1"<T> {
 }
 Route --> "TargetStations<string>" "List`1"
-Route --> "IntermediateStations<List<string>>" "List`1"
-Route --> "_duration" TimeSpan
-Route --> "Duration" TimeSpan
+Route --> "InterStations<List<string>>" "List`1"
 @enduml

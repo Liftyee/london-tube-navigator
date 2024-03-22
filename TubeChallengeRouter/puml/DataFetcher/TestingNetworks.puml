@@ -9,10 +9,6 @@ class TestNetwork1 {
     + PopulateNetworkStructure(network:Network) : void
     + SetProgressCallback(callback:Action<double>) : void
 }
-class InvalidBranchIdException {
-    + InvalidBranchIdException(message:string)
-}
 INetworkDataSource <|-- LinearNetwork
 INetworkDataSource <|-- TestNetwork1
-Exception <|-- InvalidBranchIdException
 @enduml

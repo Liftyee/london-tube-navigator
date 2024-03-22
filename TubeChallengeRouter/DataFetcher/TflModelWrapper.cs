@@ -59,7 +59,9 @@ public class TflModelWrapper : INetworkDataSource
                 
                 // NOTE: Duplicate stations cannot be added to the network,
                 // the AddStationId function only adds if not already present
-                network.AddStationId(currentId, segment.StopPoint[i].Name.Replace(" Underground Station", ""));
+                // Remove "Underground Station" from the name, it's repetitive
+                network.AddStationId(currentId, segment.StopPoint[i].Name.
+                    Replace(" Underground Station", ""));
                 
                 if (i > 0)
                 {
@@ -76,7 +78,8 @@ public class TflModelWrapper : INetworkDataSource
     {
         if (File.Exists($"{_cachePath}lastUpdated.txt"))
         {
-            DateTime lastUpdated = File.GetLastWriteTime($"{_cachePath}lastUpdated.txt");
+            DateTime lastUpdated = 
+                File.GetLastWriteTime($"{_cachePath}lastUpdated.txt");
             if (lastUpdated < DateTime.Now.AddDays(-MaxCacheAge))
             {
                 _logger.Information($"Cache is outdated, updating...");
@@ -196,24 +199,30 @@ public class TflModelWrapper : INetworkDataSource
     private void UpdateStructureCache()
     {
         _progressCallback(InitialPercent);
-        var watch = System.Diagnostics.Stopwatch.StartNew(); // timer to report performance in logs
+        
+        // Timer to track and report performance in logs
+        var watch = System.Diagnostics.Stopwatch.StartNew(); 
         long totalMs = 0;
 
         _logger.Information("Populating local cache from API...");
         var rawLines = _lineApi.LineGetByMode(new List<string> { "tube" });
         _logger.Debug("Got {A} lines from API", rawLines.Count);
-        DataContractSerializer serializer = new DataContractSerializer(typeof(TflApiPresentationEntitiesRouteSequence));
         
-        // create cache directory if it doesn't exist
+        // Instantiate a serializer we will use to cache the data
+        DataContractSerializer serializer = new DataContractSerializer(
+                typeof(TflApiPresentationEntitiesRouteSequence));
+        
+        // Create cache directory if it doesn't exist
         if (!string.IsNullOrWhiteSpace(_cachePath))
         {
             Directory.CreateDirectory(_cachePath);
         }
 
-        // Cache which lines there are to be completely independent of the API in case of no network connection
-        DataContractSerializer lineSerializer =
-            new DataContractSerializer(typeof(List<TflApiPresentationEntitiesLine>));
-        using (FileStream fs = new FileStream($"{_cachePath}lines.xml", FileMode.Create))
+        // Cache which lines there are to be completely independent of the
+        // API if the network connection is unavailable
+        DataContractSerializer lineSerializer = new DataContractSerializer(
+                typeof(List<TflApiPresentationEntitiesLine>));
+        using (FileStream fs = new($"{_cachePath}lines.xml", FileMode.Create))
         {
             lineSerializer.WriteObject(fs, rawLines);
         }
@@ -221,32 +230,44 @@ public class TflModelWrapper : INetworkDataSource
         // Fetch and cache the data for each line
         for (int idx = 0; idx < rawLines.Count; idx++)
         {
+            string cid = rawLines[idx].Id; // current line ID
             _logger.Information("Processing line {A}...", rawLines[idx].Name);
-            _logger.Debug("Processing inbound segments for line {A}", rawLines[idx].Id);
+            _logger.Debug("Processing inbound segments for line {A}", cid);
             
-            _progressCallback(InitialPercent + PercentOfTotal * idx / (double)rawLines.Count);
+            // File path + name for the current line
+            string lp = $"{_cachePath}{cid}"; 
+            _progressCallback(InitialPercent + PercentOfTotal * idx / 
+                (double)rawLines.Count);
             watch.Restart();
             
-            TflApiPresentationEntitiesRouteSequence inboundResult = _lineApi.LineRouteSequence(rawLines[idx].Id, "inbound");
-            _logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
+            // Make API call for inbound route segments
+            var inboundResult = _lineApi.LineRouteSequence(cid, "inbound");
+            
+            _logger.Debug("Got {A} segments in {B}ms", 
+                inboundResult.StopPointSequences.Count, 
+                watch.ElapsedMilliseconds);
             totalMs += watch.ElapsedMilliseconds;
             
-            using (FileStream fs = new FileStream($"{_cachePath}{rawLines[idx].Id}_inbound.xml", FileMode.Create))
+            using (FileStream fs = new($"{lp}_inbound.xml", FileMode.Create))
             {
                 serializer.WriteObject(fs, inboundResult);
             }
             
-            _progressCallback(InitialPercent + PercentOfTotal * (idx+0.5) / (double)rawLines.Count);
+            _progressCallback(InitialPercent + PercentOfTotal * (idx+0.5)
+                / (double)rawLines.Count);
             
-            // Process outbound route segments separately as our graph is directed
-            _logger.Debug("Processing outbound segments for line {A}", rawLines[idx].Id);
-            
+            // Process outbound route segments separately as graph is directed
+            _logger.Debug("Processing outbound segments for line {A}", cid);
             watch.Restart();
-            TflApiPresentationEntitiesRouteSequence outboundResult = _lineApi.LineRouteSequence(rawLines[idx].Id, "outbound");
-            _logger.Debug("Got {A} segments in {B}ms", inboundResult.StopPointSequences.Count, watch.ElapsedMilliseconds);
+            
+            var outboundResult = _lineApi.LineRouteSequence(cid, "outbound");
+            
+            _logger.Debug("Got {A} segments in {B}ms", 
+                inboundResult.StopPointSequences.Count, 
+                watch.ElapsedMilliseconds);
             totalMs += watch.ElapsedMilliseconds;
 
-            using (FileStream fs = new FileStream($"{_cachePath}{rawLines[idx].Id}_outbound.xml", FileMode.Create))
+            using (FileStream fs = new($"{lp}_outbound.xml", FileMode.Create))
             {
                 serializer.WriteObject(fs, outboundResult);
             }
@@ -258,7 +279,7 @@ public class TflModelWrapper : INetworkDataSource
         UpdateTimingsLib();
         
         // Write to a metadata file so we know when the cache was updated
-        using (FileStream fs = new FileStream($"{_cachePath}lastUpdated.txt", FileMode.Create))
+        using (FileStream fs = new($"{_cachePath}lastUpdated.txt", FileMode.Create))
         {
             using (StreamWriter sw = new StreamWriter(fs))
             {

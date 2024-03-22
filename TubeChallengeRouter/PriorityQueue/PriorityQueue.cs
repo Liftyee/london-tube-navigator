@@ -76,6 +76,9 @@ public class PriorityQueue<T> where T : IComparable<T>
 
         int rightPosition = currentPosition * 2 + 1;
         int targetPosition = leftPosition;
+        // If the right position is in bounds and more extreme than the left 
+        // node, we should swap with the right node to maintain the heap 
+        // property - the right node needs to be more extreme than the left.
         if (rightPosition <= Count && OutOfOrder(_nodes[rightPosition], _nodes[leftPosition]))
         {
             targetPosition = rightPosition;

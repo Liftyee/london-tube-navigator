@@ -5,17 +5,18 @@ class SolverControlViewModel {
     - _swapProb : double
     - _tempFactor : double
     - _maxIterations : int
+    - _source : INetworkDataSource?
+    - _tubeFactory : NetworkFactory?
     - _tube : Network?
     + SolveProgress : double <<get>> <<set>>
-    + StartStation : string? <<get>> <<set>>
     + SwapProb : double <<get>> <<set>>
     + TempFactor : double <<get>> <<set>>
     + MaxIterations : int <<get>> <<set>>
     + SolverControlViewModel()
     - InitializeNetwork() : void
     - RunSolve() : void
-    - <<async>> TestOutputs() : Task
     - <<async>> SolveRouteAsync() : Task
+    - FormatMins(mins:int) : string
     - ShowSolverResult(result:Route) : void
     - SetProgress(progress:double) : void
     - {static} GetCachePath() : string
@@ -30,8 +31,6 @@ class UiOutputSink {
 }
 ReactiveObject <|-- SolverControlViewModel
 SolverControlViewModel --> "_solver" ISolver
-SolverControlViewModel --> "_source" INetworkDataSource
-SolverControlViewModel --> "_tubeFactory" NetworkFactory
 SolverControlViewModel --> "SolveCommand" ICommand
 SolverControlViewModel o-> "OutputLog<string>" "ObservableCollection`1"
 SolverControlViewModel o-> "UiLogger" UiOutputSink
