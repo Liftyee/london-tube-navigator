@@ -1,14 +1,4 @@
 @startuml
-class LinearNetwork {
-    - <<readonly>> _numNodes : int
-    + LinearNetwork(nNodes:int)
-    + PopulateNetworkStructure(network:Network) : void
-    + SetProgressCallback(callback:Action<double>) : void
-}
-class TestNetwork1 {
-    + PopulateNetworkStructure(network:Network) : void
-    + SetProgressCallback(callback:Action<double>) : void
-}
 INetworkDataSource <|-- LinearNetwork
 INetworkDataSource <|-- TestNetwork1
 
@@ -17,13 +7,28 @@ interface INetworkDataSource {
     + SetProgressCallback(callback:Action<double>) : void
 }
 enum NetworkType {
-    Simple,
     Floyd,
-    Dijkstra,
+    Dijkstra
 }
 class NetworkFactory {
     + NetworkFactory(dataSource:INetworkDataSource)
     + Generate(type:NetworkType, logger:ILogger) : Network
 }
+class TflModelWrapper {
+    - <<readonly>> _cachePath : string
+    - <<const>> MaxCacheAge : int = 30
+    - <<const>> PercentOfTotal : int = 90
+    - <<const>> InitialPercent : double = 3.0
+    + TflModelWrapper()
+    - AddLineSeqLinks() : void
+    - EnsureCacheUpdated() : void
+    + PopulateNetworkStructure() : void
+    + SetProgressCallback() : void
+    - PopulateNetworkStructureFromCache() : void
+    - UpdateStructureCache() : void
+    - UpdateTimingsLib() : void
+    - PopulateNetworkTimesTimingsLib() : void
+}
+INetworkDataSource <|-- TflModelWrapper
 NetworkFactory --* "_dataSource" INetworkDataSource
 @enduml

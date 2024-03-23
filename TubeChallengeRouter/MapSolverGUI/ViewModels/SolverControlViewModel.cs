@@ -13,6 +13,7 @@ using TransportNetwork;
 
 namespace MapSolverGUI.ViewModels;
 
+// To sync with the GUI properly we need to inherit from ReactiveObject
 public class SolverControlViewModel : ReactiveObject
 {
     private string? _startStationName;
@@ -27,13 +28,17 @@ public class SolverControlViewModel : ReactiveObject
     public ICommand SolveCommand { get; }
     public ObservableCollection<string> OutputLog { get; } = new ObservableCollection<string>();
     
+    // We need to use a custom sink to output to the GUI
     private static UiOutputSink UiLogger { get; } = new UiOutputSink();
+    
+    // Set up a logger that uses our custom sink
     private static readonly ILogger Logger = new LoggerConfiguration()
         .MinimumLevel.Debug()
         .WriteTo.Console()
         .WriteTo.Sink(UiLogger, LogEventLevel.Information)
         .CreateLogger();
     
+    // Custom logger sink which prints messages to the GUI
     private class UiOutputSink : ILogEventSink
     {
         private ObservableCollection<string>? _outputLog;
@@ -54,6 +59,8 @@ public class SolverControlViewModel : ReactiveObject
         }
     }
 
+    // We need to set custom setters which call RaiseAndSetIfChanged to 
+    // update the GUI when the values change, as well as setting our variable
     public double SolveProgress
     {
         get => _solveProgress;
@@ -85,7 +92,7 @@ public class SolverControlViewModel : ReactiveObject
         get => _maxIterations;
         set
         {
-            _solver.SetMaxIterations(value);
+            _solver.SetMaxIterations(value); // set the value in the solver
             this.RaiseAndSetIfChanged(ref _maxIterations, value);
         }
     }
@@ -93,16 +100,18 @@ public class SolverControlViewModel : ReactiveObject
     public SolverControlViewModel()
     {
         Logger.Information("Hello World! Logging is {Description}.","online");
-        UiLogger.AddOutput(OutputLog);
+        UiLogger.AddOutput(OutputLog); // Initialise the custom logger sink
         _solver = new AnnealingSolver(Logger, SetProgress);
         SwapProb = _solver.GetRandomSwapProbability();
         TempFactor = _solver.GetCoolDownFactor();
         MaxIterations = _solver.GetMaxIterations();
-
+        
+        // Set up our command to run the solver asynchronously
         SolveCommand = ReactiveCommand.CreateFromTask(SolveRouteAsync); 
     }
 
-    private void InitializeNetwork()
+    // Initialise our Network with the London Tube data, if needed
+    private void InitialiseNetwork()
     {
         if (_tube is not null)
         {
@@ -124,9 +133,10 @@ public class SolverControlViewModel : ReactiveObject
         Logger.Debug("Result: {A}",_tube.ToString());
     }
 
+    // Synchronously run the solver and output results.
     private void RunSolve()
     {
-        InitializeNetwork();
+        InitialiseNetwork();
 
         Route route = _solver.Solve(_tube);
         Logger.Debug("Route: {A} (duration {B})",
@@ -136,13 +146,15 @@ public class SolverControlViewModel : ReactiveObject
         WriteRouteToFile(_tube, route);
     }
 
+    // Asynchronously run the solver, catching any errors.
     private async Task SolveRouteAsync()
     {
         OutputLog.Add($"Generating route with {MaxIterations} iterations " +
                       $"and temperature factor {TempFactor:0.###}...");
         try
         {
-            await Task.Run(RunSolve);
+            // Use Task.Run to run the solver on a background thread
+            await Task.Run(RunSolve); 
         }
         catch (Exception e)
         {
@@ -151,11 +163,13 @@ public class SolverControlViewModel : ReactiveObject
         }
     }
 
+    // Format a number of minutes as hours and minutes
     private string FormatMins(int mins)
     {
         return $"{mins / 60}h {mins % 60}m";
     }
-
+    
+    // Output the result of the solver to the GUI
     private void ShowSolverResult(Route result)
     {
         string first = _tube.GetStationName(result.TargetStations[0]);
@@ -167,26 +181,28 @@ public class SolverControlViewModel : ReactiveObject
         OutputLog.Add($"Actual Route: {_tube.RouteToStringStationSeq(result).Substring(0, 100)}");
     }
     
+    // Callback that updates the progress bar
     private void SetProgress(double progress)
     {
         SolveProgress = progress;
     }
     
+    // Work out the cache path in a platform-agnostic way
     private static string GetCachePath()
     {
-        // work out the cache path in a platform-agnostic way
         string homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         const string furtherPath = ".cache/TubeNetworkCache/"; // Linux standard but works for Windows too
         return Path.Combine(homeDir, furtherPath);
     }
 
+    // Write a route to a dated file in the cache directory
     private void WriteRouteToFile(Network tube, Route route)
     {
-        // generate a unique filename
+        // Generate a unique filename
         string dateCode = DateTime.Now.ToString("_yyyy-MM-dd_HH-mm");
         string outputPath = $"{GetCachePath()}route{dateCode}.txt";
 
-        // write the route directly to the filestream
+        // Write the route directly to the filestream
         using var file = new FileStream(outputPath, FileMode.Create);
         tube.RouteDetailsToStream(route, file);
         Logger.Information("Route saved to {A}", outputPath);

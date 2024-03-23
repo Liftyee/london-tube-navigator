@@ -290,6 +290,7 @@ public class TflModelWrapper : INetworkDataSource
         _progressCallback(InitialPercent + PercentOfTotal);
     }
 
+    // Download the file with timings data from the repo
     private void UpdateTimingsLib()
     {
         const string address = "https://raw.githubusercontent.com/Liftyee/tube-timings/main/data.txt";
@@ -298,7 +299,8 @@ public class TflModelWrapper : INetworkDataSource
             client.DownloadFile(address, $"{_cachePath}timingsData.txt");
         }
     }
-
+    
+    // Populate the network with the timings data from the timings file
     private void PopulateNetworkTimesTimingsLib(ref Network network)
     {
         _logger.Debug("Populating network times from timings file...");
@@ -306,7 +308,7 @@ public class TflModelWrapper : INetworkDataSource
         {
             while (!dataFile.EndOfStream)
             {
-                // parse line by line
+                // Each line is the cost of an edge
                 string rawLine = dataFile.ReadLine();
                 string[] edgeDetails = rawLine.Split(" ");
                 double decimalMinutes = System.Convert.ToDouble(edgeDetails[2]);

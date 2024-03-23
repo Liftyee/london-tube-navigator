@@ -193,57 +193,45 @@ public class DijkstraCostNetwork : Network
         route.UpdateCost(updatedCost);
     }
     
-    // Remove a station from one position and insert it so that it ends up in another.
-    // The final position will be one before the index of the element at insertBefore
-    // i.e. the element that was at that index gets pushed back to insert the new one.
+    // Remove a station from one position and insert it so that it ends up in
+    // another. The final position will be just before the index of the
+    // station at insertBefore i.e. the element that was at that index
+    // gets pushed back in the list to insert the new one.
     public override void TakeAndInsert(ref Route route, int takeFrom, int insertBefore)
     {
-        Logger.Verbose("Taking from {A} and inserting before {B}", takeFrom, insertBefore);
-        Logger.Verbose("Route is {A}", route.ToString());
-        
-        // If the two indices are the same, our operation will have no effect,
+        // If the two indices are the same, our operation will have no effect
         // so just return early.
         if (insertBefore == takeFrom)
         {
             return;
         }
-        List<string> stations = route.TargetStations;
-
+        List<string> stns = route.TargetStations;
         int updatedCost = route.Cost;
-
         string station = route.TargetStations[takeFrom];
         
-        // subtract travel cost to and from the station we are removing
+        // Subtract travel cost to and from the station we are removing
         if (takeFrom > 0)
         {
-            Logger.Verbose("Subtracting travel time from {A} to {B}", takeFrom-1, takeFrom);
-            updatedCost -= CostFunction(stations[takeFrom - 1], stations[takeFrom]);
+            updatedCost -= CostFunction(stns[takeFrom - 1], stns[takeFrom]);
         }
 
         if (takeFrom < route.Count - 1)
         {
-            Logger.Verbose("Subtracting travel time from {A} to {B}", takeFrom, takeFrom + 1);
-            updatedCost -= CostFunction(stations[takeFrom], stations[takeFrom + 1]);
+            updatedCost -= CostFunction(stns[takeFrom], stns[takeFrom + 1]);
         }
         
-        // also subtract travel cost between the stations we will be inserting between, to get ready for insert
+        // also subtract travel cost between the stations we will be
+        // inserting between, to get ready for inserting the moved station
         if (insertBefore > 0)
         {
-            Logger.Verbose("Subtracting travel time from {A} to {B}", insertBefore-1, insertBefore);
-            updatedCost -= CostFunction(stations[insertBefore - 1], stations[insertBefore]);
+            updatedCost -= CostFunction(stns[insertBefore - 1], stns[insertBefore]);
         }
         route.TargetStations.RemoveAt(takeFrom);
         Logger.Verbose("Yoinked station {A}", station);
-        // if the indices are the same, we might need to subtract
-        // we should never be doing this anyways, so throw an exception
-        if (insertBefore == takeFrom)
-        {
-            // TODO: figure out if this is actually bad
-            // throw new InvalidOperationException("Why are you taking and reinserting at the same place?");
-        }
         
-        // if the index we are going to insert at is after the index we are removing from, we need to subtract one
-        // so the final index in the array is between the elements we want TODO: rewrite this comment
+        // If our target index to insert at is after the index we are 
+        // removing from, removing will shift the indices so we need to 
+        // subtract one so the final index is between the right elements
         int actualInsertPos;
         if (insertBefore > takeFrom)
         {
@@ -257,58 +245,47 @@ public class DijkstraCostNetwork : Network
         route.TargetStations.Insert(actualInsertPos, station);
         
         // update our copy of the stations list 
-        stations = route.TargetStations;
-        // TODO: this is sus, is the unit test SwapInsert_UpdatesCost wrong?
+        stns = route.TargetStations;
 
+        // add back the new travel cost to and from the station we inserted
+        // indices differ depending on whether we inserted in front or behind
         if (insertBefore > takeFrom)
         {
-            // add back the new travel cost to and from the station we inserted
             if (insertBefore > 0)
             {
-                Logger.Verbose("Adding cost from {A} to {B}, {C}", insertBefore-1, insertBefore, CostFunction(stations[insertBefore - 1], stations[insertBefore]));
                 updatedCost += UpdatePath(route, insertBefore);
             }
             
             if (insertBefore > 1)
             {
-                Logger.Verbose("Adding cost from {A} to {B}, {C}", insertBefore-2, insertBefore-1, CostFunction(stations[insertBefore - 2], stations[insertBefore-1]));
                 updatedCost += UpdatePath(route, insertBefore-1);
             }
             
             if (takeFrom > 0)
             {
-                Logger.Verbose("Adding travel time from {A} to {B}", takeFrom-1, takeFrom);
                 updatedCost += UpdatePath(route, takeFrom);
             }
         }
         else
         {
-            // TODO: path not updated properly.
-            // add back the new travel cost to and from the station we inserted
             if (insertBefore > 0)
             {
-                Logger.Verbose("Adding travel time from {A} to {B}", insertBefore-1, insertBefore);
                 updatedCost += UpdatePath(route, insertBefore);
             }
         
             if (insertBefore < route.Count-1)
             {
-                Logger.Verbose("Adding travel time from {A} to {B}", insertBefore, insertBefore+1);
                 updatedCost += UpdatePath(route, insertBefore+1);
             }
 
             if (takeFrom < route.Count-1)
             {
-                Logger.Verbose("Adding travel time from {A} to {B}", takeFrom, takeFrom+1);
                 updatedCost += UpdatePath(route, takeFrom);
             }
 
         }
    
         route.UpdateCost(updatedCost);
-        // TODO: figure out why the quick cost update doesn't work
-        // for now, just recalculate the whole cost
-        // RecalculateRouteCosts(ref route);
         Logger.Verbose("Route is {A}", route.ToString());
     }
 

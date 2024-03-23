@@ -13,26 +13,30 @@ public class FloydCostNetwork : Network
         _costMatrix = new Dictionary<string, Dictionary<string, int>>();
     }
     
+    // Override the initialise method run by the NetworkFactory class
     internal override void Initialise()
     {
         PreprocessFloyd();
     }
 
+    // Dijkstra's algorithm turned out to be fine so this isn't supported
     public override int CostFunction(string startId, string endId, out List<string> path)
     {
         throw new NotSupportedException("Floyd cost function network does not support intermediate path tracking");
     }
 
+    // Cost function is just a lookup in the cost matrix
     public override int CostFunction(string startId, string endId)
     {
         return _costMatrix[startId][endId];
     }
     
+    // Use the Floyd-Warshall algorithm to preprocess the cost matrix
     private void PreprocessFloyd()
     {
         Logger.Information("Preprocessing Floyd-Warshall weights...");
         
-        // initialise cost matrix with infinities and zeroes to the same station
+        // Initialise cost matrix with infinities/zeroes to the same station
         foreach (string stationId in Stations.Keys)
         {
             _costMatrix[stationId] = new Dictionary<string, int>();
@@ -44,7 +48,8 @@ public class FloydCostNetwork : Network
                 }
                 else
                 {
-                    _costMatrix[stationId][station2Id] = 0; // station has no cost to itself
+                    // station has no cost to itself
+                    _costMatrix[stationId][station2Id] = 0; 
                 }
             }
         }

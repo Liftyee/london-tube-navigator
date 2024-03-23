@@ -103,7 +103,7 @@ public abstract class Network
     public abstract int CostFunction(string startId, string endId);
 
     // Generate a random valid route (visiting all stations)
-    public virtual Route GenerateRandomRoute()
+    public Route GenerateRandomRoute()
     {
         // Our resulting list of target stations
         List<string> stationIDs = new List<string>(); 
@@ -142,7 +142,7 @@ public abstract class Network
     }
 
     // Calculate the total cost function of a route
-    public virtual int CostFunction(Route route)
+    public int CostFunction(Route route)
     {
         int cost = 0;
         List<string> routeStations = route.TargetStations;
@@ -155,7 +155,7 @@ public abstract class Network
     }
     
     // Calculate the cost function between two indexed stations in a route
-    public virtual int CostFunction(Route route, int idxA, int idxB)
+    public int CostFunction(Route route, int idxA, int idxB)
     {
         List<string> stations = route.TargetStations;
         return CostFunction(stations[idxA], stations[idxB]);

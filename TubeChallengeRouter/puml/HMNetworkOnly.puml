@@ -1,0 +1,27 @@
+@startuml
+abstract class Network {
+    # NEdges : int
+    + Network()
+    <<internal>> <<virtual>> Initialise() : void
+    + AddStationId() : void
+    + LinkStationsPartial() : void
+    + UpdateLink() : void
+    + HasStationById() : bool
+    + AddLine() : void
+    + GetStationIDs() : List<string>
+    + {abstract} CostFunction() : int
+    + GenerateRandomRoute() : Route
+    + RouteToStringStationSeq() : string
+    + RouteDetailsToStream() : void
+    + <<virtual>> Swap() : void
+    + <<virtual>> TakeAndInsert() : void
+    + RecalculateRouteData() : void
+    + GetStationName() : string
+}
+
+Network --* Station
+Network --* Line
+Network <|-- DijkstraCostNetwork
+SolverInterface --> Network 
+
+@enduml

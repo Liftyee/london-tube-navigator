@@ -1,0 +1,21 @@
+@startuml
+enum Priority {
+    Smallest,
+    Largest,
+}
+class "PriorityQueue"<T> {
+    - _nodeCount : int
+    + Count : int <<get>>
+    + PriorityQueue(size:int, prio:Priority)
+    + Insert(item:T) : void
+    + Pop() : T
+    - PushUp(currentPosition:int) : void
+    - PushDown(currentPosition:int) : void
+    - OutOfOrder(node1:T, node2:T) : bool
+    - SwapIndices(pos1:int, pos2:int) : void
+    + Top() : T
+}
+"PriorityQueue" --> "_priority" Priority
+DijkstraCostNetwork --> PriorityQueue
+
+@enduml

@@ -1,0 +1,61 @@
+@startuml
+enum Priority {
+}
+class "PriorityQueue"<T> {
+}
+"PriorityQueue" --> Priority
+class TflModelWrapper {
+}
+INetworkDataSource <|-- TflModelWrapper
+struct Route {
+}
+SolverControlViewModel --> Route 
+SolverControlViewModel --> Network 
+SolverControlViewModel --> NetworkFactory 
+class Station {
+}
+interface INetworkDataSource {
+}
+class NetworkFactory {
+}
+NetworkFactory --* INetworkDataSource
+class DijkstraCostNetwork {
+}
+struct DijkstraNode {
+}
+Network <|-- DijkstraCostNetwork
+DijkstraCostNetwork +-- DijkstraNode
+DijkstraCostNetwork --> PriorityQueue
+enum Dir {
+}
+class Line {
+}
+struct Link {
+}
+Link --> Station
+Link --> Dir
+Network --* Station
+Network --* Line
+Station --* Link
+abstract class Network {
+}
+class FloydCostNetwork {
+}
+Network <|-- FloydCostNetwork
+class StrictAnnealingSolver {
+}
+AnnealingSolver <|-- StrictAnnealingSolver
+ISolver <|-- StrictAnnealingSolver
+interface ISolver {
+}
+class AnnealingSolver {
+}
+enum AnnealOpType {
+}
+ISolver <|-- AnnealingSolver
+AnnealingSolver +-- AnnealOpType
+
+class SolverControlViewModel {
+}
+SolverControlViewModel --> ISolver
+@enduml

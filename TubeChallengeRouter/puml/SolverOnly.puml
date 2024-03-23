@@ -4,11 +4,8 @@ class AnnealingSolver {
     # MaxIterations : int
     # CoolDownFactor : double
     + AnnealingSolver(logger:ILogger)
-    + AnnealingSolver(logger:ILogger, progressCallback:Action<double>)
-    # PickRandomOperation(generator:Random) : AnnealOpType
-    + <<virtual>> Solve(net:Network) : Route
-    - {static} RevertOperation(net:Network, operation:AnnealOpType, 
-    route:Route, stationA:int, stationB:int) : Route
+    + Solve(net:Network) : Route
+    + SetProgressCallback(callback:Action<double>) : void
     + SetRandomSwapProbability(probability:double) : void
     + GetRandomSwapProbability() : double
     + SetMaxIterations(max:int) : void
@@ -27,13 +24,10 @@ class NegativeCostException {
 class CostMismatchException {
     + CostMismatchException(calculatedCost:int, routeCost:int)
 }
-class StrictAnnealingSolver {
-    + StrictAnnealingSolver(logger:ILogger)
-    + StrictAnnealingSolver(logger:ILogger, progressCallback:Action<double>)
-    + <<override>> Solve(net:Network) : Route
+interface ISolver {
+    + Solve(net:Network) : Route
+    + SetProgressCallback(callback:Action<double>) : void
 }
-AnnealingSolver <|-- StrictAnnealingSolver
-ISolver <|-- StrictAnnealingSolver
 ISolver <|-- AnnealingSolver
 AnnealingSolver +-- AnnealOpType
 AnnealingSolver +-- NegativeCostException
